@@ -11,24 +11,24 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_09_12_185514) do
-    create_table "estimations", force: :cascade do |t|
-      t.string "first_name"
-      t.boolean "first_time"
-      t.integer "home_changes"
-      t.integer "rentals_mortgages"
-      t.boolean "professional_company_activity"
-      t.integer "real_state_trade"
-      t.boolean "with_couple"
-      t.boolean "approved"
-      t.boolean "paid"
-      t.string "email"
-      t.string "phone"
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
-      t.float "price"
-      t.integer "income_rent"
-      t.integer "shares_trade"
-      t.boolean "outside_alava"
-    end
+  create_table "estimations", force: :cascade do |t|
+    t.string "first_name"
+    t.boolean "first_time"
+    t.integer "home_changes"
+    t.integer "rentals_mortgages"
+    t.boolean "professional_company_activity"
+    t.integer "real_state_trade"
+    t.boolean "with_couple"
+    t.boolean "approved"
+    t.boolean "paid"
+    t.string "email"
+    t.string "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "price"
+    t.integer "income_rent"
+    t.integer "shares_trade"
+    t.boolean "outside_alava"
   end
-  
+
+end

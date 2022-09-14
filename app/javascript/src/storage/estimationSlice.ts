@@ -56,7 +56,7 @@ const estimationSlice = createSlice({
 export const calculateEstimation = createAsyncThunk(
     'estimations/calculateEstimation',
     async (obj: IEstimationProps) => {
-        const response = await post('https://errenta.eus/api/v1/estimations/estimate', {body: obj})
+        const response = await post('/api/v1/estimations/estimate', {body: obj})
         
         return [(await response.json) as IEstimation, obj] as const
     }
