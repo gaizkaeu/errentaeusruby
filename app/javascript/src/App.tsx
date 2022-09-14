@@ -6,7 +6,7 @@ import {store} from './storage/store'
 import Navigation from './components/Navigation/Navigation'
 import { useDarkMode } from "usehooks-ts";
 import { Provider } from "react-redux";
-import React from "react";
+import React, { useEffect } from "react";
 
 
 const lightTheme = createTheme({

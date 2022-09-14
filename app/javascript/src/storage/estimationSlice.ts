@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import axios from "axios";
+import { post } from '@rails/request.js'
 
 // Define a type for the slice stated
 
@@ -56,8 +56,9 @@ const estimationSlice = createSlice({
 export const calculateEstimation = createAsyncThunk(
     'estimations/calculateEstimation',
     async (obj: IEstimationProps) => {
-        const response = await axios.post<IEstimation>('http://localhost:3000/estimations/estimate', obj)
-        return [(response.data) as IEstimation, obj] as const
+        const response = await post('http://localhost:3000/api/v1/estimations/estimate', {body: obj})
+        
+        return [(await response.json) as IEstimation, obj] as const
     }
 )
 

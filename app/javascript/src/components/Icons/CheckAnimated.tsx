@@ -1,3 +1,4 @@
+import React from 'react'
 import './CheckAnimated.css'
 
 const CheckAnimated = () => {
