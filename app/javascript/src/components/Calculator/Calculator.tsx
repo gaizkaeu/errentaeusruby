@@ -1,7 +1,7 @@
 import { Button, Loading, Progress, Text } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
 import calculatorFormModel from './Model/calculatorFormModel'
-import React, { useState } from 'react'
+import React from 'react'
 import Start from './Steps/Start'
 import Viviendas from './Steps/Viviendas'
 import PrimeraVez from './Steps/PrimeraVez'
@@ -10,10 +10,10 @@ import validationSchema from './Model/validationSchema'
 import Actividad from './Steps/Actividad'
 import Inmueble from './Steps/Inmueble'
 import Pareja from './Steps/Pareja'
-import { useAppDispatch } from '../../storage/hooks'
+import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import Finish from './Steps/Finish'
 import { calculateEstimation } from '../../storage/estimationSlice'
-import { useNavigate } from 'react-router-dom'
+import { nextStep, prevStep, valuesChanged, Values, QuestionWithNumber } from '../../storage/calculatorSlice'
 
 const steps = [
   'Información importante',
@@ -25,23 +25,6 @@ const steps = [
   '¿Quieres hacer la declaración en matrimonio o con tu pareja de hecho?',
 ]
 const { formId, formField } = calculatorFormModel
-
-interface Values {
-  firstName: string
-  firstTime: string
-  homeChanges: QuestionWithNumber
-  rentalsMortgages: QuestionWithNumber
-  realStateTrade: QuestionWithNumber
-  withCouple: string,
-/*   incomeRent: QuestionWithNumber,
-  sharesTrade: QuestionWithNumber, */
-  professionalCompanyActivity: string
-}
-
-interface QuestionWithNumber {
-  consta: string
-  numero: number
-}
 
 function _renderStepContent(step: number) {
   switch (step) {
@@ -69,10 +52,17 @@ const calculateFinalNumber = (resp: QuestionWithNumber) => {
 }
 
 export default function Calculator() {
-  const [activeStep, setActiveStep] = useState(0)
-  const isLastStep = activeStep === steps.length - 1
+
   const dispatch = useAppDispatch()
-  const navigate = useNavigate();
+  const valuesPersist = useAppSelector((state) => {
+    return state.calculator.formValues
+  })
+
+  const stepPersist = useAppSelector((state) => {
+    return state.calculator.step
+  })
+
+  const isLastStep = stepPersist === steps.length - 1
 
   async function _submitForm(
     values: Values,
@@ -87,49 +77,33 @@ export default function Calculator() {
 
     formikHelpers.setSubmitting(false)
 
-    setActiveStep(activeStep + 1)
+    dispatch(nextStep());
   }
 
   function _handleSubmit(values: Values, formikHelpers: FormikHelpers<any>) {
     if (isLastStep) {
       _submitForm(values, formikHelpers)
     } else {
-      setActiveStep(activeStep + 1)
       formikHelpers.setTouched({})
       formikHelpers.setSubmitting(false)
+      dispatch(valuesChanged(values));
+      dispatch(nextStep());
     }
   }
 
   function _handleBack() {
-    setActiveStep(activeStep - 1)
+    dispatch(prevStep());
   }
 
   return (
     <React.Fragment>
       <React.Fragment>
-        {activeStep === steps.length ? (
+        {stepPersist === steps.length ? (
           <Finish />
         ) : (
-          <Formik
-            initialValues={{
-              firstName: '',
-              homeChanges: {
-                consta: '',
-                numero: 1,
-              },
-              rentalsMortgages: {
-                consta: '',
-                numero: 1,
-              },
-              realStateTrade: {
-                consta: '',
-                numero: 1,
-              },
-              firstTime: '',
-              withCouple: '',
-              professionalCompanyActivity: '',
-            }}
-            validationSchema={validationSchema[activeStep]}
+          <Formik 
+            initialValues={valuesPersist}
+            validationSchema={validationSchema[stepPersist]}
             onSubmit={_handleSubmit}
           >
             {({ isSubmitting }) => (
@@ -137,13 +111,13 @@ export default function Calculator() {
                 <Progress
                   color="primary"
                   size="xs"
-                  value={(activeStep / steps.length) * 100}
+                  value={(stepPersist / steps.length) * 100}
                 />
-                <Text h3>{steps[activeStep]}</Text>
-                {_renderStepContent(activeStep)}
+                <Text h3>{steps[stepPersist]}</Text>
+                {_renderStepContent(stepPersist)}
 
                 <div className="flex gap-4 mt-10">
-                  {activeStep !== 0 && (
+                  {stepPersist !== 0 && (
                     <Button
                       rounded
                       bordered
@@ -180,5 +154,3 @@ export default function Calculator() {
     </React.Fragment>
   )
 }
-
-export type { QuestionWithNumber }

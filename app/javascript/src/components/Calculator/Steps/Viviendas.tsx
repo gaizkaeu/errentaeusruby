@@ -13,7 +13,7 @@ export default function Viviendas(props: {
 
   return (
     <React.Fragment>
-      <YesNoField showOn="1" name={homeChangesQ.name} conditionalRender>
+      <YesNoField showOn={1} name={homeChangesQ.name} conditionalRender>
         <InputField name={homeChangesNum.name} label={homeChangesNum.label} rounded bordered fullWidth></InputField>
       </YesNoField>
     </React.Fragment>

@@ -2,23 +2,26 @@ import { Navbar, Button, Text, Switch } from '@nextui-org/react'
 import React from 'react'
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'
+import { useAppSelector } from '../../storage/hooks'
 import { MoonIcon } from '../Icons/MoonIcon'
 import { SunIcon } from '../Icons/SunIcon'
 
-const NavBarLink = ({to, children}: {to: string, children: string}) => {
+const NavBarLink = ({ to, children }: { to: string; children: string }) => {
+  const resolvedPath = useResolvedPath(to)
+  const isActive = useMatch({ path: resolvedPath.pathname })
 
-    const resolvedPath = useResolvedPath(to)
-    const isActive = useMatch({ path: resolvedPath.pathname })
-  
-    return (
-      <Navbar.Link isActive={isActive ? true : false} as={NavLink} to={to}>
-        {children}
-      </Navbar.Link>
-    )
+  return (
+    <Navbar.Link isActive={isActive ? true : false} as={NavLink} to={to}>
+      {children}
+    </Navbar.Link>
+  )
 }
 
 const Navigation = () => {
   const darkMode = useDarkMode()
+  const loggedIn = useAppSelector((state) => {
+    return state.authentication.logged_in
+  })
 
   return (
     <Navbar>
@@ -28,12 +31,8 @@ const Navigation = () => {
         </Text>
       </Navbar.Brand>
       <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
-        <NavBarLink to="/">
-          Inicio
-        </NavBarLink>
-        <NavBarLink to="/calculator">
-          Calcular
-        </NavBarLink>
+        <NavBarLink to="/">Inicio</NavBarLink>
+        <NavBarLink to="/calculator">Calcular</NavBarLink>
       </Navbar.Content>
       <Navbar.Content>
         <div>
@@ -65,6 +64,9 @@ const Navigation = () => {
           <Button rounded bordered flat color="warning" size={'md'} auto>
             Eliza Asesores
           </Button>
+        </Navbar.Item>
+        <Navbar.Item>
+          <Text>LOGGED_IN {loggedIn ? 'SI': 'NO'}</Text>
         </Navbar.Item>
       </Navbar.Content>
     </Navbar>

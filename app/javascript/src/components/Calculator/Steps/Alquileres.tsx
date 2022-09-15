@@ -12,7 +12,7 @@ export default function Alquileres(props: {
   const {formField: {rentalsMortgagesNum, rentalsMortgagesQ}} = props;
   return (
     <React.Fragment>
-      <YesNoField showOn="1" name={rentalsMortgagesQ.name} conditionalRender>
+      <YesNoField showOn={1} name={rentalsMortgagesQ.name} conditionalRender>
         <InputField name={rentalsMortgagesNum.name} label={rentalsMortgagesQ.label} rounded bordered fullWidth></InputField>
       </YesNoField>
     </React.Fragment>

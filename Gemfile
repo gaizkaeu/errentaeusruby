@@ -6,6 +6,9 @@ ruby "3.1.2"
 # Vite
 gem 'vite_rails'
 
+# Auth
+gem 'devise'
+
 gem 'rack-brotli'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

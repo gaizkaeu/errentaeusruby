@@ -1,10 +1,15 @@
 import { Button, Text, Grid } from '@nextui-org/react'
 import { ArrowIcon } from '../components/Icons/ArrowIcon'
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import { useAppSelector } from '../storage/hooks'
 
 const Home = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const selector = useAppSelector((state) => {
+    return state.authentication
+  })
+
   return (
     <header>
       <section className="py-10 sm:py-16 lg:py-24">
@@ -23,35 +28,33 @@ const Home = () => {
                 RENTA.eusa
               </Text>
               <Text className="mt-4 text-base text-black lg:mt-8 sm:text-xl">
-                Tu declaración de la renta rápida y sencilla. En Vitoria Gasteiz.
+                Tu declaración de la renta rápida y sencilla. En Vitoria
+                Gasteiz.
               </Text>
 
               <Grid.Container gap={2} justify="center">
-                  <Button
-                    rounded
-                    bordered
-                    flat
-                    className="px-6 py-4 mt-8"
-                    color="warning"
-                    size={'lg'}
-                    auto
-                    onPress={() => navigate('/calculator')}
-                    iconRight={<ArrowIcon />}
-                  >
-                    Calcula tu precio
-                  </Button>
+                <Button
+                  rounded
+                  bordered
+                  flat
+                  className="px-6 py-4 mt-8"
+                  color="warning"
+                  size={'lg'}
+                  auto
+                  onPress={() => navigate('/calculator')}
+                  iconRight={<ArrowIcon />}
+                >
+                  Calcula tu precio
+                </Button>
               </Grid.Container>
 
               <Text className="mt-5 text-center">¿Necesitas ayuda?</Text>
             </div>
 
-            <div>
-            </div>
           </div>
         </div>
       </section>
     </header>
-    
   )
 }
 
