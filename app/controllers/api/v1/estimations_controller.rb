@@ -29,7 +29,6 @@ class EstimationsController < ApplicationController
     @estimation = Estimation.new(estimation_params)
 
     render json: @estimation
-    end
   end
 
   # PATCH/PUT /estimations/1
