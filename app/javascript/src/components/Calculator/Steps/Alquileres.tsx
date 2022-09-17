@@ -1,6 +1,6 @@
 import React from 'react'
-import YesNoField from '../FormFields/YesNoField'
-import InputField from '../FormFields/InputField'
+import YesNoField from '../../FormFields/YesNoField'
+import InputField from '../../FormFields/InputField'
 import { FieldData } from '../Model/calculatorFormModel'
 
 export default function Alquileres(props: {

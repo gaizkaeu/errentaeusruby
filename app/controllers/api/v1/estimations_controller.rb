@@ -28,10 +28,7 @@ class EstimationsController < ApplicationController
   def estimate
     @estimation = Estimation.new(estimation_params)
 
-    if @estimation.save
-      render json: @estimation
-    else
-      render json: @estimation.errors, status: :unprocessable_entity
+    render json: @estimation
     end
   end
 

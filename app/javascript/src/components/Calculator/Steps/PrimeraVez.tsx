@@ -1,5 +1,5 @@
 import React from 'react'
-import YesNoField from '../FormFields/YesNoField'
+import YesNoField from '../../FormFields/YesNoField'
 import { Text } from '@nextui-org/react'
 import { FieldData } from '../Model/calculatorFormModel'
 

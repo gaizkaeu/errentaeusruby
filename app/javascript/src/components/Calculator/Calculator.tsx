@@ -13,7 +13,14 @@ import Pareja from './Steps/Pareja'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import Finish from './Steps/Finish'
 import { calculateEstimation } from '../../storage/estimationSlice'
-import { nextStep, prevStep, valuesChanged, Values, QuestionWithNumber } from '../../storage/calculatorSlice'
+import {
+  nextStep,
+  prevStep,
+  valuesChanged,
+  Values,
+  QuestionWithNumber,
+} from '../../storage/calculatorSlice'
+import { toast } from 'react-hot-toast'
 
 const steps = [
   'Información importante',
@@ -48,11 +55,10 @@ function _renderStepContent(step: number) {
 }
 
 const calculateFinalNumber = (resp: QuestionWithNumber) => {
-  return (resp.consta === "1" ? resp.numero : 0) 
+  return resp.consta === '1' ? resp.numero : 0
 }
 
 export default function Calculator() {
-
   const dispatch = useAppDispatch()
   const valuesPersist = useAppSelector((state) => {
     return state.calculator.formValues
@@ -68,16 +74,17 @@ export default function Calculator() {
     values: Values,
     formikHelpers: FormikHelpers<any>,
   ) {
-
-    await dispatch(calculateEstimation({
-      first_name: values.firstName,
-      home_changes: calculateFinalNumber(values.homeChanges),
-      first_time: parseInt(values.firstTime)
-    }))
+    await dispatch(
+      calculateEstimation({
+        first_name: values.firstName,
+        home_changes: calculateFinalNumber(values.homeChanges),
+        first_time: parseInt(values.firstTime),
+      }),
+    )
 
     formikHelpers.setSubmitting(false)
 
-    dispatch(nextStep());
+    dispatch(nextStep())
   }
 
   function _handleSubmit(values: Values, formikHelpers: FormikHelpers<any>) {
@@ -86,71 +93,69 @@ export default function Calculator() {
     } else {
       formikHelpers.setTouched({})
       formikHelpers.setSubmitting(false)
-      dispatch(valuesChanged(values));
-      dispatch(nextStep());
+      dispatch(valuesChanged(values))
+      dispatch(nextStep())
     }
   }
 
   function _handleBack() {
-    dispatch(prevStep());
+    dispatch(prevStep())
   }
 
   return (
     <React.Fragment>
-      <React.Fragment>
-        {stepPersist === steps.length ? (
-          <Finish />
-        ) : (
-          <Formik 
-            initialValues={valuesPersist}
-            validationSchema={validationSchema[stepPersist]}
-            onSubmit={_handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form id={formId} className="max-w-5xl ml-3 mr-3">
-                <Progress
-                  color="primary"
-                  size="xs"
-                  value={(stepPersist / steps.length) * 100}
-                />
-                <Text h3>{steps[stepPersist]}</Text>
-                {_renderStepContent(stepPersist)}
+      {stepPersist === steps.length ? (
+        <Finish />
+      ) : (
+        <Formik
+          initialValues={valuesPersist}
+          validationSchema={validationSchema[stepPersist]}
+          onSubmit={_handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form id={formId} className="max-w-5xl ml-3 mr-3">
+              <Progress
+                color="primary"
+                size="xs"
+                value={(stepPersist / steps.length) * 100}
+              />
+              <Text h3>{steps[stepPersist]}</Text>
+              {_renderStepContent(stepPersist)}
 
-                <div className="flex gap-4 mt-10">
-                  {stepPersist !== 0 && (
-                    <Button
-                      rounded
-                      bordered
-                      flat
-                      color="warning"
-                      onPress={_handleBack}
-                      size={'md'}
-                      auto
-                    >
-                      Atrás
-                    </Button>
-                  )}
+              <div className="flex gap-4 mt-10">
+                {stepPersist !== 0 && (
                   <Button
                     rounded
                     bordered
                     flat
-                    disabled={isSubmitting}
-                    type="submit"
                     color="warning"
+                    onPress={_handleBack}
                     size={'md'}
                     auto
                   >
-                    {isLastStep ? 'Finalizar' : 'Siguiente'}
-                    {isSubmitting && (
-                      <Loading type="points" color="currentColor" size="sm" />
-                    )}
+                    Atrás
                   </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </React.Fragment>
+                )}
+                <Button
+                  rounded
+                  bordered
+                  flat
+                  disabled={isSubmitting}
+                  type="submit"
+                  color="warning"
+                  size={'md'}
+                  auto
+                >
+                  {isLastStep ? 'Finalizar' : 'Siguiente'}
+                  {isSubmitting && (
+                    <Loading type="points" color="currentColor" size="sm" />
+                  )}
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
     </React.Fragment>
   )
 }

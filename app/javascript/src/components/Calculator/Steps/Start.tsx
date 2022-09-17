@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "@nextui-org/react";
-import InputField from "../FormFields/InputField";
+import InputField from "../../FormFields/InputField";
 
 export default function Start(formField: {formField: {
     firstName: {

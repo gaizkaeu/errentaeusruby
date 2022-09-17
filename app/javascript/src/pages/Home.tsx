@@ -25,7 +25,7 @@ const Home = () => {
                   textGradient: '45deg, $yellow600 -20%, $red600 100%',
                 }}
               >
-                RENTA.eusa
+                ERRENTA.eus
               </Text>
               <Text className="mt-4 text-base text-black lg:mt-8 sm:text-xl">
                 Tu declaración de la renta rápida y sencilla. En Vitoria
@@ -38,7 +38,7 @@ const Home = () => {
                   bordered
                   flat
                   className="px-6 py-4 mt-8"
-                  color="warning"
+                  color="gradient"
                   size={'lg'}
                   auto
                   onPress={() => navigate('/calculator')}

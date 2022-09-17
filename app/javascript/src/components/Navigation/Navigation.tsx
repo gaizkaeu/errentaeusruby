@@ -55,14 +55,19 @@ const Navigation = () => {
   ]
 
   return (
-    <Navbar>
+    <Navbar isBordered variant="sticky">
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand>
         <Text b color="inherit">
           ERRENTA
         </Text>
       </Navbar.Brand>
-      <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
+      <Navbar.Content
+        enableCursorHighlight
+        activeColor="warning"
+        hideIn="xs"
+        variant="highlight-rounded"
+      >
         {collapseItems.map((item, index) => (
           <NavBarLink key={index} to={item[1]}>
             {item[0]}
@@ -96,7 +101,7 @@ const Navigation = () => {
           />
         </div>
         <Navbar.Item hideIn="xs">
-          <Button rounded bordered flat  color="warning" size={'md'} auto>
+          <Button rounded bordered flat color="warning" size={'md'} auto>
             Eliza Asesores
           </Button>
         </Navbar.Item>
@@ -156,9 +161,11 @@ const Navigation = () => {
           </Dropdown>
         </Navbar.Content>
       )}
-      <Navbar.Collapse>
+      <Navbar.Collapse disableAnimation>
         {collapseItems.map((item, index) => (
-          <NavBarCollapse key={index} to={item[1]}>{item[0]}</NavBarCollapse>
+          <NavBarCollapse key={index} to={item[1]}>
+            {item[0]}
+          </NavBarCollapse>
         ))}
       </Navbar.Collapse>
     </Navbar>

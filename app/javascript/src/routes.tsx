@@ -2,6 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
+import AuthenticationPage from './pages/AuthenticationPage'
 import Calculator from './pages/CalculatorPage'
 import EstimationPage from './pages/EstimationPage'
 import Home from './pages/Home'
@@ -16,6 +17,7 @@ const AppRoutes = () => {
             <Route index element={<Home />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/estimation" element={<EstimationPage />} />
+            <Route path="/auth" element={<AuthenticationPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
