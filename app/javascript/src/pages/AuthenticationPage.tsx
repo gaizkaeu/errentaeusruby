@@ -1,6 +1,6 @@
 import { Button, Text } from '@nextui-org/react'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import SignUp from '../components/Authentication/SignUp'
 import SingleEstimation from '../components/Estimation/Estimation'
 import { ArrowIcon } from '../components/Icons/ArrowIcon'
@@ -34,8 +34,8 @@ function AuthenticationPage() {
           </div>
         </section>
       </header>
-      <main>
-        <SignUp/>
+      <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <Outlet />
       </main>
     </React.Fragment>
   )

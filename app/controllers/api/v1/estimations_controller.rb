@@ -28,7 +28,11 @@ class EstimationsController < ApplicationController
   def estimate
     @estimation = Estimation.new(estimation_params)
 
-    render json: @estimation
+    if @estimation.save
+      render json: @estimation
+    else
+      render json: @estimation.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /estimations/1

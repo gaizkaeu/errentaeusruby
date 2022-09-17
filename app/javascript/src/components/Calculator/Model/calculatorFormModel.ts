@@ -2,8 +2,8 @@
 const fields = {
     formId: 'checkoutForm',
     formField: {
-      firstName: {
-        name: 'firstName',
+      first_name: {
+        name: 'first_name',
         label: 'Nombre',
         requiredErrorMsg: 'First name is required'
       },

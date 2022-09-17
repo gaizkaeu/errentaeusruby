@@ -19,6 +19,7 @@ import {
   valuesChanged,
   Values,
   QuestionWithNumber,
+  firstStep,
 } from '../../storage/calculatorSlice'
 import { toast } from 'react-hot-toast'
 
@@ -74,17 +75,36 @@ export default function Calculator() {
     values: Values,
     formikHelpers: FormikHelpers<any>,
   ) {
-    await dispatch(
+    const toastNotification = toast.loading('Procesando...')
+    const action = await dispatch(
       calculateEstimation({
-        first_name: values.firstName,
+        first_name: values.first_name,
         home_changes: calculateFinalNumber(values.homeChanges),
         first_time: parseInt(values.firstTime),
       }),
     )
 
+    if (calculateEstimation.fulfilled.match(action)) {
+      toast.success('¡Listo!', {
+        id: toastNotification,
+      })
+      dispatch(nextStep())
+    } else {
+      if (action.payload) {
+        formikHelpers.setErrors(action.payload)
+        toast.error('Error en el formulario', {
+          id: toastNotification,
+        })
+        dispatch(firstStep())
+      } else {
+        toast.error('Error inesperado', {
+          id: toastNotification,
+        })
+      }
+    }
+
     formikHelpers.setSubmitting(false)
 
-    dispatch(nextStep())
   }
 
   function _handleSubmit(values: Values, formikHelpers: FormikHelpers<any>) {

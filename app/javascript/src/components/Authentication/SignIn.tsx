@@ -4,28 +4,28 @@ import * as Yup from 'yup'
 import InputField from '../FormFields/InputField'
 import PasswordField from '../FormFields/PasswordField'
 import { Button, Spacer } from '@nextui-org/react'
-import { signUp, UserRegistrationData } from '../../storage/authSlice'
+import { SessionCreationData, signIn, signUp, UserRegistrationData } from '../../storage/authSlice'
 import { useAppDispatch } from '../../storage/hooks'
 import toast from 'react-hot-toast'
 
-const SignUp = () => {
+const SignIn = () => {
   
   const dispatch = useAppDispatch()
 
-  const submitForm = async (values: UserRegistrationData, formikHelpers: FormikHelpers<any>) => {
+  const submitForm = async (values: SessionCreationData, formikHelpers: FormikHelpers<any>) => {
     const toastNotification = toast.loading('Procesando...')
     const action = await dispatch(
-      signUp(values),
+      signIn(values),
     )
 
-    if (signUp.fulfilled.match(action)) {
+    if (signIn.fulfilled.match(action)) {
       toast.success('Has iniciado sesión', {
         id: toastNotification,
       })
     } else {
       if (action.payload) {
         formikHelpers.setErrors(action.payload.errors)
-        toast.error('Error', {
+        toast.error('Error ' + action.payload.error, {
           id: toastNotification,
         })
       } else {
@@ -38,11 +38,9 @@ const SignUp = () => {
 
   return (
     <Formik
-      initialValues={{ password_confirmation: '', password: '', email: '' }}
+      initialValues={{  password: '', email: '' }}
       validationSchema={Yup.object({
         password: Yup.string().required('Password is required').min(6, 'Too short!'),
-        password_confirmation: Yup.string()
-           .oneOf([Yup.ref('password'), null], 'Passwords must match'),
         email: Yup.string().email('Invalid email address').required('Required'),
       })}
       onSubmit={submitForm}
@@ -52,8 +50,6 @@ const SignUp = () => {
           <InputField name="email" label="Email" fullWidth/>
           <Spacer y={1.5} />
           <PasswordField name="password" label="Contraseña" fullWidth></PasswordField>
-          <Spacer y={1.5} />
-          <PasswordField name="password_confirmation" label="Contraseña" fullWidth></PasswordField>
           <Spacer y={2.5} />
           <Button
             rounded
@@ -73,4 +69,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignIn

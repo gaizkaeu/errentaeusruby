@@ -1,7 +1,8 @@
 import { Button, Text } from '@nextui-org/react'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../../storage/hooks'
+import { firstStep } from '../../../storage/calculatorSlice'
+import { useAppDispatch, useAppSelector } from '../../../storage/hooks'
 import CheckAnimated from '../../Icons/CheckAnimated'
 
 const Finish = () => {
@@ -13,6 +14,7 @@ const Finish = () => {
     return state.estimations.status
   })
 
+  const dispatch = useAppDispatch();
 
   const navigation = useNavigate();
 
@@ -32,7 +34,7 @@ const Finish = () => {
           <Text h4 color="red">
             {error}
           </Text>
-          <Button rounded bordered flat color="warning" size={'md'} auto onPress={() => navigation('/calculator')}>
+          <Button rounded bordered flat color="warning" size={'md'} auto onPress={() => dispatch(firstStep())}>
             Volver a intentarlo
           </Button>
         </React.Fragment>

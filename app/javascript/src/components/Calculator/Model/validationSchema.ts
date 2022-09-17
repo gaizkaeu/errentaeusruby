@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 
 const validationSchema = [
     Yup.object().shape({
-        firstName: Yup.string()
+        first_name: Yup.string()
             .min(2, 'Demasiado corto')
             .max(50, 'Demasiado largo')
             .required('Es necesario rellenar este campo'),

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 
 export interface Values {
-  firstName: string
+  first_name: string
   firstTime: string
   homeChanges: QuestionWithNumber
   rentalsMortgages: QuestionWithNumber
@@ -25,7 +25,7 @@ interface IState {
 // Define the initial state using that type
 const initialState: IState = {
   formValues: {
-    firstName: '',
+    first_name: '',
     homeChanges: {
       consta: '',
       numero: 1,

@@ -1,12 +1,12 @@
 import { Button, Card, Grid, Link, Text } from '@nextui-org/react'
 import React from 'react'
-import { IEstimation, IEstimationProps } from '../../storage/estimationSlice'
+import { Estimation, EstimationData } from '../../storage/estimationSlice'
 import { ArrowIcon } from '../Icons/ArrowIcon'
 
 
 const SingleEstimation = (props: {
-  estimation: IEstimation
-  req: IEstimationProps
+  estimation: Estimation
+  req: EstimationData
 }) => {
   return (
     <div>

@@ -35,8 +35,6 @@ const Home = () => {
               <Grid.Container gap={2} justify="center">
                 <Button
                   rounded
-                  bordered
-                  flat
                   className="px-6 py-4 mt-8"
                   color="gradient"
                   size={'lg'}
