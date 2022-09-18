@@ -1,13 +1,15 @@
 import { Button, Text } from '@nextui-org/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import SingleEstimation from '../components/Estimation/Estimation'
-import { ArrowIcon } from '../components/Icons/ArrowIcon'
+import AuthComponent from '../components/Authentication/AuthComponent'
+import ContinueEstimation from '../components/Estimation/ContinueEstimation'
+import SingleEstimation from '../components/Estimation/SingleEstimation'
 import { firstStep } from '../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../storage/hooks'
 
 function EstimationPage() {
   const estimations = useAppSelector((state) => state.estimations)
+  const logged_in = useAppSelector((state) => state.authentication.logged_in)
   const dispatch = useAppDispatch()
   const nav = useNavigate()
 
@@ -38,42 +40,12 @@ function EstimationPage() {
       </header>
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {estimations.price !== -1.0 ? (
-          <div className="mt-12">
-            <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-4 p-3 self-center">
-              <SingleEstimation
-                estimation={estimations}
-                req={estimations.estimation_props!}
-              />
-              <div className="flex flex-wrap place-items-center gap-4 justify-items-center">
-                <Button
-                  rounded
-                  bordered
-                  flat
-                  className="px-6 py-4 "
-                  color="warning"
-                  size={'lg'}
-                  auto
-                  iconRight={<ArrowIcon />}
-                >
-                  ¿Continuamos?
-                </Button>
-                <Button
-                  rounded
-                  bordered
-                  flat
-                  className="px-6 py-4 "
-                  color="error"
-                  size={'lg'}
-                  onPress={() => {
-                    dispatch(firstStep())
-                    nav('/calculator')
-                  }}
-                  auto
-                >
-                  Quiero revisar mis respuestas.
-                </Button>
-              </div>
-            </div>
+          <div className="grid items-center lg:mt-12 grid-cols-1 lg:grid-cols-2 gap-7 p-3 self-center">
+            <SingleEstimation
+              estimation={estimations}
+              req={estimations.estimation_props!}
+            />
+            <ContinueEstimation/> 
           </div>
         ) : (
           <Text>No hay na</Text>

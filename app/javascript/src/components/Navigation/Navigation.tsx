@@ -5,12 +5,13 @@ import {
   Switch,
   Dropdown,
   Avatar,
-  Link,
 } from '@nextui-org/react'
 import React from 'react'
+import toast from 'react-hot-toast'
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'
-import { useAppSelector } from '../../storage/hooks'
+import { logOut } from '../../storage/authSlice'
+import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import { MoonIcon } from '../Icons/MoonIcon'
 import { SunIcon } from '../Icons/SunIcon'
 
@@ -46,12 +47,32 @@ const Navigation = () => {
   const loggedIn = useAppSelector((state) => {
     return state.authentication.logged_in
   })
+  const email = useAppSelector((state) => {
+    return state.authentication.user?.email
+  })
+
+  const logoutHandle = async () => {
+    const toastNotification = toast.loading('Cerrando sesión...')
+    const action = await dispatch(logOut())
+
+    if (logOut.fulfilled.match(action)) {
+      toast.success('¡Hasta luego!', {
+        id: toastNotification,
+      })
+      location.reload()
+    } else {
+      toast.error('Error inesperado', {
+        id: toastNotification,
+      })
+    }
+  }
+
+  const dispatch = useAppDispatch()
 
   const collapseItems = [
     ['Inicio', '/'],
     ['Calculadora', '/calculator'],
     ['Mi Estimacion', '/estimation'],
-    ['Ayuda', '/help'],
   ]
 
   return (
@@ -105,62 +126,41 @@ const Navigation = () => {
             Eliza Asesores
           </Button>
         </Navbar.Item>
+        {loggedIn && (
+          <Navbar.Content
+            css={{
+              '@xs': {
+                w: '12%',
+                jc: 'flex-end',
+              },
+            }}
+          >
+            <Dropdown placement="bottom-right">
+              <Navbar.Item>
+                <Dropdown.Trigger>
+                  <Avatar
+                    bordered
+                    as="button"
+                    color="secondary"
+                    size="md"
+                    text={email}
+                  />
+                </Dropdown.Trigger>
+              </Navbar.Item>
+              <Dropdown.Menu
+                aria-label="User menu actions"
+                color="secondary"
+                onAction={logoutHandle}
+              >
+                <Dropdown.Item key="logout" color="error">
+                  Log Out
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Navbar.Content>
+        )}
       </Navbar.Content>
 
-      {/* TODO: LOGGED IN DROPDOWNB */}
-      {loggedIn && (
-        <Navbar.Content
-          css={{
-            '@xs': {
-              w: '12%',
-              jc: 'flex-end',
-            },
-          }}
-        >
-          <Dropdown placement="bottom-right">
-            <Navbar.Item>
-              <Dropdown.Trigger>
-                <Avatar
-                  bordered
-                  as="button"
-                  color="secondary"
-                  size="md"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
-              </Dropdown.Trigger>
-            </Navbar.Item>
-            <Dropdown.Menu
-              aria-label="User menu actions"
-              color="secondary"
-              onAction={(actionKey) => console.log({ actionKey })}
-            >
-              <Dropdown.Item key="profile" css={{ height: '$18' }}>
-                <Text b color="inherit" css={{ d: 'flex' }}>
-                  Signed in as
-                </Text>
-                <Text b color="inherit" css={{ d: 'flex' }}>
-                  zoey@example.com
-                </Text>
-              </Dropdown.Item>
-              <Dropdown.Item key="settings" withDivider>
-                My Settings
-              </Dropdown.Item>
-              <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-              <Dropdown.Item key="analytics" withDivider>
-                Analytics
-              </Dropdown.Item>
-              <Dropdown.Item key="system">System</Dropdown.Item>
-              <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-              <Dropdown.Item key="help_and_feedback" withDivider>
-                Help & Feedback
-              </Dropdown.Item>
-              <Dropdown.Item key="logout" withDivider color="error">
-                Log Out
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Navbar.Content>
-      )}
       <Navbar.Collapse disableAnimation>
         {collapseItems.map((item, index) => (
           <NavBarCollapse key={index} to={item[1]}>

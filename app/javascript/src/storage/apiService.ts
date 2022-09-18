@@ -2,7 +2,7 @@ import axios from "axios";
 import { CurrentUser, SessionCreationData, UserRegistrationData } from "./authSlice";
 import { Estimation, EstimationData } from "./estimationSlice";
 
-const API_BASE = "/"
+const API_BASE = "http://192.168.1.129:3000/"
 
 const checkLoggedIn = async () => {
     const response = await axios.get<{user: CurrentUser, logged_in: boolean}>(API_BASE + 'api/v1/logged_in')
@@ -19,9 +19,19 @@ const createNewSession = async (data: SessionCreationData) => {
     return response.data;
 }
 
+const closeSession = async () => {
+   const response = await axios.delete(API_BASE + '/api/v1/users/sign_out') 
+   return response.status;
+}
+
 const createNewEstimation = async (data: EstimationData) => {
     const response = await axios.post<Estimation>(API_BASE + 'api/v1/estimations/estimate', data)
     return response.data;
 }
 
-export {createNewEstimation, checkLoggedIn, createNewUser, createNewSession};
+const myEstimation = async () => {
+    const response = await axios.get<Estimation>(API_BASE + 'api/v1/estimations/my_estimation')
+    return response.data;
+}
+
+export {createNewEstimation, checkLoggedIn, createNewUser, createNewSession, closeSession, myEstimation};

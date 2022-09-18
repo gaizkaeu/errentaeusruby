@@ -2,6 +2,7 @@
 
 class Api::V1::Auth::SessionsController < Devise::SessionsController
   respond_to :json
+  after_action :add_csrf_token_to_json_request_header
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -25,4 +26,11 @@ class Api::V1::Auth::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  private
+
+  def add_csrf_token_to_json_request_header
+    if request.xhr? && !request.get? && protect_against_forgery?
+      response.headers['X-CSRF-Token'] = form_authenticity_token
+    end
+  end
 end

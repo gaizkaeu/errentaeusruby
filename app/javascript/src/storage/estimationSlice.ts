@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { createNewEstimation } from "./apiService";
+import { createNewEstimation, myEstimation } from "./apiService";
 
 // Define a type for the slice stated
 
@@ -60,6 +60,19 @@ const estimationSlice = createSlice({
           state.error = action.error.message
         }
       })
+      .addCase(rescueMyEstimation.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(rescueMyEstimation.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        if (action.payload) {
+          state.price = action.payload.price
+        }
+      })
+      .addCase(rescueMyEstimation.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
   }
 })
 
@@ -77,7 +90,15 @@ export const calculateEstimation = createAsyncThunk<[Estimation, EstimationData]
       return rejectWithValue(error.response.data)
     }
   }
-)
+);
+
+export const rescueMyEstimation = createAsyncThunk<Estimation>(
+  'estimations/rescueMyEstimation',
+  async (data) => {
+    const response = await myEstimation();
+    return response;
+  }
+);
 
 
 export default estimationSlice.reducer;

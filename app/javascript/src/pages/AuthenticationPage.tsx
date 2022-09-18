@@ -1,16 +1,10 @@
-import { Button, Text } from '@nextui-org/react'
+import { Text } from '@nextui-org/react'
 import React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import SignUp from '../components/Authentication/SignUp'
-import SingleEstimation from '../components/Estimation/Estimation'
-import { ArrowIcon } from '../components/Icons/ArrowIcon'
-import { firstStep } from '../storage/calculatorSlice'
-import { useAppDispatch, useAppSelector } from '../storage/hooks'
+import { Navigate, Outlet} from 'react-router-dom'
+import {  useAppSelector } from '../storage/hooks'
 
 function AuthenticationPage() {
-  const estimations = useAppSelector((state) => state.estimations)
-  const dispatch = useAppDispatch()
-  const nav = useNavigate()
+  const authenticated = useAppSelector((state) => state.authentication.logged_in)
 
   return (
     <React.Fragment>
@@ -35,6 +29,7 @@ function AuthenticationPage() {
         </section>
       </header>
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        {authenticated && <Navigate to="/estimation" replace />}
         <Outlet />
       </main>
     </React.Fragment>

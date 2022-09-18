@@ -2,13 +2,9 @@ import { Button, Text, Grid } from '@nextui-org/react'
 import { ArrowIcon } from '../components/Icons/ArrowIcon'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
-import { useAppSelector } from '../storage/hooks'
 
 const Home = () => {
   const navigate = useNavigate()
-  const selector = useAppSelector((state) => {
-    return state.authentication
-  })
 
   return (
     <header>

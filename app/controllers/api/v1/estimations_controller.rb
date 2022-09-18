@@ -29,10 +29,17 @@ class EstimationsController < ApplicationController
     @estimation = Estimation.new(estimation_params)
 
     if @estimation.save
+      session[:estimation] = @estimation.id
       render json: @estimation
     else
       render json: @estimation.errors, status: :unprocessable_entity
     end
+  end
+
+  def my_estimation
+    @estimation = Estimation.find_by(id: session[:estimation])
+
+    render json: @estimation
   end
 
   # PATCH/PUT /estimations/1

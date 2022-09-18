@@ -1,10 +1,10 @@
 import React from 'react'
-import { Formik, Field, Form, ErrorMessage, FormikHelpers } from 'formik'
+import { Formik, Form, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../FormFields/InputField'
 import PasswordField from '../FormFields/PasswordField'
 import { Button, Spacer } from '@nextui-org/react'
-import { SessionCreationData, signIn, signUp, UserRegistrationData } from '../../storage/authSlice'
+import { SessionCreationData, signIn } from '../../storage/authSlice'
 import { useAppDispatch } from '../../storage/hooks'
 import toast from 'react-hot-toast'
 
@@ -22,9 +22,11 @@ const SignIn = () => {
       toast.success('Has iniciado sesión', {
         id: toastNotification,
       })
+      location.reload();
     } else {
       if (action.payload) {
-        formikHelpers.setErrors(action.payload.errors)
+        formikHelpers.setFieldError('password', 'Error')
+        formikHelpers.setFieldError('email', 'Error')
         toast.error('Error ' + action.payload.error, {
           id: toastNotification,
         })
@@ -61,7 +63,7 @@ const SignIn = () => {
             size={'md'}
             auto
           >
-            Registrarme
+            Iniciar Sesión
           </Button>
         </Form>
       )}

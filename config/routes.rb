@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :estimations do 
         post :estimate, on: :collection
+        get :my_estimation, on: :collection
       end
       get :logged_in, to: 'accounts#logged_in'
       devise_for :users, module: "api/v1/auth", defaults: { format: :json }

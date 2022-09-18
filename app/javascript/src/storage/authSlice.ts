@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { checkLoggedIn, createNewSession, createNewUser } from "./apiService";
+import { checkLoggedIn, closeSession, createNewSession, createNewUser } from "./apiService";
 
 // Define a type for the slice stated
 
@@ -85,19 +85,18 @@ const authSlice = createSlice({
           state.error = action.error.message
         }
       })
-      /*       .addCase(logOut.pending, (state, action) => {
-              state.status = 'loading'
-            })
-            .addCase(logOut.fulfilled, (state, action) => {
-              state.status = 'succeeded'
-      
-              let [status] = action.payload;
-              state.logged_in = !status;
-            })
-            .addCase(logOut.rejected, (state, action) => {
-              state.status = 'failed'
-              state.error = action.error.message!
-            }) */
+      .addCase(logOut.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(logOut.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+
+        state.logged_in = false;
+      })
+      .addCase(logOut.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message!
+      })
       .addCase(loggedIn.pending, (state, action) => {
         state.status = 'loading'
       })
@@ -139,14 +138,13 @@ export const loggedIn = createAsyncThunk<{ logged_in: boolean, user: CurrentUser
   }
 )
 
-/* export const logOut = createAsyncThunk(
+export const logOut = createAsyncThunk(
   'auth/logOut',
   async () => {
-    const response = await destroy('/api/v1/users/sign_out')
+    const response = await closeSession();
 
-    return [response.ok] as const
   }
-) */
+)
 
 
 export const signUp = createAsyncThunk<CurrentUser, UserRegistrationData, { rejectValue: ValidationErrors }>(
