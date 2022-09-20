@@ -8,7 +8,7 @@ import { firstStep } from '../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../storage/hooks'
 
 function EstimationPage() {
-  const estimations = useAppSelector((state) => state.estimations)
+  const estimations = useAppSelector((state) => state.estimations.estimation)
   const logged_in = useAppSelector((state) => state.authentication.logged_in)
   const dispatch = useAppDispatch()
   const nav = useNavigate()
@@ -39,11 +39,10 @@ function EstimationPage() {
         </section>
       </header>
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        {estimations.price !== -1.0 ? (
-          <div className="grid items-center lg:mt-12 grid-cols-1 lg:grid-cols-2 gap-7 p-3 self-center">
+        {estimations ? (
+          <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-10 p-3 self-center">
             <SingleEstimation
               estimation={estimations}
-              req={estimations.estimation_props!}
             />
             <ContinueEstimation/> 
           </div>

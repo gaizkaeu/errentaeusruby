@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'
 import { logOut } from '../../storage/authSlice'
-import { useAppDispatch, useAppSelector } from '../../storage/hooks'
+import { useAppDispatch, useAppSelector, useAuth, useCurrentUser } from '../../storage/hooks'
 import { MoonIcon } from '../Icons/MoonIcon'
 import { SunIcon } from '../Icons/SunIcon'
 
@@ -43,13 +43,9 @@ const NavBarCollapse = ({ to, children }: { to: string; children: string }) => {
 }
 
 const Navigation = () => {
-  const darkMode = useDarkMode()
-  const loggedIn = useAppSelector((state) => {
-    return state.authentication.logged_in
-  })
-  const email = useAppSelector((state) => {
-    return state.authentication.user?.email
-  })
+  const darkMode = useDarkMode();
+  const [auth, fetched] = useAuth();
+  const user = useCurrentUser();
 
   const logoutHandle = async () => {
     const toastNotification = toast.loading('Cerrando sesión...')
@@ -73,6 +69,7 @@ const Navigation = () => {
     ['Inicio', '/'],
     ['Calculadora', '/calculator'],
     ['Mi Estimacion', '/estimation'],
+    ['Mi declaración', '/mytaxincome']
   ]
 
   return (
@@ -126,7 +123,7 @@ const Navigation = () => {
             Eliza Asesores
           </Button>
         </Navbar.Item>
-        {loggedIn && (
+        {auth && (
           <Navbar.Content
             css={{
               '@xs': {
@@ -143,7 +140,7 @@ const Navigation = () => {
                     as="button"
                     color="secondary"
                     size="md"
-                    text={email}
+                    text={user?.name}
                   />
                 </Dropdown.Trigger>
               </Navbar.Item>

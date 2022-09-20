@@ -9,6 +9,7 @@ import { loggedIn } from './storage/authSlice'
 import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import { rescueMyEstimation } from './storage/estimationSlice'
+import Footer from './components/Footer'
 
 const lightTheme = createTheme({
   type: 'light',
@@ -39,6 +40,7 @@ const App = () => {
       <div>
         <Navigation />
         <Outlet />
+        <Footer/>
       </div>
     </NextUIProvider>
   )

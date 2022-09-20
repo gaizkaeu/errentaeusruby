@@ -60,4 +60,10 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  def sign_up_params
+    params.require(:api_v1_user).permit(:name, :surname, :email, :password, :password_confirmation)
+  end
 end

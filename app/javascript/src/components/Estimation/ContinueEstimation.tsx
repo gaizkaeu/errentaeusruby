@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { firstStep } from '../../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import AuthComponent from '../Authentication/AuthComponent'
+import { ArrowIcon } from '../Icons/ArrowIcon'
 
 export default function ContinueEstimation() {
   const logged_in = useAppSelector((state) => state.authentication.logged_in)
@@ -18,15 +19,16 @@ export default function ContinueEstimation() {
           bordered
           flat
           className="px-6 py-4 "
-          color="error"
+          color="success"
           size={'lg'}
+          iconRight={<ArrowIcon />}
           onPress={() => {
             dispatch(firstStep())
-            nav('/calculator')
+            nav('/mytaxincome/new')
           }}
           auto
         >
-          Continuamos
+          ¡Todo listo! Continuar
         </Button>
       ) : (
         <div className="w-full">

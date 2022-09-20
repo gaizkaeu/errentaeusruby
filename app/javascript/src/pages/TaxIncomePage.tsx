@@ -1,8 +1,10 @@
-import { Text } from '@nextui-org/react'
+import { Button, Text } from '@nextui-org/react'
+import axios from 'axios'
 import React from 'react'
-import AuthComponent from '../components/Authentication/AuthComponent'
+import { Outlet } from 'react-router-dom'
 
-function AuthenticationPage() {
+function TaxIncomePage() {
+
   return (
     <React.Fragment>
       <header>
@@ -18,18 +20,17 @@ function AuthenticationPage() {
                   textGradient: '45deg, $blue600 -20%, $pink600 50%',
                 }}
               >
-                INICIO DE SESIÓN
+                Tu declaración
               </Text>
-              <Text h4>Utilizamos las cuentas para proteger tus datos.</Text>
             </div>
           </div>
         </section>
       </header>
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <AuthComponent/>
+        <Outlet/>
       </main>
     </React.Fragment>
   )
 }
 
-export default AuthenticationPage
+export default TaxIncomePage

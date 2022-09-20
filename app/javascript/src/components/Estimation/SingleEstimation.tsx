@@ -8,7 +8,6 @@ import { ArrowIcon } from '../Icons/ArrowIcon'
 
 const SingleEstimation = (props: {
   estimation: Estimation
-  req: EstimationData
 }) => {
   const dispatch = useAppDispatch()
   const nav = useNavigate();
@@ -23,8 +22,7 @@ const SingleEstimation = (props: {
       </div>
       <div className="mt-3">
         <Text>
-          Hasta este momento no hemos guardado ningún dato sobre ti. Todo se
-          encuentra en tu <b>navegador.</b>
+          No guardamos <b>ningún dato sobre ti</b>, ni usamos cookies para rastrearte, únicamente lo necesario técnicamente. Nos preocupamos por la confidencialidad.
         </Text>
       </div>
       <Button
@@ -42,6 +40,7 @@ const SingleEstimation = (props: {
       >
         Quiero revisar mis respuestas.
       </Button>
+      <Text h3 className='mt-3'>Para continuar solo tienes que registrarte/iniciar sesión.</Text>
     </div>
   )
 }

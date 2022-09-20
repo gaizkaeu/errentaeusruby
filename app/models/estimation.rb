@@ -1,6 +1,5 @@
 class Estimation < ApplicationRecord
 
-
     validates :first_name, length: { minimum: 5 }
 
     PRICE_LIST = {first_time: 15, rentals_mortgages: 20, home_changes: 50, income_rent: 25, professional_company_activity: 75,

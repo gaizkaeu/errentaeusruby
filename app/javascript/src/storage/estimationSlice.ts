@@ -5,7 +5,9 @@ import { createNewEstimation, myEstimation } from "./apiService";
 // Define a type for the slice stated
 
 export interface Estimation {
-  price: number
+  price: number,
+  id: number,
+  first_name: string
 }
 
 export interface EstimationData {
@@ -18,7 +20,7 @@ interface EstimationState {
   status: 'succeeded' | 'loading' | 'failed'
   error: string | undefined
   estimation_props: EstimationData | undefined,
-  price: number
+  estimation: Estimation | undefined
 }
 
 interface ValidationErrors {
@@ -31,7 +33,7 @@ const initialState = {
   status: 'succeeded',
   error: undefined,
   estimation_props: undefined,
-  price: -1.0
+  estimation: undefined
 } as EstimationState
 
 const estimationSlice = createSlice({
@@ -49,7 +51,7 @@ const estimationSlice = createSlice({
         state.status = 'succeeded'
 
         let [res, req] = action.payload;
-        state.price = res.price;
+        state.estimation = res;
         state.estimation_props = req;
       })
       .addCase(calculateEstimation.rejected, (state, action) => {
@@ -66,7 +68,7 @@ const estimationSlice = createSlice({
       .addCase(rescueMyEstimation.fulfilled, (state, action) => {
         state.status = 'succeeded'
         if (action.payload) {
-          state.price = action.payload.price
+          state.estimation = action.payload
         }
       })
       .addCase(rescueMyEstimation.rejected, (state, action) => {

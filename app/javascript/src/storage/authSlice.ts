@@ -8,11 +8,13 @@ interface AuthState {
   status: 'succeeded' | 'loading' | 'failed'
   error: string | undefined
   logged_in: boolean,
+  fetched: boolean,
   user: CurrentUser | undefined
 }
 
 export interface CurrentUser {
-  email: string
+  email: string,
+  name: string
 }
 
 interface ValidationErrors {
@@ -21,6 +23,8 @@ interface ValidationErrors {
 }
 
 export interface UserRegistrationData {
+  name: string,
+  surname: string
   email: string,
   password: string,
   password_confirmation: string
@@ -35,6 +39,7 @@ export interface SessionCreationData {
 const initialState = {
   status: 'succeeded',
   error: '',
+  fetched: false,
   logged_in: false,
   user: undefined
 } as AuthState
@@ -105,6 +110,7 @@ const authSlice = createSlice({
 
         const response = action.payload;
         state.logged_in = response.logged_in
+        state.fetched = true;
         state.user = response.user
       })
       .addCase(loggedIn.rejected, (state, action) => {

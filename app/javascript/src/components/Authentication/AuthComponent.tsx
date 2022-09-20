@@ -1,24 +1,32 @@
 import React, { useState } from 'react'
 import { Button, Text } from '@nextui-org/react'
-import { useAppDispatch, useAppSelector } from '../../storage/hooks'
+import { useAppDispatch, useAppSelector, useAuth } from '../../storage/hooks'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const AuthComponent = () => {
   const [logIn, setLogIn] = useState(false)
-  const logged_in = useAppSelector((state) => state.authentication.logged_in)
+  const [auth, fetched] = useAuth();
+  const nav = useNavigate();
+  const { action } = useParams();
+
+  const loginSuccess = () => {
+    nav(-1);
+    location.reload()
+  }
 
   return (
     <React.Fragment>
-      {logged_in ? (
+      {auth ? (
         <Text>ya estas logeado</Text>
       ) : (
-        <div className="w-full">
-          <div className="flex flex-wrap place-content-center items-center mt-4 gap-4">
+        <div className="w-full grid-cols-1 justify-items-center">
+          <div className="flex flex-wrap place-content-center items-center mt-4 gap-4 mb-4">
             <Text b size="md">{logIn ? "Iniciar sesión" : "Registro"}</Text>
             <Button size="sm" onPress={() => setLogIn((v) => !v)}>{!logIn ? "Iniciar sesión" : "Necesito registrarme"}</Button>
           </div>
-          {logIn ? <SignIn /> : <SignUp />}
+          {logIn ? <SignIn loginSuccess={loginSuccess} /> : <SignUp loginSuccess={loginSuccess} />}
         </div>
       )}
     </React.Fragment>

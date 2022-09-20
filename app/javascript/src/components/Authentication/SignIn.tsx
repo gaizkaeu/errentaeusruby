@@ -8,7 +8,7 @@ import { SessionCreationData, signIn } from '../../storage/authSlice'
 import { useAppDispatch } from '../../storage/hooks'
 import toast from 'react-hot-toast'
 
-const SignIn = () => {
+const SignIn = (props: {loginSuccess: () => void}) => {
   
   const dispatch = useAppDispatch()
 
@@ -22,7 +22,7 @@ const SignIn = () => {
       toast.success('Has iniciado sesión', {
         id: toastNotification,
       })
-      location.reload();
+      props.loginSuccess();
     } else {
       if (action.payload) {
         formikHelpers.setFieldError('password', 'Error')
