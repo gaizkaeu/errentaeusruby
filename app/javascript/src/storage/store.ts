@@ -2,13 +2,15 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import authSlice from './authSlice'
 import calculatorSlice from './calculatorSlice'
 import estimationSlice from './estimationSlice'
+import taxIncomeSlice from './taxIncomeSlice'
 
 
 export const store = configureStore({
     reducer: {
         estimations: estimationSlice,
         authentication: authSlice,
-        calculator: calculatorSlice
+        calculator: calculatorSlice,
+        taxIncomes: taxIncomeSlice
     }
 })
 

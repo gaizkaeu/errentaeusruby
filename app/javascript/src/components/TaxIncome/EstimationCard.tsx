@@ -8,37 +8,46 @@ const EstimationCard = (props: { estimation: Estimation | undefined }) => {
     const navigate = useNavigate()
     const { estimation } = props
     return (
-        <Card isHoverable variant="bordered" css={{ mw: '400px' }}>
-            <Card.Header>
-                <Text b size="$lg">
-                    Añadir tu estimación.
-                </Text>
-            </Card.Header>
+        <Card isHoverable>
             {estimation ? (
                 <Card.Body>
                     <Text size="$xl">
-                        Tu estimación de{' '}
+                        Tu estimación de {' '}
                         <span className="text-green-600 font-bold">
                             {estimation.price} €.
                         </span>
                     </Text>
+                    <Text>Nota: Enviaremos tus respuestas, nuestros asesores deben saber tu situación fiscal.</Text>
+                    <div className="flex w-full gap-7">
                     <Button
                         rounded
                         bordered
                         flat
-                        className="px-6 py-4 mt-3"
-                        color="error"
+                        className="px-6 py-4 mt-3 flex-1"
+                        color="warning"
                         size={'lg'}
                         auto
                     >
                         Revisar
                     </Button>
+                    <Button
+                        rounded
+                        bordered
+                        flat
+                        className="px-6 py-4 mt-3 flex-1"
+                        color="error"
+                        size={'lg'}
+                        auto
+                    >
+                        Eliminar
+                    </Button></div>
                 </Card.Body>
             ) : (
                 <Card.Body>
+                    <Text>No tenemos ninguna estimación... Puedes continuar o calcularla.</Text>
                     <Button
                         rounded
-                        className=""
+                        className="mt-3"
                         color="gradient"
                         size={'lg'}
                         auto

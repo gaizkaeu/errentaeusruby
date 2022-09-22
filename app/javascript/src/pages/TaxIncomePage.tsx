@@ -1,9 +1,17 @@
 import { Button, Text } from '@nextui-org/react'
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useAppDispatch } from '../storage/hooks'
+import { loadTaxIncomes } from '../storage/taxIncomeSlice'
 
 function TaxIncomePage() {
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadTaxIncomes())
+  })
 
   return (
     <React.Fragment>

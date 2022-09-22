@@ -11,6 +11,8 @@ import { useAuth } from './storage/hooks'
 import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
 import NewTaxIncome from './components/TaxIncome/NewTaxIncome'
+import MenuTaxIncome from './components/TaxIncome/MenuTaxIncome'
+import ShowTaxIncome from './components/TaxIncome/ShowTaxIncome'
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
   const [auth, fetched] = useAuth();
@@ -38,7 +40,9 @@ const AppRoutes = () => {
                 </PrivateRoute>
               }
             >
+              <Route index element={<MenuTaxIncome/>}></Route>
               <Route path="new" element={<NewTaxIncome/>}></Route>
+              <Route path=":id" element={<ShowTaxIncome/>}></Route>
             </Route>
           </Route>
         </Routes>

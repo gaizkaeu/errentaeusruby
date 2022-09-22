@@ -37,11 +37,11 @@ const App = () => {
   return (
     <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
       <Toaster />
-      <div>
-        <Navigation />
-        <Outlet />
-        <Footer/>
+      <Navigation />
+      <div className='min-h-screen'>
+        <Outlet/>
       </div>
+      <Footer/>
     </NextUIProvider>
   )
 }

@@ -9,6 +9,8 @@ gem 'vite_rails'
 # Auth
 gem 'devise'
 
+gem 'aasm'
+
 gem 'rack-brotli'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

@@ -64,7 +64,7 @@ class EstimationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def estimation_params
-      params.require(:estimation).permit(:first_name, :first_time, :home_changes, :rentals_mortgages, :professional_company_activity, :real_state_trade, :with_couple, :approved, :paid, :email, :phone)
+      params.require(:estimation).permit(:first_name, :first_time, :home_changes, :rentals_mortgages, :professional_company_activity, :real_state_trade, :with_couple)
     end
 end
 end
