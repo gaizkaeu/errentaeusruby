@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :appointments
   root 'home#index'
 
   get '*path', to: "home#index", constraints: ->(request) do

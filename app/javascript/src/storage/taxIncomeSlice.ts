@@ -1,13 +1,17 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { createNewEstimation, createNewTaxIncome, listIncomeTaxes, myEstimation } from "./apiService";
+import { createNewTaxIncome, listIncomeTaxes } from "./apiService";
+import { Estimation } from "./estimationSlice";
 
 // Define a type for the slice stated
+
+type TaxIncomeStatus = "initial" | "pending_meeting" | "rejected" | "pending_documentation" | "in_progress" | "finished"
 
 export interface TaxIncome {
   price: number,
   id: number,
-  state: number,
+  state: TaxIncomeStatus,
+  estimation?: Estimation,
   created_at: Date
 }
 

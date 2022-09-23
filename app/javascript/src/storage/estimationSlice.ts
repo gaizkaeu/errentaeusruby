@@ -1,3 +1,9 @@
+/**
+ * Used to preserve the state of the current estimation saved on the
+ * session (server side).
+ * 
+ * Used to create the estimation (and save it server-side session)
+ */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { createNewEstimation, myEstimation } from "./apiService";
@@ -40,7 +46,10 @@ const estimationSlice = createSlice({
   name: 'estimations',
   initialState: initialState,
   reducers: {
-
+    resetEstimation(state) {
+      state.estimation = undefined;
+      state.estimation_props = undefined;
+    }
   },
   extraReducers(builder) {
     builder
@@ -104,3 +113,4 @@ export const rescueMyEstimation = createAsyncThunk<Estimation>(
 
 
 export default estimationSlice.reducer;
+export const {resetEstimation} = estimationSlice.actions;

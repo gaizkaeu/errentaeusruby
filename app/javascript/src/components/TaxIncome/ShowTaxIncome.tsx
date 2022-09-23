@@ -4,18 +4,28 @@ import { useAppSelector } from '../../storage/hooks'
 import { useNavigate, useParams } from 'react-router-dom'
 import 'react-day-picker/dist/style.css';
 import { taxSelector } from '../../storage/taxIncomeSlice'
+import TaxIncomeCard from './components/TaxIncomeCard';
+import EstimationCard from './components/EstimationCard';
 
 const ShowTaxIncome = () => {
-  const {id} = useParams()
+  const { id } = useParams()
   const taxIncome = useAppSelector((state) => taxSelector.selectById(state.taxIncomes, id!))
   const nav = useNavigate();
+
 
   return (
     <React.Fragment>
       <Button onPress={() => nav("/mytaxincome")}>Atrás</Button>
-      <Text h3>Estado: {taxIncome?.state}</Text>
-      <Text h3>Precio {taxIncome?.price}</Text>
-      <Text h3>Creado el {taxIncome?.created_at}</Text>
+      <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-10 p-3 self-center">
+        {taxIncome ? (
+          <React.Fragment>
+            <TaxIncomeCard taxIncome={taxIncome}></TaxIncomeCard>
+            {taxIncome.estimation && <EstimationCard estimation={taxIncome.estimation}></EstimationCard>}
+          </React.Fragment>
+        ) : (
+          <Text>Nonnas</Text>
+        )}
+      </div>
 
     </React.Fragment>
   )

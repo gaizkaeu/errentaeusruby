@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+/**
+ * Only used to store the state of the calculator form
+ * Being able to change pages while preserving the state.
+ */
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface Values {
   first_name: string

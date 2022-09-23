@@ -2,8 +2,6 @@ class TaxIncome < ApplicationRecord
   belongs_to :user
   has_one :estimation
 
-  
-
   include AASM
 
   enum state: {

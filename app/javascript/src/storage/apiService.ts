@@ -3,7 +3,7 @@ import { CurrentUser, SessionCreationData, UserRegistrationData } from "./authSl
 import { Estimation, EstimationData } from "./estimationSlice";
 import { TaxIncome, TaxIncomeData } from "./taxIncomeSlice";
 
-const API_BASE = "http://192.168.1.129:3000/"
+const API_BASE = "http://localhost:3000/"
 
 const checkLoggedIn = async () => {
     const response = await axios.get<{user: CurrentUser, logged_in: boolean}>(API_BASE + 'api/v1/logged_in')

@@ -17,7 +17,7 @@ import { SunIcon } from '../Icons/SunIcon'
 
 const NavBarLink = ({ to, children }: { to: string; children: string }) => {
   const resolvedPath = useResolvedPath(to)
-  const isActive = useMatch({ path: resolvedPath.pathname })
+  const isActive = useMatch({ path: resolvedPath.pathname + "/*" })
 
   return (
     <Navbar.Link isActive={isActive ? true : false} as={NavLink} to={to}>

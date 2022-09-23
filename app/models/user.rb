@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :tax_incomes
   has_many :estimations
+  has_many :appointments
 end

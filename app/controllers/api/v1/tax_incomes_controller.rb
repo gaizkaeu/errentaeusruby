@@ -6,7 +6,7 @@ class TaxIncomesController < ApplicationController
 
   # GET /tax_incomes or /tax_incomes.json
   def index
-    @tax_incomes = current_api_v1_user.tax_incomes.all
+    @tax_incomes = current_api_v1_user.tax_incomes.includes(:estimation)
   end
 
   # GET /tax_incomes/1 or /tax_incomes/1.json

@@ -3,10 +3,11 @@ import { Button,  Grid,  Text, Textarea } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import { useNavigate } from 'react-router-dom'
-import EstimationCard from './EstimationCard'
+import EstimationCard from './components/EstimationCard'
 import 'react-day-picker/dist/style.css';
 import { createTaxIncome, TaxIncomeData } from '../../storage/taxIncomeSlice'
 import toast from 'react-hot-toast'
+import { resetEstimation } from '../../storage/estimationSlice'
 
 const NewTaxIncome = () => {
   const estimation = useAppSelector((state) => state.estimations.estimation)
@@ -25,6 +26,7 @@ const NewTaxIncome = () => {
         id: toastNotification,
       })
       navigate(`/mytaxincome/${action.payload.id}`)
+      dispatch(resetEstimation());
     } else {
       if (action.payload) {
         formikHelpers.setErrors(action.payload.field_errors)
@@ -48,7 +50,7 @@ const NewTaxIncome = () => {
           <Form>
           <Grid.Container gap={3}>
             <Grid xs={12} md={6}>
-            <EstimationCard estimation={estimation} />
+            <EstimationCard estimation={estimation} deletable/>
             </Grid>
             <Grid xs={12} md={6}>
             <Textarea

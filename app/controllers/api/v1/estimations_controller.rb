@@ -1,10 +1,11 @@
 module Api::V1
 class EstimationsController < ApplicationController
   before_action :set_estimation, only: %i[ show update destroy ]
+  before_action :authenticate_api_v1_user!, except: %i[ estimate my_estimation ]
 
   # GET /estimations
   def index
-    @estimations = Estimation.all
+    @estimations = current_api_v1_user.estimations.all
 
     render json: @estimations
   end
@@ -37,9 +38,14 @@ class EstimationsController < ApplicationController
   end
 
   def my_estimation
-    @estimation = Estimation.find_by(id: session[:estimation])
-
-    render json: @estimation
+    @estimation = Estimation.find(session[:estimation]) unless !session[:estimation]
+    respond_to do |format|
+      if !@estimation.nil?
+        format.json {render @estimation }
+      else
+        format.json { render json: nil }
+      end
+    end
   end
 
   # PATCH/PUT /estimations/1
@@ -59,7 +65,7 @@ class EstimationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_estimation
-      @estimation = Estimation.find(params[:id])
+      @estimation = current_api_v1_user.estimations.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

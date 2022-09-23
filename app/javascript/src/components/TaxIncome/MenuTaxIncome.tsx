@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Card, Grid, Text } from '@nextui-org/react'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import { useNavigate } from 'react-router-dom'
-import EstimationCard from './EstimationCard'
+import EstimationCard from './components/EstimationCard'
 import { NewIcon } from '../Icons/NewIcon'
 import { loadTaxIncomes } from '../../storage/taxIncomeSlice'
 
