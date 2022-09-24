@@ -17,7 +17,8 @@ const TaxIncomeWaitingMeeting = (props: { taxIncome: TaxIncome }) => {
                 </Card.Header>
                 <Card.Divider />
                 <Card.Body>
-                    Tenemos una cita contigo. {taxIncome.appointment?.date?.toISOString}
+                    Tenemos una cita contigo.
+                    <Text>{taxIncome.appointment?.date?.toISOString}</Text>
                 </Card.Body>
             </Card>
             <Spacer/>

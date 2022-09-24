@@ -3,7 +3,7 @@ import { IUser, SessionCreationData, UserRegistrationData } from "./authSlice";
 import { Estimation, EstimationData } from "./estimationSlice";
 import { IAppointment, TaxIncome, TaxIncomeData } from "./taxIncomeSlice";
 
-const API_BASE = "http://localhost:3000/"
+const API_BASE = "/"
 
 const checkLoggedIn = async () => {
     const response = await axios.get<{user: IUser, logged_in: boolean}>(API_BASE + 'api/v1/logged_in')
