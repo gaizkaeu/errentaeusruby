@@ -1,17 +1,24 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { createNewTaxIncome, listIncomeTaxes } from "./apiService";
+import { appointmentToIncomeTax, createNewTaxIncome, listIncomeTaxes } from "./apiService";
+import { IUser } from "./authSlice";
 import { Estimation } from "./estimationSlice";
 
 // Define a type for the slice stated
 
-type TaxIncomeStatus = "initial" | "pending_meeting" | "rejected" | "pending_documentation" | "in_progress" | "finished"
+type TaxIncomeStatus = "pending_assignation" | "waiting_for_meeting_creation" |"waiting_for_meeting" | "rejected" | "pending_documentation" | "in_progress" | "finished"
+
+export interface IAppointment {
+  date: Date;
+}
 
 export interface TaxIncome {
   price: number,
   id: number,
   state: TaxIncomeStatus,
   estimation?: Estimation,
+  lawyer?: IUser,
+  appointment?: IAppointment,
   created_at: Date
 }
 
@@ -80,6 +87,28 @@ const taxIncomeSlice = createSlice({
         if (action.payload) {
           state.error = action.error.message
         }
+      })
+      .addCase(setAppointmentToIncomeTax.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(setAppointmentToIncomeTax.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        let [id, res] = action.payload;
+        taxAdapter.updateOne(state, {
+          id: id,
+          changes: {
+            appointment: res,
+            state: "waiting_for_meeting"
+          }
+        })
+      })
+      .addCase(setAppointmentToIncomeTax.rejected, (state, action) => {
+        state.status = 'failed'
+        if (action.payload) {
+          state.error = action.payload.errorMessage
+        } else {
+          state.error = action.error.message
+        }
       });
     }
 })
@@ -99,6 +128,7 @@ export const createTaxIncome = createAsyncThunk<TaxIncome, TaxIncomeData, { reje
     }
   }
 );
+
 export const loadTaxIncomes = createAsyncThunk<TaxIncome[]>(
   'taxincomes/listTaxIncomes',
   async (a, { rejectWithValue }) => {
@@ -107,6 +137,22 @@ export const loadTaxIncomes = createAsyncThunk<TaxIncome[]>(
       return response;
     } catch (err) {
       let error = err as AxiosError<string>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data)
+    }
+  }
+);
+
+export const setAppointmentToIncomeTax = createAsyncThunk<[number, IAppointment], {id: number, time: Date},  { rejectValue: ValidationErrors }>(
+  'taxincomes/setAppointment',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await appointmentToIncomeTax(data.id);
+      return [data.id, response];
+    } catch (err) {
+      let error = err as AxiosError<ValidationErrors>;
       if (!error.response) {
         throw err;
       }

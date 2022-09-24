@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Card, Text } from '@nextui-org/react'
 import { useNavigate } from 'react-router-dom'
-import { Estimation } from '../../../storage/estimationSlice'
-import { ArrowIcon } from '../../Icons/ArrowIcon'
+import { Estimation } from '../../storage/estimationSlice'
+import { ArrowIcon } from '../Icons/ArrowIcon'
 
 const EstimationCard = (props: { estimation: Estimation | undefined, deletable?: boolean }) => {
     const navigate = useNavigate()

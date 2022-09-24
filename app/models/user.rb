@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :tax_incomes
   has_many :estimations
   has_many :appointments
+
+  enum account_type: {user: 0, lawyer: 1}
 end

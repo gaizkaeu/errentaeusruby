@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :appointments
   root 'home#index'
 
   get '*path', to: "home#index", constraints: ->(request) do
@@ -12,7 +11,9 @@ Rails.application.routes.draw do
         post :estimate, on: :collection
         get :my_estimation, on: :collection
       end
-      resources :tax_incomes
+      resources :tax_incomes do
+        post :set_appointment, on: :member
+      end
       get :logged_in, to: 'accounts#logged_in'
       devise_for :users, module: "api/v1/auth", defaults: { format: :json }
     end

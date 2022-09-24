@@ -9,12 +9,13 @@ interface AuthState {
   error: string | undefined
   logged_in: boolean,
   fetched: boolean,
-  user: CurrentUser | undefined
+  user: IUser | undefined
 }
 
-export interface CurrentUser {
+export interface IUser {
   email: string,
-  name: string
+  name: string,
+  surname: string
 }
 
 interface ValidationErrors {
@@ -120,7 +121,7 @@ const authSlice = createSlice({
   }
 })
 
-export const signIn = createAsyncThunk<CurrentUser, SessionCreationData, { rejectValue: ValidationErrors }>(
+export const signIn = createAsyncThunk<IUser, SessionCreationData, { rejectValue: ValidationErrors }>(
   'authentication/signIn',
   async (data, { rejectWithValue }) => {
     try {
@@ -136,7 +137,7 @@ export const signIn = createAsyncThunk<CurrentUser, SessionCreationData, { rejec
   }
 )
 
-export const loggedIn = createAsyncThunk<{ logged_in: boolean, user: CurrentUser }>(
+export const loggedIn = createAsyncThunk<{ logged_in: boolean, user: IUser }>(
   'auth/loggedIn',
   async () => {
     const response = await checkLoggedIn()
@@ -153,7 +154,7 @@ export const logOut = createAsyncThunk(
 )
 
 
-export const signUp = createAsyncThunk<CurrentUser, UserRegistrationData, { rejectValue: ValidationErrors }>(
+export const signUp = createAsyncThunk<IUser, UserRegistrationData, { rejectValue: ValidationErrors }>(
   'authentication/signUp',
   async (data, { rejectWithValue }) => {
     try {

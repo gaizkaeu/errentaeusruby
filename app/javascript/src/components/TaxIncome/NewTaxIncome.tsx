@@ -3,7 +3,7 @@ import { Button,  Grid,  Text, Textarea } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import { useNavigate } from 'react-router-dom'
-import EstimationCard from './components/EstimationCard'
+import EstimationCard from '../Estimation/EstimationCard'
 import 'react-day-picker/dist/style.css';
 import { createTaxIncome, TaxIncomeData } from '../../storage/taxIncomeSlice'
 import toast from 'react-hot-toast'

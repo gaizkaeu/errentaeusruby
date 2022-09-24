@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_23_065515) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_23_172510) do
   create_table "appointments", force: :cascade do |t|
     t.integer "client_id", null: false
     t.integer "lawyer_id", null: false
@@ -51,6 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_23_065515) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state", default: 0
+    t.integer "lawyer_id"
+    t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
     t.index ["user_id"], name: "index_tax_incomes_on_user_id"
   end
 
@@ -65,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_23_065515) do
     t.string "name"
     t.string "surname"
     t.string "phone"
+    t.integer "account_type", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -75,4 +78,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_23_065515) do
   add_foreign_key "estimations", "tax_incomes"
   add_foreign_key "estimations", "users"
   add_foreign_key "tax_incomes", "users"
+  add_foreign_key "tax_incomes", "users", column: "lawyer_id"
 end

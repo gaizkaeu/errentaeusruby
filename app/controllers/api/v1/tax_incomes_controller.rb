@@ -1,6 +1,6 @@
 module Api::V1
 class TaxIncomesController < ApplicationController
-  before_action :set_tax_income, only: %i[ show edit update destroy ]
+  before_action :set_tax_income, only: %i[ show edit update destroy set_appointment ]
   before_action :authenticate_api_v1_user!
   respond_to :json
 
@@ -15,6 +15,16 @@ class TaxIncomesController < ApplicationController
 
   # GET /tax_incomes/1/edit
   def edit
+  end
+
+  def set_appointment
+    @appointment = Appointment.create!(lawyer: @tax_income.lawyer, client: @tax_income.user, tax_income: @tax_income, time: params[:time])
+    if @appointment.save
+      @tax_income.appointment_created!
+      render json: @appointment
+    else
+      render json: @appointment.errors, status: :unprocessable_entity
+    end
   end
 
   # POST /tax_incomes or /tax_incomes.json
@@ -63,6 +73,7 @@ class TaxIncomesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def tax_income_params
       params.require(:tax_income).permit(:observations, :load_price_from_estimation)
+      params.require(:appointment).permit(:time)
     end
 end
 end

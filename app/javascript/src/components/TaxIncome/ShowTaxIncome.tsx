@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import 'react-day-picker/dist/style.css';
 import { taxSelector } from '../../storage/taxIncomeSlice'
 import TaxIncomeCard from './components/TaxIncomeCard';
-import EstimationCard from './components/EstimationCard';
+import EstimationCard from '../Estimation/EstimationCard';
 
 const ShowTaxIncome = () => {
   const { id } = useParams()
@@ -20,7 +20,7 @@ const ShowTaxIncome = () => {
         {taxIncome ? (
           <React.Fragment>
             <TaxIncomeCard taxIncome={taxIncome}></TaxIncomeCard>
-            {taxIncome.estimation && <EstimationCard estimation={taxIncome.estimation}></EstimationCard>}
+            <EstimationCard estimation={taxIncome.estimation}></EstimationCard>
           </React.Fragment>
         ) : (
           <Text>Nonnas</Text>
