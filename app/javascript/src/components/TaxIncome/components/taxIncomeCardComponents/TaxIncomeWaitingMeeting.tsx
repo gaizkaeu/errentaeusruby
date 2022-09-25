@@ -5,6 +5,7 @@ import LawyerAvatar from "../../../Lawyer";
 import axios from "axios";
 import { useAppDispatch } from "../../../../storage/hooks";
 import AssignedLawyer from "../../../Lawyer/AssignedLawyer";
+import Appointment from "../../../Appointment/Appointment";
 
 const TaxIncomeWaitingMeeting = (props: { taxIncome: TaxIncome }) => {
     const { taxIncome } = props;
@@ -18,11 +19,10 @@ const TaxIncomeWaitingMeeting = (props: { taxIncome: TaxIncome }) => {
                 <Card.Divider />
                 <Card.Body>
                     Tenemos una cita contigo.
-                    <Text>{taxIncome.appointment?.date?.toISOString}</Text>
                 </Card.Body>
             </Card>
             <Spacer/>
-            <AssignedLawyer lawyer={taxIncome.lawyer!} />
+            {taxIncome.appointment?.time && <Appointment appointment={taxIncome.appointment}></Appointment>}
         </div>
     )
 }

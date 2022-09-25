@@ -4,6 +4,7 @@ class TaxIncome < ApplicationRecord
   has_one :estimation
   has_one :appointment
 
+
   include AASM
 
   after_create_commit :assign_lawyer

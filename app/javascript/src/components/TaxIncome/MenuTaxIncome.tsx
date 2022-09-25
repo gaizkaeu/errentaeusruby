@@ -5,12 +5,18 @@ import { useNavigate } from 'react-router-dom'
 import EstimationCard from '../Estimation/EstimationCard'
 import { NewIcon } from '../Icons/NewIcon'
 import { loadTaxIncomes } from '../../storage/taxIncomeSlice'
+import { useGetTaxIncomeByIdQuery, useGetTaxIncomesQuery } from '../../storage/taxIncomeApi'
 
 const MenuTaxIncome = () => {
 
+  const {data} = useGetTaxIncomeByIdQuery(46);
+  useEffect(() => {
+    console.log(data)
+  })
+
   return (
     <React.Fragment>
-      <Text h3>¡Hola!</Text>
+      <Text h3>¡Hola! a {data?.id}</Text>
 
       <Grid.Container gap={2} justify="center">
       <Grid xs={12} md={6}>

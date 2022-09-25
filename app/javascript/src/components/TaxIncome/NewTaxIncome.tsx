@@ -8,10 +8,11 @@ import 'react-day-picker/dist/style.css';
 import { createTaxIncome, TaxIncomeData } from '../../storage/taxIncomeSlice'
 import toast from 'react-hot-toast'
 import { resetEstimation } from '../../storage/estimationSlice'
+import { useCreateTaxIncomeMutation } from '../../storage/taxIncomeApi'
 
 const NewTaxIncome = () => {
   const estimation = useAppSelector((state) => state.estimations.estimation)
-  const dispatch = useAppDispatch();
+  const [addTaxIncome, result] = useCreateTaxIncomeMutation();
   const navigate = useNavigate()
 
   const submitForm = async (
@@ -19,9 +20,19 @@ const NewTaxIncome = () => {
     formikHelpers: FormikHelpers<any>,
   ) => {
     const toastNotification = toast.loading('Procesando...')
-    const action = await dispatch(createTaxIncome(values))
+   addTaxIncome(values).unwrap().then((data) => {
+    toast.success('Listo', {
+      id: toastNotification
+    })
+    navigate(`/mytaxincome/${data.id}`)
+   }).catch((error) => {
+      toast.error('Error', {
+        id: toastNotification
+      })     
+    formikHelpers.setErrors(error.data)
+    })
 
-    if (createTaxIncome.fulfilled.match(action)) {
+    /* if (createTaxIncome.fulfilled.match(action)) {
       toast.success('¡Listo!', {
         id: toastNotification,
       })
@@ -37,9 +48,8 @@ const NewTaxIncome = () => {
         toast.error('Error inesperado', {
           id: toastNotification,
         })
-      }
+      } */
     }
-  }
 
   return (
     <React.Fragment>

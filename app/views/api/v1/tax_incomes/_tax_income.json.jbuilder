@@ -6,3 +6,8 @@ if tax_income.lawyer.present?
         json.partial! partial: 'api/v1/user/lawyer', lawyer: tax_income.lawyer
     end
 end
+if tax_income.appointment.present?
+    json.appointment do
+        json.extract! tax_income.appointment, :time
+    end
+end

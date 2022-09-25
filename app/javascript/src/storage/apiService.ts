@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IUser, SessionCreationData, UserRegistrationData } from "./authSlice";
 import { Estimation, EstimationData } from "./estimationSlice";
-import { IAppointment, TaxIncome, TaxIncomeData } from "./taxIncomeSlice";
+import { IAppointment, IAppointmentData, TaxIncome, TaxIncomeData } from "./taxIncomeSlice";
 
 const API_BASE = "/"
 
@@ -45,10 +45,19 @@ const listIncomeTaxes = async () => {
     return response.data;
 }
 
-export const appointmentToIncomeTax = async (id: number) => {
-    const response = await axios.post<IAppointment>(API_BASE +'api/v1/tax_incomes/'+id+"/set_appointment");
+export const appointmentToIncomeTax = async (id: number, data: IAppointmentData) => {
+    const response = await axios.post<IAppointment>(API_BASE +'api/v1/tax_incomes/'+id+"/set_appointment", data);
     return response.data;
 }
 
+export const listAppointments = async () => {
+    const response = await axios.get<IAppointment>(API_BASE + 'api/v1/appointments')
+    return response.data;
+}
+
+export const showLawyer = async (id: number) => {
+    const response = await axios.get<IUser>(API_BASE + 'api/v1/lawyer/' + id)
+    return response.data;
+}
 
 export {createNewEstimation, checkLoggedIn, createNewUser, createNewSession, closeSession, myEstimation, createNewTaxIncome, listIncomeTaxes};

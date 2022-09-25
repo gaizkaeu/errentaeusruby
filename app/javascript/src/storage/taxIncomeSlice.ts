@@ -9,7 +9,13 @@ import { Estimation } from "./estimationSlice";
 type TaxIncomeStatus = "pending_assignation" | "waiting_for_meeting_creation" |"waiting_for_meeting" | "rejected" | "pending_documentation" | "in_progress" | "finished"
 
 export interface IAppointment {
-  date: Date;
+  time: Date,
+  lawyer_id: number,
+  tax_income_id: number
+}
+
+export interface IAppointmentData {
+  time: Date
 }
 
 export interface TaxIncome {
@@ -149,7 +155,7 @@ export const setAppointmentToIncomeTax = createAsyncThunk<[number, IAppointment]
   'taxincomes/setAppointment',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await appointmentToIncomeTax(data.id);
+      const response = await appointmentToIncomeTax(data.id, {time: data.time});
       return [data.id, response];
     } catch (err) {
       let error = err as AxiosError<ValidationErrors>;
