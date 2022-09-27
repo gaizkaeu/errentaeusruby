@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import App from './App'
-import AuthenticationPage from './pages/AuthenticationPage'
-import Calculator from './pages/CalculatorPage'
-import EstimationPage from './pages/EstimationPage'
-import Home from './pages/Home'
-import TaxIncomePage from './pages/TaxIncomePage'
 import { useAuth } from './storage/hooks'
 import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
-import NewTaxIncome from './components/TaxIncome/NewTaxIncome'
-import MenuTaxIncome from './components/TaxIncome/MenuTaxIncome'
-import ShowTaxIncome from './components/TaxIncome/ShowTaxIncome'
+const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
+const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
+const MenuTaxIncome = React.lazy(() => import('./components/TaxIncome/MenuTaxIncome'));
+const TaxIncomePage = React.lazy(() => import('./pages/TaxIncomePage'));
+const HomePage = React.lazy(() => import('./pages/Home'));
+const EstimationPage = React.lazy(() => import('./pages/EstimationPage'));
+const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
+const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
+const App = React.lazy(() => import('./App'));
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
   const [auth, fetched] = useAuth();
@@ -26,8 +26,8 @@ const AppRoutes = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route index element={<Home />} />
-            <Route path="/calculator" element={<Calculator />} />
+            <Route index element={<HomePage />} />
+            <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/estimation" element={<EstimationPage />} />
             <Route path="/auth" element={<AuthenticationPage />}>
               <Route path=":action" element={<AuthenticationPage/>}/>

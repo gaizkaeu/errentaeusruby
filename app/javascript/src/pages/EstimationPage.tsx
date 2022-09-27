@@ -1,17 +1,11 @@
-import { Button, Text } from '@nextui-org/react'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import AuthComponent from '../components/Authentication/AuthComponent'
+import React from 'react'
 import ContinueEstimation from '../components/Estimation/ContinueEstimation'
 import SingleEstimation from '../components/Estimation/SingleEstimation'
-import { firstStep } from '../storage/calculatorSlice'
-import { useAppDispatch, useAppSelector } from '../storage/hooks'
+import { useAppSelector } from '../storage/hooks'
+import { Text } from '@nextui-org/react'
 
 function EstimationPage() {
   const estimations = useAppSelector((state) => state.estimations.estimation)
-  const logged_in = useAppSelector((state) => state.authentication.logged_in)
-  const dispatch = useAppDispatch()
-  const nav = useNavigate()
 
   return (
     <React.Fragment>

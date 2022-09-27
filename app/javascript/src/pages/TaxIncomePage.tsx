@@ -1,9 +1,6 @@
+import React from 'react'
 import { Button, Text } from '@nextui-org/react'
-import axios from 'axios'
-import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import { useAppDispatch } from '../storage/hooks'
-import { loadTaxIncomes } from '../storage/_taxIncomeSliceold'
 
 function TaxIncomePage() {
 

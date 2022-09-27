@@ -1,10 +1,8 @@
 import { Text } from '@nextui-org/react'
 import React from 'react'
 import CalculatorComponent from '../components/Calculator/Calculator'
-import { useAppSelector } from '../storage/hooks'
 
 function CalculatorPage() {
-  const estimation = useAppSelector((state) => state.estimations.estimation)
   return (
     <React.Fragment>
       <header>

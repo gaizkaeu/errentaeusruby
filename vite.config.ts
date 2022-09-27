@@ -3,10 +3,10 @@ import RubyPlugin from 'vite-plugin-ruby'
 import { splitVendorChunkPlugin } from 'vite'
 
 
-export default defineConfig({
 
+export default defineConfig({
   plugins: [
     RubyPlugin(),
-    splitVendorChunkPlugin()
+    splitVendorChunkPlugin(),
   ],
 })
