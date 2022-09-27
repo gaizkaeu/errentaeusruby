@@ -1,33 +1,8 @@
-/**
- * Only used to store the state of the calculator form
- * Being able to change pages while preserving the state.
- */
 import { createSlice } from "@reduxjs/toolkit";
+import { CalculatorState } from "./types";
 
-export interface Values {
-  first_name: string
-  firstTime: string
-  homeChanges: QuestionWithNumber
-  rentalsMortgages: QuestionWithNumber
-  realStateTrade: QuestionWithNumber
-  withCouple: string,
-/*   incomeRent: QuestionWithNumber,
-  sharesTrade: QuestionWithNumber, */
-  professionalCompanyActivity: string
-}
 
-export interface QuestionWithNumber {
-  consta: string
-  numero: number
-}
-
-interface IState {
-  formValues: Values,
-  step: number
-}
-  
-// Define the initial state using that type
-const initialState: IState = {
+const initialState: CalculatorState = {
   formValues: {
     first_name: '',
     homeChanges: {

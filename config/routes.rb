@@ -7,10 +7,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :appointments
       resources :estimations do 
         post :estimate, on: :collection
         get :my_estimation, on: :collection
       end
+      get 'lawyers/:id', to: 'lawyers#show'
       resources :tax_incomes do
         post :set_appointment, on: :member
       end

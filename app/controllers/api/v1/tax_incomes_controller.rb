@@ -1,8 +1,7 @@
 module Api::V1
-class TaxIncomesController < ApplicationController
+class TaxIncomesController < ApiBaseController
   before_action :set_tax_income, only: %i[ show edit update destroy set_appointment ]
   before_action :authenticate_api_v1_user!
-  respond_to :json
 
   # GET /tax_incomes or /tax_incomes.json
   def index
@@ -73,7 +72,6 @@ class TaxIncomesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def tax_income_params
       params.require(:tax_income).permit(:observations, :load_price_from_estimation)
-      params.require(:appointment).permit(:time)
     end
 end
 end

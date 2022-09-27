@@ -17,11 +17,10 @@ import {
   nextStep,
   prevStep,
   valuesChanged,
-  Values,
-  QuestionWithNumber,
   firstStep,
 } from '../../storage/calculatorSlice'
 import { toast } from 'react-hot-toast'
+import { CalculatorValues, QuestionWithNumber } from '../../storage/types'
 
 const steps = [
   'Información importante',
@@ -72,7 +71,7 @@ export default function Calculator() {
   const isLastStep = stepPersist === steps.length - 1
 
   async function _submitForm(
-    values: Values,
+    values: CalculatorValues,
     formikHelpers: FormikHelpers<any>,
   ) {
     const toastNotification = toast.loading('Procesando...')
@@ -107,7 +106,7 @@ export default function Calculator() {
 
   }
 
-  function _handleSubmit(values: Values, formikHelpers: FormikHelpers<any>) {
+  function _handleSubmit(values: CalculatorValues, formikHelpers: FormikHelpers<any>) {
     if (isLastStep) {
       _submitForm(values, formikHelpers)
     } else {

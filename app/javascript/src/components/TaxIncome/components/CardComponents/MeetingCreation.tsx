@@ -1,10 +1,10 @@
 import React from "react"
 import { Card, Spacer, Text } from "@nextui-org/react"
-import { TaxIncome } from "../../../../storage/taxIncomeSlice";
 import 'react-day-picker/dist/style.css';
 import NewAppointmentForm from "../../../Appointment/NewAppointmentForm";
+import { TaxIncome } from "../../../../storage/types";
 
-const TaxIncomeInitial = (props: { taxIncome: TaxIncome }) => {
+const MeetingCreation = (props: { taxIncome: TaxIncome }) => {
     const { taxIncome } = props;
     return (
         <div>
@@ -16,7 +16,7 @@ const TaxIncomeInitial = (props: { taxIncome: TaxIncome }) => {
                 <Card.Body>
                     <Text>Tenemos que concertar una cita. Para asegurarnos que te damos el servicio que necesitas.</Text>
                     <Spacer/>
-                    <NewAppointmentForm tax_id={taxIncome.id}/> 
+                    <NewAppointmentForm taxIncomeId={taxIncome.id}/> 
                 </Card.Body>
             </Card>
             <Spacer />
@@ -24,4 +24,4 @@ const TaxIncomeInitial = (props: { taxIncome: TaxIncome }) => {
     )
 }
 
-export default TaxIncomeInitial;
+export default MeetingCreation;

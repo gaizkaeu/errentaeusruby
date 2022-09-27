@@ -1,40 +1,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { checkLoggedIn, closeSession, createNewSession, createNewUser } from "./apiService";
-
-// Define a type for the slice stated
-
-interface AuthState {
-  status: 'succeeded' | 'loading' | 'failed'
-  error: string | undefined
-  logged_in: boolean,
-  fetched: boolean,
-  user: IUser | undefined
-}
-
-export interface IUser {
-  email: string,
-  name: string,
-  surname: string
-}
-
-interface ValidationErrors {
-  error: string
-  errors: Record<string, string>
-}
-
-export interface UserRegistrationData {
-  name: string,
-  surname: string
-  email: string,
-  password: string,
-  password_confirmation: string
-}
-
-export interface SessionCreationData {
-  email: string,
-  password: string,
-}
+import { AuthState, IUser, SessionCreationData, UserRegistrationData, ValidationErrors } from "./types";
 
 // Define the initial state using that type
 const initialState = {
@@ -152,7 +119,6 @@ export const logOut = createAsyncThunk(
 
   }
 )
-
 
 export const signUp = createAsyncThunk<IUser, UserRegistrationData, { rejectValue: ValidationErrors }>(
   'authentication/signUp',

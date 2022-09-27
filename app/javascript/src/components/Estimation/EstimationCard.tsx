@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Card, Text } from '@nextui-org/react'
 import { useNavigate } from 'react-router-dom'
-import { Estimation } from '../../storage/estimationSlice'
 import { ArrowIcon } from '../Icons/ArrowIcon'
+import NoEstimationCard from './NoEstimationCard'
+import { Estimation } from '../../storage/types'
 
 const EstimationCard = (props: { estimation: Estimation | undefined, deletable?: boolean }) => {
-    const navigate = useNavigate()
     const { estimation, deletable } = props
     return (
         <Card isHoverable>
@@ -45,20 +45,7 @@ const EstimationCard = (props: { estimation: Estimation | undefined, deletable?:
                     </div>
                 </Card.Body>
             ) : (
-                <Card.Body>
-                    <Text>No tenemos ninguna estimación... Puedes continuar o calcularla.</Text>
-                    <Button
-                        rounded
-                        className="mt-3"
-                        color="gradient"
-                        size={'lg'}
-                        auto
-                        onPress={() => navigate('/calculator')}
-                        iconRight={<ArrowIcon />}
-                    >
-                        Calcula tu precio
-                    </Button>
-                </Card.Body>
+                <NoEstimationCard/>
             )}
         </Card>
     )

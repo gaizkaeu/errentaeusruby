@@ -1,8 +1,8 @@
 import React from "react";
 import { Text } from "@nextui-org/react";
-import { TaxIncome } from "../../../storage/taxIncomeSlice";
-import TaxIncomeInitial from "./taxIncomeCardComponents/TaxIncomeInitial";
-import TaxIncomeWaitingMeeting from "./taxIncomeCardComponents/TaxIncomeWaitingMeeting";
+import { TaxIncome } from "../../../storage/types";
+import MeetingCreation from "./CardComponents/MeetingCreation";
+import WaitingMeeting from "./CardComponents/WaitingMeeting";
 
 
 const TaxIncomeCard = (props: {taxIncome: TaxIncome}) => {
@@ -14,9 +14,9 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome}) => {
             case "pending_assignation":
                 return <Text>Te estamos asignando un asesor</Text>
             case "waiting_for_meeting_creation":
-                return <TaxIncomeInitial taxIncome={taxIncome}/>;
+                return <MeetingCreation taxIncome={taxIncome}/>;
             case "waiting_for_meeting":
-                return <TaxIncomeWaitingMeeting taxIncome={taxIncome}/>;
+                return <WaitingMeeting taxIncome={taxIncome}/>;
             case "pending_documentation":
                 return <Text>Peding documentation</Text>;
             case "in_progress":

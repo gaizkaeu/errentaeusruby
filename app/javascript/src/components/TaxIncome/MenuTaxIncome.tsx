@@ -4,19 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import { useNavigate } from 'react-router-dom'
 import EstimationCard from '../Estimation/EstimationCard'
 import { NewIcon } from '../Icons/NewIcon'
-import { loadTaxIncomes } from '../../storage/taxIncomeSlice'
-import { useGetTaxIncomeByIdQuery, useGetTaxIncomesQuery } from '../../storage/taxIncomeApi'
+import { loadTaxIncomes } from '../../storage/_taxIncomeSliceold'
+import { useGetTaxIncomeByIdQuery, useGetTaxIncomesQuery } from '../../storage/api'
 
 const MenuTaxIncome = () => {
 
-  const {data} = useGetTaxIncomeByIdQuery(46);
-  useEffect(() => {
-    console.log(data)
-  })
-
   return (
     <React.Fragment>
-      <Text h3>¡Hola! a {data?.id}</Text>
+      <Text h3>¡Hola! a </Text>
 
       <Grid.Container gap={2} justify="center">
       <Grid xs={12} md={6}>

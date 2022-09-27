@@ -4,12 +4,13 @@ import { at } from 'lodash';
 import { useField } from 'formik';
 import { DayOfWeek, DayPicker } from "react-day-picker"
 import es from 'date-fns/locale/es';
+import { addDays } from 'date-fns';
 
 export default function DatePickerField({...props}) {
   const { errorText, ...rest } = props;
   const [field, meta, helpers] = useField(props.name);
   const dayOfWeekMatcher: DayOfWeek = {
-      dayOfWeek: [0, 6]
+      dayOfWeek: [0, 6],
   };
 
   function _renderHelperText() {
@@ -33,9 +34,10 @@ export default function DatePickerField({...props}) {
     <DayPicker mode="single"
       selected={field.value}
       locale={es}
-      disabled={dayOfWeekMatcher}
+      disabled={[dayOfWeekMatcher, {before: addDays(new Date(), 1)}]}
       footer={<Text color="error">{_renderHelperText()}</Text>}
       onSelect={(day: any) => {helpers.setValue(day)}}
+      showOutsideDays
     />
   );
 }

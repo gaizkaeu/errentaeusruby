@@ -1,15 +1,22 @@
-import { Text, Button, Input, Radio, Spacer } from "@nextui-org/react"
-import { add, setHours, setMinutes } from "date-fns";
-import { FieldMetaProps, Form, Formik, FormikHelpers, useField } from "formik";
+import { Text, Button, Radio, Spacer } from "@nextui-org/react"
+import { setHours, setMinutes } from "date-fns";
+import { Form, Formik, FormikHelpers, useField } from "formik";
 import React from "react"
-import { useAppDispatch } from "../../storage/hooks";
-import { setAppointmentToIncomeTax } from "../../storage/taxIncomeSlice";
 import DatePickerField from "../FormFields/DatePickerField";
 import InputField from "../FormFields/InputField";
 import { at } from 'lodash';
 import * as Yup from 'yup'
+import { useCreateAppointmentToTaxIncomeMutation } from "../../storage/api";
+import toast from "react-hot-toast";
 
-const AppointmentType = (props: { contactMethodFieldName: string, phone_field: string }) => {
+interface Values {
+    day: string,
+    hour: string,
+    method: 0 | 1 | undefined,
+    phone: string
+}
+
+const AppointmentTypeSelector = (props: { contactMethodFieldName: string, phone_field: string }) => {
     const [methodField, methodMeta, methodHelpers] = useField(props.contactMethodFieldName);
 
     function _renderHelperText() {
@@ -33,19 +40,26 @@ const AppointmentType = (props: { contactMethodFieldName: string, phone_field: s
     );
 }
 
-const AppointmentForm = (props: { tax_id: number }) => {
+const AppointmentForm = (props: { taxIncomeId: string }) => {
 
-    const dispatch = useAppDispatch();
+    const [addNewAppointment, result] = useCreateAppointmentToTaxIncomeMutation();
 
-    const onSubmit = (values: any,
+    const onSubmit = (values: Values,
         formikHelpers: FormikHelpers<any>,) => {
+        const statusToast = toast.loading("Procesando...")
         let [hour, min] = values.hour.split(":")
-        let date_new = setHours(setMinutes(new Date(values.day), min), hour)
-        dispatch(setAppointmentToIncomeTax({ id: props.tax_id, time: date_new }));
+        let date_new = setHours(setMinutes(new Date(values.day), +min), +hour)
+
+        addNewAppointment({tax_income_id: props.taxIncomeId, time: date_new.toString(), method: values.method, phone: values.phone}).unwrap().then((result) => {
+            toast.success("¡Listo!", {id: statusToast});
+        }).catch((err) => {
+            toast.error("Error", {id: statusToast});
+            formikHelpers.setErrors(err.data);
+        })
     }
 
     return (
-        <Formik initialValues={{ day: '', hour: '12:30', method: '', phone: ''}} validationSchema={Yup.object({
+        <Formik initialValues={{ day: '', hour: '12:30', method: undefined, phone: ''}} validationSchema={Yup.object({
             day: Yup.date().required(),
             hour: Yup.string().min(4, "Hora inválida").required(),
             method: Yup.number().required(),
@@ -58,7 +72,7 @@ const AppointmentForm = (props: { tax_id: number }) => {
                     <div>
                         <InputField name="hour" type="time" label="¿Sobre que hora?" rounded bordered fullWidth></InputField>
                         <Spacer />
-                        <AppointmentType contactMethodFieldName="method" phone_field="phone"/>
+                        <AppointmentTypeSelector contactMethodFieldName="method" phone_field="phone"/>
                     </div>
                 </div>
                 <Button
@@ -67,6 +81,7 @@ const AppointmentForm = (props: { tax_id: number }) => {
                     className="px-6 py-4 mt-8"
                     color="primary"
                     type="submit"
+                    disabled={result.isLoading}
                 >
                     Concertar cita
                 </Button>

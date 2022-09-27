@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Grid, Spacer, Tooltip, User } from "@nextui-org/react"
-import { IUser } from "../../storage/authSlice"
+import { Button, Spacer, Tooltip, User } from "@nextui-org/react"
+import { IUser } from "../../storage/types";
 
 const LawyerAvatar = (props: { lawyer: IUser }) => {
     const { lawyer } = props;

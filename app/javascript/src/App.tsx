@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import { createTheme, NextUIProvider } from '@nextui-org/react'
 
 import Navigation from './components/Navigation/Navigation'
-import { useDarkMode } from 'usehooks-ts'
 import React, { useEffect } from 'react'
 import { useAppDispatch } from './storage/hooks'
 import { loggedIn } from './storage/authSlice'
@@ -10,6 +9,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import { rescueMyEstimation } from './storage/estimationSlice'
 import Footer from './components/Footer'
+import useDarkMode from 'use-dark-mode'
 
 const lightTheme = createTheme({
   type: 'light',
@@ -20,8 +20,8 @@ const darkTheme = createTheme({
 })
 
 const App = () => {
-  const darkMode = useDarkMode()
   const dispatch = useAppDispatch()
+  const darkMode = useDarkMode(false);
 
   useEffect(() => {
     const token = document
@@ -35,7 +35,7 @@ const App = () => {
   }, [])
 
   return (
-    <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
+    <NextUIProvider theme={darkMode.value ? darkTheme : lightTheme}>
       <Toaster />
       <Navigation />
       <div className='min-h-screen'>

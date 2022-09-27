@@ -7,32 +7,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { createNewEstimation, myEstimation } from "./apiService";
+import { EstimationState, Estimation, EstimationData } from "./types";
 
-// Define a type for the slice stated
-
-export interface Estimation {
-  price: number,
-  id: number,
-  first_name: string
-}
-
-export interface EstimationData {
-  first_name: string,
-  home_changes: number,
-  first_time: number
-}
-
-interface EstimationState {
-  status: 'succeeded' | 'loading' | 'failed'
-  error: string | undefined
-  estimation_props: EstimationData | undefined,
-  estimation: Estimation | undefined
-}
-
-interface ValidationErrors {
-  errorMessage: string,
-  field_errors: Record<string, string>
-}
 
 // Define the initial state using that type
 const initialState = {

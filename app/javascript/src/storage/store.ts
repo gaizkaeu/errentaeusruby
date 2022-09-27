@@ -3,8 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import authSlice from './authSlice'
 import calculatorSlice from './calculatorSlice'
 import estimationSlice from './estimationSlice'
-import { taxIncomeApi } from './taxIncomeApi'
-import taxIncomeSlice from './taxIncomeSlice'
+import { taxIncomeApi } from './api'
 
 
 export const store = configureStore({
@@ -12,7 +11,6 @@ export const store = configureStore({
         estimations: estimationSlice,
         authentication: authSlice,
         calculator: calculatorSlice,
-        taxIncomes: taxIncomeSlice,
         [taxIncomeApi.reducerPath]: taxIncomeApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

@@ -4,9 +4,10 @@ import * as Yup from 'yup'
 import InputField from '../FormFields/InputField'
 import PasswordField from '../FormFields/PasswordField'
 import { Button, Spacer } from '@nextui-org/react'
-import { SessionCreationData, signIn } from '../../storage/authSlice'
+import { signIn } from '../../storage/authSlice'
 import { useAppDispatch } from '../../storage/hooks'
 import toast from 'react-hot-toast'
+import { SessionCreationData } from '../../storage/types'
 
 const SignIn = (props: {loginSuccess: () => void}) => {
   

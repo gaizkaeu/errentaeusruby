@@ -4,14 +4,13 @@ class TaxIncome < ApplicationRecord
   has_one :estimation
   has_one :appointment
 
-
   include AASM
 
   after_create_commit :assign_lawyer
 
   def load_price_from_estimation(estimation)
     update(price: estimation.price)
-    estimation.update(tax_income: self)
+    estimation.update(tax_income: self, user_id: self.user_id)
   end
 
   enum state: {
@@ -20,7 +19,7 @@ class TaxIncome < ApplicationRecord
     waiting_for_meeting: 2,
     pending_documentation: 3,
     in_progress: 4,
-    finished: 4,
+    finished: 5,
     rejected: -1,
   }
 
@@ -37,6 +36,9 @@ class TaxIncome < ApplicationRecord
     end
     event :appointment_created do
       transitions from: :waiting_for_meeting_creation, to: :waiting_for_meeting
+    end
+    event :appointment_deleted do
+      transitions from: :waiting_for_meeting, to: :waiting_for_meeting_creation
     end
   end
 

@@ -1,13 +1,11 @@
-json.extract! tax_income, :id, :paid, :state, :price, :created_at, :updated_at
-json.estimation tax_income.estimation
+json.extract! tax_income, :id ,:state, :price, :created_at, :updated_at
 
+if tax_income.estimation.present?
+    json.estimation tax_income.estimation.id
+end
 if tax_income.lawyer.present?
-    json.lawyer do
-        json.partial! partial: 'api/v1/user/lawyer', lawyer: tax_income.lawyer
-    end
+    json.lawyer tax_income.lawyer.id
 end
 if tax_income.appointment.present?
-    json.appointment do
-        json.extract! tax_income.appointment, :time
-    end
+    json.appointment tax_income.appointment.id
 end
