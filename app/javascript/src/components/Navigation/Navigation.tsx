@@ -1,3 +1,4 @@
+import useDarkMode from '@fisch0920/use-dark-mode'
 import {
   Navbar,
   Button,
@@ -9,7 +10,6 @@ import {
 import React from 'react'
 import toast from 'react-hot-toast'
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
-import { useDarkMode } from 'usehooks-ts'
 import { logOut } from '../../storage/authSlice'
 import { useAppDispatch, useAppSelector, useAuth, useCurrentUser } from '../../storage/hooks'
 import { MoonIcon } from '../Icons/MoonIcon'
@@ -95,7 +95,7 @@ const Navigation = () => {
       <Navbar.Content>
         <div>
           <Switch
-            checked={darkMode.isDarkMode}
+            checked={darkMode.value}
             onChange={darkMode.toggle}
             size="md"
             iconOn={
