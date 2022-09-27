@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import { rescueMyEstimation } from './storage/estimationSlice'
 import Footer from './components/Footer'
+import Loader from './components/Loader'
 
 const lightTheme = createTheme({
   type: 'light',
@@ -39,7 +40,7 @@ const App = () => {
       <Toaster />
       <Navigation />
       <div className='min-h-screen'>
-        <Suspense fallback={<div>Loading... </div>}>
+        <Suspense fallback={<Loader/>}>
           <Outlet/>
         </Suspense>
       </div>
