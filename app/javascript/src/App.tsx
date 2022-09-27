@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import { rescueMyEstimation } from './storage/estimationSlice'
 import Footer from './components/Footer'
-import useDarkMode from 'use-dark-mode'
+import useDarkMode from '@fisch0920/use-dark-mode'
 
 const lightTheme = createTheme({
   type: 'light',
