@@ -9,6 +9,8 @@ gem 'vite_rails'
 # Auth
 gem 'devise'
 
+gem 'pg'
+
 gem 'aasm'
 
 gem 'rack-brotli'
