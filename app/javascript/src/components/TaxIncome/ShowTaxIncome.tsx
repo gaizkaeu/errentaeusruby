@@ -1,10 +1,9 @@
 import React from 'react'
 import { Spacer, Text } from '@nextui-org/react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import 'react-day-picker/dist/style.css';
 import TaxIncomeCard from './components/TaxIncomeCard';
-import EstimationCard from '../Estimation/EstimationCard';
-import AssignedLawyer from '../Lawyer/AssignedLawyer';
+import AssignedLawyerCard from '../Lawyer/AssignedLawyer';
 import { useGetTaxIncomeByIdQuery } from '../../storage/api';
 import Estimation from '../Estimation/Estimation';
 import NoEstimationCard from '../Estimation/NoEstimationCard';
@@ -22,7 +21,7 @@ const ShowTaxIncome = () => {
               <TaxIncomeCard taxIncome={currentData!}></TaxIncomeCard>
             </div>
             <div className="w-full lg:w-auto">
-              {currentData.lawyer && <AssignedLawyer lawyerId={currentData.lawyer} /> }
+              {currentData.lawyer && <AssignedLawyerCard lawyerId={currentData.lawyer} /> }
               <Spacer/>
               {currentData.estimation ? <Estimation estimationId={currentData.estimation}/> : <NoEstimationCard/> }
             </div>

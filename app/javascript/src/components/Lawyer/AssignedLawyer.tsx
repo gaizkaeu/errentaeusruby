@@ -3,7 +3,7 @@ import { Card, Loading, Text } from "@nextui-org/react";
 import LawyerAvatar from "./Lawyer";
 import { useGetLawyerByIdQuery } from "../../storage/api";
 
-const AssignedLawyer = (props: { lawyerId: string }) => {
+const AssignedLawyerCard = (props: { lawyerId: string }) => {
     const {data, isLoading, isError} = useGetLawyerByIdQuery(props.lawyerId);
     return isLoading || !data || isError ?  <Loading type="points" /> : (
         <Card>
@@ -15,4 +15,11 @@ const AssignedLawyer = (props: { lawyerId: string }) => {
     )
 }
 
-export default AssignedLawyer;
+export const AssignedLawyerSimple = (props: { lawyerId: string }) => {
+    const {data, isLoading, isError} = useGetLawyerByIdQuery(props.lawyerId);
+    return isLoading || !data || isError ?  <Loading type="points" /> : (
+        <LawyerAvatar lawyer={data!} /> 
+    )
+}
+
+export default AssignedLawyerCard;

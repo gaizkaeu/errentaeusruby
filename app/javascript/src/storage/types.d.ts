@@ -5,12 +5,8 @@ export interface TaxIncome {
   estimation: string,
   lawyer: string,
   appointment: string,
-  created_at: Date
-}
-
-export enum AppointmentType{
-  phone = 0,
-  office = 1
+  created_at: string,
+  updated_at: string
 }
 
 export interface Appointment {
@@ -19,7 +15,7 @@ export interface Appointment {
   tax_income_id: string,
   phone: string,
   time: string,
-  method: AppointmentType
+  method: "office" | "phone"
 }
 
 export type TaxIncomeStatus = "pending_assignation" | "waiting_for_meeting_creation" | "waiting_for_meeting" | "rejected" | "pending_documentation" | "in_progress" | "finished"

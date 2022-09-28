@@ -1,8 +1,7 @@
+import React from 'react'
 import { Button, Text, Grid } from '@nextui-org/react'
 import { ArrowIcon } from '../components/Icons/ArrowIcon'
 import { useNavigate } from 'react-router-dom'
-import React from 'react'
-import Loader from '../components/Loader'
 
 const Home = () => {
   const navigate = useNavigate()

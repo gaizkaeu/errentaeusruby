@@ -8,11 +8,12 @@ import { at } from 'lodash';
 import * as Yup from 'yup'
 import { useCreateAppointmentToTaxIncomeMutation } from "../../storage/api";
 import toast from "react-hot-toast";
+import { Appointment } from "../../storage/types";
 
 interface Values {
     day: string,
     hour: string,
-    method: 0 | 1 | undefined,
+    method: "office" | "phone"
     phone: string
 }
 
@@ -27,12 +28,12 @@ const AppointmentTypeSelector = (props: { contactMethodFieldName: string, phone_
     }
 
     return (
-        <Radio.Group name={props.contactMethodFieldName} label="¿Como quedamos?" onChange={(v) => {methodHelpers.setValue(+v)}}>
-            <Radio name={props.contactMethodFieldName} value="0" description="Tu asesor te llamará.">
+        <Radio.Group name={props.contactMethodFieldName} label="¿Como quedamos?" onChange={(v) => {methodHelpers.setValue(v)}}>
+            <Radio name={props.contactMethodFieldName} value="phone" description="Tu asesor te llamará.">
                 Cita telefónica
             </Radio>
-            {methodField.value === 0 && <InputField name={props.phone_field} bordered label="Número de teléfono"/>}
-            <Radio name={props.contactMethodFieldName} value="1" description="Tendrás que venir a nuestra oficina.">
+            {methodField.value === 'phone' && <InputField name={props.phone_field} bordered label="Número de teléfono"/>}
+            <Radio name={props.contactMethodFieldName} value="office" description="Tendrás que venir a nuestra oficina.">
                 Cita presencial
             </Radio>
             <Text color="error">{_renderHelperText()}</Text>
@@ -40,7 +41,7 @@ const AppointmentTypeSelector = (props: { contactMethodFieldName: string, phone_
     );
 }
 
-const AppointmentForm = (props: { taxIncomeId: string }) => {
+const AppointmentForm = (props: { taxIncomeId: string, appointment?: Appointment, edit?: boolean }) => {
 
     const [addNewAppointment, result] = useCreateAppointmentToTaxIncomeMutation();
 
@@ -59,10 +60,10 @@ const AppointmentForm = (props: { taxIncomeId: string }) => {
     }
 
     return (
-        <Formik initialValues={{ day: '', hour: '12:30', method: undefined, phone: ''}} validationSchema={Yup.object({
+        <Formik initialValues={{ day: '', hour: '12:30', method: "office" as const, phone: ''}} validationSchema={Yup.object({
             day: Yup.date().required(),
             hour: Yup.string().min(4, "Hora inválida").required(),
-            method: Yup.number().required(),
+            method: Yup.string().required(),
             phone: Yup.number().when('method', {is: 0, then: Yup.number().min(9).required()})
           })
         } onSubmit={onSubmit}>

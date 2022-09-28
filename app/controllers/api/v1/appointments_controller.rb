@@ -4,7 +4,7 @@ module Api::V1
     before_action :authenticate_api_v1_user!
 
     def index
-      @appointments = Appointment.find_by(client_id: current_api_v1_user.id)
+      @appointments = Appointment.where(client_id: current_api_v1_user.id)
     end
 
     def create

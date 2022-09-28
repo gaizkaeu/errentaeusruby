@@ -53,7 +53,7 @@ export const taxIncomeApi = createApi({
         query: (data) => ({url: `tax_incomes`, method: 'post', data: data}),
         invalidatesTags: [{ type: 'TaxIncome', id: 'LIST' }],
       }),
-    getAppointments: build.query<TaxIncomesResponse, void>({
+    getAppointments: build.query<Appointment[], void>({
       query: () => ({url: 'appointments', method: 'get'}),
       providesTags: (result) =>
         result
@@ -80,11 +80,11 @@ export const taxIncomeApi = createApi({
       providesTags: (result, error, id) => [{type: 'Lawyer', id}],
     }),
     updateAppointmentById: build.mutation<Appointment, Partial<Appointment>>({
-      query: (data) => ({url: `tax_incomes`, method: 'put', body: data}),
+      query: (data) => ({url: `appointments/${data.id}`, method: 'put', body: data}),
       invalidatesTags: (result, error) => [{ type: 'TaxIncome', id:  result?.tax_income_id}, {type: 'Appointment', id: result?.id}],
     }),
   }),
 })
 
 export const { useGetTaxIncomesQuery, useGetTaxIncomeByIdQuery, useCreateTaxIncomeMutation, useCreateAppointmentToTaxIncomeMutation,
-               useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery } = taxIncomeApi
+               useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery, useGetAppointmentsQuery } = taxIncomeApi

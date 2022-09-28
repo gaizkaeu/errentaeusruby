@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Card, Spacer, Text, User } from "@nextui-org/react"
+import {  Card, Spacer, Text } from "@nextui-org/react"
 import Appointment from "../../../Appointment/Appointment";
 import { TaxIncome } from "../../../../storage/types";
 
