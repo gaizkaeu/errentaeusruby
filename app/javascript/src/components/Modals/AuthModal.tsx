@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
-import { Button, Modal, Text, useModal } from '@nextui-org/react'
-import { useAuth } from '../../storage/hooks'
-import SignIn from '../Authentication/SignIn'
-import SignUp from '../Authentication/SignUp'
+import React from 'react'
+import { Button, Modal, Text } from '@nextui-org/react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AuthComponent from '../Authentication/AuthComponent'
 
 const AuthModal = () => {
   const nav = useNavigate();
-  const { bindings } = useModal(true);
 
   const closeHandler = () => {
     nav(-1)
@@ -19,8 +15,8 @@ const AuthModal = () => {
     <Modal
       closeButton
       aria-labelledby="modal-title"
-      onCloseButtonClick={closeHandler}
-      {...bindings}
+      onClose={closeHandler}
+      open={true}
     >
       <Modal.Header>
         <Text id="modal-title" size={18}>
@@ -33,12 +29,7 @@ const AuthModal = () => {
         <AuthComponent/>
       </Modal.Body>
       <Modal.Footer>
-        <Button auto flat color="error" onClick={closeHandler}>
-          Close
-        </Button>
-        <Button auto onClick={closeHandler}>
-          Sign in
-        </Button>
+        <Text>Todos los datos están encriptados.</Text>
       </Modal.Footer>
     </Modal>
     </div>

@@ -13,7 +13,6 @@ const AuthComponent = () => {
 
   const loginSuccess = () => {
     nav(-1);
-    location.reload()
   }
 
   return (
