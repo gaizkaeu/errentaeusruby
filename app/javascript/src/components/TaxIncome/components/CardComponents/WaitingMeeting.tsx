@@ -1,6 +1,6 @@
 import React from "react"
 import {  Card, Spacer, Text } from "@nextui-org/react"
-import Appointment from "../../../Appointment/Appointment";
+import {AppointmentWrapper } from "../../../Appointment/Appointment";
 import { TaxIncome } from "../../../../storage/types";
 
 const WaitingMeeting = (props: { taxIncome: TaxIncome }) => {
@@ -17,7 +17,7 @@ const WaitingMeeting = (props: { taxIncome: TaxIncome }) => {
                 </Card.Body>
             </Card>
             <Spacer/>
-            <Appointment appointmentId={taxIncome.appointment!}></Appointment>
+            <AppointmentWrapper appointmentId={taxIncome.appointment!}></AppointmentWrapper>
         </div>
     )
 }
