@@ -68,28 +68,29 @@ const SignUp = (props: {loginSuccess: () => void}) => {
         <Form className="ml-3 mr-3">
           <Grid.Container gap={1}>
             <Grid xs={12} md={6}>
-              <InputField name="name" label="Nombre" size="xl" fullWidth/>
+              <InputField name="name" label="Nombre" size="xl" fullWidth bordered/>
             </Grid>
             <Grid xs={12} md={6}>
-              <InputField name="surname" label="Apellido" size="xl" fullWidth/>
+              <InputField name="surname" label="Apellido" size="xl" fullWidth bordered/>
             </Grid>
           </Grid.Container>
           <Spacer y={1.5} />
           <Grid.Container gap={1}>
             <Grid xs={12} md={12}>
-              <InputField name="email" label="Email" fullWidth />
+              <InputField name="email" label="Email" fullWidth bordered/>
             </Grid>
           </Grid.Container>
           <Spacer y={1.5} />
-          <Grid.Container gap={1}>
+          <Grid.Container gap={1} alignItems="center">
             <Grid xs={12} md={6}>
-            <PasswordField name="password" label="Contraseña" fullWidth />
+            <PasswordField name="password" label="Contraseña" fullWidth bordered/>
             </Grid>
             <Grid xs={12} md={6}>
             <PasswordField
               name="password_confirmation"
               label="Confirmar Contraseña"
-              fullWidth 
+              fullWidth
+              bordered
             />
             </Grid>
           </Grid.Container>

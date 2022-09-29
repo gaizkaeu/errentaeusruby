@@ -5,7 +5,7 @@ import { ArrowIcon } from '../Icons/ArrowIcon'
 import { useGetEstimationByIdQuery } from '../../storage/api'
 import EstimationCard from './EstimationCard'
 
-const Estimation = (props: { estimationId: string }, {...rest}) => {
+const EstimationWrapper = (props: { estimationId: string }, {...rest}) => {
     const {data, isLoading} = useGetEstimationByIdQuery(props.estimationId);
     return isLoading ?  <Loading type="points" /> : (
             <EstimationCard estimation={data} {...rest}></EstimationCard>
@@ -13,4 +13,4 @@ const Estimation = (props: { estimationId: string }, {...rest}) => {
     
 }
 
-export default Estimation
+export default EstimationWrapper

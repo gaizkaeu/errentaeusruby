@@ -50,9 +50,9 @@ const SignIn = (props: {loginSuccess: () => void}) => {
     >
       {({ isSubmitting }) => (
         <Form className="ml-3 mr-3">
-          <InputField name="email" label="Email" fullWidth/>
+          <InputField name="email" label="Email" fullWidth bordered/>
           <Spacer y={1.5} />
-          <PasswordField name="password" label="Contraseña" fullWidth></PasswordField>
+          <PasswordField name="password" label="Contraseña" fullWidth bordered></PasswordField>
           <Spacer y={2.5} />
           <Button
             rounded

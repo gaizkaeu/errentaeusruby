@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'
 import { logOut } from '../../storage/authSlice'
-import { useAppDispatch, useAppSelector, useAuth, useCurrentUser } from '../../storage/hooks'
+import { useAppDispatch, useAuth, useCurrentUser } from '../../storage/hooks'
 import { MoonIcon } from '../Icons/MoonIcon'
 import { SunIcon } from '../Icons/SunIcon'
 

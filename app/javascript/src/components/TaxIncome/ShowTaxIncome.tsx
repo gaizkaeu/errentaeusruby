@@ -5,7 +5,7 @@ import 'react-day-picker/dist/style.css';
 import TaxIncomeCard from './components/TaxIncomeCard';
 import AssignedLawyerCard from '../Lawyer/AssignedLawyer';
 import { useGetTaxIncomeByIdQuery } from '../../storage/api';
-import Estimation from '../Estimation/Estimation';
+import EstimationWrapper from '../Estimation/Estimation';
 import NoEstimationCard from '../Estimation/NoEstimationCard';
 
 const ShowTaxIncome = () => {
@@ -23,7 +23,7 @@ const ShowTaxIncome = () => {
             <div className="w-full lg:w-auto">
               {currentData.lawyer && <AssignedLawyerCard lawyerId={currentData.lawyer} /> }
               <Spacer/>
-              {currentData.estimation ? <Estimation estimationId={currentData.estimation}/> : <NoEstimationCard/> }
+              {currentData.estimation ? <EstimationWrapper estimationId={currentData.estimation}/> : <NoEstimationCard/> }
             </div>
           </React.Fragment>
         ) : (

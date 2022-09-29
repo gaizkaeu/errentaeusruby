@@ -5,11 +5,17 @@ import { DayPicker } from "react-day-picker";
 import { formatRelative } from "date-fns";
 import {es} from "date-fns/locale"
 import es_day from 'date-fns/locale/es';
+import { Appointment } from "../../storage/types";
 
-
-const Appointment = (props: { appointmentId: string }) => {
-
+export const AppointmentWrapper = (props: { appointmentId: string }) => {
     const {currentData, isError, isLoading} = useGetAppointmentByIdQuery(props.appointmentId)
+
+    return isLoading || !currentData || isError ?  <Loading type="points" /> : <Appointment appointment={currentData}/>
+
+}
+
+
+const Appointment = (props: { appointment: Appointment }) => {
 
     return (
         <Card>
@@ -21,14 +27,12 @@ const Appointment = (props: { appointmentId: string }) => {
                     <Button size="sm">Editar</Button>
                 </div>
             </Card.Header>
-            {isLoading || !currentData || isError ?  <Loading type="points" /> : (
                 <Card.Body>
                     <div className="flex flex-wrap">
-                        <DayPicker locale={es_day} selected={new Date(currentData!.time)}></DayPicker>
-                        <Text>{formatRelative(new Date(currentData!.time), new Date(), {locale: es})}</Text>
+                        <DayPicker locale={es_day} selected={new Date(props.appointment.time)}></DayPicker>
+                        <Text>{formatRelative(new Date(props.appointment.time), new Date(), {locale: es})}</Text>
                     </div>
                 </Card.Body>
-            )}
         </Card>
     )
 }

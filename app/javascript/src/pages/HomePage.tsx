@@ -3,7 +3,7 @@ import { Button, Text, Grid } from '@nextui-org/react'
 import { ArrowIcon } from '../components/Icons/ArrowIcon'
 import { useNavigate } from 'react-router-dom'
 
-const Home = () => {
+const HomePage = () => {
   const navigate = useNavigate()
 
   return (
@@ -51,4 +51,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

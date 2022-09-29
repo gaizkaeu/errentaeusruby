@@ -18,7 +18,7 @@ const createNewSession = async (data: SessionCreationData) => {
 }
 
 const closeSession = async () => {
-   const response = await axios.delete(API_BASE + '/api/v1/users/sign_out') 
+   const response = await axios.delete(API_BASE + 'api/v1/users/sign_out') 
    return response.status;
 }
 

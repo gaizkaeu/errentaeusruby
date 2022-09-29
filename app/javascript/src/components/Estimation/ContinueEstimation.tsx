@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text } from '@nextui-org/react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { firstStep } from '../../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import AuthComponent from '../Authentication/AuthComponent'
@@ -9,6 +9,7 @@ import { ArrowIcon } from '../Icons/ArrowIcon'
 export default function ContinueEstimation() {
   const logged_in = useAppSelector((state) => state.authentication.logged_in)
   const dispatch = useAppDispatch()
+  const location = useLocation();
   const nav = useNavigate()
 
   return (
@@ -34,8 +35,8 @@ export default function ContinueEstimation() {
         <div className="w-full">
           <Text className="text-center">
             Útilizamos las cuentas para poder <b>proteger tu información</b>.
+            <br/><Link to="/auth" state={{ background: location }}>Inicia sesión para continuar.</Link>
           </Text>
-          <AuthComponent />
         </div>
       )}
     </div>

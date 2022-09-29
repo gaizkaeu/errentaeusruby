@@ -7,7 +7,6 @@ import { Appointment } from "../../storage/types";
 
 const AppointmentCard = (props: { appointment: Appointment }) => {
 
-
     return (
         <Card>
             <Card.Header>

@@ -40,7 +40,6 @@ const SingleEstimation = (props: {
       >
         Quiero revisar mis respuestas.
       </Button>
-      <Text h3 className='mt-3'>Para continuar solo tienes que registrarte/iniciar sesión.</Text>
     </div>
   )
 }
