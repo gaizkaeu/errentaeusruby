@@ -7,7 +7,7 @@ echo "----------------"
 
 # Create or migrate database
 echo "Preparing database..."
-bin/rails db:prepare
+bin/rails db:reset
 echo "Database is ready!"
 
 bundle exec puma -C config/puma.rb
