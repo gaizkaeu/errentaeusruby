@@ -6,7 +6,6 @@ import TaxIncomeCard from './components/TaxIncomeCard';
 import AssignedLawyerCard from '../Lawyer/AssignedLawyer';
 import { useGetTaxIncomeByIdQuery } from '../../storage/api';
 import EstimationWrapper from '../Estimation/Estimation';
-import NoEstimationCard from '../Estimation/NoEstimationCard';
 
 const ShowTaxIncome = () => {
   const { id } = useParams()
@@ -23,7 +22,7 @@ const ShowTaxIncome = () => {
             <div className="w-full lg:w-auto">
               {currentData.lawyer && <AssignedLawyerCard lawyerId={currentData.lawyer} /> }
               <Spacer/>
-              {currentData.estimation ? <EstimationWrapper estimationId={currentData.estimation}/> : <NoEstimationCard/> }
+              <EstimationWrapper estimationId={currentData.estimation}/>
             </div>
           </React.Fragment>
         ) : (

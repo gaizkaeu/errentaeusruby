@@ -8,7 +8,7 @@ import { Appointment } from "../../storage/types";
 const AppointmentCard = (props: { appointment: Appointment }) => {
 
     return (
-        <Card>
+        <Card variant="flat">
             <Card.Header>
                 <Text b>{formatRelative(new Date(props.appointment.time), new Date(), { locale: es }).toLocaleUpperCase()}</Text>
             </Card.Header>

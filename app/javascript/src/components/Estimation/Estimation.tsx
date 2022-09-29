@@ -8,7 +8,7 @@ import EstimationCard from './EstimationCard'
 const EstimationWrapper = (props: { estimationId: string }, {...rest}) => {
     const {data, isLoading} = useGetEstimationByIdQuery(props.estimationId);
     return isLoading ?  <Loading type="points" /> : (
-            <EstimationCard estimation={data} {...rest}></EstimationCard>
+            <EstimationCard estimation={data!} {...rest}></EstimationCard>
         )
     
 }

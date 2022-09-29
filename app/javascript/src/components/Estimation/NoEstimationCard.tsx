@@ -6,14 +6,13 @@ import { ArrowIcon } from '../Icons/ArrowIcon'
 const NoEstimationCard = () => {
     const navigate = useNavigate()
     return (
-        <Card isHoverable>
+        <Card variant="flat">
             <Card.Body>
                 <Text b>No tenemos ninguna estimación.</Text>
                 <Text>Utilizamos las estimaciones para hacer las cosas más sencillas y claras.</Text>
                 <Button
                     rounded
                     className="mt-3"
-                    color="gradient"
                     size={'lg'}
                     auto
                     onPress={() => navigate('/calculator')}

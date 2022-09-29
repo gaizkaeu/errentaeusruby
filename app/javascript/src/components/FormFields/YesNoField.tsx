@@ -28,10 +28,9 @@ export default function YesNoField({...props }) {
       <label>
         <Card
           isPressable
-          isHoverable
           borderWeight= "extrabold"
           onPress={() => selectOption(1)}
-          variant={field.value === 1 ? 'shadow' : 'bordered'}
+          variant={field.value === 1 ? 'flat' : 'bordered'}
         >
           <Card.Body>
             <Text>Si.</Text>
@@ -45,7 +44,7 @@ export default function YesNoField({...props }) {
           isHoverable
           borderWeight= "extrabold"
           onPress={() => selectOption(0)}
-          variant={field.value === 0 ? 'shadow' : 'bordered'}
+          variant={field.value === 0 ? 'flat' : 'bordered'}
         >
           <Card.Body>
             <Text>No.</Text>

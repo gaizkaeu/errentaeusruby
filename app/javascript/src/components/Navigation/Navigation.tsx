@@ -5,6 +5,7 @@ import {
   Switch,
   Dropdown,
   Avatar,
+  Link,
 } from '@nextui-org/react'
 import React from 'react'
 import toast from 'react-hot-toast'
@@ -119,9 +120,9 @@ const Navigation = () => {
           />
         </div>
         <Navbar.Item hideIn="xs">
-          <Button rounded bordered flat color="warning" size={'md'} auto>
+          <Link href="https://elizaasesores.com">
             Eliza Asesores
-          </Button>
+          </Link>
         </Navbar.Item>
         {auth && (
           <Navbar.Content

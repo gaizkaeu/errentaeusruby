@@ -1,18 +1,17 @@
 import React from 'react'
 import { Button, Grid, Text, Textarea } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
-import { useAppSelector } from '../../storage/hooks'
 import { useNavigate } from 'react-router-dom'
-import EstimationCard from '../Estimation/EstimationCard'
-import 'react-day-picker/dist/style.css';
 import toast from 'react-hot-toast'
 import { useCreateTaxIncomeMutation } from '../../storage/api'
 import { TaxIncomeData } from '../../storage/types'
+import { useAppSelector } from '../../storage/hooks'
+import EstimationCard from '../Estimation/EstimationCard'
 
 const NewTaxIncome = () => {
-  const estimation = useAppSelector((state) => state.estimations.estimation)
-  const [addTaxIncome, result] = useCreateTaxIncomeMutation();
   const navigate = useNavigate()
+  const estimation = useAppSelector((state) => state.estimations.estimation)
+  const [addTaxIncome] = useCreateTaxIncomeMutation();
 
   const submitForm = async (
     values: TaxIncomeData,
@@ -29,7 +28,7 @@ const NewTaxIncome = () => {
       toast.error('Error', {
         id: toastNotification
       })
-      formikHelpers.setErrors(error.data)
+      formikHelpers.setErrors(error.data) 
     })
 
   }
@@ -59,7 +58,6 @@ const NewTaxIncome = () => {
               className="px-6 py-4 mt-8"
               color="primary"
               size={'lg'}
-              isDisabled={result.isLoading}
               auto
               type="submit"
             >

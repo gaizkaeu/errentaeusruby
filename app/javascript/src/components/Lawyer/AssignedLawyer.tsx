@@ -6,7 +6,7 @@ import { useGetLawyerByIdQuery } from "../../storage/api";
 const AssignedLawyerCard = (props: { lawyerId: string }) => {
     const {data, isLoading, isError} = useGetLawyerByIdQuery(props.lawyerId);
     return isLoading || !data || isError ?  <Loading type="points" /> : (
-        <Card>
+        <Card variant="flat">
             <Card.Body>
                 <Text b>Tu asesor fiscal</Text>
                  <LawyerAvatar lawyer={data!} /> 

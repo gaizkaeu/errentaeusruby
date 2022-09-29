@@ -8,7 +8,7 @@ import { Estimation } from '../../storage/types'
 const EstimationCard = (props: { estimation: Estimation | undefined, deletable?: boolean }) => {
     const { estimation, deletable } = props
     return (
-        <Card isHoverable>
+        <Card variant="flat">
             {estimation ? (
                 <Card.Body>
                     <Text size="$xl">

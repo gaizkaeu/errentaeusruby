@@ -37,7 +37,7 @@ const TaxIncomeCardMin = (props: {taxIncome: TaxIncome}) => {
     }
 
     return (
-        <Card isPressable onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}>
+        <Card variant="flat" isPressable onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}>
             <Card.Header>{renderStatus()}</Card.Header>
             <Card.Divider/>
             <Card.Body>

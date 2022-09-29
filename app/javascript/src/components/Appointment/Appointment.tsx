@@ -18,7 +18,7 @@ export const AppointmentWrapper = (props: { appointmentId: string }) => {
 const Appointment = (props: { appointment: Appointment }) => {
 
     return (
-        <Card>
+        <Card variant="flat">
             <Card.Header>
                 <div className="flex w-full">
                     <div className="flex-1">
