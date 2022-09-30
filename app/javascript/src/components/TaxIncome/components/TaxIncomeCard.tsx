@@ -16,7 +16,7 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome}) => {
             case "waiting_for_meeting_creation":
                 return <MeetingCreation taxIncome={taxIncome}/>;
             case "waiting_for_meeting":
-                return <WaitingMeeting/>;
+                return <WaitingMeeting taxIncome={taxIncome}/>;
             case "pending_documentation":
                 return <Text>Peding documentation</Text>;
             case "in_progress":

@@ -29,7 +29,7 @@ const AuthModal = () => {
         <AuthComponent/>
       </Modal.Body>
       <Modal.Footer>
-        <Text>Todos los datos están encriptados.</Text>
+        <Text weight="light">Todos los datos están encriptados.</Text>
       </Modal.Footer>
     </Modal>
     </div>

@@ -18,7 +18,7 @@ const App = React.lazy(() => import('./App'));
 const PrivateRoute = (props: { children: JSX.Element }) => {
   const [auth, fetched] = useAuth();
 
-  return fetched ? (auth ? props.children : <Navigate to="/auth/sign_in" />) : <Text>Loading...</Text>
+  return fetched ? (auth ? props.children : <Navigate to="/auth" />) : <Text>Loading...</Text>
 }
 
 const AppRoutes = () => {

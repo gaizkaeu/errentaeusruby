@@ -1,4 +1,4 @@
-import { Text, Button, Input, Radio, Spacer, Card, Loading } from "@nextui-org/react"
+import { Text, Button, Input, Radio, Spacer, Card, Loading, Link } from "@nextui-org/react"
 import React from "react"
 import { useGetAppointmentByIdQuery } from "../../storage/api";
 import { DayPicker } from "react-day-picker";
@@ -22,15 +22,15 @@ const Appointment = (props: { appointment: Appointment }) => {
             <Card.Header>
                 <div className="flex w-full">
                     <div className="flex-1">
-                        <Text b>Mi cita</Text>
+                        <Text b>Mi cita - {formatRelative(new Date(props.appointment.time), new Date(), {locale: es})}</Text>
                     </div>
-                    <Button size="sm">Editar</Button>
                 </div>
             </Card.Header>
                 <Card.Body>
                     <div className="flex flex-wrap">
                         <DayPicker locale={es_day} selected={new Date(props.appointment.time)}></DayPicker>
-                        <Text>{formatRelative(new Date(props.appointment.time), new Date(), {locale: es})}</Text>
+                        <Text>{props.appointment.method == "phone" ? "Te llamaremos al telefono proporcionado" : "Te esperamos en nuestra oficina."} </Text>
+                        {props.appointment.method == "office" && <Link href="https://g.page/eliza-asesores?share">Indicaciones</Link>}
                     </div>
                 </Card.Body>
         </Card>

@@ -1,8 +1,11 @@
 import React from "react"
-import { Card, Text } from "@nextui-org/react"
+import { Card, Spacer, Text } from "@nextui-org/react"
+import Appointment, { AppointmentWrapper } from "../../../Appointment/Appointment";
+import { TaxIncome } from "../../../../storage/types";
 
-const WaitingMeeting = () => {
+const WaitingMeeting = (props: {taxIncome: TaxIncome}) => {
     return (
+        <div>
         <Card variant="flat">
             <Card.Header>
                 <Text b size="$xl">Esperando para hablar contigo.</Text>
@@ -12,6 +15,9 @@ const WaitingMeeting = () => {
                 Tenemos una cita contigo.
             </Card.Body>
         </Card>
+        <Spacer/>
+        <AppointmentWrapper appointmentId={props.taxIncome.appointment}/>
+        </div>
     )
 }
 

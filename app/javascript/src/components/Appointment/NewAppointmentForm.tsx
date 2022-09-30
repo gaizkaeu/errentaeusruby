@@ -63,8 +63,8 @@ const AppointmentForm = (props: { taxIncomeId: string, appointment?: Appointment
         <Formik initialValues={{ day: '', hour: '12:30', method: "office" as const, phone: ''}} validationSchema={Yup.object({
             day: Yup.date().required(),
             hour: Yup.string().min(4, "Hora inválida").required(),
-            method: Yup.string().required(),
-            phone: Yup.number().when('method', {is: 0, then: Yup.number().min(9).required()})
+            method: Yup.string(),
+            phone: Yup.number().when('method', {is: "phone", then: Yup.number().min(9).required()})
           })
         } onSubmit={onSubmit}>
             <Form>
