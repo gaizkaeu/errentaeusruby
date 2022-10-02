@@ -6,6 +6,8 @@ class Appointment < ApplicationRecord
   after_create_commit :notify_creation_to_tax_income
   after_destroy_commit :notify_deletion_to_tax_income
 
+  validates :phone, presence: true, if: :phone?
+
   enum method: {
     phone: 0,
     office: 1
@@ -20,8 +22,4 @@ class Appointment < ApplicationRecord
   def notify_deletion_to_tax_income
     tax_income.appointment_deleted!
   end
-
-
-
-
 end
