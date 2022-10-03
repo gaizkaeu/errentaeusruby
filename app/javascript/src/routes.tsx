@@ -12,7 +12,6 @@ const TaxIncomePage = React.lazy(() => import('./pages/TaxIncomePage'));
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const EstimationPage = React.lazy(() => import('./pages/EstimationPage'));
 const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
-const AuthenticationPage = React.lazy(() => import('./pages/AuthenticationPage'));
 const App = React.lazy(() => import('./App'));
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
@@ -33,9 +32,7 @@ const AppRoutes = () => {
             <Route index element={<HomePage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/estimation" element={<EstimationPage />} />
-            <Route path="/auth" element={<AuthModal />}>
-              <Route path=":action" element={<AuthenticationPage/>}/>
-            </Route>
+            <Route path="/auth" element={<AuthModal />}/>
             <Route
               path="/mytaxincome"
               element={

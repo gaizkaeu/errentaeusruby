@@ -2,9 +2,11 @@ import React from 'react'
 import { Button, Text, Grid } from '@nextui-org/react'
 import { ArrowIcon } from '../components/Icons/ArrowIcon'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const HomePage = () => {
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation();
 
   return (
     <header>
@@ -12,8 +14,8 @@ const HomePage = () => {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <div>
-              <Text className="text-base font-semibold tracking-wider">
-                UN SERVICIO DE ELIZA ASESORES
+              <Text className="text-base font-semibold tracking-wider uppercase">
+               {t("header.elizaasesoresservice")} 
               </Text>
               <Text
                 className="mt-4 text-5xl font-bold text-black lg:mt-8 sm:text-7xl  xl:text-8xl"

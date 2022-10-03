@@ -12,6 +12,8 @@ import { rescueMyEstimation } from './storage/estimationSlice'
 import Footer from './components/Footer'
 import Loader from './components/Loader'
 
+import './i18n';
+
 const lightTheme = createTheme({
   type: 'light',
 })
@@ -36,6 +38,7 @@ const App = () => {
   }, [])
 
   return (
+
     <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
       <Toaster />
       <Navigation />
