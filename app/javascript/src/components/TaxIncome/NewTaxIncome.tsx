@@ -1,4 +1,4 @@
-import React from 'react'
+import {Fragment} from 'react'
 import { Button, Grid, Text, Textarea } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { useNavigate } from 'react-router-dom'
@@ -34,7 +34,7 @@ const NewTaxIncome = () => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Text h3>Solo te llevará 2 minutos más.</Text>
 
       <div>
@@ -67,7 +67,7 @@ const NewTaxIncome = () => {
 
         </Formik>
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

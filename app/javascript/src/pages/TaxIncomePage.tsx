@@ -1,11 +1,11 @@
-import React from 'react'
+import {Fragment} from 'react'
 import { Button, Text } from '@nextui-org/react'
 import { Outlet } from 'react-router-dom'
 
 function TaxIncomePage() {
 
   return (
-    <React.Fragment>
+    <Fragment>
       <header>
         <section className="py-5 ">
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -28,7 +28,7 @@ function TaxIncomePage() {
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Outlet/>
       </main>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

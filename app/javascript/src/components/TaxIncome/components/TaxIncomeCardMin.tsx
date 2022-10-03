@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Card, Text } from "@nextui-org/react";
 import { TaxIncome } from "../../../storage/types";
 import { RightArrowIcon } from "../../Icons/RightArrowIcon";

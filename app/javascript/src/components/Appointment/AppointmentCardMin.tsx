@@ -1,5 +1,4 @@
 import { Text,  Card, Link } from "@nextui-org/react"
-import React from "react"
 import { formatRelative } from "date-fns";
 import { es } from "date-fns/locale"
 import { Appointment } from "../../storage/types";

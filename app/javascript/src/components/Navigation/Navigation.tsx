@@ -7,7 +7,6 @@ import {
   Avatar,
   Link,
 } from '@nextui-org/react'
-import React from 'react'
 import toast from 'react-hot-toast'
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'

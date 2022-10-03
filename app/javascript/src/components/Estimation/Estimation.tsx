@@ -1,7 +1,4 @@
-import React from 'react'
 import { Button, Card, Loading, Text } from '@nextui-org/react'
-import { useNavigate } from 'react-router-dom'
-import { ArrowIcon } from '../Icons/ArrowIcon'
 import { useGetEstimationByIdQuery } from '../../storage/api'
 import EstimationCard from './EstimationCard'
 

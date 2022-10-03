@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, Modal, Text } from '@nextui-org/react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AuthComponent from '../Authentication/AuthComponent'

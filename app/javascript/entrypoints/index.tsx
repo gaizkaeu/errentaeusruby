@@ -1,5 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
 import './index.css'
 
 import AppRoutes from '../src/routes'
@@ -10,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AppRoutes/>
+      <AppRoutes/>
     </BrowserRouter>
   </React.StrictMode>,
 )

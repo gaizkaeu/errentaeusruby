@@ -1,9 +1,7 @@
-import React from 'react'
 import { Button, Text } from '@nextui-org/react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { firstStep } from '../../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
-import AuthComponent from '../Authentication/AuthComponent'
 import { ArrowIcon } from '../Icons/ArrowIcon'
 
 export default function ContinueEstimation() {

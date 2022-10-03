@@ -1,7 +1,7 @@
+import { Fragment } from 'react'
 import { Button, Loading, Progress, Text } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
 import calculatorFormModel from './Model/calculatorFormModel'
-import React from 'react'
 import Start from './Steps/Start'
 import Viviendas from './Steps/Viviendas'
 import PrimeraVez from './Steps/PrimeraVez'
@@ -122,7 +122,7 @@ export default function Calculator() {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       {stepPersist === steps.length ? (
         <Finish />
       ) : (
@@ -175,6 +175,6 @@ export default function Calculator() {
           )}
         </Formik>
       )}
-    </React.Fragment>
+    </Fragment>
   )
 }

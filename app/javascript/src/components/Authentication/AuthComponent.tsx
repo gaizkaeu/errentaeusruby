@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { Button, Text } from '@nextui-org/react'
 import { useAuth } from '../../storage/hooks'
 import SignIn from './SignIn'
@@ -16,7 +16,7 @@ const AuthComponent = () => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       {auth ? (
         <Text>ya estas logeado</Text>
       ) : (
@@ -28,7 +28,7 @@ const AuthComponent = () => {
           {logIn ? <SignIn loginSuccess={loginSuccess} /> : <SignUp loginSuccess={loginSuccess} />}
         </div>
       )}
-    </React.Fragment>
+    </Fragment>
   )
 }
 export default AuthComponent

@@ -1,4 +1,4 @@
-import React from 'react'
+import {Fragment} from 'react'
 import { Spacer, Text } from '@nextui-org/react';
 import { useParams } from 'react-router-dom'
 import 'react-day-picker/dist/style.css';
@@ -12,10 +12,10 @@ const ShowTaxIncome = () => {
   const {currentData, isError, isLoading} = useGetTaxIncomeByIdQuery(id!);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div className="items-center flex flex-wrap gap-10 p-3 self-center place-content-center">
         {!isError && !isLoading && currentData? (
-          <React.Fragment>
+          <Fragment>
             <div className="flex-1">
               <TaxIncomeCard taxIncome={currentData!}></TaxIncomeCard>
             </div>
@@ -24,13 +24,13 @@ const ShowTaxIncome = () => {
               <Spacer/>
               <EstimationWrapper estimationId={currentData.estimation}/>
             </div>
-          </React.Fragment>
+          </Fragment>
         ) : (
           <Text>Cargando... o no tienes permisos</Text>
         )}
       </div>
 
-    </React.Fragment>
+    </Fragment>
   )
 }
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text } from '@nextui-org/react'
 import './index.css'
 export default function Loader() {

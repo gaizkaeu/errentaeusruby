@@ -1,4 +1,4 @@
-import React from 'react'
+import {Fragment} from 'react'
 import ContinueEstimation from '../components/Estimation/ContinueEstimation'
 import SingleEstimation from '../components/Estimation/SingleEstimation'
 import { useAppSelector } from '../storage/hooks'
@@ -8,7 +8,7 @@ function EstimationPage() {
   const estimations = useAppSelector((state) => state.estimations.estimation)
 
   return (
-    <React.Fragment>
+    <Fragment>
       <header>
         <section className="py-5 ">
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -44,7 +44,7 @@ function EstimationPage() {
           <Text>No hay na</Text>
         )}
       </main>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

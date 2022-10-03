@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Loading, Text } from "@nextui-org/react";
 import LawyerAvatar from "./Lawyer";
 import { useGetLawyerByIdQuery } from "../../storage/api";

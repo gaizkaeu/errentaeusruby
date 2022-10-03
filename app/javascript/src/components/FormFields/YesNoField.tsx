@@ -1,6 +1,5 @@
-import React from 'react'
 import { at } from 'lodash'
-import { Field, useField, useFormikContext } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { Card, Text } from '@nextui-org/react'
 
 export default function YesNoField({...props }) {

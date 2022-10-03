@@ -1,5 +1,6 @@
+import { Fragment } from 'react'
 import { Button, Text } from '@nextui-org/react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { firstStep } from '../../../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../../../storage/hooks'
@@ -27,9 +28,9 @@ const Finish = () => {
   })
 
   return (
-    <React.Fragment>
+    <Fragment>
       {status === 'failed' && error ? (
-        <React.Fragment>
+        <Fragment>
           <Text h3>Ha ocurrido un error</Text>
           <Text h4 color="red">
             {error}
@@ -37,13 +38,13 @@ const Finish = () => {
           <Button rounded bordered flat color="warning" size={'md'} auto onPress={() => dispatch(firstStep())}>
             Volver a intentarlo
           </Button>
-        </React.Fragment>
+        </Fragment>
       ) : (
-        <React.Fragment>
+        <Fragment>
             <CheckAnimated/>
-        </React.Fragment>
+        </Fragment>
       )}
-    </React.Fragment>
+    </Fragment>
   )
 }
 

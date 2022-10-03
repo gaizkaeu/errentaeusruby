@@ -3,7 +3,7 @@ import { createTheme, NextUIProvider } from '@nextui-org/react'
 
 import Navigation from './components/Navigation/Navigation'
 import { useDarkMode } from 'usehooks-ts'
-import React, { Suspense, useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useAppDispatch } from './storage/hooks'
 import { loggedIn } from './storage/authSlice'
 import toast, { Toaster } from 'react-hot-toast'

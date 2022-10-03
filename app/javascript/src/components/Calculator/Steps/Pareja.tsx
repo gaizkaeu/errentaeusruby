@@ -1,5 +1,5 @@
+import { Fragment } from 'react'
 import { Text } from '@nextui-org/react'
-import React from 'react'
 import YesNoField from '../../FormFields/YesNoField'
 import { FieldData } from '../Model/calculatorFormModel'
 
@@ -10,9 +10,9 @@ export default function Pareja(props: {
 }){
   const {formField: {withCouple}} = props;
   return (
-    <React.Fragment>
+    <Fragment>
       <YesNoField name={withCouple.name}></YesNoField>
       <Text>Al hacer la declaración en pareja eres elegible para un descuento del 25%.</Text>
-    </React.Fragment>
+    </Fragment>
   )
 }

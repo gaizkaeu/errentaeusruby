@@ -1,10 +1,9 @@
-import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './storage/hooks'
 import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
-import AuthModal from './components/Modals/AuthModal'
+const AuthModal = React.lazy(() => import('./components/Modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
 const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
 const MenuTaxIncome = React.lazy(() => import('./components/TaxIncome/MenuTaxIncome'));

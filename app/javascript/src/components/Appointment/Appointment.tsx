@@ -1,5 +1,4 @@
 import { Text, Button, Input, Radio, Spacer, Card, Loading, Link } from "@nextui-org/react"
-import React from "react"
 import { useGetAppointmentByIdQuery } from "../../storage/api";
 import { DayPicker } from "react-day-picker";
 import { formatRelative } from "date-fns";

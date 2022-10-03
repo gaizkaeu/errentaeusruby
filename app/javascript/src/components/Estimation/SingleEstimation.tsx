@@ -1,10 +1,8 @@
-import { Button, Card, Grid, Link, Text } from '@nextui-org/react'
-import React from 'react'
+import { Button, Text } from '@nextui-org/react'
 import { useNavigate } from 'react-router-dom'
 import { firstStep } from '../../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
 import { Estimation } from '../../storage/types'
-import { ArrowIcon } from '../Icons/ArrowIcon'
 
 const SingleEstimation = (props: {
   estimation: Estimation

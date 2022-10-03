@@ -1,4 +1,3 @@
-import React from "react";
 import { Text } from "@nextui-org/react";
 import { TaxIncome } from "../../../storage/types";
 import MeetingCreation from "./CardComponents/MeetingCreation";

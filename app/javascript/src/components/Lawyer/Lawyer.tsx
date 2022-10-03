@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { Button, Spacer, Tooltip, User } from "@nextui-org/react"
 import { IUser } from "../../storage/types";
 
@@ -18,11 +18,11 @@ const LawyerAvatar = (props: { lawyer: IUser }) => {
 
 const LawyerCard = (props: { lawyer: IUser }) => {
     return (
-        <React.Fragment>
+        <Fragment>
             <Button>Email</Button>
             <Spacer y={1}/>
             <Button>Teléfono</Button>
-        </React.Fragment>
+        </Fragment>
     )
 }
 

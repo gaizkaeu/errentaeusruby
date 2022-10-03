@@ -1,4 +1,4 @@
-import React from 'react'
+import {Fragment} from 'react'
 import YesNoField from '../../FormFields/YesNoField'
 import { Text } from '@nextui-org/react'
 import { FieldData } from '../Model/calculatorFormModel'
@@ -10,9 +10,9 @@ export default function PrimeraVez(props: {
 }){
   const {formField: {firstTime}} = props;
   return (
-    <React.Fragment>
+    <Fragment>
       <YesNoField name={firstTime.name}></YesNoField>
       <Text>Si en otros años has hecho la declaración con nosotros eres elegible para un descuento del 10%</Text>
-    </React.Fragment>
+    </Fragment>
   )
 }

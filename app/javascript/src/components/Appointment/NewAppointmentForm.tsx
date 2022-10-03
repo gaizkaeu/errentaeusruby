@@ -1,7 +1,6 @@
 import { Text, Button, Radio, Spacer } from "@nextui-org/react"
 import { setHours, setMinutes } from "date-fns";
 import { Form, Formik, FormikHelpers, useField } from "formik";
-import React from "react"
 import DatePickerField from "../FormFields/DatePickerField";
 import InputField from "../FormFields/InputField";
 import { at } from 'lodash';

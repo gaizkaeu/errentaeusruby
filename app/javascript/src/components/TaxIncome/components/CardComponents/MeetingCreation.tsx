@@ -1,4 +1,3 @@
-import React from "react"
 import { Card, Spacer, Text } from "@nextui-org/react"
 import 'react-day-picker/dist/style.css';
 import NewAppointmentForm from "../../../Appointment/NewAppointmentForm";

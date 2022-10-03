@@ -1,5 +1,3 @@
-import React from "react"
-
 export const RightArrowIcon = (props: {
     fill?: string,
     filled?: boolean,

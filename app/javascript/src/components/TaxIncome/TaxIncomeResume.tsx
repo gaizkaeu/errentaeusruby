@@ -1,4 +1,4 @@
-import React from 'react'
+import {Fragment} from 'react'
 import { Loading, Text } from '@nextui-org/react'
 import { useGetAppointmentsQuery, useGetTaxIncomesQuery } from '../../storage/api'
 import TaxIncomeCardMin from './components/TaxIncomeCardMin'
@@ -10,7 +10,7 @@ const TaxIncomeResume = () => {
   const appointments = useGetAppointmentsQuery()
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className=''>
           <Text h3>Mis declaraciones</Text>
@@ -33,7 +33,7 @@ const TaxIncomeResume = () => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

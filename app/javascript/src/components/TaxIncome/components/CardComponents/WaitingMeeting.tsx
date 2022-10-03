@@ -1,4 +1,3 @@
-import React from "react"
 import { Card, Spacer, Text } from "@nextui-org/react"
 import Appointment, { AppointmentWrapper } from "../../../Appointment/Appointment";
 import { TaxIncome } from "../../../../storage/types";

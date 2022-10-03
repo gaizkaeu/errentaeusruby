@@ -1,4 +1,3 @@
-import React from "react"
 
 export const NewIcon = (props: {height: number, width: number}) => {
   return (
