@@ -1,5 +1,5 @@
 import {Fragment} from 'react'
-import { Button, Text } from '@nextui-org/react'
+import { Text } from '@nextui-org/react'
 import { Outlet } from 'react-router-dom'
 
 function TaxIncomePage() {

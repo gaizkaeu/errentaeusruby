@@ -1,6 +1,6 @@
 import { Text } from '@nextui-org/react'
 import {Fragment} from 'react'
-import CalculatorComponent from '../components/Calculator/Calculator'
+const CalculatorComponent = React.lazy(() => import('../components/Calculator/Calculator'));
 
 function CalculatorPage() {
   return (

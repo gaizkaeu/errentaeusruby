@@ -1,8 +1,9 @@
 import {Fragment} from 'react'
-import ContinueEstimation from '../components/Estimation/ContinueEstimation'
-import SingleEstimation from '../components/Estimation/SingleEstimation'
 import { useAppSelector } from '../storage/hooks'
 import { Text } from '@nextui-org/react'
+
+const SingleEstimation = React.lazy(() => import('../components/Estimation/SingleEstimation'));
+const ContinueEstimation = React.lazy(() => import('../components/Estimation/ContinueEstimation'));
 
 function EstimationPage() {
   const estimations = useAppSelector((state) => state.estimations.estimation)
