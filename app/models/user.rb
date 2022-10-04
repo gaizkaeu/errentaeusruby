@@ -8,5 +8,7 @@ class User < ApplicationRecord
   has_many :estimations
   has_many :appointments
 
+  has_many :assigned_tax_incomes, ->(self_o) { where lawyer_id: self_o.id }, class_name: "TaxIncome", foreign_key: "lawyer_id"
+
   enum account_type: {user: 0, lawyer: 1}
 end

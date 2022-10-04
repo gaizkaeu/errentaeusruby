@@ -2,16 +2,16 @@ import { Fragment } from 'react'
 import { Button, Loading, Progress, Text } from '@nextui-org/react'
 import { Form, Formik, FormikHelpers } from 'formik'
 import calculatorFormModel from './Model/calculatorFormModel'
-import Start from './Steps/Start'
-import Viviendas from './Steps/Viviendas'
-import PrimeraVez from './Steps/PrimeraVez'
-import Alquileres from './Steps/Alquileres'
 import validationSchema from './Model/validationSchema'
-import Actividad from './Steps/Actividad'
-import Inmueble from './Steps/Inmueble'
-import Pareja from './Steps/Pareja'
+const Start = React.lazy(() => import('./Steps/Start'));
+const Viviendas = React.lazy(() => import('./Steps/Viviendas'));
+const PrimeraVez = React.lazy(() => import('./Steps/PrimeraVez'));
+const Alquileres = React.lazy(() => import('./Steps/Alquileres'));
+const Actividad = React.lazy(() => import('./Steps/Actividad'));
+const Inmueble = React.lazy(() => import('./Steps/Inmueble'));
+const Pareja = React.lazy(() => import('./Steps/Pareja'));
+const Finish = React.lazy(() => import('./Steps/Finish'));
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
-import Finish from './Steps/Finish'
 import { calculateEstimation } from '../../storage/estimationSlice'
 import {
   nextStep,
