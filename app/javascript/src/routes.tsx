@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './storage/hooks'
 import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
+import { Suspense } from 'react'
 const AuthModal = React.lazy(() => import('./components/Modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
 const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
@@ -54,7 +55,7 @@ const AppRoutes = () => {
         <Routes>
           <Route path="auth" element={<AuthModal />} />
           <Route path="/appointment/:appointment_id">
-            <Route path="edit" element={<EditAppointment/>}/>
+            <Route path="edit" element={<Suspense><EditAppointment/></Suspense>}/>
           </Route>
         </Routes>
       )}
