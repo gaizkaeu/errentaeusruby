@@ -87,4 +87,5 @@ export const taxIncomeApi = createApi({
 })
 
 export const { useGetTaxIncomesQuery, useGetTaxIncomeByIdQuery, useCreateTaxIncomeMutation, useCreateAppointmentToTaxIncomeMutation,
-               useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery, useGetAppointmentsQuery } = taxIncomeApi
+               useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery, useGetAppointmentsQuery,
+                useUpdateAppointmentByIdMutation } = taxIncomeApi

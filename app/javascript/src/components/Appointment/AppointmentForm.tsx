@@ -1,19 +1,18 @@
 import { Text, Button, Radio, Spacer } from "@nextui-org/react"
-import { setHours, setMinutes } from "date-fns";
 import { Form, Formik, FormikHelpers, useField } from "formik";
 import DatePickerField from "../FormFields/DatePickerField";
 import InputField from "../FormFields/InputField";
 import { at } from 'lodash';
 import * as Yup from 'yup'
-import { useCreateAppointmentToTaxIncomeMutation } from "../../storage/api";
-import toast from "react-hot-toast";
 import { Appointment } from "../../storage/types";
+import 'react-day-picker/dist/style.css';
 
 interface Values {
     day: string,
     hour: string,
     method: "office" | "phone"
     phone: string
+    appointment_id?: string,
 }
 
 const AppointmentTypeSelector = (props: { contactMethodFieldName: string, phone_field: string }) => {
@@ -43,10 +42,8 @@ const AppointmentTypeSelector = (props: { contactMethodFieldName: string, phone_
 const AppointmentForm = (props: {appointment?: Appointment, edit?: boolean, onSubmit: (values: Values,
     formikHelpers: FormikHelpers<any>) => void }) => {
     
-    const date = new Date(props.appointment?.time ?? '')
-
     return (
-        <Formik initialValues={{ day: props.appointment?.time ?? '', hour: '12:30', method: props.appointment?.method ?? "office" as const, phone: ''}} validationSchema={Yup.object({
+        <Formik initialValues={{ day:  '', hour: '12:30', method: "office" as const, phone: '', appointment_id: props.appointment?.id}} validationSchema={Yup.object({
             day: Yup.date().required(),
             hour: Yup.string().min(4, "Hora inválida").required(),
             method: Yup.string(),

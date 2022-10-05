@@ -8,6 +8,7 @@ const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncom
 const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
 const MenuTaxIncome = React.lazy(() => import('./components/TaxIncome/MenuTaxIncome'));
 const TaxIncomePage = React.lazy(() => import('./pages/TaxIncomePage'));
+const EditAppointment = React.lazy(() => import('./components/Appointment/EditAppointment'));
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const EstimationPage = React.lazy(() => import('./pages/EstimationPage'));
 const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
@@ -42,13 +43,19 @@ const AppRoutes = () => {
             >
               <Route index element={<MenuTaxIncome/>}></Route>
               <Route path="new" element={<NewTaxIncome/>}></Route>
-              <Route path=":id" element={<ShowTaxIncome/>}></Route>
+              <Route path=":tax_income_id" element={<ShowTaxIncome/>}/>
+            </Route>
+            <Route path="/appointment/:appointment_id">
+              <Route path="edit" element={<EditAppointment/>}/>
             </Route>
           </Route>
         </Routes>
         {background && (
         <Routes>
           <Route path="auth" element={<AuthModal />} />
+          <Route path="/appointment/:appointment_id">
+            <Route path="edit" element={<EditAppointment/>}/>
+          </Route>
         </Routes>
       )}
     </Provider>

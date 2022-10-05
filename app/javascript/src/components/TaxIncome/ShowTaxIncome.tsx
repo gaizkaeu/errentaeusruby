@@ -1,15 +1,14 @@
 import {Fragment} from 'react'
 import { Spacer, Text } from '@nextui-org/react';
 import { useParams } from 'react-router-dom'
-import 'react-day-picker/dist/style.css';
 import TaxIncomeCard from './components/TaxIncomeCard';
 import AssignedLawyerCard from '../Lawyer/AssignedLawyer';
 import { useGetTaxIncomeByIdQuery } from '../../storage/api';
 import EstimationWrapper from '../Estimation/Estimation';
 
 const ShowTaxIncome = () => {
-  const { id } = useParams()
-  const {currentData, isError, isLoading} = useGetTaxIncomeByIdQuery(id!);
+  const { tax_income_id } = useParams()
+  const {currentData, isError, isLoading} = useGetTaxIncomeByIdQuery(tax_income_id!);
 
   return (
     <Fragment>

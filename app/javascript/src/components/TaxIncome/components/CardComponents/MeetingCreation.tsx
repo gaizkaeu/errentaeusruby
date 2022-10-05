@@ -1,6 +1,5 @@
 import { Card, Spacer, Text } from "@nextui-org/react"
-import 'react-day-picker/dist/style.css';
-import NewAppointmentForm from "../../../Appointment/NewAppointmentForm";
+import NewAppointmentForm from "../../../Appointment/NewAppointment";
 import { TaxIncome } from "../../../../storage/types";
 
 const MeetingCreation = (props: { taxIncome: TaxIncome }) => {
