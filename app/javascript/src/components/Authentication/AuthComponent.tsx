@@ -3,17 +3,10 @@ import { Button, Text } from '@nextui-org/react'
 import { useAuth } from '../../storage/hooks'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
-import { useNavigate, useParams } from 'react-router-dom'
 
-const AuthComponent = () => {
-  const [logIn, setLogIn] = useState(false)
+const AuthComponent = (props: {onAuth: () => void, method: boolean}) => {
+  const [logIn, setLogIn] = useState(props.method)
   const [auth, fetched] = useAuth();
-  const nav = useNavigate();
-  const { action } = useParams();
-
-  const loginSuccess = () => {
-    nav(-1);
-  }
 
   return (
     <Fragment>
@@ -25,7 +18,7 @@ const AuthComponent = () => {
             <Text b size="md">{logIn ? "Iniciar sesión" : "Registro"}</Text>
             <Button size="sm" onPress={() => setLogIn((v) => !v)}>{!logIn ? "Iniciar sesión" : "Necesito registrarme"}</Button>
           </div>
-          {logIn ? <SignIn loginSuccess={loginSuccess} /> : <SignUp loginSuccess={loginSuccess} />}
+          {logIn ? <SignIn loginSuccess={props.onAuth} /> : <SignUp loginSuccess={props.onAuth} />}
         </div>
       )}
     </Fragment>

@@ -27,20 +27,26 @@ const EditAppointment = () => {
         const statusToast = toast.loading("Procesando...")
         let [hour, min] = values.hour.split(":")
         let date_new = setHours(setMinutes(new Date(values.day), +min), +hour)
+        console.log(values.method)
 
-        updateAppointment({ id: values.appointment_id, time: date_new.toString(), method: values.method, phone: values.phone }).unwrap().then((result) => {
+        updateAppointment({ id: appointment_id, time: date_new.toString(), method: values.method, phone: values.phone }).unwrap().then((result) => {
             toast.success("¡Listo!", { id: statusToast });
+            onClose();
         }).catch((err) => {
             toast.error("Error", { id: statusToast });
             formikHelpers.setErrors(err.data);
         })
     }
 
+    const onClose = () => {
+        nav(-1)
+    }
+
     return (
         <Modal
             closeButton
             aria-labelledby="modal-title"
-            onClose={() => nav(-1)}
+            onClose={onClose}
             open={true}
         >
             <Modal.Header>

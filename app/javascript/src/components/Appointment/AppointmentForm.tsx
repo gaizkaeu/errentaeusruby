@@ -4,7 +4,6 @@ import DatePickerField from "../FormFields/DatePickerField";
 import InputField from "../FormFields/InputField";
 import { at } from 'lodash';
 import * as Yup from 'yup'
-import { Appointment } from "../../storage/types";
 import 'react-day-picker/dist/style.css';
 
 interface Values {
@@ -39,11 +38,11 @@ const AppointmentTypeSelector = (props: { contactMethodFieldName: string, phone_
     );
 }
 
-const AppointmentForm = (props: {appointment?: Appointment, edit?: boolean, onSubmit: (values: Values,
+const AppointmentForm = (props: {onSubmit: (values: Values,
     formikHelpers: FormikHelpers<any>) => void }) => {
     
     return (
-        <Formik initialValues={{ day:  '', hour: '12:30', method: "office" as const, phone: '', appointment_id: props.appointment?.id}} validationSchema={Yup.object({
+        <Formik initialValues={{ day:  '', hour: '12:30', method: "office" as const, phone: ''}} validationSchema={Yup.object({
             day: Yup.date().required(),
             hour: Yup.string().min(4, "Hora inválida").required(),
             method: Yup.string(),

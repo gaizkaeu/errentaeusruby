@@ -24,6 +24,16 @@ module Api::V1
     def show
     end
 
+    def update
+      respond_to do |format|
+        if @appointment.update(time: params[:time], method: params[:method], phone: params[:phone])
+          format.json { render :show, status: :ok}
+        else
+          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
     private
     def set_appointment
       @appointment = Appointment.find_by(id: params[:id], client_id: current_api_v1_user.id)

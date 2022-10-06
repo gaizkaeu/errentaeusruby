@@ -33,7 +33,7 @@ export default function ContinueEstimation() {
         <div className="w-full">
           <Text className="text-center">
             Útilizamos las cuentas para poder <b>proteger tu información</b>.
-            <br/><Link to="/auth" state={{ background: location }}>Inicia sesión para continuar.</Link>
+            <br/><Link to="/auth/sign_in" state={{ background: location }}>Inicia sesión para continuar.</Link>
           </Text>
         </div>
       )}

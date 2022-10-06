@@ -80,8 +80,8 @@ export const taxIncomeApi = createApi({
       providesTags: (result, error, id) => [{type: 'Lawyer', id}],
     }),
     updateAppointmentById: build.mutation<Appointment, Partial<Appointment>>({
-      query: (data) => ({url: `appointments/${data.id}`, method: 'put', body: data}),
-      invalidatesTags: (result, error) => [{ type: 'TaxIncome', id:  result?.tax_income_id}, {type: 'Appointment', id: result?.id}],
+      query: (data) => ({url: `appointments/${data.id}`, method: 'put', params: data}),
+      invalidatesTags: (result, error) => [{type: 'Appointment', id: result?.id}],
     }),
   }),
 })

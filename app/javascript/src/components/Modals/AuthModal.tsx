@@ -1,19 +1,26 @@
 import { Button, Modal, Text } from '@nextui-org/react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { replace } from 'formik';
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import AuthComponent from '../Authentication/AuthComponent'
 
-const AuthModal = () => {
+const AuthModal = (props: {method: boolean}) => {
   const nav = useNavigate();
+  const loc = useLocation();
 
   const closeHandler = () => {
-    nav(-1)
-  };
+      nav(-1)
+  }
+
+  const onAuth = () => {
+      nav(loc.state.nextPage, {replace: true})
+  }
 
   return (
     <div>
     <Modal
       closeButton
       aria-labelledby="modal-title"
+      preventClose
       onClose={closeHandler}
       open={true}
     >
@@ -25,7 +32,7 @@ const AuthModal = () => {
         </Text>
       </Modal.Header>
       <Modal.Body>
-        <AuthComponent/>
+        <AuthComponent method={props.method} onAuth={onAuth}/>
       </Modal.Body>
       <Modal.Footer>
         <Text weight="light">Todos los datos están encriptados.</Text>

@@ -8,7 +8,7 @@ import {
   Link,
 } from '@nextui-org/react'
 import toast from 'react-hot-toast'
-import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
+import { NavLink, useLocation, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'
 import i18n from '../../i18n'
 import { logOut } from '../../storage/authSlice'
