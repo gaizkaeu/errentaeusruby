@@ -1,18 +1,15 @@
 import {
   Navbar,
-  Button,
   Text,
   Switch,
   Dropdown,
   Avatar,
   Link,
 } from '@nextui-org/react'
-import toast from 'react-hot-toast'
-import { NavLink, useLocation, useMatch, useResolvedPath } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
 import { useDarkMode } from 'usehooks-ts'
-import i18n from '../../i18n'
-import { logOut } from '../../storage/authSlice'
-import { useAppDispatch, useAuth, useCurrentUser } from '../../storage/hooks'
+import { useAuth } from '../../hooks/authHook'
 import { MoonIcon } from '../Icons/MoonIcon'
 import { SunIcon } from '../Icons/SunIcon'
 
@@ -45,32 +42,14 @@ const NavBarCollapse = ({ to, children }: { to: string; children: string }) => {
 
 const Navigation = () => {
   const darkMode = useDarkMode();
-  const [auth, fetched] = useAuth();
-  const user = useCurrentUser();
-
-  const logoutHandle = async () => {
-    const toastNotification = toast.loading('Cerrando sesión...')
-    const action = await dispatch(logOut())
-
-    if (logOut.fulfilled.match(action)) {
-      toast.success('¡Hasta luego!', {
-        id: toastNotification,
-      })
-      location.reload()
-    } else {
-      toast.error('Error inesperado', {
-        id: toastNotification,
-      })
-    }
-  }
-
-  const dispatch = useAppDispatch()
+  const {status, actions, currentUser} = useAuth();
+  const { t, i18n } = useTranslation();
 
   const collapseItems = [
-    ['Inicio', '/'],
-    ['Calculadora', '/calculator'],
-    ['Mi Estimacion', '/estimation'],
-    ['Mi declaración', '/mytaxincome']
+    [t("homepage.navbar"), '/'],
+    [t("calculator.title"), '/calculator'],
+    [t("estimation.title"), '/estimation'],
+    [t("taxincome.title"), '/mytaxincome']
   ]
 
   return (
@@ -124,7 +103,7 @@ const Navigation = () => {
             Eliza Asesores
           </Link>
         </Navbar.Item>
-        {auth && (
+        {status.fetched && status.loggedIn && (
           <Navbar.Content
             css={{
               '@xs': {
@@ -141,14 +120,14 @@ const Navigation = () => {
                     as="button"
                     color="secondary"
                     size="md"
-                    text={user?.name}
+                    text={currentUser?.name}
                   />
                 </Dropdown.Trigger>
               </Navbar.Item>
               <Dropdown.Menu
                 aria-label="User menu actions"
                 color="secondary"
-                onAction={logoutHandle}
+                onAction={actions.logOut}
               >
                 <Dropdown.Item key="logout" color="error">
                   Log Out

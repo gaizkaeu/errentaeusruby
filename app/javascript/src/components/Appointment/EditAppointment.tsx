@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react"
+import { Text, useModal } from "@nextui-org/react"
 import { setHours, setMinutes } from "date-fns";
 import { FormikHelpers } from "formik";
 import { useUpdateAppointmentByIdMutation } from "../../storage/api";
@@ -19,6 +19,7 @@ interface Values {
 const EditAppointment = () => {
     const { appointment_id } = useParams()
     const nav = useNavigate()
+    const {bindings, setVisible} = useModal(true)
 
     const [updateAppointment, result] = useUpdateAppointmentByIdMutation();
 
@@ -31,23 +32,23 @@ const EditAppointment = () => {
 
         updateAppointment({ id: appointment_id, time: date_new.toString(), method: values.method, phone: values.phone }).unwrap().then((result) => {
             toast.success("¡Listo!", { id: statusToast });
-            onClose();
+            bindings.onClose()
         }).catch((err) => {
             toast.error("Error", { id: statusToast });
             formikHelpers.setErrors(err.data);
         })
     }
 
-    const onClose = () => {
+    bindings.onClose = () => {
         nav(-1)
+        setVisible(false)
     }
 
     return (
         <Modal
             closeButton
             aria-labelledby="modal-title"
-            onClose={onClose}
-            open={true}
+            {...bindings}
         >
             <Modal.Header>
                 <Text id="modal-title" size={18}>

@@ -3,8 +3,28 @@
     "header": {
         "elizaasesoresservice": "SERVICE PROVIDED BY ELIZA ASESORES"
     },
-    "description": {
-      "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-      "part2": "Switch language between english and german using buttons above."
+    "homepage": {
+        "navbar": "Home",
+        "title": "ERRENTA.EUS",
+        "subtitle": "Tax Income in Vitoria Gasteiz"
+    },
+    "estimation": {
+        "title": "Estimation",
+        "subtitle": "Thank you for reaching this step."
+    },
+    "taxincome": {
+      "title": "My Tax Income"
+    },
+    "calculator": {
+      "title": "Calculator"
+    },
+    "authentication": {
+      "loggedIn": "Logged In!",
+      "loggedOut": "See you soon",
+      "loggingOut": "Logging out...",
+      "loggingIn": "Logging in..."
+    },
+    "errors": {
+      "unexpected": "Unexpected error"
     }
-  }
+}

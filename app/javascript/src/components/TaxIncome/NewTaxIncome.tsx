@@ -35,7 +35,8 @@ const NewTaxIncome = () => {
 
   return (
     <Fragment>
-      <Text h3>Solo te llevará 2 minutos más.</Text>
+      <Text h2>Nueva declaración.</Text>
+      <Text h4>Solo te llevará unos segundos más.</Text>
 
       <div>
         <Formik initialValues={{ load_price_from_estimation: false, observations: '' }} onSubmit={submitForm}>

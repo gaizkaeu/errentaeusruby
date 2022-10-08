@@ -2,6 +2,7 @@ import { Button, Text } from '@nextui-org/react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { firstStep } from '../../storage/calculatorSlice'
 import { useAppDispatch, useAppSelector } from '../../storage/hooks'
+import { RequiresAuthentication } from '../Authentication/AuthComponent'
 import { ArrowIcon } from '../Icons/ArrowIcon'
 
 export default function ContinueEstimation() {
@@ -33,7 +34,8 @@ export default function ContinueEstimation() {
         <div className="w-full">
           <Text className="text-center">
             Útilizamos las cuentas para poder <b>proteger tu información</b>.
-            <br/><Link to="/auth/sign_in" state={{ background: location }}>Inicia sesión para continuar.</Link>
+            <br/>
+            <RequiresAuthentication nextPage='/mytaxincome/new' location={location}/>
           </Text>
         </div>
       )}

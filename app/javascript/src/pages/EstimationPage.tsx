@@ -1,6 +1,8 @@
 import {Fragment} from 'react'
 import { useAppSelector } from '../storage/hooks'
 import { Text } from '@nextui-org/react'
+import { HeaderMin } from '../components/Header';
+import { Navigate } from 'react-router-dom';
 
 const SingleEstimation = React.lazy(() => import('../components/Estimation/SingleEstimation'));
 const ContinueEstimation = React.lazy(() => import('../components/Estimation/ContinueEstimation'));
@@ -10,29 +12,7 @@ function EstimationPage() {
 
   return (
     <Fragment>
-      <header>
-        <section className="py-5 ">
-          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div>
-              <Text className="text-base font-semibold tracking-wider">
-                UN SERVICIO DE ELIZA ASESORES
-              </Text>
-              <Text
-                className="text-5xl font-bold text-black sm:text-7xl  xl:text-8xl"
-                css={{
-                  textGradient: '45deg, $blue600 -20%, $pink600 50%',
-                }}
-              >
-                Estimación
-              </Text>
-              <Text h4>
-                Gracias por llegar hasta aquí. Esta información es solo visible
-                para ti.
-              </Text>
-            </div>
-          </div>
-        </section>
-      </header>
+      <HeaderMin gradient="45deg, $blue600 -20%, $pink600 50%" title="estimation.title" subtitle="estimation.subtitle"/>
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {estimations ? (
           <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-10 p-3 self-center">
@@ -42,7 +22,7 @@ function EstimationPage() {
             <ContinueEstimation/> 
           </div>
         ) : (
-          <Text>No hay na</Text>
+          <Navigate to="/calculator" replace></Navigate>
         )}
       </main>
     </Fragment>

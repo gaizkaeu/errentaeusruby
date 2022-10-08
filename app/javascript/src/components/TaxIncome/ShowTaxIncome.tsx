@@ -1,5 +1,5 @@
 import {Fragment} from 'react'
-import { Spacer, Text } from '@nextui-org/react';
+import { Loading, Spacer, Text } from '@nextui-org/react';
 import { useParams } from 'react-router-dom'
 import TaxIncomeCard from './components/TaxIncomeCard';
 import AssignedLawyerCard from '../Lawyer/AssignedLawyer';
@@ -25,7 +25,7 @@ const ShowTaxIncome = () => {
             </div>
           </Fragment>
         ) : (
-          <Text>Cargando... o no tienes permisos</Text>
+          <Loading/>
         )}
       </div>
 

@@ -7,36 +7,14 @@ import { signIn } from '../../storage/authSlice'
 import { useAppDispatch } from '../../storage/hooks'
 import toast from 'react-hot-toast'
 import { SessionCreationData } from '../../storage/types'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/authHook'
 
 const SignIn = (props: {loginSuccess: () => void}) => {
   
   const dispatch = useAppDispatch()
+  const {actions} = useAuth();
 
-  const submitForm = async (values: SessionCreationData, formikHelpers: FormikHelpers<any>) => {
-    const toastNotification = toast.loading('Procesando...')
-    const action = await dispatch(
-      signIn(values),
-    )
-
-    if (signIn.fulfilled.match(action)) {
-      toast.success('Has iniciado sesión', {
-        id: toastNotification,
-      })
-      props.loginSuccess();
-    } else {
-      if (action.payload) {
-        formikHelpers.setFieldError('password', 'Error')
-        formikHelpers.setFieldError('email', 'Error')
-        toast.error('Error ' + action.payload.error, {
-          id: toastNotification,
-        })
-      } else {
-        toast.error('Error inesperado', {
-          id: toastNotification,
-        })
-      }
-    }
-  }
 
   return (
     <Formik
@@ -45,7 +23,7 @@ const SignIn = (props: {loginSuccess: () => void}) => {
         password: Yup.string().required('Password is required').min(6, 'Too short!'),
         email: Yup.string().email('Invalid email address').required('Required'),
       })}
-      onSubmit={submitForm}
+      onSubmit={(v, e) => actions.formLogIn(v, e, props.loginSuccess)}
     >
       {({ isSubmitting }) => (
         <Form className="ml-3 mr-3">

@@ -1,9 +1,9 @@
 import { Provider } from 'react-redux'
 import { Routes, Route, Navigate, useLocation, matchRoutes } from 'react-router-dom'
-import { useAuth } from './storage/hooks'
 import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
 import { Suspense, useEffect } from 'react'
+import { useAuth } from './hooks/authHook'
 const AuthModal = React.lazy(() => import('./components/Modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
 const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
@@ -16,10 +16,10 @@ const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
 const App = React.lazy(() => import('./App'));
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
-  const [auth, fetched] = useAuth();
+  const {status} = useAuth();
   const location = useLocation()
 
-  return fetched ? (auth ? props.children : <Navigate to="/auth/sign_in" replace state={{nextPage: location.pathname}} />) : <Text>Loading...</Text>
+  return status.fetched ? (status.loggedIn ? props.children : <Navigate to="/auth/sign_in" replace state={{nextPage: location.pathname}} />) : <Text>Loading...</Text>
 }
 
 const AppRoutes = () => {
@@ -34,8 +34,8 @@ const AppRoutes = () => {
             <Route index element={<HomePage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/estimation" element={<EstimationPage />} />
-            <Route path="auth/sign_up" element={<AuthModal method={false}/>} />
-            <Route path="auth/sign_in" element={<AuthModal method={true}/>} />
+            <Route path="auth/sign_up" element={<Suspense><AuthModal method={false}/></Suspense>} />
+            <Route path="auth/sign_in" element={<Suspense><AuthModal method={true}/></Suspense>} />
             <Route
               path="/mytaxincome"
               element={
@@ -55,8 +55,8 @@ const AppRoutes = () => {
         </Routes>
         {background && (
         <Routes>
-          <Route path="auth/sign_up" element={<AuthModal method={false}/>} />
-          <Route path="auth/sign_in" element={<AuthModal method={true}/>} />
+          <Route path="auth/sign_up" element={<Suspense><AuthModal method={false}/></Suspense>} />
+          <Route path="auth/sign_in" element={<Suspense><AuthModal method={true}/></Suspense>} />
           <Route path="/appointment/:appointment_id">
             <Route path="edit" element={<Suspense><EditAppointment/></Suspense>}/>
           </Route>
