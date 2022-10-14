@@ -1,6 +1,6 @@
 import { Text } from '@nextui-org/react'
 import { Estimation } from '../../storage/types'
-import EstimationCard from './EstimationCard'
+import EstimationCard from './Card/EstimationCard'
 
 const SingleEstimation = (props: {
   estimation: Estimation

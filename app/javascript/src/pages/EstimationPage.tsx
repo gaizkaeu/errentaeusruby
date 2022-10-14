@@ -4,7 +4,7 @@ import { Text } from '@nextui-org/react'
 import { HeaderMin } from '../components/Header';
 import { Navigate } from 'react-router-dom';
 
-const SingleEstimation = React.lazy(() => import('../components/Estimation/SingleEstimation'));
+const SingleEstimation = React.lazy(() => import('../components/Estimation/EstimationResume'));
 const ContinueEstimation = React.lazy(() => import('../components/Estimation/ContinueEstimation'));
 
 function EstimationPage() {

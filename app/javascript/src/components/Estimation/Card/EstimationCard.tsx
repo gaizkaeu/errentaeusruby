@@ -1,8 +1,8 @@
 import { Button, Card, Text } from '@nextui-org/react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowIcon } from '../Icons/ArrowIcon'
+import { ArrowIcon } from '../../Icons/ArrowIcon'
 import NoEstimationCard from './NoEstimationCard'
-import { Estimation } from '../../storage/types'
+import { Estimation } from '../../../storage/types'
 
 const EstimationCard = (props: { estimation: Estimation | undefined, deletable?: boolean }) => {
     const { estimation, deletable } = props
