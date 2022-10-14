@@ -40,8 +40,8 @@ const EditAppointment = () => {
     }
 
     bindings.onClose = () => {
-        nav(-1)
         setVisible(false)
+        nav(-1)
     }
 
     return (

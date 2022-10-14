@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CalculatorState } from "./types";
 
-
 const initialState: CalculatorState = {
   formValues: {
     first_name: '',
