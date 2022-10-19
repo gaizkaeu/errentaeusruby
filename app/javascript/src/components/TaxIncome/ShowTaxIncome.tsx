@@ -8,7 +8,9 @@ import EstimationWrapper from '../Estimation/Card/Estimation';
 
 const ShowTaxIncome = () => {
   const { tax_income_id } = useParams()
-  const {currentData, isError, isLoading} = useGetTaxIncomeByIdQuery(tax_income_id!);
+  const {currentData, isError, isLoading} = useGetTaxIncomeByIdQuery(tax_income_id!, {
+    pollingInterval: 10000
+  });
 
   return (
     <Fragment>

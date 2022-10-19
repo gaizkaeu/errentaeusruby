@@ -44,9 +44,6 @@ class TaxIncome < ApplicationRecord
 
   private
   def assign_lawyer
-    lawyer_id = User.where(account_type: 1).first&.id
-    if (update!(lawyer_id: lawyer_id))
-      waiting_for_meeting_creation!
-    end unless lawyer_id.nil?
+    #LawyerAssignationJob.perform_later(self)
   end
 end

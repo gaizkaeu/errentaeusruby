@@ -1,6 +1,7 @@
 import { Text } from "@nextui-org/react";
 import { TaxIncome } from "../../../storage/types";
 import MeetingCreation from "./CardComponents/MeetingCreation";
+import WaitingLawyer from "./CardComponents/WaitingLawyer";
 import WaitingMeeting from "./CardComponents/WaitingMeeting";
 
 
@@ -11,7 +12,7 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome}) => {
     const renderStatus = () => {
         switch (taxIncome.state) {
             case "pending_assignation":
-                return <Text>Te estamos asignando un asesor</Text>
+                return <WaitingLawyer/>
             case "waiting_for_meeting_creation":
                 return <MeetingCreation taxIncome={taxIncome}/>;
             case "waiting_for_meeting":
