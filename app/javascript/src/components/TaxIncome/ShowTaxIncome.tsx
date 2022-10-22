@@ -15,7 +15,7 @@ const ShowTaxIncome = () => {
   return (
     <Fragment>
       <div className="items-center flex flex-wrap gap-10 p-3 self-center place-content-center">
-        {!isError && !isLoading && currentData? (
+        {!isLoading && currentData? (
           <Fragment>
             <div className="flex-1">
               <TaxIncomeCard taxIncome={currentData!}></TaxIncomeCard>

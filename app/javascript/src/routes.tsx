@@ -4,6 +4,7 @@ import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
 import { Suspense } from 'react'
 import { useAuth } from './hooks/authHook'
+const EstimationEditModal = React.lazy(() => import('./components/Modals/EstimationEditModal'));
 const AuthModal = React.lazy(() => import('./components/Modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
 const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
@@ -49,7 +50,10 @@ const AppRoutes = () => {
               <Route path=":tax_income_id" element={<ShowTaxIncome/>}/>
             </Route>
             <Route path="/appointment/:appointment_id">
-              <Route path="edit" element={<EditAppointment/>}/>
+              <Route path="edit" element={<Suspense><EditAppointment/></Suspense>}/>
+            </Route>
+            <Route path="/estimation/:estimation_id">
+              <Route path="edit" element={<Suspense><EstimationEditModal/></Suspense>}/>
             </Route>
           </Route>
         </Routes>
@@ -59,6 +63,9 @@ const AppRoutes = () => {
           <Route path="auth/sign_in" element={<Suspense><AuthModal method={true}/></Suspense>} />
           <Route path="/appointment/:appointment_id">
             <Route path="edit" element={<Suspense><EditAppointment/></Suspense>}/>
+          </Route>
+          <Route path="/estimation/:estimation_id">
+            <Route path="edit" element={<Suspense><EstimationEditModal/></Suspense>}/>
           </Route>
         </Routes>
       )}

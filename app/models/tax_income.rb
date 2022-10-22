@@ -44,6 +44,6 @@ class TaxIncome < ApplicationRecord
 
   private
   def assign_lawyer
-    #LawyerAssignationJob.perform_later(self)
+    LawyerAssignationJob.perform_later(self)
   end
 end

@@ -37,7 +37,7 @@ export const HeaderMin = (props: {title: string, subtitle?: string, gradient: st
     const { t, i18n } = useTranslation();
     return (
         <header>
-        <section className="py-5 ">
+        <section className="mt-4">
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div>
               <Text className="text-base font-semibold tracking-wider">
