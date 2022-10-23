@@ -60,7 +60,7 @@ export interface SessionCreationData {
   password: string,
 }
 
-export interface Estimation {
+export interface Estimation extends EstimationData {
   price: number,
   id: number,
   first_name: string

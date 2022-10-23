@@ -1,21 +1,25 @@
-import { Button, Modal, Text, useModal } from '@nextui-org/react'
-import { replace } from 'formik';
+import { Button, Modal, Text } from '@nextui-org/react'
+import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import AuthComponent from '../Authentication/AuthComponent'
+import AuthComponent from '../AuthComponent'
 
 const AuthModal = (props: {method: boolean}) => {
   const nav = useNavigate();
   const loc = useLocation();
-  const {setVisible, bindings} = useModal(true)
+  const [open, setOpen] = useState(true);
 
-  bindings.onClose = () => {
-      setVisible(false)
-      nav(-1)
+  const onClose = () => {
+    setOpen(false)
+    setTimeout(() => {
+          nav(loc.state?.background?.pathname ?? "/") 
+    }, 50)
   }
 
   const onAuth = () => {
-      setVisible(false)
-      nav(loc.state.nextPage, {replace: true})
+      setOpen(false)
+      setTimeout(() => {
+        nav(loc.state.nextPage, {replace: true})
+    }, 50)
   }
 
   return (
@@ -24,8 +28,9 @@ const AuthModal = (props: {method: boolean}) => {
         closeButton
         aria-labelledby="modal-title"
         animated={false}
+        onClose={onClose}
         preventClose
-        {...bindings}
+        open={open}
       >
         <Modal.Header>
           <Text id="modal-title" size={18}>

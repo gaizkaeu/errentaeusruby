@@ -1,11 +1,12 @@
 import { Text, useModal } from "@nextui-org/react"
 import { setHours, setMinutes } from "date-fns";
 import { FormikHelpers } from "formik";
-import { useUpdateAppointmentByIdMutation } from "../../storage/api";
+import { useGetEstimationByIdQuery, useUpdateAppointmentByIdMutation } from "../../../storage/api";
 import toast from "react-hot-toast";
-import AppointmentForm from "./AppointmentForm";
-import { useNavigate, useParams } from "react-router-dom";
+import AppointmentForm from "../AppointmentForm";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Modal } from "@nextui-org/react";
+import { useState } from "react";
 
 interface Values {
     day: string,
@@ -19,7 +20,8 @@ interface Values {
 const EditAppointment = () => {
     const { appointment_id } = useParams()
     const nav = useNavigate()
-    const {bindings, setVisible} = useModal(true)
+    const loc = useLocation();
+    const [open, setOpen] = useState(true)
 
     const [updateAppointment, result] = useUpdateAppointmentByIdMutation();
 
@@ -32,23 +34,26 @@ const EditAppointment = () => {
 
         updateAppointment({ id: appointment_id, time: date_new.toString(), method: values.method, phone: values.phone }).unwrap().then((result) => {
             toast.success("¡Listo!", { id: statusToast });
-            bindings.onClose()
+            onClose()
         }).catch((err) => {
             toast.error("Error", { id: statusToast });
             formikHelpers.setErrors(err.data);
         })
     }
 
-    bindings.onClose = () => {
-        setVisible(false)
-        nav(-1)
+    const onClose = () => {
+        setOpen(false)
+        setTimeout(() => {
+            nav(loc.state.background.pathname) 
+        }, 200)
     }
 
     return (
         <Modal
             closeButton
             aria-labelledby="modal-title"
-            {...bindings}
+            open={open}
+            onClose={onClose}
         >
             <Modal.Header>
                 <Text id="modal-title" size={18}>

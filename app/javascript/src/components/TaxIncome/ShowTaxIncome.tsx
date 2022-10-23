@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import TaxIncomeCard from './components/TaxIncomeCard';
 import AssignedLawyerCard from '../Lawyer/AssignedLawyer';
 import { useGetTaxIncomeByIdQuery } from '../../storage/api';
-import EstimationWrapper from '../Estimation/Card/Estimation';
+import EstimationWrapper from '../Estimation/card/Estimation';
 
 const ShowTaxIncome = () => {
   const { tax_income_id } = useParams()

@@ -1,13 +1,14 @@
 import { Button, Modal, Text, useModal } from '@nextui-org/react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import EstimationEditForm from '../EstimationForm';
 
 const EstimationEditModal = () => {
   const nav = useNavigate();
   const loc = useLocation();
   const {setVisible, bindings} = useModal(true)
+  const {estimation_id} = useParams();
 
   bindings.onClose = () => {
-      setVisible(false)
       nav(-1)
   }
 
@@ -28,7 +29,7 @@ const EstimationEditModal = () => {
           </Text>
         </Modal.Header>
         <Modal.Body>
-            <Text>Lo estoy editando</Text>
+          <EstimationEditForm id={estimation_id!}/>
         </Modal.Body>
         <Modal.Footer>
           <Text weight="light">Todos los datos están encriptados.</Text>

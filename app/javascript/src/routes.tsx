@@ -4,13 +4,13 @@ import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
 import { Suspense } from 'react'
 import { useAuth } from './hooks/authHook'
-const EstimationEditModal = React.lazy(() => import('./components/Modals/EstimationEditModal'));
-const AuthModal = React.lazy(() => import('./components/Modals/AuthModal'));
+const EstimationEditModal = React.lazy(() => import('./components/Estimation/modals/EstimationEditModal'));
+const AuthModal = React.lazy(() => import('./components/Authentication/modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
 const ShowTaxIncome = React.lazy(() => import('./components/TaxIncome/ShowTaxIncome'));
 const MenuTaxIncome = React.lazy(() => import('./components/TaxIncome/MenuTaxIncome'));
 const TaxIncomePage = React.lazy(() => import('./pages/TaxIncomePage'));
-const EditAppointment = React.lazy(() => import('./components/Appointment/EditAppointment'));
+const EditAppointment = React.lazy(() => import('./components/Appointment/modals/EditAppointment'));
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const EstimationPage = React.lazy(() => import('./pages/EstimationPage'));
 const CalculatorPage = React.lazy(() => import('./pages/CalculatorPage'));
