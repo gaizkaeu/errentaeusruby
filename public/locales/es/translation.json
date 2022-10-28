@@ -25,5 +25,9 @@
     },
     "errors": {
         "unexpected": "Error inesperado"
+    },
+    "global": {
+        "loading": "Cargando...",
+        "ok": "¡Listo!"
     }
 }

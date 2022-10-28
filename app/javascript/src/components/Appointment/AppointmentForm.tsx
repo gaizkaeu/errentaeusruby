@@ -58,15 +58,15 @@ const AppointmentForm = (props: {onSubmit: (values: Values,
                         <AppointmentTypeSelector contactMethodFieldName="method" phone_field="phone"/>
                     </div>
                 </div>
-                <Button
-                    rounded
-                    size="lg"
-                    className="px-6 py-4 mt-8"
-                    color="primary"
-                    type="submit"
-                >
-                    Concertar cita
-                </Button>
+                <div className="flex mt-8">
+                    <Button
+                        color="primary"
+                        type="submit"
+                        className="flex-1"
+                    >
+                        Concertar cita
+                    </Button>
+                </div>
             </Form>
         </Formik>
     )

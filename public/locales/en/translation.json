@@ -26,5 +26,9 @@
     },
     "errors": {
       "unexpected": "Unexpected error"
+    },
+    "global": {
+      "loading": "Processing...",
+      "ok": "Done!"
     }
 }

@@ -39,7 +39,8 @@ export interface AuthState {
 export interface IUser {
   email: string,
   name: string,
-  surname: string
+  surname: string,
+  account_type: "user" | "lawyer"
 }
 
 export interface ValidationErrors {
