@@ -200,6 +200,7 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.5.1-arm64-darwin)
     sqlite3 (1.5.1-x86_64-linux)
+    stripe (7.1.0)
     thor (1.2.1)
     timeout (0.3.0)
     tzinfo (2.0.5)
@@ -251,6 +252,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.5)
+  stripe
   tzinfo-data
   vite_rails
   web-console

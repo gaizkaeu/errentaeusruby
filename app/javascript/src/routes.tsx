@@ -47,7 +47,8 @@ const AppRoutes = () => {
             >
               <Route index element={<MenuTaxIncome/>}></Route>
               <Route path="new" element={<NewTaxIncome/>}></Route>
-              <Route path=":tax_income_id" element={<ShowTaxIncome/>}/>
+              <Route path=":tax_income_id/" element={<ShowTaxIncome/>}/>
+              <Route path=":tax_income_id/:page" element={<ShowTaxIncome/>}/>
             </Route>
             <Route path="/appointment/:appointment_id">
               <Route path="edit" element={<Suspense><EditAppointment/></Suspense>}/>

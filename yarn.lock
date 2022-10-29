@@ -1264,7 +1264,7 @@
   dependencies:
     "@humanwhocodes/object-schema" "^1.2.1"
     debug "^4.1.1"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 "@humanwhocodes/gitignore-to-minimatch@^1.0.2":
   version "1.0.2"
@@ -2418,6 +2418,18 @@
   version "1.2.8"
   resolved "https://registry.npmjs.org/@stitches/react/-/react-1.2.8.tgz"
   integrity sha512-9g9dWI4gsSVe8bNLlb+lMkBYsnIKCZTmvqvDG+Avnn69XfmHZKiaMrx7cgTaddq7aTPPmXiTsbFcUy0xgI4+wA==
+
+"@stripe/react-stripe-js@^1.14.1":
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.14.1.tgz#7b748fa039beb79b549b88e9389fd6148ac8c54f"
+  integrity sha512-PpXsi/NkiDGKILS6bWcM8QwBdC39U7QAT9KFopQ2CdO+kcbXv9l/e8M1saXAQC5AwdgQTTk6Zl0+//qp1faRiw==
+  dependencies:
+    prop-types "^15.7.2"
+
+"@stripe/stripe-js@^1.42.0":
+  version "1.42.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.42.0.tgz#6074d0ac184bd70c9e5b5bc00e126719277e0128"
+  integrity sha512-ZaQpZo5PRv/mN6157OywMW4fc7FIS+eI/tS12I1gU9MdvnL8fzFktuAU/g9FyUOL22E4t9hF1tsfLQAZcQDokQ==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -3659,7 +3671,7 @@ bonjour-service@^1.0.11:
     fast-deep-equal "^3.1.3"
     multicast-dns "^7.2.5"
 
-boolbase@^1.0.0:
+boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
@@ -5385,7 +5397,7 @@ fork-ts-checker-webpack-plugin@^6.5.0:
     fs-extra "^9.0.0"
     glob "^7.1.6"
     memfs "^3.1.2"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
     schema-utils "2.7.0"
     semver "^7.3.2"
     tapable "^1.0.0"
@@ -6207,7 +6219,7 @@ jake@^10.8.5:
     async "^3.2.3"
     chalk "^4.0.2"
     filelist "^1.0.1"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
@@ -7142,7 +7154,7 @@ minimalistic-assert@^1.0.0:
 
 minimatch@3.0.4:
   version "3.0.4"
-  resolved "https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
   dependencies:
     brace-expansion "^1.1.7"
@@ -7284,6 +7296,13 @@ npm-run-path@^4.0.1:
   integrity sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==
   dependencies:
     path-key "^3.0.0"
+
+nth-check@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-1.0.2.tgz#b2bd295c37e3dd58a3bf0700376663ba4d9cf05c"
+  integrity sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==
+  dependencies:
+    boolbase "~1.0.0"
 
 nth-check@^2.0.1:
   version "2.1.1"
@@ -8229,7 +8248,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8547,7 +8566,7 @@ recursive-readdir@^2.2.2:
   resolved "https://registry.npmjs.org/recursive-readdir/-/recursive-readdir-2.2.2.tgz"
   integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
   dependencies:
-    minimatch "3.0.5"
+    minimatch "3.0.4"
 
 redent@^3.0.0:
   version "3.0.0"
@@ -9436,7 +9455,7 @@ test-exclude@^6.0.0:
   dependencies:
     "@istanbuljs/schema" "^0.1.2"
     glob "^7.1.4"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 text-table@^0.2.0:
   version "0.2.0"

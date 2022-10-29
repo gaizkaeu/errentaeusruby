@@ -17,6 +17,7 @@ class TaxIncome < ApplicationRecord
     pending_assignation: 0,
     waiting_for_meeting_creation: 1,
     waiting_for_meeting: 2,
+    waiting_payment: 5,
     pending_documentation: 3,
     in_progress: 4,
     finished: 5,
@@ -30,6 +31,7 @@ class TaxIncome < ApplicationRecord
     state :in_progress
     state :finished
     state :rejected
+    state :waiting_payment
 
     event :assigned_lawyer do
       transitions from: :pending_assignation, to: :pending_meeting

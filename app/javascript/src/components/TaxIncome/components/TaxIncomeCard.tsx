@@ -1,22 +1,25 @@
 import { Text } from "@nextui-org/react";
 import { TaxIncome } from "../../../storage/types";
 import MeetingCreation from "./CardComponents/MeetingCreation";
+import WaitingPayment from "./CardComponents/Payment";
 import WaitingLawyer from "./CardComponents/WaitingLawyer";
 import WaitingMeeting from "./CardComponents/WaitingMeeting";
 
-
-const TaxIncomeCard = (props: {taxIncome: TaxIncome}) => {
+const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string}) => {
 
     const {taxIncome} = props;
 
     const renderStatus = () => {
-        switch (taxIncome.state) {
+        let to_render = props.renderCard ?? props.taxIncome.state
+        switch (to_render) {
             case "pending_assignation":
                 return <WaitingLawyer/>
             case "waiting_for_meeting_creation":
                 return <MeetingCreation taxIncome={taxIncome}/>;
             case "waiting_for_meeting":
                 return <WaitingMeeting taxIncome={taxIncome}/>;
+            case "waiting_payment":
+                return <WaitingPayment taxIncome={taxIncome}/>;
             case "pending_documentation":
                 return <Text>Peding documentation</Text>;
             case "in_progress":
