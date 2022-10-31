@@ -1,5 +1,4 @@
 import { Card, Loading, Spacer, Text } from "@nextui-org/react"
-import Appointment, { AppointmentWrapper } from "../../../Appointment/Appointment";
 import { TaxIncome } from "../../../../storage/types";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,7 +6,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../../Checkout/CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { useDarkMode } from "usehooks-ts";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe("pk_test_51LxvpDGrlIhNYf6eC8Bfb4jKtTzFRPBEkpNLHWRjq6sgMFtlb6bQ0dmuIEWANdwCkeV1laTQNAXWJjYEYmmen5me00SA8Wd4kJ");
 
@@ -18,7 +16,7 @@ const WaitingPayment = (props: { taxIncome: TaxIncome }) => {
     const darkMode = useDarkMode();
 
     useEffect(() => {
-        axios.post<{ clientSecret: string }>('/api/v1/new_payment_intent').then((data) => {
+        axios.post<{ clientSecret: string }>('/api/v1/payments/new_payment_intent').then((data) => {
             setClientSecret(data.data.clientSecret)
         })
     }, [])

@@ -18,7 +18,10 @@ Rails.application.routes.draw do
       end
       get :logged_in, to: 'accounts#logged_in'
       devise_for :users, module: "api/v1/auth", defaults: { format: :json }
-      post 'new_payment_intent', to: 'payments#create_payment_intent'
+      namespace :payments do
+        post :webhook, to: "payments#webhook"
+        post :create_payment_intent, to: "payments#create_payment_intent"
+      end
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

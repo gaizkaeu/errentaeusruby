@@ -21,6 +21,8 @@ const TaxIncomeCardMin = (props: {taxIncome: TaxIncome}) => {
                 return <Text b>Pendiente cita</Text>;
             case "waiting_for_meeting":
                 return <Text b>Esperando a la cita</Text>;
+            case "waiting_payment":
+                return <Text b>Esperando pago</Text>;
             case "pending_documentation":
                 return <Text b>Esperando documentación</Text>;
             case "in_progress":
