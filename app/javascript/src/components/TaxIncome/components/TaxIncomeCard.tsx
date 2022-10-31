@@ -5,7 +5,7 @@ import WaitingPayment from "./CardComponents/Payment";
 import WaitingLawyer from "./CardComponents/WaitingLawyer";
 import WaitingMeeting from "./CardComponents/WaitingMeeting";
 
-const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string}) => {
+const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string, navCurrentState: JSX.Element}) => {
 
     const {taxIncome} = props;
 
@@ -13,9 +13,9 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string}) => {
         let to_render = props.renderCard ?? props.taxIncome.state
         switch (to_render) {
             case "pending_assignation":
-                return <WaitingLawyer/>
+                return props.taxIncome.state == "pending_assignation" ? <WaitingLawyer/> : props.navCurrentState;
             case "waiting_for_meeting_creation":
-                return <MeetingCreation taxIncome={taxIncome}/>;
+                return  props.taxIncome.state == "waiting_for_meeting_creation" ? <MeetingCreation taxIncome={taxIncome}/> : props.navCurrentState;
             case "waiting_for_meeting":
                 return <WaitingMeeting taxIncome={taxIncome}/>;
             case "waiting_payment":

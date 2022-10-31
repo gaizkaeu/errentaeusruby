@@ -1,4 +1,4 @@
-import { Card, Spacer, Text } from "@nextui-org/react"
+import { Card, Loading, Spacer, Text } from "@nextui-org/react"
 import Appointment, { AppointmentWrapper } from "../../../Appointment/Appointment";
 import { TaxIncome } from "../../../../storage/types";
 import { useEffect, useState } from "react";
@@ -16,7 +16,6 @@ const WaitingPayment = (props: { taxIncome: TaxIncome }) => {
 
     const [clientSecret, setClientSecret] = useState("");
     const darkMode = useDarkMode();
-    const nav = useNavigate()
 
     useEffect(() => {
         axios.post<{ clientSecret: string }>('/api/v1/new_payment_intent').then((data) => {
@@ -34,7 +33,7 @@ const WaitingPayment = (props: { taxIncome: TaxIncome }) => {
         appearance
     };
 
-    return clientSecret && (
+    return clientSecret ? (
         <div>
             <Card variant="flat">
                 <Card.Body>
@@ -47,7 +46,7 @@ const WaitingPayment = (props: { taxIncome: TaxIncome }) => {
                 <CheckoutForm />
             </Elements>
         </div>
-    )
+    ) : <Loading/>
 
 }
 

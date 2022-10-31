@@ -7,8 +7,8 @@ function TaxIncomePage() {
 
   return (
     <Fragment>
-      <HeaderMin title="taxincome.title" gradient="45deg, $blue600 -20%, $pink600 50%"></HeaderMin>
-      <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <HeaderMin title="taxincome.title" gradient="45deg, $blue600 -20%, $pink600 50%" textClass='text-4xl font-bold text-black sm:text-5xl xl:text-6xl'/>
+      <main className="max-w-7xl px-4 mx-auto sm:px-6 lg:px-8">
         <Outlet/>
       </main>
     </Fragment>

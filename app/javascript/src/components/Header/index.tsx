@@ -33,7 +33,7 @@ const Header = (props: { title: string, subtitle: string, gradient: string, subt
     )
 }
 
-export const HeaderMin = (props: {title: string, subtitle?: string, gradient: string}) => {
+export const HeaderMin = (props: {title: string, subtitle?: string, gradient: string, textClass?: string}) => {
     const { t, i18n } = useTranslation();
     return (
         <header>
@@ -44,7 +44,7 @@ export const HeaderMin = (props: {title: string, subtitle?: string, gradient: st
                 {t("header.elizaasesoresservice")}
               </Text>
               <Text
-                className="text-5xl font-bold text-black sm:text-7xl  xl:text-8xl"
+                className={props.textClass ?? "text-5xl font-bold text-black sm:text-7xl xl:text-8xl"}
                 css={{
                   textGradient: props.gradient,
                 }}
