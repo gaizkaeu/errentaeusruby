@@ -19,7 +19,7 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string, navCur
             case "waiting_for_meeting":
                 return <WaitingMeeting taxIncome={taxIncome}/>;
             case "waiting_payment":
-                return <WaitingPayment taxIncome={taxIncome}/>;
+                return props.taxIncome.state == "waiting_payment" ? <WaitingPayment taxIncome={taxIncome}/> : props.navCurrentState;
             case "pending_documentation":
                 return <Text>Peding documentation</Text>;
             case "in_progress":

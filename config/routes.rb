@@ -15,12 +15,12 @@ Rails.application.routes.draw do
       get 'lawyers/:id', to: 'lawyers#show'
       resources :tax_incomes do
         post :set_appointment, on: :member
+        post :create_payment_intent, on: :member
       end
       get :logged_in, to: 'accounts#logged_in'
       devise_for :users, module: "api/v1/auth", defaults: { format: :json }
-      namespace :payments do
+      scope :payments do
         post :webhook, to: "payments#webhook"
-        post :create_payment_intent, to: "payments#create_payment_intent"
       end
     end
   end

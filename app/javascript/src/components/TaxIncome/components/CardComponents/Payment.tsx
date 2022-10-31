@@ -16,7 +16,7 @@ const WaitingPayment = (props: { taxIncome: TaxIncome }) => {
     const darkMode = useDarkMode();
 
     useEffect(() => {
-        axios.post<{ clientSecret: string }>('/api/v1/payments/new_payment_intent').then((data) => {
+        axios.post<{ clientSecret: string }>(`/api/v1/tax_incomes/${props.taxIncome.id}/create_payment_intent`).then((data) => {
             setClientSecret(data.data.clientSecret)
         })
     }, [])

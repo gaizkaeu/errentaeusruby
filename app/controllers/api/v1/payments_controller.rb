@@ -1,23 +1,8 @@
 module Api::V1
-    require 'stripe'
-    Stripe.api_key = 'sk_test_51LxvpDGrlIhNYf6eyMiOoOdSbL3nqJzwj53cNFmE8S6ZHZrzWEE5uljuObcKniylLkgtMKgQOg2Oc865VTG0DqTd00oTgt6imP'
-    endpoint_secret = 'whsec_b670d9ba2a31531921e2c1e16bbd9ac8c00b71d10bbca17f4dbb46aa52d83987'
-
+    ENDPOINT_SECRET = 'whsec_b670d9ba2a31531921e2c1e16bbd9ac8c00b71d10bbca17f4dbb46aa52d83987'
 
     class PaymentsController < ApiBaseController
-        def create_payment_intent
-          
-            # Create a PaymentIntent with amount and currency
-            payment_intent = Stripe::PaymentIntent.create(
-              amount: 1000,
-              currency: 'eur',
-              automatic_payment_methods: {
-                enabled: true,
-              },
-            )
-          
-            render json: {clientSecret: payment_intent['client_secret']}
-        end
+        skip_before_action :verify_authenticity_token, only: :webhook
 
         def webhook
           payload = request.body.read
@@ -26,15 +11,15 @@ module Api::V1
 
           begin
               event = Stripe::Webhook.construct_event(
-                  payload, sig_header, endpoint_secret
+                  payload, sig_header, ENDPOINT_SECRET
               )
           rescue JSON::ParserError => e
               # Invalid payload
-              render json: "error", 400 
+              render json: "error", status: 400 
               return
           rescue Stripe::SignatureVerificationError => e
               # Invalid signature
-              render json: "error", 400 
+              render json: "error",  status: 400  
               return
           end
 
@@ -42,13 +27,13 @@ module Api::V1
           case event.type
           when 'payment_intent.succeeded'
               payment_intent = event.data.object
-              puts "llega ok"
+              TaxIncome.find(payment_intent['metadata']['id']).paid!
           # ... handle other event types
           else
               puts "Unhandled event type: #{event.type}"
           end
 
-          render json: "ok", 200 
+          render json: "ok" 
         end
     end
 

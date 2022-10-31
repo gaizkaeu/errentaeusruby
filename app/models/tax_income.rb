@@ -42,6 +42,9 @@ class TaxIncome < ApplicationRecord
     event :appointment_deleted do
       transitions from: :waiting_for_meeting, to: :waiting_for_meeting_creation
     end
+    event :paid do
+      transitions from: :waiting_payment, to: :in_progress
+    end
   end
 
   private

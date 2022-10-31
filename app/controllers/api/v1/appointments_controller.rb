@@ -1,6 +1,6 @@
 module Api::V1
   class AppointmentsController < ApiBaseController
-    before_action :set_appointment, only: %i[ show edit update destroy]
+    before_action :set_appointment, only: %i[ show edit update destroy ]
     before_action :authenticate_api_v1_user!
 
     def index
