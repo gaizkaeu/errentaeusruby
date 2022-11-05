@@ -56,7 +56,7 @@ const Stepper = () => {
 const ShowTaxIncome = () => {
   const { tax_income_id, page} = useParams()
   const {currentData, isError, isLoading} = useGetTaxIncomeByIdQuery(tax_income_id!, {
-    pollingInterval: 10000
+    pollingInterval: 3000
   });
   const nav = useNavigate()
 

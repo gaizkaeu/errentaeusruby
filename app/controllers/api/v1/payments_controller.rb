@@ -3,7 +3,6 @@ module Api::V1
 
     class PaymentsController < ApiBaseController
         skip_before_action :verify_authenticity_token, only: :webhook
-
         def webhook
           payload = request.body.read
           sig_header = request.env['HTTP_STRIPE_SIGNATURE']
@@ -27,8 +26,14 @@ module Api::V1
           case event.type
           when 'payment_intent.succeeded'
               payment_intent = event.data.object
-              TaxIncome.find(payment_intent['metadata']['id']).paid!
+              tax_income = TaxIncome.find(payment_intent['metadata']['id'])
+              tax_income.update!(payment: payment_intent['id'])
+              tax_income.paid!
           # ... handle other event types
+          when 'charge.refunded'
+              refund = event.data.object
+              tax_income = TaxIncome.find(refund['metadata']['id'])
+              tax_income.refund!
           else
               puts "Unhandled event type: #{event.type}"
           end
@@ -36,5 +41,4 @@ module Api::V1
           render json: "ok" 
         end
     end
-
 end

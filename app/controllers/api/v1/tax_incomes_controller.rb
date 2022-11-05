@@ -4,7 +4,7 @@ require 'stripe'
 Stripe.api_key = 'sk_test_51LxvpDGrlIhNYf6eyMiOoOdSbL3nqJzwj53cNFmE8S6ZHZrzWEE5uljuObcKniylLkgtMKgQOg2Oc865VTG0DqTd00oTgt6imP'
 
 class TaxIncomesController < ApiBaseController
-  before_action :set_tax_income, only: %i[ show edit update destroy set_appointment create_payment_intent]
+  before_action :set_tax_income, except: %i[ index create ]
   before_action :authenticate_api_v1_user!
 
   # GET /tax_incomes or /tax_incomes.json
@@ -48,18 +48,31 @@ class TaxIncomesController < ApiBaseController
   end
 
   def create_payment_intent
-    payment_intent = Stripe::PaymentIntent.create(
-      amount: 1000,
-      currency: 'eur',
-      automatic_payment_methods: {
-        enabled: true,
-      },
-      metadata: {
-        id: @tax_income.id
-      }
-    )
-  
-    render json: {clientSecret: payment_intent['client_secret']}
+    if @tax_income.waiting_payment?
+      payment_intent = Stripe::PaymentIntent.create(
+        amount: @tax_income.price,
+        currency: 'eur',
+        payment_method_types: [:card],
+        metadata: {
+          id: @tax_income.id
+        },
+        customer: current_api_v1_user.stripe_customer_id,
+      )
+      render json: {clientSecret: payment_intent['client_secret']}
+    else
+      render json: {error: "Not able to pay"}, status: :unprocessable_entity
+    end
+  end
+
+  def payment_data
+    if @tax_income.payment
+      payment_data = Stripe::PaymentIntent.retrieve(
+        @tax_income.payment,
+      )
+      render partial: "api/v1/payment/payment_data", locals: {payment: payment_data}
+    else
+      render json: {error: "No payment data"}, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /tax_incomes/1 or /tax_incomes/1.json

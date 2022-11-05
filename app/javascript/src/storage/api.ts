@@ -1,6 +1,6 @@
 import {BaseQueryFn, buildCreateApi, createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
-import { TaxIncomesResponse, Appointment, TaxIncome, TaxIncomeData, Estimation, IUser } from './types'
+import { TaxIncomesResponse, Appointment, TaxIncome, TaxIncomeData, Estimation, IUser, PaymentDetails } from './types'
 
 const axiosBaseQuery =
   (
@@ -83,9 +83,12 @@ export const taxIncomeApi = createApi({
       query: (data) => ({url: `appointments/${data.id}`, method: 'put', params: data}),
       invalidatesTags: (result, error) => [{type: 'Appointment', id: result?.id}],
     }),
+    getPaymentDataOfTaxIncome: build.query<PaymentDetails, string>({
+      query: (id) => ({url: `tax_incomes/${id}/payment_data`, method: 'get'}),
+    }), 
   }),
 })
 
 export const { useGetTaxIncomesQuery, useGetTaxIncomeByIdQuery, useCreateTaxIncomeMutation, useCreateAppointmentToTaxIncomeMutation,
                useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery, useGetAppointmentsQuery,
-                useUpdateAppointmentByIdMutation } = taxIncomeApi
+                useUpdateAppointmentByIdMutation , useGetPaymentDataOfTaxIncomeQuery} = taxIncomeApi

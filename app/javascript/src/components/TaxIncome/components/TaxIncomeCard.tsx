@@ -1,7 +1,8 @@
 import { Text } from "@nextui-org/react";
+import { Navigate } from "react-router-dom";
 import { TaxIncome } from "../../../storage/types";
 import MeetingCreation from "./CardComponents/MeetingCreation";
-import WaitingPayment from "./CardComponents/Payment";
+import WaitingPayment, { PaymentCompleted } from "./CardComponents/Payment";
 import WaitingLawyer from "./CardComponents/WaitingLawyer";
 import WaitingMeeting from "./CardComponents/WaitingMeeting";
 
@@ -10,16 +11,19 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string, navCur
     const {taxIncome} = props;
 
     const renderStatus = () => {
-        let to_render = props.renderCard ?? props.taxIncome.state
+        let to_render = props.renderCard ?? taxIncome.state
         switch (to_render) {
             case "pending_assignation":
-                return props.taxIncome.state == "pending_assignation" ? <WaitingLawyer/> : props.navCurrentState;
+                return taxIncome.state == "pending_assignation" ? <WaitingLawyer/> : props.navCurrentState;
             case "waiting_for_meeting_creation":
-                return  props.taxIncome.state == "waiting_for_meeting_creation" ? <MeetingCreation taxIncome={taxIncome}/> : props.navCurrentState;
+                return  taxIncome.state == "waiting_for_meeting_creation" ? <MeetingCreation taxIncome={taxIncome}/> : props.navCurrentState;
             case "waiting_for_meeting":
                 return <WaitingMeeting taxIncome={taxIncome}/>;
             case "waiting_payment":
-                return props.taxIncome.state == "waiting_payment" ? <WaitingPayment taxIncome={taxIncome}/> : props.navCurrentState;
+                return taxIncome.state == "waiting_payment" ? <WaitingPayment taxIncome={taxIncome}/> : <Navigate to={`/mytaxincome/${taxIncome.id}/payment_completed`} replace={true}/>
+            case "refunded":
+            case "payment_completed":
+                return <PaymentCompleted taxIncome={taxIncome}/> 
             case "pending_documentation":
                 return <Text>Peding documentation</Text>;
             case "in_progress":

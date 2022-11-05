@@ -22,6 +22,7 @@ class TaxIncome < ApplicationRecord
     in_progress: 4,
     finished: 5,
     rejected: -1,
+    refunded: -2,
   }
 
   aasm column: :state, enum: true do
@@ -32,6 +33,7 @@ class TaxIncome < ApplicationRecord
     state :finished
     state :rejected
     state :waiting_payment
+    state :refunded
 
     event :assigned_lawyer do
       transitions from: :pending_assignation, to: :pending_meeting
@@ -44,6 +46,9 @@ class TaxIncome < ApplicationRecord
     end
     event :paid do
       transitions from: :waiting_payment, to: :in_progress
+    end
+    event :refund do
+      transitions to: :refunded
     end
   end
 

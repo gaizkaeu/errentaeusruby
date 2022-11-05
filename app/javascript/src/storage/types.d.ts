@@ -9,6 +9,18 @@ export interface TaxIncome {
   updated_at: string
 }
 
+export interface PaymentDetails {
+  status: "succeeded" | "canceled" | "processing" | "requires_action" | "requires_confirmation"
+  amount: number,
+  receipt_url: string,
+  card: {
+    brand: "visa" | "mastercard"
+    last4: string,
+    wallet: string | undefined,
+    refunded: boolean
+  }
+}
+
 export interface Appointment {
   id: string,
   lawyer_id: string,
