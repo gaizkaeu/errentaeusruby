@@ -20,16 +20,6 @@ class TaxIncomesController < ApiBaseController
   def edit
   end
 
-  def set_appointment
-    @appointment = Appointment.create!(lawyer: @tax_income.lawyer, client: @tax_income.user, tax_income: @tax_income, time: params[:time])
-    if @appointment.save
-      @tax_income.appointment_created!
-      render json: @appointment
-    else
-      render json: @appointment.errors, status: :unprocessable_entity
-    end
-  end
-
   # POST /tax_incomes or /tax_incomes.json
   def create
     @tax_income = current_api_v1_user.tax_incomes.build(observations: params[:observations])
@@ -47,7 +37,7 @@ class TaxIncomesController < ApiBaseController
     end
   end
 
-  def create_payment_intent
+  def checkout
     if @tax_income.waiting_payment?
       payment_intent = Stripe::PaymentIntent.create(
         amount: @tax_income.price,

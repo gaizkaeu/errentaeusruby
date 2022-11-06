@@ -14,7 +14,7 @@ module Api::V1
       
       respond_to do |format|
         if @appointment.save
-          format.json { render json: @appointment}
+          format.json { render :show}
         else
           format.json { render json: @appointment.errors, status: :unprocessable_entity }
         end

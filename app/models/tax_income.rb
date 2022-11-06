@@ -32,6 +32,7 @@ class TaxIncome < ApplicationRecord
     state :in_progress
     state :finished
     state :rejected
+    state :pending_documentation
     state :waiting_payment
     state :refunded
 
@@ -45,7 +46,7 @@ class TaxIncome < ApplicationRecord
       transitions from: :waiting_for_meeting, to: :waiting_for_meeting_creation
     end
     event :paid do
-      transitions from: :waiting_payment, to: :in_progress
+      transitions from: :waiting_payment, to: :pending_documentation
     end
     event :refund do
       transitions to: :refunded
