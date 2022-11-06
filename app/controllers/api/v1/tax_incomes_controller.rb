@@ -30,7 +30,7 @@ class TaxIncomesController < ApiBaseController
         @tax_income.load_price_from_estimation(Estimation.find(session[:estimation])) if session[:estimation]
         session[:estimation] = nil
 
-        format.json {render @tax_income, status: :ok }
+        format.json {render :show, status: :ok }
       else
         format.json { render json: @tax_income.errors, status: :unprocessable_entity }
       end
@@ -88,12 +88,13 @@ class TaxIncomesController < ApiBaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tax_income
-      @tax_income = current_api_v1_user.tax_incomes.find(params[:id])
+      #TODO: ACCESS PERMISSIONS
+      @tax_income = TaxIncome.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def tax_income_params
-      params.require(:tax_income).permit(:observations, :load_price_from_estimation)
+      params.require(:tax_income).permit(:observations)
     end
 end
 end

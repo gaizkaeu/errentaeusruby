@@ -13,11 +13,11 @@ class User < ApplicationRecord
   has_many :tax_incomes
   has_many :estimations
   has_many :appointments
-
-  has_many :assigned_tax_incomes, ->(self_o) { where lawyer_id: self_o.id }, class_name: "TaxIncome", foreign_key: "lawyer_id"
+  has_many :requested_documents, foreign_key: :requested_by, dependent: :destroy, class_name: "Document"
+  has_many :asked_documents, foreign_key: :requested_to, dependent: :destroy, class_name: "Document"
+  has_many :assigned_tax_incomes, foreign_key: :lawyer_id, class_name: "TaxIncome"
 
   enum account_type: {user: 0, lawyer: 1}
-
 
   def create_stripe_customer
     customer = Stripe::Customer.create({

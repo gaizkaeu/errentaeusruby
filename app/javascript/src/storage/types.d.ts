@@ -33,7 +33,6 @@ export interface Appointment {
 export type TaxIncomeStatus = "pending_assignation" | "waiting_for_meeting_creation" | "waiting_payment" |"waiting_for_meeting" | "rejected" | "pending_documentation" | "in_progress" | "finished"
 
 export interface TaxIncomeData {
-  load_price_from_estimation: boolean,
   observations: string,
 }
 

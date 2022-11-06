@@ -1,5 +1,8 @@
 class Document < ApplicationRecord
   belongs_to :tax_income
+  belongs_to :requested_by, class_name: "User"
+  belongs_to :requested_to, class_name: "User"
+
   has_one_attached :data
 
   include AASM

@@ -39,7 +39,7 @@ const NewTaxIncome = () => {
       <Text h4>Solo te llevará unos segundos más.</Text>
 
       <div>
-        <Formik initialValues={{ load_price_from_estimation: false, observations: '' }} onSubmit={submitForm}>
+        <Formik initialValues={{ observations: '' }} onSubmit={submitForm}>
           <Form>
             <Grid.Container gap={3}>
               <Grid xs={12} md={6}>

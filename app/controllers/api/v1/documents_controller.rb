@@ -63,7 +63,7 @@ class DocumentsController < ApiBaseController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:status, :name, :description, :tax_income_id, :data)
+      params.require(:document).permit(:status, :name, :description, :tax_income_id, :data, :requested_by_id, :requested_to_id)
     end
 end
 end

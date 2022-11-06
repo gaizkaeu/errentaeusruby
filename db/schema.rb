@@ -58,9 +58,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_164243) do
     t.string "name"
     t.string "description"
     t.integer "tax_income_id", null: false
+    t.integer "requested_by_id", null: false
+    t.integer "requested_to_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tax_income_id"], name: "index_documents_on_tax_income_id"
+    t.index ["requested_by_id"], name: "index_documents_on_requested_by_id"
+    t.index ["requested_to_id"], name: "index_documents_on_requested_to_id"
   end
 
   create_table "estimations", force: :cascade do |t|
@@ -120,6 +124,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_164243) do
   add_foreign_key "appointments", "users", column: "client_id"
   add_foreign_key "appointments", "users", column: "lawyer_id"
   add_foreign_key "documents", "tax_incomes"
+  add_foreign_key "documents", "users", column: "requested_by_id"
+  add_foreign_key "documents", "users", column: "requested_to_id"
   add_foreign_key "estimations", "tax_incomes"
   add_foreign_key "estimations", "users"
   add_foreign_key "tax_incomes", "users"
