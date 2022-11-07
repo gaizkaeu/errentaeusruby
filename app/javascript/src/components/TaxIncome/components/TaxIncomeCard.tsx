@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { TaxIncome } from "../../../storage/types";
 import MeetingCreation from "./CardComponents/MeetingCreation";
 import WaitingPayment, { PaymentCompleted } from "./CardComponents/Payment";
+import DocumentationUpload from "./CardComponents/WaitingDocumentation";
 import WaitingLawyer from "./CardComponents/WaitingLawyer";
 import WaitingMeeting from "./CardComponents/WaitingMeeting";
 
@@ -25,7 +26,7 @@ const TaxIncomeCard = (props: {taxIncome: TaxIncome, renderCard?: string, navCur
             case "payment_completed":
                 return <PaymentCompleted taxIncome={taxIncome}/> 
             case "pending_documentation":
-                return <Text>Peding documentation</Text>;
+                return <DocumentationUpload taxIncome={taxIncome}/>
             case "in_progress":
                 return <Text>In progress</Text>;
             case "finished":

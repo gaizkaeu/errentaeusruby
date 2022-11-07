@@ -1,12 +1,18 @@
 module Api::V1
 
 class DocumentsController < ApiBaseController
-  before_action :set_document, only: %i[ show edit update destroy ]
+  before_action :set_document, only: %i[ show edit update destroy delete_document_attachment ]
   skip_before_action :verify_authenticity_token
 
   # GET /documents or /documents.json
   def index
     @documents = Document.all
+  end
+
+  def delete_document_attachment
+    doc = @document.data.find(params[:id_attachment])
+    doc.purge
+    render :show
   end
 
   # GET /documents/1 or /documents/1.json
@@ -24,7 +30,7 @@ class DocumentsController < ApiBaseController
 
   # POST /documents or /documents.json
   def create
-    @document = Document.new(document_params)
+    @document = Document.new(document_create_params)
 
     respond_to do |format|
       if @document.save
@@ -62,8 +68,8 @@ class DocumentsController < ApiBaseController
     end
 
     # Only allow a list of trusted parameters through.
-    def document_params
-      params.require(:document).permit(:status, :name, :description, :tax_income_id, :data, :requested_by_id, :requested_to_id)
+    def document_create_params
+      params.require(:document).permit(:name, :description, :tax_income_id, :requested_by_id, :requested_to_id, :data)
     end
 end
 end

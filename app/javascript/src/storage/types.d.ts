@@ -1,3 +1,5 @@
+import { StringMap } from "i18next"
+
 export interface TaxIncome {
   id: string,
   price: number,
@@ -7,6 +9,24 @@ export interface TaxIncome {
   appointment: string,
   created_at: string,
   updated_at: string
+}
+
+export interface Document {
+  id: string,
+  state: "created" | "uploaded" | "ready",
+  name: string,
+  description: string,
+  tax_income_id: string,
+  requested_by_id: string,
+  requested_to_id: string
+  created_at: string,
+  updated_at: string
+  attachments: {
+    filename: string,
+    url: string,
+    id: string
+  }[]
+
 }
 
 export interface PaymentDetails {

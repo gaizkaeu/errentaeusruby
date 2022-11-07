@@ -37,6 +37,11 @@ class TaxIncomesController < ApiBaseController
     end
   end
 
+  def documents
+    @documents = @tax_income.documents
+    render "api/v1/documents/index"
+  end
+
   def checkout
     if @tax_income.waiting_payment?
       payment_intent = Stripe::PaymentIntent.create(

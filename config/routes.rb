@@ -16,13 +16,16 @@ Rails.application.routes.draw do
       resources :tax_incomes do
         post "create_payment_intent", to: "tax_incomes#checkout", on: :member
         get :payment_data, on: :member
+        get :documents, on: :member
       end
       get :logged_in, to: 'accounts#logged_in'
       devise_for :users, module: "api/v1/auth", defaults: { format: :json }
       scope :payments do
         post :webhook, to: "payments#webhook"
       end
-      resources :documents
+      resources :documents do
+        delete 'delete_document_attachment/:id_attachment', on: :member, to: "documents#delete_document_attachment" 
+      end
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

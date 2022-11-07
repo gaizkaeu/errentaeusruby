@@ -8,7 +8,9 @@ const AssignedLawyerCard = (props: { lawyerId: string }) => {
         <Card variant="flat">
             <Card.Body>
                 <Text b>Tu asesor fiscal</Text>
-                {isLoading ? <LawyerSkeleton /> : (!data || isError ? <NoLawyerAvatar/> : <LawyerAvatar lawyer={data!} />)}
+                <div className="mt-3">
+                {isLoading ? <LawyerSkeleton /> : (!data || isError ? <NoLawyerAvatar/> : <LawyerAvatar size="md"lawyer={data!} />)}
+                </div>
             </Card.Body>
         </Card>
     )
@@ -26,10 +28,10 @@ export const LawyerSkeleton = () => {
     )
 }
 
-export const AssignedLawyerSimple = (props: { lawyerId: string }) => {
+export const AssignedLawyerSimple = (props: { lawyerId: string, size: "xs" | "sm" | "md"}) => {
     const { data, isLoading, isError } = useGetLawyerByIdQuery(props.lawyerId);
     return isLoading ? <LawyerSkeleton /> : (
-        (!data || isError ? <NoLawyerAvatar/> : <LawyerAvatar lawyer={data!}/>)
+        (!data || isError ? <NoLawyerAvatar/> : <LawyerAvatar size={props.size} lawyer={data!}/>)
     )
 }
 

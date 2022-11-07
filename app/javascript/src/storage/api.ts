@@ -1,6 +1,7 @@
 import {BaseQueryFn, buildCreateApi, createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
-import { TaxIncomesResponse, Appointment, TaxIncome, TaxIncomeData, Estimation, IUser, PaymentDetails } from './types'
+import { string } from 'yup'
+import { TaxIncomesResponse, Appointment, TaxIncome, TaxIncomeData, Estimation, IUser, PaymentDetails, Document } from './types'
 
 const axiosBaseQuery =
   (
@@ -33,7 +34,7 @@ const axiosBaseQuery =
 export const taxIncomeApi = createApi({
   reducerPath: 'taxIncomeApi',
   baseQuery: axiosBaseQuery({baseUrl: '/api/v1/'}),
-  tagTypes: ['TaxIncome', 'Appointment', 'Estimation', 'Lawyer'],
+  tagTypes: ['TaxIncome', 'Appointment', 'Estimation', 'Lawyer', 'Document'],
   endpoints: (build) => ({
     getTaxIncomes: build.query<TaxIncomesResponse, void>({
       query: () => ({url: 'tax_incomes', method: 'get'}),
@@ -86,9 +87,25 @@ export const taxIncomeApi = createApi({
     getPaymentDataOfTaxIncome: build.query<PaymentDetails, string>({
       query: (id) => ({url: `tax_incomes/${id}/payment_data`, method: 'get'}),
     }), 
+    getDocumentsOfTaxIncome: build.query<Document[], string>({
+      query: (id) => ({url: `tax_incomes/${id}/documents`, method: 'get'}),
+      providesTags: (result, error, arg) =>
+      result
+        ? [...result.map(({ id }) => ({ type: 'Document' as const, id })), { type: 'Document', id: 'LIST' }]
+        : [{ type: 'Document', id: 'LIST' }],
+      }),
+    getDocumentById: build.query<Document, string>({
+      query: (id) => ({url: `documents/${id}`, method: 'get'}),
+      providesTags: (result, error, id) => [{type: 'Document', id}]
+    }),
+    deleteDocumentAttachmentById: build.mutation<Document, {document_id: string, attachment_id: string}>({
+      query: (data) => ({url: `documents/${data.document_id}/delete_document_attachment/${data.attachment_id}`, method: 'delete'}),
+      invalidatesTags: (result, error) => [{type: 'Document', id: result?.id}],
+    }),
   }),
 })
 
 export const { useGetTaxIncomesQuery, useGetTaxIncomeByIdQuery, useCreateTaxIncomeMutation, useCreateAppointmentToTaxIncomeMutation,
                useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery, useGetAppointmentsQuery,
-                useUpdateAppointmentByIdMutation , useGetPaymentDataOfTaxIncomeQuery} = taxIncomeApi
+                useUpdateAppointmentByIdMutation , useGetPaymentDataOfTaxIncomeQuery, useGetDocumentsOfTaxIncomeQuery,
+              useDeleteDocumentAttachmentByIdMutation} = taxIncomeApi

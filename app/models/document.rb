@@ -3,7 +3,9 @@ class Document < ApplicationRecord
   belongs_to :requested_by, class_name: "User"
   belongs_to :requested_to, class_name: "User"
 
-  has_one_attached :data
+  has_many_attached :data
+
+  validates :data, content_type: ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']
 
   include AASM
 

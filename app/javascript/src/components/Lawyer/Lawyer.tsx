@@ -2,15 +2,15 @@ import { Fragment } from "react";
 import { Button, Spacer, Tooltip, User } from "@nextui-org/react"
 import { IUser } from "../../storage/types";
 
-const LawyerAvatar = (props: { lawyer: IUser }) => {
+const LawyerAvatar = (props: { lawyer: IUser, size: "xs" | "sm" | "md"}) => {
     const { lawyer } = props;
     return (
     <Tooltip placement="top" content={<LawyerHover lawyer={lawyer} />}>
         <User
-            className="mt-3"
             text={lawyer?.name}
             name={lawyer?.name}
-            description={lawyer?.surname}
+            description={props.size == "md" ? lawyer?.surname : undefined}
+            size={props.size}
         />
     </Tooltip>
     )
