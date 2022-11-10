@@ -3,7 +3,7 @@ class TaxIncome < ApplicationRecord
   belongs_to :lawyer, class_name: "User", optional: true
   has_one :estimation
   has_one :appointment
-  has_many :documents
+  has_many :documents, class_name: "Document"
 
   include AASM
 

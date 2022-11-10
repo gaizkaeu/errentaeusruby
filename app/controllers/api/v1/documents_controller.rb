@@ -1,8 +1,8 @@
 module Api::V1
 
 class DocumentsController < ApiBaseController
-  before_action :set_document, only: %i[ show edit update destroy delete_document_attachment ]
-  skip_before_action :verify_authenticity_token
+  before_action :set_document, except: %i[index, create]
+  before_action :authenticate_api_v1_user!
 
   # GET /documents or /documents.json
   def index
@@ -10,9 +10,37 @@ class DocumentsController < ApiBaseController
   end
 
   def delete_document_attachment
-    doc = @document.data.find(params[:id_attachment])
+    doc = @document.files.find(params[:id_attachment])
     doc.purge
+    @document.delete_file!(current_api_v1_user, doc.filename)
     render :show
+  end
+
+  def add_document_attachment
+    if @document.files.size < @document.document_number
+      params[:files].values.each do |v|
+        if @document.upload_file?
+          @document.files.attach(v)
+          @document.uploaded_file!(current_api_v1_user, v.original_filename)
+        else
+          break
+        end
+      end
+      render :show
+    else
+      render json: {error: "Document size full"}, status: :unprocessable_entity
+    end
+  end
+
+  def export_document
+    CreatePdfFromDocumentAttachmentsJob.perform_later(@document)
+    @document.export!(current_api_v1_user)
+    render :show
+  end
+
+  def history
+    @history = DocumentHistory.where(document: @document).order(created_at: :desc)
+    render :index_history
   end
 
   # GET /documents/1 or /documents/1.json
@@ -69,7 +97,7 @@ class DocumentsController < ApiBaseController
 
     # Only allow a list of trusted parameters through.
     def document_create_params
-      params.require(:document).permit(:name, :description, :tax_income_id, :requested_by_id, :requested_to_id, :data)
+      params.require(:document).permit(:name, :lawyer_id, :tax_income_id, :user_id, :files, :document_number)
     end
 end
 end

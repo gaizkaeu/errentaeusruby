@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_06_164243) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_084511) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_164243) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -53,18 +53,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_164243) do
     t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id"
   end
 
+  create_table "document_histories", force: :cascade do |t|
+    t.integer "document_id", null: false
+    t.integer "user_id", null: false
+    t.integer "action"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "description"
+    t.index ["document_id"], name: "index_document_histories_on_document_id"
+    t.index ["user_id"], name: "index_document_histories_on_user_id"
+  end
+
   create_table "documents", force: :cascade do |t|
     t.integer "state"
     t.string "name"
-    t.string "description"
     t.integer "tax_income_id", null: false
-    t.integer "requested_by_id", null: false
-    t.integer "requested_to_id", null: false
+    t.integer "user_id", null: false
+    t.integer "lawyer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "export_status"
+    t.integer "exported_by_id"
+    t.integer "document_number"
+    t.index ["exported_by_id"], name: "index_documents_on_exported_by_id"
+    t.index ["lawyer_id"], name: "index_documents_on_lawyer_id"
     t.index ["tax_income_id"], name: "index_documents_on_tax_income_id"
-    t.index ["requested_by_id"], name: "index_documents_on_requested_by_id"
-    t.index ["requested_to_id"], name: "index_documents_on_requested_to_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "estimations", force: :cascade do |t|
@@ -123,9 +137,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_164243) do
   add_foreign_key "appointments", "tax_incomes"
   add_foreign_key "appointments", "users", column: "client_id"
   add_foreign_key "appointments", "users", column: "lawyer_id"
+  add_foreign_key "document_histories", "documents"
+  add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
-  add_foreign_key "documents", "users", column: "requested_by_id"
-  add_foreign_key "documents", "users", column: "requested_to_id"
+  add_foreign_key "documents", "users"
+  add_foreign_key "documents", "users", column: "exported_by_id"
+  add_foreign_key "documents", "users", column: "lawyer_id"
   add_foreign_key "estimations", "tax_incomes"
   add_foreign_key "estimations", "users"
   add_foreign_key "tax_incomes", "users"

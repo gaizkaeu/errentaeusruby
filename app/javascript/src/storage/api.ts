@@ -1,7 +1,7 @@
 import {BaseQueryFn, buildCreateApi, createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 import { string } from 'yup'
-import { TaxIncomesResponse, Appointment, TaxIncome, TaxIncomeData, Estimation, IUser, PaymentDetails, Document } from './types'
+import { TaxIncomesResponse, Appointment, TaxIncome, TaxIncomeData, Estimation, IUser, PaymentDetails, Document, DocumentHistory } from './types'
 
 const axiosBaseQuery =
   (
@@ -34,7 +34,7 @@ const axiosBaseQuery =
 export const taxIncomeApi = createApi({
   reducerPath: 'taxIncomeApi',
   baseQuery: axiosBaseQuery({baseUrl: '/api/v1/'}),
-  tagTypes: ['TaxIncome', 'Appointment', 'Estimation', 'Lawyer', 'Document'],
+  tagTypes: ['TaxIncome', 'Appointment', 'Estimation', 'Lawyer', 'Document', 'DocumentHistory'],
   endpoints: (build) => ({
     getTaxIncomes: build.query<TaxIncomesResponse, void>({
       query: () => ({url: 'tax_incomes', method: 'get'}),
@@ -102,10 +102,26 @@ export const taxIncomeApi = createApi({
       query: (data) => ({url: `documents/${data.document_id}/delete_document_attachment/${data.attachment_id}`, method: 'delete'}),
       invalidatesTags: (result, error) => [{type: 'Document', id: result?.id}],
     }),
+    addAttachmentToDocument: build.mutation<Document, {document_id: string, files: any}>({
+      query: (data) => ({url: `documents/${data.document_id}/add_document_attachment/`, method: 'post', data: data.files}),
+      invalidatesTags: (result, error) => [{type: 'Document', id: result?.id}],
+    }),
+    createDocument: build.mutation<Document, {files: any}>({
+      query: (data) => ({url: `documents`, method: 'post', body: {files: data.files}}),
+      invalidatesTags: (result, error) => [{type: 'Document', id: result?.id}],
+    }),
+    exportDocumentById: build.mutation<Document, string>({
+      query: (data) => ({url: `documents/${data}/export_document`, method: 'post' }),
+      invalidatesTags: (result, error) => [{type: 'Document', id: result?.id}],
+    }),
+    getDocumentHistoryById: build.query<DocumentHistory[], string>({
+      query: (id) => ({url: `documents/${id}/history`, method: 'get'}),
+    }),
   }),
 })
 
 export const { useGetTaxIncomesQuery, useGetTaxIncomeByIdQuery, useCreateTaxIncomeMutation, useCreateAppointmentToTaxIncomeMutation,
                useGetAppointmentByIdQuery, useGetEstimationByIdQuery, useGetLawyerByIdQuery, useGetAppointmentsQuery,
                 useUpdateAppointmentByIdMutation , useGetPaymentDataOfTaxIncomeQuery, useGetDocumentsOfTaxIncomeQuery,
-              useDeleteDocumentAttachmentByIdMutation} = taxIncomeApi
+              useDeleteDocumentAttachmentByIdMutation, useAddAttachmentToDocumentMutation, useCreateDocumentMutation, useGetDocumentByIdQuery,
+            useExportDocumentByIdMutation, useGetDocumentHistoryByIdQuery} = taxIncomeApi

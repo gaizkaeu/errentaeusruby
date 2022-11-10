@@ -7,7 +7,9 @@ import { DocumentComponent } from "../../../Document/Document";
 
 const DocumentationUpload = (props: { taxIncome: TaxIncome }) => {
     const { taxIncome } = props;
-    const {currentData, isLoading, isError} = useGetDocumentsOfTaxIncomeQuery(taxIncome.id)
+    const {currentData, isLoading, isError} = useGetDocumentsOfTaxIncomeQuery(taxIncome.id, {
+        pollingInterval: 3000
+    })
     return (
         <Fragment>
             <Text h3>Documentación</Text>

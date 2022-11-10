@@ -25,6 +25,9 @@ Rails.application.routes.draw do
       end
       resources :documents do
         delete 'delete_document_attachment/:id_attachment', on: :member, to: "documents#delete_document_attachment" 
+        post :add_document_attachment, on: :member
+        post :export_document, on: :member
+        get :history, on: :member
       end
     end
   end

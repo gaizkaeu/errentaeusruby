@@ -17,16 +17,29 @@ export interface Document {
   name: string,
   description: string,
   tax_income_id: string,
-  requested_by_id: string,
-  requested_to_id: string
+  user_id: string,
+  lawyer_id: string
   created_at: string,
   updated_at: string
-  attachments: {
-    filename: string,
-    url: string,
-    id: string
-  }[]
+  attachments: DocumentAttachment[],
+  export_status: "export_successful" | "export_queue" | "not_exported",
+  export: DocumentAttachment,
+  document_number: number
+}
 
+export interface DocumentHistory {
+  id: string,
+  document_id: string,
+  user_id: string,
+  action: "remove_image" | "add_image" | "completed" | "exported",
+  description: string,
+  created_at: string
+}
+
+export interface DocumentAttachment {
+  filename: string,
+  url: string,
+  id: string 
 }
 
 export interface PaymentDetails {

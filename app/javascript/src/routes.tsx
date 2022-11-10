@@ -4,6 +4,7 @@ import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
 import { Suspense } from 'react'
 import { useAuth } from './hooks/authHook'
+import ShowDocumentHistory from './components/Document/modals/DocumentHistoryModal'
 const EstimationEditModal = React.lazy(() => import('./components/Estimation/modals/EstimationEditModal'));
 const AuthModal = React.lazy(() => import('./components/Authentication/modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));
@@ -56,6 +57,9 @@ const AppRoutes = () => {
             <Route path="/estimation/:estimation_id">
               <Route path="edit" element={<Suspense><EstimationEditModal/></Suspense>}/>
             </Route>
+            <Route path="/documents/:document_id">
+              <Route path="history" element={<Suspense><ShowDocumentHistory/></Suspense>}/>
+            </Route>
           </Route>
         </Routes>
         {background && (
@@ -67,6 +71,9 @@ const AppRoutes = () => {
           </Route>
           <Route path="/estimation/:estimation_id">
             <Route path="edit" element={<Suspense><EstimationEditModal/></Suspense>}/>
+          </Route>
+          <Route path="/documents/:document_id">
+            <Route path="history" element={<Suspense><ShowDocumentHistory/></Suspense>}/>
           </Route>
         </Routes>
       )}
