@@ -13,6 +13,7 @@ import Footer from './components/Footer'
 import Loader from './components/Loader'
 
 import './i18n';
+import i18next from 'i18next'
 
 const lightTheme = createTheme({
   type: 'light',
@@ -36,6 +37,8 @@ const App = () => {
     dispatch(loggedIn())
     dispatch(rescueMyEstimation())
   }, [])
+
+  i18next.on('languageChanged', (lng) => {document.documentElement.setAttribute('lang', lng);})
 
   return (
 

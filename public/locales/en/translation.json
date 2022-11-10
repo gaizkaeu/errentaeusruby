@@ -1,34 +1,63 @@
-
 {
-    "header": {
-        "elizaasesoresservice": "SERVICE PROVIDED BY ELIZA ASESORES"
+  "header": {
+    "elizaasesoresservice": "SERVICE PROVIDED BY ELIZA ASESORES"
+  },
+  "homepage": {
+    "navbar": "Home",
+    "title": "ERRENTA.EUS",
+    "subtitle": "Tax Income in Vitoria Gasteiz"
+  },
+  "estimation": {
+    "title": "Estimation",
+    "subtitle": "Thank you for reaching this step."
+  },
+  "taxincome": {
+    "title": "My Tax Income"
+  },
+  "calculator": {
+    "title": "Calculator"
+  },
+  "documentation": {
+    "title": "Documentation"
+  },
+  "authentication": {
+    "loggedIn": "Logged In!",
+    "loggedOut": "See you soon",
+    "loggingOut": "Logging out...",
+    "loggingIn": "Logging in..."
+  },
+  "errors": {
+    "unexpected": "Unexpected error"
+  },
+  "lawyers": {
+    "assignedLawyer": "Your lawyer",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "documents": {
+    "history": {
+      "action": "ACTION",
+      "user": "USER",
+      "date": "DATE",
+      "description": "DESCRIPTION"
     },
-    "homepage": {
-        "navbar": "Home",
-        "title": "ERRENTA.EUS",
-        "subtitle": "Tax Income in Vitoria Gasteiz"
+    "actions": {
+      "export": "Export document",
+      "viewDocument": "View document",
+      "delete": "Delete"
     },
-    "estimation": {
-        "title": "Estimation",
-        "subtitle": "Thank you for reaching this step."
+    "info": {
+      "history": "History",
+      "askedBy": "Requested by",
+      "lastUpdate": "Last update"
     },
-    "taxincome": {
-      "title": "My Tax Income"
-    },
-    "calculator": {
-      "title": "Calculator"
-    },
-    "authentication": {
-      "loggedIn": "Logged In!",
-      "loggedOut": "See you soon",
-      "loggingOut": "Logging out...",
-      "loggingIn": "Logging in..."
-    },
-    "errors": {
-      "unexpected": "Unexpected error"
-    },
-    "global": {
-      "loading": "Processing...",
-      "ok": "Done!"
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending"
     }
+  },
+  "global": {
+    "loading": "Processing...",
+    "ok": "Done!"
+  }
 }

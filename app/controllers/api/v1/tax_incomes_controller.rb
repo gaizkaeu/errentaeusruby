@@ -38,7 +38,7 @@ class TaxIncomesController < ApiBaseController
   end
 
   def documents
-    @documents = @tax_income.documents
+    @documents = @tax_income.documents.with_attached_files
     render "api/v1/documents/index"
   end
 

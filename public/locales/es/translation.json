@@ -17,11 +17,41 @@
     "calculator": {
         "title": "Calculadora"
     },
+    "documentation": {
+        "title": "Documentación"
+    },
     "authentication": {
         "loggedIn": "Has iniciado sesión",
         "loggedOut": "¡Hasta luego!",
         "loggingOut": "Cerrando sesión...",
         "loggingIn": "Iniciando sesión..."
+    },
+    "lawyers": {
+        "assignedLawyer": "Tu abogado",
+        "email": "Email",
+        "phone": "Teléfono"
+    },
+    "documents": {
+        "history": {
+            "action": "ACCIÓN",
+            "user": "USUARIO",
+            "date": "FECHA",
+            "description": "DESCRIPCIÓN"
+        },
+        "actions": {
+            "export": "Exportar documento",
+            "viewDocument": "Ver documento",
+            "delete": "Eliminar"
+        },
+        "info": {
+            "history": "Historial",
+            "askedBy": "Solicitado por",
+            "lastUpdate": "Ultima actualización"
+        },
+        "status": {
+            "completed": "Completado",
+            "pending": "Pediente"
+        }
     },
     "errors": {
         "unexpected": "Error inesperado"

@@ -4,7 +4,7 @@ import { store } from './storage/store'
 import { Text } from '@nextui-org/react'
 import { Suspense } from 'react'
 import { useAuth } from './hooks/authHook'
-import ShowDocumentHistory from './components/Document/modals/DocumentHistoryModal'
+const ShowDocumentHistory = React.lazy(() => import('./components/Document/modals/DocumentHistoryModal'));
 const EstimationEditModal = React.lazy(() => import('./components/Estimation/modals/EstimationEditModal'));
 const AuthModal = React.lazy(() => import('./components/Authentication/modals/AuthModal'));
 const NewTaxIncome = React.lazy(() => import('./components/TaxIncome/NewTaxIncome'));

@@ -1,17 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Errentaeusreact</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <meta charset="utf-8">
 
+    <title>Templatus-Vue</title>
+
+    <meta name="description" content="Ruby on Rails template for using Vue.js 3">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Templatus (Vue edition)">
+    <meta name="theme-color" content="#991c1c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Templatus (Vue edition)">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+
+    <meta name="git-commit-version" content="<%= Rails.configuration.x.git.commit_version %>">
+    <meta name="git-commit-time" content="<%= Rails.configuration.x.git.commit_time %>">
+
+    <% if Rails.configuration.x.honeybadger.api_key %>
+    <meta name="honeybadger-api-key" content="<%= Rails.configuration.x.honeybadger.api_key %>">
+    <% end %>
+    <% if Rails.configuration.x.plausible_url %>
+    <meta name="plausible-url" content= "<%= Rails.configuration.x.plausible_url %>">
+    <% end %>
+    <% if Rails.configuration.x.app_host %>
+    <meta name="app-host" content= "<%= Rails.configuration.x.app_host %>">
+    <% end %>
+    <% if Rails.configuration.asset_host.present? %>
+    <meta name="asset-host" content="<%= request.protocol %><%= Rails.configuration.asset_host %>">
+    <% end %>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= tag :link, href: asset_path('/apple-touch-icon.png'), rel: 'apple-touch-icon', type: 'image/png', sizes: '180x180' %>
+    <%= tag :link, href: asset_path('/favicon-32x32.png'),    rel: 'icon',             type: 'image/png', sizes: '32x32' %>
+    <%= tag :link, href: asset_path('/favicon-16x16.png'),    rel: 'icon',             type: 'image/png', sizes: '16x16' %>
+    <% #tag :link, href: asset_path('/safari-pinned-tab.svg'),rel: 'mask-icon',        color: '#d30001' %>
+    <%= tag :link, href: webmanifest_path, rel: 'manifest' %>
+    <% # tag :link, href: vite_asset_path('images/logo.svg'), rel: 'preload', as: 'image' %>
     <%= vite_client_tag %>
     <%= vite_typescript_tag 'index.tsx' %>
 
   </head>
 
   <body>
-      <%= yield %>
+    <noscript>
+      <p>This website doesn't work without JavaScript enabled. Please enable it to continue.</p>
+    </noscript>
+
+    <%= yield %>
   </body>
 </html>

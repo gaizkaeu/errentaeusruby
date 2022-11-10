@@ -8,7 +8,7 @@ const EstimationCard = (props: { estimation: Estimation | undefined, deletable?:
     const navigate = useNavigate()
     const location = useLocation()
     return (
-        <Card variant="flat">
+        <Card variant="flat" role="dialog">
             {estimation ? (
                 <Card.Body>
                     <Text size="$xl">

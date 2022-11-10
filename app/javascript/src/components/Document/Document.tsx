@@ -5,52 +5,81 @@ import {
   Loading,
   Table,
   Text,
+  User,
 } from "@nextui-org/react"
 import { formatRelative } from "date-fns"
 import es from "date-fns/locale/es"
+import { useTranslation } from "react-i18next"
 import { Link, useLocation } from "react-router-dom"
 import {
   useDeleteDocumentAttachmentByIdMutation,
   useExportDocumentByIdMutation,
   useGetDocumentHistoryByIdQuery,
 } from "../../storage/api"
+import { useAppDispatch, useAppSelector } from "../../storage/hooks"
 import { Document } from "../../storage/types"
 import { AssignedLawyerSimple } from "../Lawyer/AssignedLawyer"
 import { AttachmentForm } from "./AttachmentForm"
 
 export const DocumentHistory = (props: { documentId: string }) => {
-  const { currentData, isLoading, isError } = useGetDocumentHistoryByIdQuery(props.documentId)
+  const { t, i18n } = useTranslation();
+  const RenderUser = (props: { userId: string }) => {
+    const currentUser = useAppSelector((state) => state.authentication.user)
 
-  return currentData && !isLoading ? (
+    return currentUser ? (
+      currentUser.id === props.userId ? (
+        <User
+          bordered
+          color="secondary"
+          size="md"
+          text={currentUser.name}
+          name={currentUser.name}
+        />
+      ) : (
+        <AssignedLawyerSimple size="md" lawyerId={props.userId} />
+      )
+    ) : (
+      <Loading />
+    )
+  }
+
+  const { currentData, isLoading, isError } = useGetDocumentHistoryByIdQuery(
+    props.documentId
+  )
+
+  return currentData && !isLoading && !isError ? (
     <Table
-      aria-label="Example table with static content"
+      aria-label="history table"
       css={{
         height: "auto",
         minWidth: "100%",
       }}
     >
       <Table.Header>
-        <Table.Column>ACCION</Table.Column>
-        <Table.Column>USUARIO</Table.Column>
-        <Table.Column>FECHA</Table.Column>
-        <Table.Column>DESCRIPCIÓN</Table.Column>
+        <Table.Column>{t('documents.history.action')}</Table.Column>
+        <Table.Column>{t('documents.history.user')}</Table.Column>
+        <Table.Column>{t('documents.history.date')}</Table.Column>
+        <Table.Column>{t('documents.history.description')}</Table.Column>
       </Table.Header>
       <Table.Body>
         {currentData!.map((action, ind) => (
           <Table.Row key={ind}>
             <Table.Cell>{action.action}</Table.Cell>
-            <Table.Cell>{action.user_id}</Table.Cell>
+            <Table.Cell><RenderUser userId={action.user_id}/></Table.Cell>
             <Table.Cell>{action.created_at}</Table.Cell>
             <Table.Cell>{action.description}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
     </Table>
-  ) : <Loading/>
+  ) : (
+    <Loading />
+  )
 }
 
 const DocumentActions = (props: { document: Document }) => {
   const { document } = props
+  const { t, i18n } = useTranslation();
   const [exportDocument, resula] = useExportDocumentByIdMutation()
 
   return (
@@ -58,7 +87,7 @@ const DocumentActions = (props: { document: Document }) => {
       {document.export_status == "export_successful" && (
         <Link to={document.export.url}>
           <Button auto color="primary" rounded>
-            Documento exportado
+            {t('documents.actions.viewDocument')}
           </Button>
         </Link>
       )}
@@ -75,7 +104,7 @@ const DocumentActions = (props: { document: Document }) => {
             rounded
             onPress={() => exportDocument(document.id)}
           >
-            Exportar como pdf
+            {t('documents.actions.export')}
           </Button>
         )}
     </div>
@@ -84,12 +113,12 @@ const DocumentActions = (props: { document: Document }) => {
 
 export const DocumentComponent = (props: { document: Document }) => {
   const { document } = props
+  const { t, i18n } = useTranslation();
   const location = useLocation()
   const [deleteAttachment, result] = useDeleteDocumentAttachmentByIdMutation()
 
   return (
-    <div>
-      <Card variant="flat">
+      <Card variant="flat" role="article">
         <Card.Header>
           <div className="flex w-full">
             <div className="grow">
@@ -98,13 +127,14 @@ export const DocumentComponent = (props: { document: Document }) => {
             <div className="flex-none">
               {document.state == "ready" ? (
                 <Badge color="success" variant="flat">
-                  Completado
+                  {t('documents.status.completed')}
                 </Badge>
               ) : (
                 <Text>
-                <Badge color="primary" variant="flat">
-                  Pendiente {document.attachments.length}/{document.document_number}
-                </Badge>
+                  <Badge color="primary" variant="flat">
+                    {t('documents.status.pending')} {document.attachments.length}/
+                    {document.document_number}
+                  </Badge>
                 </Text>
               )}
             </div>
@@ -124,7 +154,7 @@ export const DocumentComponent = (props: { document: Document }) => {
                     })
                   }
                 >
-                  Eliminar
+                  {t('documents.actions.delete')}
                 </Button>
               </div>
             ))}
@@ -139,21 +169,28 @@ export const DocumentComponent = (props: { document: Document }) => {
         </Card.Body>
         <Card.Divider />
         <Card.Footer>
-          <div className="flex flex-wrap gap-2">
-            <Text size="small">
-              <Link to={`/documents/${document.id}/history`} state={{ background: location }}>Historial</Link>
-            </Text>
-            <Text size="small">
-              Actualizado{" "}
-              {formatRelative(new Date(document.updated_at), new Date(), {
-                locale: es,
-              })}
-            </Text>
-            <Text size="small">Solicitado por</Text>
-            <AssignedLawyerSimple size="xs" lawyerId={document.lawyer_id} />
+          <div className="flex gap-2 w-full flex-wrap">
+            <div className="flex-1">
+              <Text size="small">
+                <Link
+                  to={`/documents/${document.id}/history`}
+                  state={{ background: location }}
+                >
+                  {t('documents.info.history')}
+                </Link>
+                {" "}
+                {t('documents.info.lastUpdate')} {" "}
+                {formatRelative(new Date(document.updated_at), new Date(), {
+                  locale: es,
+                })}
+              </Text>
+            </div>
+            <div className="flex items-center">
+              <Text size="small">{t('documents.info.askedBy')}</Text>
+              <AssignedLawyerSimple size="xs" lawyerId={document.lawyer_id} />
+            </div>
           </div>
         </Card.Footer>
       </Card>
-    </div>
   )
 }

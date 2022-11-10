@@ -14,8 +14,7 @@ class Document < ApplicationRecord
   validates :files, size: { between: 1.kilobyte..5.megabytes , message: 'is not given between size' }
 
   enum state: {
-    empty_documents: 0,
-    uploaded: 1,
+    pending: 1,
     ready: 2,
   }
 
@@ -27,14 +26,12 @@ class Document < ApplicationRecord
 
 
   aasm column: :state, enum: true do
-    state :empty_documents, initial: true
-    state :uploaded
+    state :pending, initial: true
     state :ready
 
     event :uploaded_file, binding_event: :files_changed do
-      transitions from: :empty_documents, to: :uploaded, guard: :upload_file?
-      transitions from: :uploaded, to: :uploaded, guard: :upload_file?
-      transitions from: :uploaded, to: :ready, guard: :document_full? do
+      transitions from: :pending, to: :pending, guard: :upload_file?
+      transitions from: :pending, to: :ready, guard: :document_full? do
         after do |user, description|
           create_history_record(:completed, user)
         end
@@ -45,8 +42,7 @@ class Document < ApplicationRecord
     end
 
     event :delete_file, binding_event: :files_changed do
-      transitions from: :uploaded, to: :uploaded
-      transitions from: :ready, to: :uploaded
+      transitions from: :ready, to: :pending
       after do |user, description|
         create_history_record(:remove_image, user, description)
       end

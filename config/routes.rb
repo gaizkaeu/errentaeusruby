@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  get '/manifest.v1.webmanifest', to: 'statics#manifest', as: :webmanifest
+  root 'react#index'
 
-  get '*path', to: "home#index", constraints: ->(request) do
+  get '*path', to: "react#index", constraints: ->(request) do
     !request.xhr? && request.format.html?
   end
 

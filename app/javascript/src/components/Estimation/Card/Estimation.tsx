@@ -12,7 +12,7 @@ const EstimationWrapper = (props: { estimationId: string }, { ...rest }) => {
 
 const EstimationCardSkeleton = () => {
     return (
-        <Card variant="flat">
+        <Card variant="flat" role="dialog">
             <Card.Body>
                 <Text b>Estimación</Text>
                 <div className="flex justify-between gap-5 mt-3 items-center animate-pulse">

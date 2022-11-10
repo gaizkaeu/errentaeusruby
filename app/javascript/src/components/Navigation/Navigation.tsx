@@ -1,17 +1,10 @@
-import {
-  Navbar,
-  Text,
-  Switch,
-  Dropdown,
-  Avatar,
-  Link,
-} from '@nextui-org/react'
-import { useTranslation } from 'react-i18next'
-import { NavLink, useMatch, useResolvedPath } from 'react-router-dom'
-import { useDarkMode } from 'usehooks-ts'
-import { useAuth } from '../../hooks/authHook'
-import { MoonIcon } from '../Icons/MoonIcon'
-import { SunIcon } from '../Icons/SunIcon'
+import { Navbar, Text, Switch, Dropdown, Avatar, Link } from "@nextui-org/react"
+import { useTranslation } from "react-i18next"
+import { NavLink, useMatch, useResolvedPath } from "react-router-dom"
+import { useDarkMode } from "usehooks-ts"
+import { useAuth } from "../../hooks/authHook"
+import { MoonIcon } from "../Icons/MoonIcon"
+import { SunIcon } from "../Icons/SunIcon"
 
 const NavBarLink = ({ to, children }: { to: string; children: string }) => {
   const resolvedPath = useResolvedPath(to)
@@ -41,15 +34,15 @@ const NavBarCollapse = ({ to, children }: { to: string; children: string }) => {
 }
 
 const Navigation = () => {
-  const darkMode = useDarkMode();
-  const {status, actions, currentUser} = useAuth();
-  const { t, i18n } = useTranslation();
+  const darkMode = useDarkMode()
+  const { status, actions, currentUser } = useAuth()
+  const { t, i18n } = useTranslation()
 
   const collapseItems = [
-    [t("homepage.navbar"), '/'],
-    [t("calculator.title"), '/calculator'],
-    [t("estimation.title"), '/estimation'],
-    [t("taxincome.title"), '/mytaxincome']
+    [t("homepage.navbar"), "/"],
+    [t("calculator.title"), "/calculator"],
+    [t("estimation.title"), "/estimation"],
+    [t("taxincome.title"), "/mytaxincome"],
   ]
 
   return (
@@ -73,42 +66,39 @@ const Navigation = () => {
         ))}
       </Navbar.Content>
       <Navbar.Content>
-        <div>
-          <Switch
-            checked={darkMode.isDarkMode}
-            onChange={darkMode.toggle}
-            size="md"
-            iconOn={
-              <SunIcon
-                filled
-                size={undefined}
-                height={undefined}
-                width={undefined}
-                label={undefined}
-              />
-            }
-            iconOff={
-              <MoonIcon
-                filled
-                size={undefined}
-                height={undefined}
-                width={undefined}
-                label={undefined}
-              />
-            }
-          />
-        </div>
+        <Switch
+          checked={darkMode.isDarkMode}
+          onChange={darkMode.toggle}
+          button-name="night-mode"
+          size="md"
+          iconOn={
+            <SunIcon
+              filled
+              size={undefined}
+              height={undefined}
+              width={undefined}
+              label={undefined}
+            />
+          }
+          iconOff={
+            <MoonIcon
+              filled
+              size={undefined}
+              height={undefined}
+              width={undefined}
+              label={undefined}
+            />
+          }
+        />
         <Navbar.Item hideIn="xs">
-          <Link href="https://elizaasesores.com">
-            Eliza Asesores
-          </Link>
+          <Link href="https://elizaasesores.com">Eliza Asesores</Link>
         </Navbar.Item>
         {status.fetched && status.loggedIn && (
           <Navbar.Content
             css={{
-              '@xs': {
-                w: '12%',
-                jc: 'flex-end',
+              "@xs": {
+                w: "12%",
+                jc: "flex-end",
               },
             }}
           >

@@ -1,13 +1,15 @@
 import { Card, Loading, Text } from "@nextui-org/react";
 import LawyerAvatar, { NoLawyerAvatar } from "./Lawyer";
 import { useGetLawyerByIdQuery } from "../../storage/api";
+import { useTranslation } from "react-i18next";
 
 const AssignedLawyerCard = (props: { lawyerId: string }) => {
+    const { t, i18n } = useTranslation();
     const { data, isLoading, isError } = useGetLawyerByIdQuery(props.lawyerId);
     return (
-        <Card variant="flat">
+        <Card variant="flat" role="dialog">
             <Card.Body>
-                <Text b>Tu asesor fiscal</Text>
+                <Text b>{t('lawyers.assignedLawyer')}</Text>
                 <div className="mt-3">
                 {isLoading ? <LawyerSkeleton /> : (!data || isError ? <NoLawyerAvatar/> : <LawyerAvatar size="md"lawyer={data!} />)}
                 </div>

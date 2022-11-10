@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Button, Spacer, Tooltip, User } from "@nextui-org/react"
 import { IUser } from "../../storage/types";
+import { useTranslation } from "react-i18next";
 
 const LawyerAvatar = (props: { lawyer: IUser, size: "xs" | "sm" | "md"}) => {
     const { lawyer } = props;
@@ -17,22 +18,25 @@ const LawyerAvatar = (props: { lawyer: IUser, size: "xs" | "sm" | "md"}) => {
 }
 
 export const NoLawyerAvatar = () => {
+    const { t, i18n } = useTranslation();
 
     return (
     <User
         className="mt-3"
-        text="Ha ocurrido un error"
-        name="Tu abogado"
-        description="Ha ocurrido un error"
+        text={t('errors.unexpected')}
+        name={t('lawyers.assignedLawyer')}
+        description={t('errors.unexpected')}
 /> )
 }
 
 const LawyerHover = (props: { lawyer: IUser }) => {
+    const { t, i18n } = useTranslation();
+
     return (
         <Fragment>
-            <Button>Email</Button>
+            <Button>{t('lawyers.email')}</Button>
             <Spacer y={1}/>
-            <Button>Teléfono</Button>
+            <Button>{t('lawyers.phone')}</Button>
         </Fragment>
     )
 }

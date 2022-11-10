@@ -5,7 +5,7 @@ import { ArrowIcon } from '../../Icons/ArrowIcon'
 const NoEstimationCard = () => {
     const navigate = useNavigate()
     return (
-        <Card variant="flat">
+        <Card variant="flat" role="dialog">
             <Card.Body>
                 <Text b>No tenemos ninguna estimación.</Text>
                 <Text>Utilizamos las estimaciones para hacer las cosas más sencillas y claras.</Text>
