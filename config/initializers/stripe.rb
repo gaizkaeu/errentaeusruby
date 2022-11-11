@@ -5,9 +5,9 @@ StripeEvent.signing_secret = ENV.fetch('STRIPE_SIGNING_SECRET', nil)
 billing_mode = ENV.fetch("BILLING_MODE", "test")
 
 Stripe.api_key = if billing_mode == "live"
-  ENV.fetch("STRIPE_SECRET_LIVE_KEY")
+  ENV.fetch("STRIPE_SECRET_LIVE_KEY", nil)
 else
-  ENV.fetch("STRIPE_SECRET_TEST_KEY")
+  ENV.fetch("STRIPE_SECRET_TEST_KEY", nil)
 end
 
 StripeEvent.signing_secrets = [
@@ -18,9 +18,9 @@ StripeEvent.signing_secrets = [
 class EventFilter
   def call(event)
     event.api_key = if event.livemode
-      ENV.fetch("STRIPE_SECRET_LIVE_KEY")
+      ENV.fetch("STRIPE_SECRET_LIVE_KEY", nil)
     else
-      ENV.fetch("STRIPE_SECRET_TEST_KEY")
+      ENV.fetch("STRIPE_SECRET_TEST_KEY", nil)
     end
     event
   end
