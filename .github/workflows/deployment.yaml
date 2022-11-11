@@ -10,9 +10,6 @@ concurrency:
 
 on: push
 
-env:
-  AR_LOCATION: eu
-
 jobs:
   test:
     runs-on: ubuntu-20.04
