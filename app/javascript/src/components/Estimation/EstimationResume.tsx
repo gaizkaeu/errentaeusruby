@@ -1,17 +1,14 @@
-import { Text } from '@nextui-org/react'
-import { Estimation } from '../../storage/types'
-import EstimationCard from './card/EstimationCard'
+import { Text } from "@nextui-org/react";
+import { Estimation } from "../../storage/types";
+import EstimationCard from "./card/EstimationCard";
 
-const SingleEstimation = (props: {
-  estimation: Estimation
-}) => {
-
+const SingleEstimation = (props: { estimation: Estimation }) => {
   return (
     <div>
-        <Text h2>Según tus respuestas</Text>
-        <EstimationCard estimation={props.estimation} deletable/>
+      <Text h2>Según tus respuestas</Text>
+      <EstimationCard estimation={props.estimation} deletable />
     </div>
-  )
-}
+  );
+};
 
-export default SingleEstimation
+export default SingleEstimation;

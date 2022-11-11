@@ -6,25 +6,25 @@ import {
   Table,
   Text,
   User,
-} from "@nextui-org/react"
-import { formatRelative } from "date-fns"
-import es from "date-fns/locale/es"
-import { useTranslation } from "react-i18next"
-import { Link, useLocation } from "react-router-dom"
+} from "@nextui-org/react";
+import { formatRelative } from "date-fns";
+import es from "date-fns/locale/es";
+import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
 import {
   useDeleteDocumentAttachmentByIdMutation,
   useExportDocumentByIdMutation,
   useGetDocumentHistoryByIdQuery,
-} from "../../storage/api"
-import { useAppDispatch, useAppSelector } from "../../storage/hooks"
-import { Document } from "../../storage/types"
-import { AssignedLawyerSimple } from "../Lawyer/AssignedLawyer"
-import { AttachmentForm } from "./AttachmentForm"
+} from "../../storage/api";
+import { useAppSelector } from "../../storage/hooks";
+import { Document } from "../../storage/types";
+import { AssignedLawyerSimple } from "../Lawyer/AssignedLawyer";
+import { AttachmentForm } from "./AttachmentForm";
 
 export const DocumentHistory = (props: { documentId: string }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const RenderUser = (props: { userId: string }) => {
-    const currentUser = useAppSelector((state) => state.authentication.user)
+    const currentUser = useAppSelector((state) => state.authentication.user);
 
     return currentUser ? (
       currentUser.id === props.userId ? (
@@ -40,12 +40,12 @@ export const DocumentHistory = (props: { documentId: string }) => {
       )
     ) : (
       <Loading />
-    )
-  }
+    );
+  };
 
   const { currentData, isLoading, isError } = useGetDocumentHistoryByIdQuery(
     props.documentId
-  )
+  );
 
   return currentData && !isLoading && !isError ? (
     <Table
@@ -56,16 +56,18 @@ export const DocumentHistory = (props: { documentId: string }) => {
       }}
     >
       <Table.Header>
-        <Table.Column>{t('documents.history.action')}</Table.Column>
-        <Table.Column>{t('documents.history.user')}</Table.Column>
-        <Table.Column>{t('documents.history.date')}</Table.Column>
-        <Table.Column>{t('documents.history.description')}</Table.Column>
+        <Table.Column>{t("documents.history.action")}</Table.Column>
+        <Table.Column>{t("documents.history.user")}</Table.Column>
+        <Table.Column>{t("documents.history.date")}</Table.Column>
+        <Table.Column>{t("documents.history.description")}</Table.Column>
       </Table.Header>
       <Table.Body>
         {currentData!.map((action, ind) => (
           <Table.Row key={ind}>
             <Table.Cell>{action.action}</Table.Cell>
-            <Table.Cell><RenderUser userId={action.user_id}/></Table.Cell>
+            <Table.Cell>
+              <RenderUser userId={action.user_id} />
+            </Table.Cell>
             <Table.Cell>{action.created_at}</Table.Cell>
             <Table.Cell>{action.description}</Table.Cell>
           </Table.Row>
@@ -74,20 +76,20 @@ export const DocumentHistory = (props: { documentId: string }) => {
     </Table>
   ) : (
     <Loading />
-  )
-}
+  );
+};
 
 const DocumentActions = (props: { document: Document }) => {
-  const { document } = props
-  const { t, i18n } = useTranslation();
-  const [exportDocument, resula] = useExportDocumentByIdMutation()
+  const { document } = props;
+  const { t } = useTranslation();
+  const [exportDocument] = useExportDocumentByIdMutation();
 
   return (
     <div className="flex w-full">
       {document.export_status == "export_successful" && (
         <Link to={document.export.url}>
           <Button auto color="primary" rounded>
-            {t('documents.actions.viewDocument')}
+            {t("documents.actions.viewDocument")}
           </Button>
         </Link>
       )}
@@ -104,93 +106,92 @@ const DocumentActions = (props: { document: Document }) => {
             rounded
             onPress={() => exportDocument(document.id)}
           >
-            {t('documents.actions.export')}
+            {t("documents.actions.export")}
           </Button>
         )}
     </div>
-  )
-}
+  );
+};
 
 export const DocumentComponent = (props: { document: Document }) => {
-  const { document } = props
-  const { t, i18n } = useTranslation();
-  const location = useLocation()
-  const [deleteAttachment, result] = useDeleteDocumentAttachmentByIdMutation()
+  const { document } = props;
+  const { t } = useTranslation();
+  const location = useLocation();
+  const [deleteAttachment] = useDeleteDocumentAttachmentByIdMutation();
 
   return (
-      <Card variant="flat" role="article">
-        <Card.Header>
-          <div className="flex w-full">
-            <div className="grow">
-              <Text b>{document.name}</Text>
-            </div>
-            <div className="flex-none">
-              {document.state == "ready" ? (
-                <Badge color="success" variant="flat">
-                  {t('documents.status.completed')}
+    <Card variant="flat" role="article">
+      <Card.Header>
+        <div className="flex w-full">
+          <div className="grow">
+            <Text b>{document.name}</Text>
+          </div>
+          <div className="flex-none">
+            {document.state == "ready" ? (
+              <Badge color="success" variant="flat">
+                {t("documents.status.completed")}
+              </Badge>
+            ) : (
+              <Text>
+                <Badge color="primary" variant="flat">
+                  {t("documents.status.pending")} {document.attachments.length}/
+                  {document.document_number}
                 </Badge>
-              ) : (
-                <Text>
-                  <Badge color="primary" variant="flat">
-                    {t('documents.status.pending')} {document.attachments.length}/
-                    {document.document_number}
-                  </Badge>
-                </Text>
-              )}
-            </div>
-          </div>
-        </Card.Header>
-        <Card.Divider />
-        <Card.Body>
-          <div className="flex flex-wrap gap-5">
-            {document.attachments.map((a) => (
-              <div>
-                <a href={a.url}> {a.filename}</a>
-                <Button
-                  onPress={() =>
-                    deleteAttachment({
-                      document_id: document.id,
-                      attachment_id: a.id,
-                    })
-                  }
-                >
-                  {t('documents.actions.delete')}
-                </Button>
-              </div>
-            ))}
-          </div>
-          {document.attachments.length < document.document_number && (
-            <div className="mt-3">
-              <AttachmentForm document={document} />
-            </div>
-          )}
-          <br />
-          <DocumentActions document={document} />
-        </Card.Body>
-        <Card.Divider />
-        <Card.Footer>
-          <div className="flex gap-2 w-full flex-wrap">
-            <div className="flex-1">
-              <Text size="small">
-                <Link
-                  to={`/documents/${document.id}/history`}
-                  state={{ background: location }}
-                >
-                  {t('documents.info.history')}
-                </Link>
-                {" "}
-                {t('documents.info.lastUpdate')} {" "}
-                {formatRelative(new Date(document.updated_at), new Date(), {
-                  locale: es,
-                })}
               </Text>
-            </div>
-            <div className="flex items-center">
-              <Text size="small">{t('documents.info.askedBy')}</Text>
-              <AssignedLawyerSimple size="xs" lawyerId={document.lawyer_id} />
-            </div>
+            )}
           </div>
-        </Card.Footer>
-      </Card>
-  )
-}
+        </div>
+      </Card.Header>
+      <Card.Divider />
+      <Card.Body>
+        <div className="flex flex-wrap gap-5">
+          {document.attachments.map((a, ind) => (
+            <div key={ind}>
+              <a href={a.url}> {a.filename}</a>
+              <Button
+                onPress={() =>
+                  deleteAttachment({
+                    document_id: document.id,
+                    attachment_id: a.id,
+                  })
+                }
+              >
+                {t("documents.actions.delete")}
+              </Button>
+            </div>
+          ))}
+        </div>
+        {document.attachments.length < document.document_number && (
+          <div className="mt-3">
+            <AttachmentForm document={document} />
+          </div>
+        )}
+        <br />
+        <DocumentActions document={document} />
+      </Card.Body>
+      <Card.Divider />
+      <Card.Footer>
+        <div className="flex gap-2 w-full flex-wrap">
+          <div className="flex-1">
+            <Text size="small">
+              <Link
+                to={`/documents/${document.id}/history`}
+                state={{ background: location }}
+              >
+                {t("documents.info.history")}
+              </Link>{" "}
+              {t("documents.info.lastUpdate")}{" "}
+              {formatRelative(new Date(document.updated_at), new Date(), {
+                locale: es,
+              })}
+            </Text>
+          </div>
+          <div className="flex items-center">
+            <Text size="small">{t("documents.info.askedBy")}</Text>
+            <AssignedLawyerSimple size="xs" lawyerId={document.lawyer_id} />
+          </div>
+        </div>
+      </Card.Footer>
+    </Card>
+  );
+};

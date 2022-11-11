@@ -1,26 +1,26 @@
-import { Button, Modal, Text } from '@nextui-org/react'
-import { useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import AuthComponent from '../AuthComponent'
+import { Modal, Text } from "@nextui-org/react";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthComponent from "../AuthComponent";
 
-const AuthModal = (props: {method: boolean}) => {
+const AuthModal = (props: { method: boolean }) => {
   const nav = useNavigate();
   const loc = useLocation();
   const [open, setOpen] = useState(true);
 
   const onClose = () => {
-    setOpen(false)
+    setOpen(false);
     setTimeout(() => {
-          nav(loc.state?.background?.pathname ?? "/") 
-    }, 50)
-  }
+      nav(loc.state?.background?.pathname ?? "/");
+    }, 50);
+  };
 
   const onAuth = () => {
-      setOpen(false)
-      setTimeout(() => {
-        nav(loc.state.nextPage, {replace: true})
-    }, 50)
-  }
+    setOpen(false);
+    setTimeout(() => {
+      nav(loc.state.nextPage, { replace: true });
+    }, 50);
+  };
 
   return (
     <div>
@@ -35,18 +35,18 @@ const AuthModal = (props: {method: boolean}) => {
         <Modal.Header>
           <Text id="modal-title" size={18}>
             <Text b size={18}>
-              Con tu cuenta proteges tu información. 
+              Con tu cuenta proteges tu información.
             </Text>
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <AuthComponent method={props.method} onAuth={onAuth}/>
+          <AuthComponent method={props.method} onAuth={onAuth} />
         </Modal.Body>
         <Modal.Footer>
           <Text weight="light">Todos los datos están encriptados.</Text>
         </Modal.Footer>
       </Modal>
     </div>
-  )
-}
-export default AuthModal
+  );
+};
+export default AuthModal;

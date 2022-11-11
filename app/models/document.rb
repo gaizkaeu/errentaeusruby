@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Document < ApplicationRecord
   include AASM
 
   belongs_to :tax_income
-  belongs_to :user, class_name: "User"
-  belongs_to :lawyer, class_name: "User"
+  belongs_to :user, class_name: 'User'
+  belongs_to :lawyer, class_name: 'User'
 
   has_many_attached :files
   has_one_attached :exported_document
@@ -11,19 +13,18 @@ class Document < ApplicationRecord
   validates :document_number, presence: true
 
   validates :files, content_type: ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']
-  validates :files, size: { between: 1.kilobyte..5.megabytes , message: 'is not given between size' }
+  validates :files, size: { between: (1.kilobyte)..(5.megabytes)}
 
   enum state: {
     pending: 1,
-    ready: 2,
+    ready: 2
   }
 
   enum export_status: {
     not_exported: 0,
     export_queue: 1,
-    export_successful: 2,
+    export_successful: 2
   }
-
 
   aasm column: :state, enum: true do
     state :pending, initial: true
@@ -32,7 +33,7 @@ class Document < ApplicationRecord
     event :uploaded_file, binding_event: :files_changed do
       transitions from: :pending, to: :pending, guard: :upload_file?
       transitions from: :pending, to: :ready, guard: :document_full? do
-        after do |user, description|
+        after do |user, _description|
           create_history_record(:completed, user)
         end
       end
@@ -70,16 +71,16 @@ class Document < ApplicationRecord
   end
 
   def upload_file?
-    self.files.size < self.document_number
+    files.size < document_number
   end
 
   def document_full?
-    self.files.size == self.document_number
+    files.size == document_number
   end
 
   private
-  def create_history_record(action, user_id, description="")
-    DocumentHistory.create!(user: user_id, document: self, description: description, action: action)
-  end
 
+  def create_history_record(action, user_id, description = '')
+    DocumentHistory.create!(user: user_id, document: self, description:, action:)
+  end
 end

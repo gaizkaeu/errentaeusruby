@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 class TaxIncome < ApplicationRecord
   belongs_to :user
-  belongs_to :lawyer, class_name: "User", optional: true
-  has_one :estimation
-  has_one :appointment
-  has_many :documents, class_name: "Document"
+  belongs_to :lawyer, class_name: 'User', optional: true
+  has_one :estimation, dependent: :destroy, required: false
+  has_one :appointment, dependent: :destroy
+  has_many :documents, class_name: 'Document', dependent: :destroy, inverse_of: :tax_income
 
   include AASM
 
   after_create_commit :assign_lawyer
 
   def load_price_from_estimation(estimation)
-    update(price: estimation.price)
-    estimation.update(tax_income: self, user_id: self.user_id)
+    estimation = Estimation.find(estimation) unless estimation.nil?
+    estimation&.update!(tax_income: self, user_id:)
   end
 
   enum state: {
@@ -21,9 +23,9 @@ class TaxIncome < ApplicationRecord
     waiting_payment: 5,
     pending_documentation: 3,
     in_progress: 4,
-    finished: 5,
+    finished: 6,
     rejected: -1,
-    refunded: -2,
+    refunded: -2
   }
 
   aasm column: :state, enum: true do
@@ -55,6 +57,7 @@ class TaxIncome < ApplicationRecord
   end
 
   private
+
   def assign_lawyer
     LawyerAssignationJob.perform_later(self)
   end

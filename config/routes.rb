@@ -1,31 +1,29 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get '/manifest.v1.webmanifest', to: 'statics#manifest', as: :webmanifest
   root 'react#index'
-
-  get '*path', to: "react#index", constraints: ->(request) do
+  get '*path', to: 'react#index', constraints: lambda { |request|
     !request.xhr? && request.format.html?
-  end
-
+  }
+  mount StripeEvent::Engine, at: '/api/v1/payments/webhook'
   namespace :api do
     namespace :v1 do
       resources :appointments
-      resources :estimations do 
+      resources :estimations do
         post :estimate, on: :collection
         get :my_estimation, on: :collection
       end
       get 'lawyers/:id', to: 'lawyers#show'
       resources :tax_incomes do
-        post "create_payment_intent", to: "tax_incomes#checkout", on: :member
+        post 'create_payment_intent', to: 'tax_incomes#checkout', on: :member
         get :payment_data, on: :member
         get :documents, on: :member
       end
       get :logged_in, to: 'accounts#logged_in'
-      devise_for :users, module: "api/v1/auth", defaults: { format: :json }
-      scope :payments do
-        post :webhook, to: "payments#webhook"
-      end
+      devise_for :users, module: 'api/v1/auth', defaults: { format: :json }
       resources :documents do
-        delete 'delete_document_attachment/:id_attachment', on: :member, to: "documents#delete_document_attachment" 
+        delete 'delete_document_attachment/:id_attachment', on: :member, to: 'documents#delete_document_attachment'
         post :add_document_attachment, on: :member
         post :export_document, on: :member
         get :history, on: :member

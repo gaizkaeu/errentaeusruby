@@ -1,4 +1,4 @@
-import './CheckAnimated.css'
+import "./CheckAnimated.css";
 
 const CheckAnimated = () => {
   return (
@@ -20,7 +20,7 @@ const CheckAnimated = () => {
         d="M14.1 27.2l7.1 7.2 16.7-16.8"
       />
     </svg>
-  )
-}
+  );
+};
 
-export default CheckAnimated
+export default CheckAnimated;

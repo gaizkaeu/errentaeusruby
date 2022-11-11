@@ -1,26 +1,18 @@
-import { useField } from 'formik';
-import { Switch } from '@nextui-org/react'
+import { useField } from "formik";
+import { Switch } from "@nextui-org/react";
 
-export default function SwitchField({...props}) {
-  const { errorText, ...rest } = props;
+export default function SwitchField(props: { name: string }, ...rest: any[]) {
   const [field, meta] = useField(props.name);
 
   function _renderColor() {
     if (meta.touched) {
       if (meta.error) {
-        return "error"
+        return "error";
       }
-      return "success"
-    } 
-    return "default"
+      return "success";
+    }
+    return "default";
   }
 
-  return (
-    <Switch
-      color={_renderColor()}
-      size="xl"
-      {...field}
-      {...rest}
-    />
-  );
+  return <Switch color={_renderColor()} size="xl" {...field} {...rest} />;
 }

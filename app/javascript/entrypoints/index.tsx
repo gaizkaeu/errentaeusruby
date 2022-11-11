@@ -1,43 +1,47 @@
-import ReactDOM from 'react-dom/client';
-import './index.css'
-import { register } from 'register-service-worker';
+// eslint-disable-file react/jsx-no-undef
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { register } from "register-service-worker";
 
-import AppRoutes from '../src/routes'
-import { BrowserRouter } from 'react-router-dom'
+import AppRoutes from "../src/routes";
+import { BrowserRouter } from "react-router-dom";
+import React from "react";
 
-register('/sw.js', {
-  registrationOptions: { scope: './' },
+register("/sw.js", {
+  registrationOptions: { scope: "./" },
   ready(_registration: ServiceWorkerRegistration) {
-    console.log('Service worker is active.');
+    console.log("Service worker is active.");
   },
   registered(_registration: ServiceWorkerRegistration) {
-    console.log('Service worker has been registered.');
+    console.log("Service worker has been registered.");
   },
   cached(_registration: ServiceWorkerRegistration) {
-    console.log('Content has been cached for offline use.');
+    console.log("Content has been cached for offline use.");
   },
   updatefound(_registration: ServiceWorkerRegistration) {
-    console.log('New content is downloading.');
+    console.log("New content is downloading.");
   },
   updated(_registration: ServiceWorkerRegistration) {
-    console.log('New content is available; please refresh.');
+    console.log("New content is available; please refresh.");
   },
   offline() {
     console.log(
-      'No internet connection found. App is running in offline mode.',
+      "No internet connection found. App is running in offline mode."
     );
   },
   error(error) {
-    console.error('Error during service worker registration:', error);
+    console.error("Error during service worker registration:", error);
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AppRoutes/>
+      <AppRoutes />
     </BrowserRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

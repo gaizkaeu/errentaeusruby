@@ -1,47 +1,54 @@
-module Api::V1
-  class AppointmentsController < ApiBaseController
-    before_action :set_appointment, only: %i[ show edit update destroy ]
-    before_action :authenticate_api_v1_user!
+# frozen_string_literal: true
 
-    def index
-      @appointments = Appointment.where(client_id: current_api_v1_user.id)
-    end
+module Api
+  module V1
+    class AppointmentsController < ApiBaseController
+      before_action :set_appointment, only: %i[show update destroy]
+      before_action :authenticate_api_v1_user!
 
-    def create
-      @tax_income = current_api_v1_user.tax_incomes.find(params[:tax_income_id])
-      @appointment = Appointment.create(client: current_api_v1_user, tax_income: @tax_income,
-      lawyer_id: @tax_income.lawyer_id, time: params[:time], method: params[:method], phone: params[:phone])
-      
-      respond_to do |format|
-        if @appointment.save
-          format.json { render :show}
-        else
-          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+      def index
+        @appointments = current_api_v1_user.appointments
+      end
+
+      def create
+        @tax_income = current_api_v1_user.tax_incomes.find(params[:tax_income_id])
+        @appointment = @tax_income.create_appointment(appointment_params)
+
+        respond_to do |format|
+          if @appointment.save
+            format.json { render :show }
+          else
+            format.json { render json: @appointment.errors, status: :unprocessable_entity }
+          end
         end
       end
-    end
 
-    def show
-    end
+      def show
+      end
 
-    def update
-      respond_to do |format|
-        if @appointment.update(time: params[:time], method: params[:method], phone: params[:phone])
-          format.json { render :show, status: :ok}
-        else
-          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+      def destroy
+      end
+
+      def update
+        respond_to do |format|
+          if @appointment.update(time: params[:time], method: params[:method], phone: params[:phone])
+            format.json { render :show, status: :ok }
+          else
+            format.json { render json: @appointment.errors, status: :unprocessable_entity }
+          end
         end
       end
-    end
 
-    private
-    def set_appointment
-      @appointment = Appointment.find_by(id: params[:id], client_id: current_api_v1_user.id)
-    end
+      private
 
-    # Only allow a list of trusted parameters through.
-    def appointment_params
-      params.require(:appointment).permit(:time, :method, :tax_income_id, :phone)
+      def set_appointment
+        @appointment = Appointment.find_by(id: params[:id])
+      end
+
+      # Only allow a list of trusted parameters through.
+      def appointment_params
+        params.require(:appointment).permit(:time, :method, :phone)
+      end
     end
   end
 end

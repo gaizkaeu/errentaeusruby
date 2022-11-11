@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_084511) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_11_090054) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,16 +40,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_084511) do
   end
 
   create_table "appointments", force: :cascade do |t|
-    t.integer "client_id", null: false
-    t.integer "lawyer_id", null: false
     t.datetime "time"
     t.integer "tax_income_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "method"
     t.string "phone"
-    t.index ["client_id"], name: "index_appointments_on_client_id"
-    t.index ["lawyer_id"], name: "index_appointments_on_lawyer_id"
     t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id"
   end
 
@@ -135,8 +131,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_084511) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "tax_incomes"
-  add_foreign_key "appointments", "users", column: "client_id"
-  add_foreign_key "appointments", "users", column: "lawyer_id"
   add_foreign_key "document_histories", "documents"
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"

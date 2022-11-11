@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class Appointment < ApplicationRecord
-  belongs_to :client, class_name: "User"
-  belongs_to :lawyer, class_name: "User" 
   belongs_to :tax_income
+
+  delegate :lawyer, to: :tax_income, allow_nil: false
+  delegate :client, to: :tax_income, allow_nil: false
 
   after_create_commit :notify_creation_to_tax_income
   after_destroy_commit :notify_deletion_to_tax_income
@@ -13,8 +16,8 @@ class Appointment < ApplicationRecord
     office: 1
   }
 
-  private 
-  
+  private
+
   def notify_creation_to_tax_income
     tax_income.appointment_created!
   end

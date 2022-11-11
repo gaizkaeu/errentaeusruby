@@ -1,13 +1,13 @@
-import { at } from 'lodash';
-import { useField } from 'formik';
-import { Input } from '@nextui-org/react'
+import { at } from "lodash";
+import { useField } from "formik";
+import { Input } from "@nextui-org/react";
 
-export default function InputField({...props}) {
-  const { errorText, ...rest } = props;
-  const [field, meta] = useField(props.name);
+export default function InputField(props: { name: string; [x: string]: any }) {
+  const { name, ...rest } = props;
+  const [field, meta] = useField(name);
 
   function _renderHelperText() {
-    const [touched, error] = at(meta, 'touched', 'error');
+    const [touched, error] = at(meta, "touched", "error");
     if (touched && error) {
       return error;
     }
@@ -16,11 +16,11 @@ export default function InputField({...props}) {
   function _renderColor() {
     if (meta.touched) {
       if (meta.error) {
-        return "error"
+        return "error";
       }
-      return "success"
-    } 
-    return "default"
+      return "success";
+    }
+    return "default";
   }
 
   return (
