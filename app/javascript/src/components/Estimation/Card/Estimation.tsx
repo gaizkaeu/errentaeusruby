@@ -1,6 +1,6 @@
 import { Card, Text } from "@nextui-org/react";
 import { useGetEstimationByIdQuery } from "../../../storage/api";
-import EstimationCard from "./EstimationCard";
+import EstimationCard from "../EstimationCard";
 
 const EstimationWrapper = (props: { estimationId: string }, { ...rest }) => {
   const { data, isLoading } = useGetEstimationByIdQuery(props.estimationId);

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useCreateTaxIncomeMutation } from "../../storage/api";
 import { TaxIncomeData } from "../../storage/types";
 import { useAppSelector } from "../../storage/hooks";
-import EstimationCard from "../Estimation/card/EstimationCard";
+import EstimationCard from "../Estimation/EstimationCard";
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();

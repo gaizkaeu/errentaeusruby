@@ -1,7 +1,7 @@
 import { Button, Card, Text } from "@nextui-org/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import NoEstimationCard from "./NoEstimationCard";
-import { Estimation } from "../../../storage/types";
+import NoEstimationCard from "./card/NoEstimationCard";
+import { Estimation } from "../../storage/types";
 
 const EstimationCard = (props: {
   estimation: Estimation | undefined;
