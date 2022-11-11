@@ -4,7 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import TaxIncomeCard from "./components/TaxIncomeCard";
 import AssignedLawyerCard from "../Lawyer/AssignedLawyer";
 import { useGetTaxIncomeByIdQuery } from "../../storage/api";
-import EstimationWrapper from "../Estimation/card/Estimation";
+import EstimationWrapper from "../Estimation/Estimation";
 
 const Stepper = () => {
   return (
