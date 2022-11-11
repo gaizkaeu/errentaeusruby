@@ -90,8 +90,17 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
-  # Testing
-  gem 'rubocop'
+  # Automatic Ruby code style checking tool. (https://github.com/rubocop/rubocop)
+  gem 'rubocop', require: false
+
+  # Automatic performance checking tool for Ruby code. (https://github.com/rubocop/rubocop-performance)
+  gem 'rubocop-performance', require: false
+
+  # Automatic Rails code style checking tool. (https://github.com/rubocop/rubocop-rails)
+  gem 'rubocop-rails', require: false
+
+  # Code style checking for RSpec files (https://github.com/rubocop/rubocop-rspec)
+  gem 'rubocop-rspec', require: false
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

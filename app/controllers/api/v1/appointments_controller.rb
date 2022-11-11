@@ -10,6 +10,9 @@ module Api
         @appointments = current_api_v1_user.appointments
       end
 
+      def show
+      end
+
       def create
         @tax_income = current_api_v1_user.tax_incomes.find(params[:tax_income_id])
         @appointment = @tax_income.create_appointment(appointment_params)
@@ -23,12 +26,6 @@ module Api
         end
       end
 
-      def show
-      end
-
-      def destroy
-      end
-
       def update
         respond_to do |format|
           if @appointment.update(time: params[:time], method: params[:method], phone: params[:phone])
@@ -37,6 +34,9 @@ module Api
             format.json { render json: @appointment.errors, status: :unprocessable_entity }
           end
         end
+      end
+
+      def destroy
       end
 
       private
