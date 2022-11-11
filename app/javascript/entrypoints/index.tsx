@@ -5,7 +5,6 @@ import { register } from "register-service-worker";
 
 import AppRoutes from "../src/routes";
 import { BrowserRouter } from "react-router-dom";
-import React from "react";
 
 register("/sw.js", {
   registrationOptions: { scope: "./" },
