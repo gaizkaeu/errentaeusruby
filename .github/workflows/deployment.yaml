@@ -8,6 +8,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+on: push
+
 jobs:
   test:
     runs-on: ubuntu-20.04
@@ -63,19 +65,6 @@ jobs:
       - name: Run Ruby Tests
         run: bin/rspec
 
-      - name: End-to-end tests
-        uses: cypress-io/github-action@v4
-        with:
-          start: bundle exec rails server
-          wait-on: http://localhost:3000
-          browser: chrome
-          record: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_BASE_URL: http://localhost:3000
-          CYPRESS: true
-        if: env.CYPRESS_RECORD_KEY != null
 
       - name: Check JS size limit
         run: yarn size-limit
