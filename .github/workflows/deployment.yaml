@@ -62,18 +62,6 @@ jobs:
       - name: Compile assets
         run: bin/rails assets:precompile
 
-      - name: Run Ruby Tests
-        run: bin/rspec
-
-
       - name: Check JS size limit
         run: yarn size-limit
 
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: Cypress screenshots and videos
-          path: |
-            tmp/cypress_screenshots/
-            tmp/cypress_videos/
-          if-no-files-found: ignore
