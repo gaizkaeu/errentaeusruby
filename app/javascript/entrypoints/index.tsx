@@ -1,4 +1,4 @@
-// eslint-disable-file react/jsx-no-undef
+/* eslint-disable */
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { register } from "register-service-worker";
