@@ -23,6 +23,7 @@ module Api
       enum account_type: { user: 0, lawyer: 1 }
 
       def create_stripe_customer
+        # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create({
                                             name: name + surname,
                                             email:,
@@ -30,6 +31,7 @@ module Api
                                               user_id: id
                                             }
                                           })
+        # rubocop:enable Rails/SaveBang
         update!(stripe_customer_id: customer['id'])
       end
     end
