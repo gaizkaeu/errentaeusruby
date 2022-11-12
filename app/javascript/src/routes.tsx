@@ -59,8 +59,8 @@ const AppRoutes = () => {
       <Routes location={background || location}>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path="/calculator" element={<CalculatorPage />} />
-          <Route path="/estimation" element={<EstimationPage />} />
+          <Route path="calculator" element={<CalculatorPage />} />
+          <Route path="estimation" element={<EstimationPage />} />
           <Route
             path="auth/sign_up"
             element={
@@ -78,7 +78,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path="/mytaxincome"
+            path="mytaxincome"
             element={
               <PrivateRoute>
                 <TaxIncomePage />
@@ -90,7 +90,7 @@ const AppRoutes = () => {
             <Route path=":tax_income_id/" element={<ShowTaxIncome />} />
             <Route path=":tax_income_id/:page" element={<ShowTaxIncome />} />
           </Route>
-          <Route path="/appointment/:appointment_id">
+          <Route path="appointment/:appointment_id">
             <Route
               path="edit"
               element={
@@ -100,7 +100,7 @@ const AppRoutes = () => {
               }
             />
           </Route>
-          <Route path="/estimation/:estimation_id">
+          <Route path="estimation/:estimation_id">
             <Route
               path="edit"
               element={
@@ -110,7 +110,7 @@ const AppRoutes = () => {
               }
             />
           </Route>
-          <Route path="/documents/:document_id">
+          <Route path="documents/:document_id">
             <Route
               path="history"
               element={
@@ -140,7 +140,7 @@ const AppRoutes = () => {
               </Suspense>
             }
           />
-          <Route path="/appointment/:appointment_id">
+          <Route path="appointment/:appointment_id">
             <Route
               path="edit"
               element={
@@ -150,7 +150,7 @@ const AppRoutes = () => {
               }
             />
           </Route>
-          <Route path="/estimation/:estimation_id">
+          <Route path="estimation/:estimation_id">
             <Route
               path="edit"
               element={
@@ -160,7 +160,7 @@ const AppRoutes = () => {
               }
             />
           </Route>
-          <Route path="/documents/:document_id">
+          <Route path="documents/:document_id">
             <Route
               path="history"
               element={

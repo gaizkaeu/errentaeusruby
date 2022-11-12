@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get '/manifest.v1.webmanifest', to: 'statics#manifest', as: :webmanifest
-  root 'react#index'
-  get '*path', to: 'react#index', constraints: lambda { |request|
-    !request.xhr? && request.format.html?
-  }
+
   mount StripeEvent::Engine, at: '/api/v1/payments/webhook'
+
   namespace :api do
     namespace :v1 do
       resources :appointments
@@ -30,8 +27,10 @@ Rails.application.routes.draw do
       end
     end
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  get '/manifest.v1.webmanifest', to: 'statics#manifest', as: :webmanifest
+  root 'react#index'
+  get '/*path', to: "react#index", constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end
