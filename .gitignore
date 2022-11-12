@@ -11,6 +11,10 @@
 /coverage
 /coverage/*
 
+# Active Record storage
+/storage
+/storage/*
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-*
@@ -20,11 +24,13 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/log
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
+/tmp
 
 # Ignore uploaded files in development.
 /storage/*

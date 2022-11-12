@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { register } from "register-service-worker";
 
-import AppRoutes from "../src/routes";
+import AppRoutes from "../../../client/routes";
 import { BrowserRouter } from "react-router-dom";
 
 register("/sw.js", {
