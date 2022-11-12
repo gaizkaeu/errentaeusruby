@@ -102,6 +102,12 @@ group :development do
   # Code style checking for RSpec files (https://github.com/rubocop/rubocop-rspec)
   gem 'rubocop-rspec', require: false
 
+  # RSpec for Rails (https://github.com/rspec/rspec-rails)
+  gem 'rspec-rails'
+
+  # Test coverage
+  gem 'simplecov', require: false
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 

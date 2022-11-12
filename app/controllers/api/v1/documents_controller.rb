@@ -13,8 +13,8 @@ module Api
 
       def delete_document_attachment
         doc = @document.files.find(params[:id_attachment])
-        doc.purge
-        @document.delete_file!(current_api_v1_user, doc.filename)
+        doc.purge_later
+        @document.delete_file!(current_api_v1_user, doc.filename.to_s)
         render :show
       end
 
