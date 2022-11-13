@@ -15,7 +15,23 @@
         "title": "Mi declaración"
     },
     "calculator": {
-        "title": "Calculadora"
+        "title": "Calculadora",
+        "home": {
+            "importantInformation": "Información importante",
+            "welcome": "Bienvenido al apartado de estimación.",
+            "header": "Aquí podrás obtener un precio estimado para la realización de la declaración de la renta. Una vez obtenida la estimación podrás decidir si sigues adelante o no. "
+        },
+        "fields": {
+            "name": "Nombre"
+        },
+        "privacy": {
+            "header": "Acerca de tu privacidad",
+            "content": "La privacidad es importante para nosotros, por lo que no guardamos <b>nada de información</b> sobre tu estimación. Únicamente guardaremos tus datos si decides realizar la declaración con nosotros."
+        },
+        "actions": {
+            "next": "Siguiente",
+            "finish": "Finalizar"
+        }
     },
     "documentation": {
         "title": "Documentación"

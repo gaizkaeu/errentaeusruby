@@ -21,6 +21,7 @@ import {
 } from "../../storage/calculatorSlice";
 import { toast } from "react-hot-toast";
 import { CalculatorValues, QuestionWithNumber } from "../../storage/types";
+import { useTranslation } from "react-i18next";
 
 const steps = [
   "Información importante",
@@ -63,6 +64,7 @@ export default function Calculator() {
   const valuesPersist = useAppSelector((state) => {
     return state.calculator.formValues;
   });
+  const { t } = useTranslation();
 
   const stepPersist = useAppSelector((state) => {
     return state.calculator.step;
@@ -167,7 +169,9 @@ export default function Calculator() {
                   size={"md"}
                   auto
                 >
-                  {isLastStep ? "Finalizar" : "Siguiente"}
+                  {isLastStep
+                    ? t("calculator.actions.finish")
+                    : t("calculator.actions.finish")}
                   {isSubmitting && (
                     <Loading type="points" color="currentColor" size="sm" />
                   )}

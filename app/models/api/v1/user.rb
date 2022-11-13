@@ -34,6 +34,11 @@ module Api
         # rubocop:enable Rails/SaveBang
         update!(stripe_customer_id: customer['id'])
       end
+      # def as_user_jwt
+      #   payload = attributes.slice("id", "first_name", "surname", "email")
+    
+      #   JWT.encode(payload, ENV['SECRET_KEY_BASE'], "HS512")
+      # end
     end
   end
 end

@@ -38,7 +38,8 @@ gem 'wicked_pdf'
 # PDF UTILITIES
 gem 'wkhtmltopdf-binary'
 
-
+# JWT ENCRYPTION
+gem "jwt"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.3', '>= 7.0.3.1'

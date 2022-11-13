@@ -133,7 +133,7 @@ const Navigation = () => {
                   <Avatar
                     bordered
                     as="button"
-                    color="secondary"
+                    color="warning"
                     size="md"
                     text={currentUser?.name}
                   />

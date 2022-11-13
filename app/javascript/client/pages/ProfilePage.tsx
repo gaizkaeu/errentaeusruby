@@ -1,4 +1,4 @@
-import { Card, Text } from "@nextui-org/react";
+import { Card, Text, User } from "@nextui-org/react";
 import { Fragment } from "react";
 import { HeaderMin } from "../components/Header";
 
@@ -13,9 +13,6 @@ function ProfilePage() {
         <div className="pt-4 lg:grid lg:grid-cols-10 lg:gap-x-5">
           <aside className="pb-4 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-2">
             <div>
-              <div className="text-slate-600 text-sm font-medium ml-2 mb-1">
-                <Text>ERRENTA</Text>
-              </div>
               <nav className="space-y-3">
                 <a
                   href="https://account.rwx.com/gaizkaurd/manage/overview"
@@ -43,53 +40,7 @@ function ProfilePage() {
                   </Text>
                 </a>
                 <a
-                  href="https://account.rwx.com/gaizkaurd/manage/team"
-                  className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
-                  aria-current="page"
-                >
-                  <svg
-                    className="icon flex-shrink-0 group-hover:stroke-blue-500 stroke-slate-400 h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    stroke="currentColor"
-                  >
-                    <title></title>
-                    <path
-                      d="M16 3.46776C17.4817 4.20411 18.5 5.73314 18.5 7.5C18.5 9.26686 17.4817 10.7959 16 11.5322M18 16.7664C19.5115 17.4503 20.8725 18.565 22 20M2 20C3.94649 17.5226 6.58918 16 9.5 16C12.4108 16 15.0535 17.5226 17 20M14 7.5C14 9.98528 11.9853 12 9.5 12C7.01472 12 5 9.98528 5 7.5C5 5.01472 7.01472 3 9.5 3C11.9853 3 14 5.01472 14 7.5Z"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-
-                  <Text className="ml-3">Team</Text>
-                </a>
-                <a
-                  href="https://account.rwx.com/gaizkaurd/manage/invites"
-                  className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
-                  aria-current="page"
-                >
-                  <svg
-                    className="icon flex-shrink-0 group-hover:stroke-blue-500 stroke-slate-400 h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    stroke="currentColor"
-                  >
-                    <title></title>
-                    <path
-                      d="M10.4995 13.5001L20.9995 3.00005M10.6271 13.8281L13.2552 20.5861C13.4867 21.1815 13.6025 21.4791 13.7693 21.566C13.9139 21.6414 14.0862 21.6415 14.2308 21.5663C14.3977 21.4796 14.5139 21.1821 14.7461 20.587L21.3364 3.69925C21.5461 3.16207 21.6509 2.89348 21.5935 2.72185C21.5437 2.5728 21.4268 2.45583 21.2777 2.40604C21.1061 2.34871 20.8375 2.45352 20.3003 2.66315L3.41258 9.25349C2.8175 9.48572 2.51997 9.60183 2.43326 9.76873C2.35809 9.91342 2.35819 10.0857 2.43353 10.2303C2.52043 10.3971 2.81811 10.5128 3.41345 10.7444L10.1715 13.3725C10.2923 13.4195 10.3527 13.443 10.4036 13.4793C10.4487 13.5114 10.4881 13.5509 10.5203 13.596C10.5566 13.6468 10.5801 13.7073 10.6271 13.8281Z"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-
-                  <Text className="ml-3">Invites</Text>
-                </a>
-                <a
-                  href="https://account.rwx.com/gaizkaurd/manage/access_tokens"
+                  href=""
                   className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
                   aria-current="page"
                 >
@@ -109,7 +60,7 @@ function ProfilePage() {
                     ></path>
                   </svg>
 
-                  <Text className="ml-3">Access Tokens</Text>
+                  <Text className="ml-3">Contraseña</Text>
                 </a>
                 <a
                   href="https://account.rwx.com/gaizkaurd/manage/support"
@@ -132,13 +83,13 @@ function ProfilePage() {
                     ></path>
                   </svg>
 
-                  <Text className="ml-3">Support</Text>
+                  <Text className="ml-3">Ayuda</Text>
                 </a>
               </nav>
             </div>
             <div className="mt-8">
               <div className="text-slate-600 text-sm font-medium ml-2 mb-1">
-                Captain
+                Otros
               </div>
               <nav className="space-y-3">
                 <a
@@ -162,7 +113,7 @@ function ProfilePage() {
                     ></path>
                   </svg>
 
-                  <Text className="ml-3">Integrations</Text>
+                  <Text className="ml-3">Pagos</Text>
                 </a>
                 <a
                   href="https://account.rwx.com/gaizkaurd/manage/hidden_repositories"
@@ -185,7 +136,7 @@ function ProfilePage() {
                     ></path>
                   </svg>
 
-                  <Text className="ml-3">Hidden Repositories</Text>
+                  <Text className="ml-3">Mi historial</Text>
                 </a>
                 <a
                   href="https://account.rwx.com/gaizkaurd/manage/notifications"
@@ -208,15 +159,22 @@ function ProfilePage() {
                     ></path>
                   </svg>
 
-                  <Text className="ml-3">Notifications</Text>
+                  <Text className="ml-3">Notificaciones</Text>
                 </a>
               </nav>
             </div>
           </aside>
-          <Card className="space-y-6 sm:px-6 lg:px-0 lg:col-span-8">
-            <Card.Header>Genera</Card.Header>
+          <Card
+            variant="flat"
+            className="space-y-6 sm:px-6 lg:px-0 lg:col-span-8"
+          >
             <Card.Body>
-              <Text>Mi verfil</Text>
+              <User
+                text="Gaizka"
+                name="Tu perfil"
+                description="Gaizka Urdangarin"
+                size="xl"
+              />
             </Card.Body>
           </Card>
         </div>

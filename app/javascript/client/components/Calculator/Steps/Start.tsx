@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Text } from "@nextui-org/react";
 import InputField from "../../FormFields/InputField";
+import { useTranslation } from "react-i18next";
 
 export default function Start(formField: {
   formField: {
@@ -14,14 +15,13 @@ export default function Start(formField: {
   const {
     formField: { first_name },
   } = formField;
+  const { t } = useTranslation();
 
   return (
     <Fragment>
-      <Text h3>Bienvenido al apartado de estimación.</Text>
+      <Text h3>{t("calculator.home.welcome")}</Text>
       <Text h4 weight={"normal"}>
-        Aquí podrás obtener un precio estimado para la realización de la
-        declaración de la renta. Una vez obtenida la estimación podrás decidir
-        si sigues adelante o no.
+        {t("calculator.home.header")}
       </Text>
       <InputField
         name={first_name.name}
@@ -33,12 +33,10 @@ export default function Start(formField: {
       <br />
       <br />
       <Text h5 className="underline">
-        IMPORTANTE
+        {t("calculator.privacy.header")}
       </Text>
       <Text h6 weight={"normal"}>
-        La privacidad es importante para nosotros, por lo que no guardamos{" "}
-        <b>nada de información</b> sobre tu estimación. Únicamente guardaremos
-        tus datos si decides realizar la declaración con nosotros.
+        {t("calculator.privacy.content")}
       </Text>
     </Fragment>
   );
