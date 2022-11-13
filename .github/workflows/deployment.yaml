@@ -59,6 +59,9 @@ jobs:
       - name: Run RSpec
         run: bin/rspec --format json --out tmp/rspec.json --format documentation
 
+      - name: Run Jest
+        run: bin/yarn test
+
       - name: Setup PostgreSQL
         run: bin/rails db:create
 
