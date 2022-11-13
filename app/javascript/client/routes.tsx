@@ -30,6 +30,7 @@ const HomePage = React.lazy(() => import("./pages/HomePage"));
 const EstimationPage = React.lazy(() => import("./pages/EstimationPage"));
 const CalculatorPage = React.lazy(() => import("./pages/CalculatorPage"));
 const App = React.lazy(() => import("./App"));
+const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
   const { status } = useAuth();
@@ -59,6 +60,7 @@ const AppRoutes = () => {
       <Routes location={background || location}>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="calculator" element={<CalculatorPage />} />
           <Route path="estimation" element={<EstimationPage />} />
           <Route

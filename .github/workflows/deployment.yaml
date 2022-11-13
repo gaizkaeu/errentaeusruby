@@ -80,6 +80,12 @@ jobs:
                 "path": "tmp/**/rspec.json",
                 "kind": "test_results",
                 "parser": "rspec_json"
+              },
+              {
+                "name": "Jest",
+                "path": "tmp/jest.json",
+                "kind": "test_results",
+                "parser": "jest_json"
               }
             ]
           captain-token: '${{ secrets.RWX_ACCESS_TOKEN }}'

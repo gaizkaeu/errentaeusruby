@@ -59,5 +59,11 @@
     "global": {
         "loading": "Cargando...",
         "ok": "¡Listo!"
+    },
+    "navbar": {
+        "myProfile": "Mi cuenta"
+    },
+    "profile": {
+        "title": "Mi cuenta"
     }
 }

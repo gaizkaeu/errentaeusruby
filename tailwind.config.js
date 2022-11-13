@@ -5,6 +5,7 @@ module.exports = {
     "./public/*.html",
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.{tsx,js,ts}",
+    "./client/**/*.{tsx, js, ts}",
   ],
   theme: {
     extend: {

@@ -6,8 +6,14 @@ import {
   Avatar,
   Link,
 } from "@nextui-org/react";
+import { Key } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink, useMatch, useResolvedPath } from "react-router-dom";
+import {
+  NavLink,
+  useMatch,
+  useNavigate,
+  useResolvedPath,
+} from "react-router-dom";
 import { useDarkMode } from "usehooks-ts";
 import { useAuth } from "../../hooks/authHook";
 import { MoonIcon } from "../Icons/MoonIcon";
@@ -44,6 +50,7 @@ const Navigation = () => {
   const darkMode = useDarkMode();
   const { status, actions, currentUser } = useAuth();
   const { t } = useTranslation();
+  const nav = useNavigate();
 
   const collapseItems = [
     [t("homepage.navbar"), "/"],
@@ -51,6 +58,17 @@ const Navigation = () => {
     [t("estimation.title"), "/estimation"],
     [t("taxincome.title"), "/mytaxincome"],
   ];
+
+  const dropdownActions = (key: Key) => {
+    switch (key) {
+      case "logout":
+        actions.logOut();
+        break;
+      case "profile":
+        nav("/profile");
+        break;
+    }
+  };
 
   return (
     <Navbar isBordered variant="sticky">
@@ -124,8 +142,11 @@ const Navigation = () => {
               <Dropdown.Menu
                 aria-label="User menu actions"
                 color="secondary"
-                onAction={actions.logOut}
+                onAction={dropdownActions}
               >
+                <Dropdown.Item key="profile">
+                  {t("navbar.myProfile")}
+                </Dropdown.Item>
                 <Dropdown.Item key="logout" color="error">
                   Log Out
                 </Dropdown.Item>
