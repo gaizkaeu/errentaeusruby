@@ -2,7 +2,7 @@ import renderer from "react-test-renderer";
 import LawyerAvatar from "../components/Lawyer/Lawyer";
 import { IUser } from "../storage/types";
 
-it("shows correct data", () => {
+it("Lawyer::Avatar: show correct data", () => {
   const user: IUser = {
     id: "0",
     email: "gaizkaurdangarin@gmail.com",

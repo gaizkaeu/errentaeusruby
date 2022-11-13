@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`shows correct data 1`] = `
+exports[`Lawyer::Avatar: show correct data 1`] = `
 <div
   className="nextui-c-ijHtNE nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-ijHtNE-iPJLV-css"
   onBlur={[Function]}
