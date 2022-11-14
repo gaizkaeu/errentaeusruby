@@ -61,7 +61,8 @@ const HomePage = () => (
             </Text>
             <Text className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
               Haz la declaración de la renta con una asesoria de{" "}
-              <b>confianza</b>, sin <b>sorpresas</b> y con el mejor asesoramiento.
+              <b>confianza</b>, sin <b>sorpresas</b> y con el mejor
+              asesoramiento.
             </Text>
             <HeaderActions />
           </div>
