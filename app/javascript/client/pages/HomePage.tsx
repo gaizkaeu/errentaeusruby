@@ -57,7 +57,10 @@ const HomePage = () => (
               h1
               className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl"
             >
-              ERRENTA.EUS
+              ERRENTA.EUS{" "}
+              <span className="font-extralight text-xl sm:text-md">
+                by Eliza Asesores
+              </span>
             </Text>
             <Text className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
               Haz la declaración de la renta con una asesoria de{" "}
