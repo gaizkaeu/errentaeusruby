@@ -21,7 +21,6 @@ RSpec.describe "/api/v1/appointments" do
   # adjust the attributes here as well.
   let(:valid_attributes) do
     # https://stackoverflow.com/questions/11684300/fixtures-in-rspec
-    #{time: "02-07-2002", tax_income_id: 0, method: 0, phone: "688867636"}
     skip("Add a hash of attributes invalid for your model")
   end
 

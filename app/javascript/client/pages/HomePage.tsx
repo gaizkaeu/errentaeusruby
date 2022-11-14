@@ -129,45 +129,45 @@ const HeaderActions = () => {
 
 const features = [
   {
-    name: "Competitive exchange rates",
+    name: "Digital.",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "La declaración de la renta en la palma de tu mano. No solo eso, sino que también, segura, rápida y personal.",
     icon: GlobeAltIcon,
   },
   {
-    name: "No hidden fees",
+    name: "Precio justo.",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "Nuestra asesoria ofrece los precios más competitivos del sector, además de dar el mejor servicio.",
     icon: ScaleIcon,
   },
   {
-    name: "Transfers are instant",
+    name: "Rápido.",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "No solo por la velocidad en la comunicación con tu asesor/a, sino por la facilidad de aportar documentacion o realizar un pago.",
     icon: BoltIcon,
   },
   {
-    name: "Mobile notifications",
+    name: "Seguro.",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "Nos preocupamos por tu privacidad, por lo que te mostramos todo lo que guardamos sobre ti, y tienes la capacidad de eliminar lo que quieras.",
     icon: DevicePhoneMobileIcon,
   },
 ];
 
 export function Example() {
   return (
-    <div className="py-18 sm:py-29 lg:py-32">
+    <div className="py-18 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="sm:text-center">
           <h2 className="text-lg font-semibold leading-8 text-indigo-600">
-            Transactions
+            Lo mejor.
           </h2>
           <Text className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            A better way to send money
+            Porque errenta
           </Text>
           <Text className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam
-            voluptatum cupiditate veritatis in accusamus quisquam.
+            Disfruta de todas las nuevas características de esta plataforma,
+            como si fuese tu asesoría de toda la vida.
           </Text>
         </div>
 
