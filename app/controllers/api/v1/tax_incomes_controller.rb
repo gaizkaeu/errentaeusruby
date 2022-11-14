@@ -14,6 +14,7 @@ module Api
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
+        (render json: {error: "Not found"}, status: :unprocessable_entity) unless @tax_income
       end
 
       # GET /tax_incomes/1/edit
@@ -85,7 +86,7 @@ module Api
       # Use callbacks to share common setup or constraints between actions.
       def set_tax_income
         # TODO: ACCESS PERMISSIONS
-        @tax_income = TaxIncome.find(params[:id])
+        @tax_income = current_api_v1_user.tax_incomes.find_by(id: params[:id])
       end
 
       # Only allow a list of trusted parameters through.

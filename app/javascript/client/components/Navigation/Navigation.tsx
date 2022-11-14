@@ -71,7 +71,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar isBordered variant="sticky">
+    <Navbar variant="sticky" maxWidth="xl">
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand>
         <Text b color="inherit">

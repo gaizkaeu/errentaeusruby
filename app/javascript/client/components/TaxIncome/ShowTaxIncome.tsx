@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { Loading, Spacer, Text } from "@nextui-org/react";
+import { Loading, Modal, Spacer, Text } from "@nextui-org/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import TaxIncomeCard from "./components/TaxIncomeCard";
 import AssignedLawyerCard from "../Lawyer/AssignedLawyer";
@@ -112,9 +112,12 @@ const Stepper = () => {
 
 const ShowTaxIncome = () => {
   const { tax_income_id, page } = useParams();
-  const { currentData, isLoading } = useGetTaxIncomeByIdQuery(tax_income_id!, {
-    pollingInterval: 3000,
-  });
+  const { currentData, isLoading, isError, error } = useGetTaxIncomeByIdQuery(
+    tax_income_id!,
+    {
+      pollingInterval: 3000,
+    }
+  );
   const nav = useNavigate();
 
   useEffect(() => {
@@ -136,7 +139,7 @@ const ShowTaxIncome = () => {
     <Fragment>
       <Stepper />
       <div className="flex flex-wrap gap-10 p-3 md:mt-10">
-        {!isLoading && currentData ? (
+        {!isLoading && currentData && !isError ? (
           <Fragment>
             <div className="flex-1">
               <TaxIncomeCard
@@ -155,6 +158,22 @@ const ShowTaxIncome = () => {
           </Fragment>
         ) : (
           <Loading />
+        )}
+        {isError && error && (
+          <Modal closeButton blur aria-labelledby="modal-title" open={isError}>
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                Error
+                <Text b size={18}>
+                  Acceso
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <Text b>No puedes acceder</Text>
+              <Text>{JSON.stringify(error.data)}</Text>
+            </Modal.Body>
+          </Modal>
         )}
       </div>
     </Fragment>

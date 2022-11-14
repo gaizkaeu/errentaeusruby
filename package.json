@@ -11,6 +11,7 @@
     "test": "jest --json --outputFile tmp/jest.json"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.13",
     "@nextui-org/react": "^1.0.0-beta.10",
     "@reduxjs/toolkit": "^1.9.0",
     "@stripe/react-stripe-js": "^1.14.2",
@@ -19,6 +20,7 @@
     "date-fns": "^2.29.3",
     "eslint-plugin-jest": "^27.1.5",
     "formik": "^2.2.9",
+    "heroicons": "^2.0.13",
     "i18next": "^22.0.4",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.0.1",
