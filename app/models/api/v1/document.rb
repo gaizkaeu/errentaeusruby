@@ -34,11 +34,11 @@ module Api
         event :uploaded_file, binding_event: :files_changed do
           transitions from: :pending, to: :pending, guard: :upload_file?
           transitions from: :pending, to: :ready, guard: :document_full? do
-            run do |user, _description|
+            after do |user, _description|
               create_history_record(:completed, user)
             end
           end
-          run do |user, description|
+          after do |user, description|
             create_history_record(:add_image, user, description)
           end
         end
@@ -46,7 +46,7 @@ module Api
         event :delete_file, binding_event: :files_changed do
           transitions from: :ready, to: :pending
           transitions from: :pending, to: :pending
-          run do |user, description|
+          after do |user, description|
             create_history_record(:remove_image, user, description)
           end
         end
