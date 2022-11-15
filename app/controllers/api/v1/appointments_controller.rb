@@ -5,6 +5,7 @@ module Api
     class AppointmentsController < ApiBaseController
       before_action :set_appointment, only: %i[show update destroy]
       before_action :authenticate_api_v1_user!
+      rescue_from ActiveRecord::RecordNotFound, with: :handler  
 
       def index
         @appointments = current_api_v1_user.appointments
@@ -14,12 +15,12 @@ module Api
       end
 
       def create
-        @tax_income = current_api_v1_user.tax_incomes.find(params[:tax_income_id])
-        @appointment = @tax_income.create_appointment(appointment_params)
+        @tax_income = current_api_v1_user.tax_incomes.find(appointment_params[:tax_income_id])
+        @appointment = @tax_income.create_appointment(appointment_params.except(:tax_income_id))
 
         respond_to do |format|
           if @appointment.save
-            format.json { render :show }
+            format.json { render :show, status: :created, location: @appointment }
           else
             format.json { render json: @appointment.errors, status: :unprocessable_entity }
           end
@@ -28,7 +29,7 @@ module Api
 
       def update
         respond_to do |format|
-          if @appointment.update(time: params[:time], method: params[:method], phone: params[:phone])
+          if @appointment.update(appointment_params)
             format.json { render :show, status: :ok }
           else
             format.json { render json: @appointment.errors, status: :unprocessable_entity }
@@ -39,6 +40,10 @@ module Api
       def destroy
       end
 
+      def handler
+        render json: {error: "not found"}, status: :unprocessable_entity
+      end
+
       private
 
       def set_appointment
@@ -47,7 +52,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def appointment_params
-        params.require(:appointment).permit(:time, :method, :phone)
+        params.require(:api_v1_appointment).permit(:time, :method, :phone, :tax_income_id)
       end
     end
   end

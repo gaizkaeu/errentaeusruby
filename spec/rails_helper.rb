@@ -44,12 +44,10 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  # Factory bot
+  config.include FactoryBot::Syntax::Methods
+  FactoryBot.find_definitions
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
   config.use_transactional_fixtures = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
@@ -74,4 +72,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end

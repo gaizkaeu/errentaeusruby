@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import {
   BoltIcon,
-  DevicePhoneMobileIcon,
   GlobeAltIcon,
+  LockClosedIcon,
   ScaleIcon,
 } from "@heroicons/react/24/outline";
 
@@ -58,7 +58,7 @@ const HomePage = () => (
               className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl"
             >
               ERRENTA.EUS{" "}
-              <span className="font-extralight text-xl sm:text-md">
+              <span className="inline-block font-extralight text-xl sm:text-md">
                 by Eliza Asesores
               </span>
             </Text>
@@ -153,7 +153,7 @@ const features = [
     name: "Seguro.",
     description:
       "Nos preocupamos por tu privacidad, por lo que te mostramos todo lo que guardamos sobre ti, y tienes la capacidad de eliminar lo que quieras.",
-    icon: DevicePhoneMobileIcon,
+    icon: LockClosedIcon,
   },
 ];
 
@@ -162,11 +162,11 @@ export function Example() {
     <div className="py-18 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="sm:text-center">
-          <h2 className="text-lg font-semibold leading-8 text-indigo-600">
-            Lo mejor.
-          </h2>
-          <Text className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Porque errenta
+          <Text className="mt-2 font-bold tracking-tight  sm:text-4xl">
+            Lo mejor
+          </Text>
+          <Text color="#9750DD" className="text-lg font-semibold leading-8">
+            de nuestros servicios.
           </Text>
           <Text className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
             Disfruta de todas las nuevas características de esta plataforma,

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Api::V1::AppointmentsController do
   describe "routing" do
     it "routes to #index" do
-      expect(get: "/api/v1/appointments", xhr: true).to route_to("api/v1/appointments#index")
+      expect(get: "/api/v1/appointments").to route_to("api/v1/appointments#index")
     end
 
     it "routes to #show" do

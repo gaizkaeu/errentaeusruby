@@ -4,6 +4,10 @@ module Api
     class Appointment < ApplicationRecord
       belongs_to :tax_income
 
+      MEETING_OPTIONS = %w[phone office].freeze
+
+      private_constant :MEETING_OPTIONS
+
       delegate :lawyer, to: :tax_income, allow_nil: false
       delegate :client, to: :tax_income, allow_nil: false
 
@@ -11,11 +15,8 @@ module Api
       after_destroy_commit :notify_deletion_to_tax_income
 
       validates :phone, presence: true, if: :phone?
+      validates :method, inclusion: { in: MEETING_OPTIONS} 
 
-      enum method: {
-        phone: 0,
-        office: 1
-      }
 
       private
 

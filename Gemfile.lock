@@ -100,6 +100,8 @@ GEM
       railties (>= 3.2)
     dry-cli (0.7.0)
     erubi (1.11.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  factory_bot
   importmap-rails
   jbuilder
   jwt

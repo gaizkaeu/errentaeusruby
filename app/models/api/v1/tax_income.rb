@@ -41,7 +41,7 @@ module Api
         state :refunded
 
         event :assigned_lawyer do
-          transitions from: :pending_assignation, to: :pending_meeting
+          transitions from: :pending_assignation, to: :waiting_for_meeting_creation
         end
         event :appointment_created do
           transitions from: :waiting_for_meeting_creation, to: :waiting_for_meeting
