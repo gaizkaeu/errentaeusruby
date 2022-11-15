@@ -17,6 +17,11 @@ module Api
       validates :phone, presence: true, if: :phone?
       validates :method, inclusion: { in: MEETING_OPTIONS} 
 
+      validate do |appointment|
+        tax_income = Api::V1::TaxIncome.find(appointment.tax_income_id)
+        appointment.errors.add :base, "tax income doesn't accept appointment" unless tax_income.waiting_for_meeting_creation? || tax_income.waiting_for_meeting?
+      end
+
 
       private
 

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { createTheme, NextUIProvider } from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
 
 import Navigation from "./components/Navigation/Navigation";
 import { useDarkMode } from "usehooks-ts";
@@ -14,14 +14,7 @@ import Loader from "./components/Loader";
 
 import "./i18n";
 import i18next from "i18next";
-
-const lightTheme = createTheme({
-  type: "light",
-});
-
-const darkTheme = createTheme({
-  type: "dark",
-});
+import { darkTheme, lightTheme } from "./theme";
 
 const App = () => {
   const darkMode = useDarkMode();

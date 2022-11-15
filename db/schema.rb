@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_094026) do
     t.datetime "updated_at", null: false
     t.string "method"
     t.string "phone"
-    t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id"
+    t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id", unique: true
   end
 
   create_table "document_histories", force: :cascade do |t|

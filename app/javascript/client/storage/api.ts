@@ -106,7 +106,7 @@ export const taxIncomeApi = createApi({
       query: (data) => ({
         url: `appointments/${data.id}`,
         method: "put",
-        params: data,
+        params: { appointment: data },
       }),
       invalidatesTags: (result, _error) => [
         { type: "Appointment", id: result?.id },

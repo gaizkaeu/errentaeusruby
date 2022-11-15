@@ -71,7 +71,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar variant="sticky" maxWidth="xl">
+    <Navbar>
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand>
         <Text b color="inherit">

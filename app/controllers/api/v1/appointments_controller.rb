@@ -16,7 +16,7 @@ module Api
 
       def create
         @tax_income = current_api_v1_user.tax_incomes.find(appointment_params[:tax_income_id])
-        @appointment = @tax_income.create_appointment(appointment_params.except(:tax_income_id))
+        @appointment = @tax_income.build_appointment(appointment_params.except(:tax_income_id))
 
         respond_to do |format|
           if @appointment.save
@@ -29,7 +29,7 @@ module Api
 
       def update
         respond_to do |format|
-          if @appointment.update(appointment_params)
+          if @appointment.update(appointment_update_params)
             format.json { render :show, status: :ok }
           else
             format.json { render json: @appointment.errors, status: :unprocessable_entity }
@@ -52,7 +52,10 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def appointment_params
-        params.require(:api_v1_appointment).permit(:time, :method, :phone, :tax_income_id)
+        params.require(:appointment).permit(:time, :method, :phone, :tax_income_id)
+      end
+      def appointment_update_params
+        params.require(:appointment).permit(:time, :method, :phone)
       end
     end
   end
