@@ -133,3 +133,6 @@ RSpec/AlignLeftLetBrace:
 RSpec/AlignRightLetBrace:
   Enabled: false
 
+RSpec/NestedGroups:
+  Max: 4
+
