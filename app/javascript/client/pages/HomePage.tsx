@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import BulletPoints from "../components/Home/BulletPoints";
-import CollapsePoints, { CollapsePointsText } from "../components/Home/CollapsePoints";
+import CollapsePoints from "../components/Home/CollapsePoints";
 import Heading from "../components/Home/Heading";
 
 // const topFeatures = [
