@@ -27,3 +27,23 @@ export const FeatureItem = styled(Grid, StyledCardBlur, {
     },
   },
 });
+
+export const FeatureItemBlur = styled(Grid, StyledCardBlur, {
+  transition: "$default",
+  minWidth: "100%",
+  "& .icon-wrapper": {
+    dflex: "center",
+    br: "$pill",
+    p: "$4",
+  },
+  variants: {
+    clickable: {
+      true: {
+        cursor: "pointer",
+        "&:hover": {
+          opacity: 0.8,
+        },
+      },
+    },
+  },
+});

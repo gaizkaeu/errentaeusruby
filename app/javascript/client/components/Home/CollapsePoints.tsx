@@ -167,10 +167,10 @@ const CollapsePoints = () => {
                 fd: "column",
                 ai: "flex-start",
                 h: "100%",
-                mt: "-10%",
+                mt: "0%",
               }}
             >
-              <FeatureItem onClick={() => undefined}>
+              <FeatureItem onClick={() => undefined} className="h-full">
                 <Row align="center">
                   <div className="icon-wrapper">
                     <StarIcon />

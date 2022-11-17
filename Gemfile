@@ -11,6 +11,12 @@ gem 'vite_rails'
 # Auth
 gem 'devise'
 
+# Auth callbacks
+gem 'omniauth'
+
+# Google auth2 callback
+gem 'omniauth-google-oauth2'
+
 # Posgres connector
 gem 'pg'
 

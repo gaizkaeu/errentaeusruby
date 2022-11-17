@@ -9,7 +9,7 @@ module Api
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
       devise :database_authenticatable, :registerable,
-            :recoverable, :rememberable, :validatable
+            :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
 
       after_create_commit :create_stripe_customer
 
@@ -39,6 +39,13 @@ module Api
     
       #   JWT.encode(payload, ENV['SECRET_KEY_BASE'], "HS512")
       # end
+      def self.from_omniauth(auth)
+        where(provider: auth.provider, uid: auth.uid).first_or_create! do |user|
+          user.email = auth.info.email
+          user.password = Devise.friendly_token[0, 20]
+          user.first_name = auth.info.name # assuming the user model has a name
+        end
+      end
     end
   end
 end

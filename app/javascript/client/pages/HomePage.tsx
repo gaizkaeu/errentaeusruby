@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import BulletPoints from "../components/Home/BulletPoints";
 import CollapsePoints from "../components/Home/CollapsePoints";
 import Heading from "../components/Home/Heading";
+import Reviews from "../components/Home/Reviews";
 
 // const topFeatures = [
 //   {
@@ -37,9 +38,10 @@ const HomePage = () => {
         <Heading />
       </header>
       <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <BulletPoints />
         <CollapsePoints />
+        <BulletPoints />
         {/*         <FeaturesGrid features={topFeatures} /> */}
+        <Reviews />
       </main>
     </Fragment>
   );

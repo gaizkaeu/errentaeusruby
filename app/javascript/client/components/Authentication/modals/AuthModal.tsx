@@ -1,4 +1,6 @@
-import { Modal, Text } from "@nextui-org/react";
+import { Button, Modal, Text } from "@nextui-org/react";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthComponent from "../AuthComponent";
@@ -22,6 +24,10 @@ const AuthModal = (props: { method: boolean }) => {
     }, 50);
   };
 
+  const responseGoogle = (res: CredentialResponse) => {
+    axios.post("/api/v1/users/auth/google_oauth2/callback", res);
+  };
+
   return (
     <div>
       <Modal
@@ -43,7 +49,17 @@ const AuthModal = (props: { method: boolean }) => {
           <AuthComponent method={props.method} onAuth={onAuth} />
         </Modal.Body>
         <Modal.Footer>
-          <Text weight="light">Todos los datos están encriptados.</Text>
+          <GoogleLogin
+            onSuccess={responseGoogle}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          <Button
+            onPress={() => {
+              axios.get("/api/v1/users/auth/google_oauth2");
+            }}
+          ></Button>
         </Modal.Footer>
       </Modal>
     </div>

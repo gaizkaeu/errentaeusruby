@@ -15,6 +15,7 @@ import Loader from "./components/Loader";
 import "./i18n";
 import i18next from "i18next";
 import { darkTheme, lightTheme } from "./theme";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const App = () => {
   const darkMode = useDarkMode();
@@ -36,16 +37,18 @@ const App = () => {
   });
 
   return (
-    <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
-      <Toaster />
-      <Navigation />
-      <div className="min-h-screen">
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
-      </div>
-      <Footer />
-    </NextUIProvider>
+    <GoogleOAuthProvider clientId="321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com">
+      <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
+        <Toaster />
+        <Navigation />
+        <div className="min-h-screen">
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </div>
+        <Footer />
+      </NextUIProvider>
+    </GoogleOAuthProvider>
   );
 };
 

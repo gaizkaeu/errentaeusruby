@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         get :documents, on: :member
       end
       get :logged_in, to: 'accounts#logged_in'
-      devise_for :users, module: 'api/v1/auth', class_name: "Api::V1::User", defaults: { format: :json }
+      devise_for :users, module: 'api/v1/auth', class_name: "Api::V1::User", defaults: { format: :json }, controllers: { omniauth_callbacks: 'api/v1/auth/omniauth_callbacks'}
       resources :documents do
         delete 'delete_document_attachment/:id_attachment', on: :member, to: 'documents#delete_document_attachment'
         post :add_document_attachment, on: :member
