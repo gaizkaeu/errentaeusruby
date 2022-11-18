@@ -48,7 +48,7 @@ const ReviewsComponent = () => {
           top: "-400px",
           left: "100px",
           px: "$8",
-          mw: "280px",
+          mw: "120px",
           animation: `${levitating} 11s ease infinite`,
           backgroundColor: "$cardBackground",
           boxShadow: "$sm",
@@ -84,9 +84,9 @@ const ReviewsComponent = () => {
           position: "relative",
           cursor: "pointer",
           top: "0px",
-          left: "-200px",
+          left: "-100px",
           px: "$8",
-          mw: "280px",
+          mw: "120px",
           animation: `${levitating} 8s ease infinite`,
           backgroundColor: "$cardBackground",
           boxShadow: "$sm",
@@ -105,7 +105,45 @@ const ReviewsComponent = () => {
               ml: "$4",
             }}
           >
-            Elena
+            Laura
+          </Text>
+        </Row>
+        <Row align="center" css={{ px: "$2", pt: "$4", pb: "$2" }}>
+          <Text className="feature-description" css={{ color: "$accents8" }}>
+            Atención profesional, personalizada y atenta. Muy satisfecha con
+            servicios prestados y trato recibido. Ya tengo nueva asesora,
+            totalmente recomendable.
+          </Text>
+        </Row>
+      </FeatureItem>
+      <FeatureItem
+        onClick={() => undefined}
+        css={{
+          position: "relative",
+          cursor: "pointer",
+          top: "-30px",
+          left: "100px",
+          px: "$8",
+          mw: "120px",
+          animation: `${levitating} 8s ease infinite`,
+          backgroundColor: "$cardBackground",
+          boxShadow: "$sm",
+        }}
+      >
+        <Row align="center">
+          <div className="icon-wrapper">
+            <StarIcon />
+          </div>
+          <Text
+            className="feature-title"
+            css={{
+              my: 0,
+              fontSize: "1.1rem",
+              fontWeight: "$semibold",
+              ml: "$4",
+            }}
+          >
+            Laura
           </Text>
         </Row>
         <Row align="center" css={{ px: "$2", pt: "$4", pb: "$2" }}>
@@ -124,8 +162,8 @@ const Reviews = () => {
   return (
     <Container
       alignItems="center"
+      className="overflow-hidden"
       as="section"
-      className="hero__container"
       css={{
         position: "relative",
         height: "calc(84vh - 76px)",
@@ -141,7 +179,6 @@ const Reviews = () => {
     >
       <Row
         align="center"
-        className="hero__content"
         css={{
           zIndex: "$2",
           "@mdMax": {
@@ -155,7 +192,6 @@ const Reviews = () => {
         wrap="wrap"
       >
         <Col
-          className="hero__left-container"
           css={{
             position: "relative",
             zIndex: "$2",
@@ -171,13 +207,10 @@ const Reviews = () => {
           <Spacer y={1.5} />
         </Col>
         <Col
-          className="hero__right-container"
+          className="w-full h-full"
           css={{
             position: "relative",
             height: "100%",
-            "@mdMax": {
-              display: "none",
-            },
           }}
           span={6}
         >

@@ -37,9 +37,11 @@ const HomePage = () => {
       <header>
         <Heading />
       </header>
-      <main className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <CollapsePoints />
-        <BulletPoints />
+      <main>
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <CollapsePoints />
+          <BulletPoints />
+        </div>
         {/*         <FeaturesGrid features={topFeatures} /> */}
         <Reviews />
       </main>

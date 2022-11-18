@@ -5,7 +5,6 @@ import Navigation from "./components/Navigation/Navigation";
 import { useDarkMode } from "usehooks-ts";
 import { Suspense, useEffect } from "react";
 import { useAppDispatch } from "./storage/hooks";
-import { loggedIn } from "./storage/authSlice";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { rescueMyEstimation } from "./storage/estimationSlice";
@@ -16,10 +15,12 @@ import "./i18n";
 import i18next from "i18next";
 import { darkTheme, lightTheme } from "./theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useGetCurrentAccountQuery } from "./storage/api";
 
 const App = () => {
   const darkMode = useDarkMode();
   const dispatch = useAppDispatch();
+  useGetCurrentAccountQuery();
 
   useEffect(() => {
     const token = document
@@ -28,7 +29,6 @@ const App = () => {
     axios.defaults.headers.common["X-CSRF-Token"] = token!;
     axios.defaults.headers.common["Accept"] = "application/json";
     axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-    dispatch(loggedIn());
     dispatch(rescueMyEstimation());
   }, []);
 

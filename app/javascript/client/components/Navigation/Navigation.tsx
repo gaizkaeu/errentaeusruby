@@ -118,7 +118,7 @@ const Navigation = () => {
         <Navbar.Item hideIn="xs">
           <Link href="https://elizaasesores.com">Eliza Asesores</Link>
         </Navbar.Item>
-        {status.fetched && status.loggedIn && (
+        {status.loggedIn && (
           <Navbar.Content
             css={{
               "@xs": {

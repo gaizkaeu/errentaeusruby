@@ -1,9 +1,10 @@
 import { Provider } from "react-redux";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { store } from "./storage/store";
-import { Text } from "@nextui-org/react";
+import { Loading } from "@nextui-org/react";
 import { Suspense } from "react";
 import { useAuth } from "./hooks/authHook";
+import { useGetCurrentAccountQuery } from "./storage/api";
 const ShowDocumentHistory = React.lazy(
   () => import("./components/Document/modals/DocumentHistoryModal")
 );
@@ -34,9 +35,10 @@ const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
   const { status } = useAuth();
+  const { isLoading } = useGetCurrentAccountQuery();
   const location = useLocation();
 
-  return status.fetched ? (
+  return !isLoading ? (
     status.loggedIn ? (
       props.children
     ) : (
@@ -47,7 +49,7 @@ const PrivateRoute = (props: { children: JSX.Element }) => {
       />
     )
   ) : (
-    <Text>Loading...</Text>
+    <Loading />
   );
 };
 

@@ -1,14 +1,15 @@
-import { Button, Modal, Text } from "@nextui-org/react";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+import { Modal, Text } from "@nextui-org/react";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthComponent from "../AuthComponent";
+import { useGoogleOAuthCallBackMutation } from "../../../storage/api";
 
 const AuthModal = (props: { method: boolean }) => {
   const nav = useNavigate();
   const loc = useLocation();
   const [open, setOpen] = useState(true);
+  const [googleoAuthCallback] = useGoogleOAuthCallBackMutation();
 
   const onClose = () => {
     setOpen(false);
@@ -24,9 +25,13 @@ const AuthModal = (props: { method: boolean }) => {
     }, 50);
   };
 
-  const responseGoogle = (res: CredentialResponse) => {
-    axios.post("/api/v1/users/auth/google_oauth2/callback", res);
-  };
+  const googleLogin = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (codeResponse) => {
+      googleoAuthCallback(codeResponse.code).unwrap().then(onAuth);
+    },
+    onError: (errorResponse) => console.log(errorResponse),
+  });
 
   return (
     <div>
@@ -50,16 +55,12 @@ const AuthModal = (props: { method: boolean }) => {
         </Modal.Body>
         <Modal.Footer>
           <GoogleLogin
-            onSuccess={responseGoogle}
+            useOneTap
+            onSuccess={googleLogin}
             onError={() => {
               console.log("Login Failed");
             }}
           />
-          <Button
-            onPress={() => {
-              axios.get("/api/v1/users/auth/google_oauth2");
-            }}
-          ></Button>
         </Modal.Footer>
       </Modal>
     </div>

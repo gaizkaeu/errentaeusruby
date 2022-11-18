@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import InputField from "../FormFields/InputField";
 import PasswordField from "../FormFields/PasswordField";
 import { Button, Grid, Spacer } from "@nextui-org/react";
-import { signUp } from "../../storage/authSlice";
+import { signUp } from "../../storage/authSliceold";
 import { useAppDispatch, useAppSelector } from "../../storage/hooks";
 import toast from "react-hot-toast";
 import { UserRegistrationData } from "../../storage/types";

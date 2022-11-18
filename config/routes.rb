@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   mount StripeEvent::Engine, at: '/api/v1/payments/webhook'
 
-  namespace :api do
+  namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       resources :appointments
       resources :estimations do

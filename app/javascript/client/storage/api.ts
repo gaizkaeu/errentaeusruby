@@ -10,6 +10,8 @@ import {
   PaymentDetails,
   Document,
   DocumentHistory,
+  UserRegistrationData,
+  SessionCreationData,
 } from "./types";
 
 const axiosBaseQuery =
@@ -40,7 +42,7 @@ const axiosBaseQuery =
     }
   };
 
-export const taxIncomeApi = createApi({
+export const api = createApi({
   reducerPath: "taxIncomeApi",
   baseQuery: axiosBaseQuery({ baseUrl: "/api/v1/" }),
   tagTypes: [
@@ -50,6 +52,7 @@ export const taxIncomeApi = createApi({
     "Lawyer",
     "Document",
     "DocumentHistory",
+    "User",
   ],
   endpoints: (build) => ({
     getTaxIncomes: build.query<TaxIncomesResponse, void>({
@@ -176,6 +179,34 @@ export const taxIncomeApi = createApi({
     getDocumentHistoryById: build.query<DocumentHistory[], string>({
       query: (id) => ({ url: `documents/${id}/history`, method: "get" }),
     }),
+    getCurrentAccount: build.query<IUser, void>({
+      query: () => ({ url: `logged_in`, method: "get" }),
+      providesTags: (_result, _error, _id) => ["User"],
+    }),
+    createNewAccount: build.mutation<IUser, UserRegistrationData>({
+      query: (data) => ({ url: "users", method: "post", data: data }),
+      invalidatesTags: (_result) => ["User"],
+    }),
+    loginAccount: build.mutation<IUser, SessionCreationData>({
+      query: (data) => ({
+        url: "users/sign_in",
+        method: "post",
+        data: { api_v1_user: data },
+      }),
+      invalidatesTags: (_result) => ["User"],
+    }),
+    logOut: build.mutation<void, void>({
+      query: () => ({ url: `users/sign_out`, method: "delete" }),
+      invalidatesTags: (_result, _error, _id) => ["User"],
+    }),
+    googleOAuthCallBack: build.mutation<void, string>({
+      query: (data) => ({
+        url: "users/auth/google_oauth2/callback",
+        method: "post",
+        data: { code: data },
+      }),
+      invalidatesTags: (_result) => ["User"],
+    }),
   }),
 });
 
@@ -197,4 +228,9 @@ export const {
   useGetDocumentByIdQuery,
   useExportDocumentByIdMutation,
   useGetDocumentHistoryByIdQuery,
-} = taxIncomeApi;
+  useCreateNewAccountMutation,
+  useGetCurrentAccountQuery,
+  useLoginAccountMutation,
+  useLogOutMutation,
+  useGoogleOAuthCallBackMutation,
+} = api;
