@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import InputField from "../FormFields/InputField";
 import PasswordField from "../FormFields/PasswordField";
 import { Button, Grid, Spacer } from "@nextui-org/react";
-import { signUp } from "../../storage/authSliceold";
-import { useAppDispatch, useAppSelector } from "../../storage/hooks";
+import { useAppSelector } from "../../storage/hooks";
 import toast from "react-hot-toast";
 import { UserRegistrationData } from "../../storage/types";
 
 const SignUp = (props: { loginSuccess: () => void }) => {
-  const dispatch = useAppDispatch();
   const firstName = useAppSelector((state) => {
     return state.estimations.estimation?.first_name;
   });
@@ -19,25 +18,8 @@ const SignUp = (props: { loginSuccess: () => void }) => {
     formikHelpers: FormikHelpers<any>
   ) => {
     const toastNotification = toast.loading("Procesando...");
-    const action = await dispatch(signUp(values));
 
-    if (signUp.fulfilled.match(action)) {
-      toast.success("Has iniciado sesión", {
-        id: toastNotification,
-      });
-      props.loginSuccess();
-    } else {
-      if (action.payload) {
-        formikHelpers.setErrors(action.payload.errors);
-        toast.error("Error", {
-          id: toastNotification,
-        });
-      } else {
-        toast.error("Error inesperado", {
-          id: toastNotification,
-        });
-      }
-    }
+    props.loginSuccess();
   };
 
   return (
