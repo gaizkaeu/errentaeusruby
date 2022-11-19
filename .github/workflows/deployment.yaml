@@ -94,7 +94,7 @@ jobs:
           captain-token: '${{ secrets.RWX_ACCESS_TOKEN }}'
 
 
-  deploy:
+  build_push_image:
     runs-on: ubuntu-20.04
 
     if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
@@ -135,3 +135,16 @@ jobs:
         run: |
           docker tag app ghcr.io/${{ github.repository }}:${GITHUB_REF##*/}
           docker push ghcr.io/${{ github.repository }}:${GITHUB_REF##*/}
+
+  deploy:
+    runs-on: ubuntu-20.04
+
+    needs: build_push_image
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --app errenta
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
