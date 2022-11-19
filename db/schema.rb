@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_16_213326) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_18_124634) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -119,8 +119,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_213326) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "surname"
+    t.string "first_name"
+    t.string "last_name"
     t.string "phone"
     t.integer "account_type", default: 0
     t.string "stripe_customer_id"

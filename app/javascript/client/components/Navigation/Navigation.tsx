@@ -71,7 +71,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar>
+    <Navbar maxWidth="fluid">
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand>
         <Text b color="inherit">
@@ -118,7 +118,7 @@ const Navigation = () => {
         <Navbar.Item hideIn="xs">
           <Link href="https://elizaasesores.com">Eliza Asesores</Link>
         </Navbar.Item>
-        {status.loggedIn && (
+        {status.loggedIn && currentUser && (
           <Navbar.Content
             css={{
               "@xs": {
@@ -135,7 +135,7 @@ const Navigation = () => {
                     as="button"
                     color="warning"
                     size="md"
-                    text={currentUser?.name}
+                    text={currentUser.first_name}
                   />
                 </Dropdown.Trigger>
               </Navbar.Item>

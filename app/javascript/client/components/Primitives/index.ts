@@ -8,7 +8,6 @@ const animatedText = keyframes({
 });
 
 export const Title = styled("h1", {
-  display: "inline",
   fontWeight: "$bold",
   color: "$text",
   lh: "1.2",
@@ -146,7 +145,8 @@ export const AnimatedText = styled(Text, {
   cursor: "default",
   position: "relative",
   fontWeight: "$semibold",
-  backgroundImage: "linear-gradient(120deg, $$colorA 0%, $$colorB 50%, $$colorA 100%)",
+  backgroundImage:
+    "linear-gradient(120deg, $$colorA 0%, $$colorB 50%, $$colorA 100%)",
   backgroundOrigin: "padding-box",
   backgroundSize: "200%",
   WebkitBoxDecorationBreak: "clone",

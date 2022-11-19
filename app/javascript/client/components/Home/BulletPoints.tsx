@@ -35,7 +35,7 @@ const BulletPoints = () => {
     },
   ];
   return (
-    <div className="py-18 sm:py-24 lg:py-28">
+    <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <Box
           css={{

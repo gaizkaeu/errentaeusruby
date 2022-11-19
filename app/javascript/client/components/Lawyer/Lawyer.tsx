@@ -8,9 +8,9 @@ const LawyerAvatar = (props: { lawyer: IUser; size: "xs" | "sm" | "md" }) => {
   return (
     <Fragment>
       <User
-        text={lawyer.name}
-        name={lawyer.name}
-        description={props.size == "md" ? lawyer.surname : undefined}
+        text={lawyer.first_name}
+        name={lawyer.first_name}
+        description={props.size == "md" ? lawyer.last_name : undefined}
         size={props.size}
       />
     </Fragment>

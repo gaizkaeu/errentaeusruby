@@ -93,8 +93,8 @@ export interface AuthState {
 export interface IUser {
   id: string;
   email: string;
-  name: string;
-  surname: string;
+  first_name: string;
+  last_name: string;
   account_type: "user" | "lawyer";
 }
 

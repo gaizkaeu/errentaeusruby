@@ -1,3 +1,4 @@
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { FormikHelpers } from "formik";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -15,8 +16,10 @@ export const useAuth = () => {
   const [signOut] = useLogOutMutation();
   const [signIn] = useLoginAccountMutation();
 
+
   const logoutHandle = async () => {
     const toastNotification = toast.loading(t("authentication.loggingOut"));
+    googleLogout();
     signOut()
       .unwrap()
       .then(

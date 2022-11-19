@@ -32,8 +32,8 @@ export const DocumentHistory = (props: { documentId: string }) => {
           bordered
           color="secondary"
           size="md"
-          text={currentUser.name}
-          name={currentUser.name}
+          text={currentUser.first_name}
+          name={currentUser.first_name}
         />
       ) : (
         <AssignedLawyerSimple size="md" lawyerId={props.userId} />

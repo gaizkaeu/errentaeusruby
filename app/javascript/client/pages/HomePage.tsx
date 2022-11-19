@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { Actions } from "../components/Home/Actions";
 import BulletPoints from "../components/Home/BulletPoints";
 import CollapsePoints from "../components/Home/CollapsePoints";
 import Heading from "../components/Home/Heading";
@@ -38,10 +39,9 @@ const HomePage = () => {
         <Heading />
       </header>
       <main>
-        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <CollapsePoints />
-          <BulletPoints />
-        </div>
+        <CollapsePoints />
+        <Actions />
+        <BulletPoints />
         {/*         <FeaturesGrid features={topFeatures} /> */}
         <Reviews />
       </main>

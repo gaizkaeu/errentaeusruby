@@ -33,7 +33,7 @@ const CollapsePoints = () => {
   };
 
   return (
-    <div className="py-20 sm:py-24 lg:py-28">
+    <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-28">
       <Section css={{ position: "relative" }}>
         <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
           <svg

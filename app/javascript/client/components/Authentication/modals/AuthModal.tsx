@@ -56,6 +56,7 @@ const AuthModal = (props: { method: boolean }) => {
         <Modal.Footer>
           <GoogleLogin
             useOneTap
+            auto_select
             onSuccess={googleLogin}
             onError={() => {
               console.log("Login Failed");

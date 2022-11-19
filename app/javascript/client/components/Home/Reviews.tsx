@@ -1,5 +1,13 @@
 import { StarIcon } from "@heroicons/react/24/outline";
-import { Col, Container, Row, Spacer, styled, Text } from "@nextui-org/react";
+import {
+  Col,
+  Container,
+  Link,
+  Row,
+  Spacer,
+  styled,
+  Text,
+} from "@nextui-org/react";
 import { levitating } from "../../utils/animations";
 import { FeatureItem } from "../Card-Grid/styles";
 import { Title } from "../Primitives";
@@ -204,6 +212,9 @@ const Reviews = () => {
           }}
         >
           <Title>Nuestros clientes nos avalan</Title>
+          <Link href="https://g.page/r/CbKDg4dig5GNEBM/review">
+            ¡Danos tu opinión!{" "}
+          </Link>
           <Spacer y={1.5} />
         </Col>
         <Col

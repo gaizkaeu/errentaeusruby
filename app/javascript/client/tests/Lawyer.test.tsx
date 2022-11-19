@@ -6,8 +6,8 @@ it("Lawyer::Avatar: show correct data", () => {
   const user: IUser = {
     id: "0",
     email: "gaizkaurdangarin@gmail.com",
-    name: "Gaizka",
-    surname: "Urdangarin",
+    first_name: "Gaizka",
+    last_name: "Urdangarin",
     account_type: "user",
   };
   const component = renderer.create(<LawyerAvatar lawyer={user} size="sm" />);

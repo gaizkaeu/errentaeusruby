@@ -5,11 +5,23 @@ import SignUp from "./SignUp";
 import { Link, Location } from "react-router-dom";
 import CheckAnimated from "../Icons/CheckAnimated";
 import { useAuth } from "../../hooks/authHook";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import toast from "react-hot-toast";
+import { useGoogleOAuthCallBackMutation } from "../../storage/api";
 
 export const RequiresAuthentication = (props: {
   nextPage: string;
   location: Location;
 }) => {
+  const [googleoAuthCallback] = useGoogleOAuthCallBackMutation();
+  const googleLogin = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (codeResponse) => {
+      googleoAuthCallback(codeResponse.code).unwrap().then(toast.success("Ok"));
+    },
+    onError: (errorResponse) => console.log(errorResponse),
+  });
+
   return (
     <div>
       <Text>Es necesario tener una cuenta para continuar</Text>
@@ -28,6 +40,14 @@ export const RequiresAuthentication = (props: {
           Registrarme
         </Link>
       </Text>
+      <GoogleLogin
+        useOneTap
+        auto_select
+        onSuccess={googleLogin}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
     </div>
   );
 };

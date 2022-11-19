@@ -8,5 +8,5 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Api::V1::User.create!(name: 'Carolina', surname: 'Elizagarate', password: 'sjldkhfjhskdfhalkjhsdjncks',
+Api::V1::User.create!(first_name: 'Carolina', last_name: 'Elizagarate', password: 'sjldkhfjhskdfhalkjhsdjncks',
              email: 'carolina@elizaasesores.com', account_type: :lawyer)

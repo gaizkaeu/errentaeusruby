@@ -25,7 +25,7 @@ module Api
       def create_stripe_customer
         # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create({
-                                            name: name + (surname || ''),
+                                            name: first_name + (last_name || ''),
                                             email:,
                                             metadata: {
                                               user_id: id
@@ -39,13 +39,17 @@ module Api
     
       #   JWT.encode(payload, ENV['SECRET_KEY_BASE'], "HS512")
       # end
+      # rubocop:disable Metrics/AbcSize
       def self.from_omniauth(auth)
         where(provider: auth.provider, uid: auth.uid).first_or_create! do |user|
           user.email = auth.info.email
           user.password = Devise.friendly_token[0, 20]
-          user.name = auth.info.name # assuming the user model has a name
+          user.first_name = auth.info.first_name # assuming the user model has a name
+          user.last_name = auth.info.last_name # assuming the user model has a name
+          Rails.logger.debug auth.info
         end
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
