@@ -93,50 +93,47 @@ jobs:
             ]
           captain-token: '${{ secrets.RWX_ACCESS_TOKEN }}'
 
-
-  build_push_image:
-    runs-on: ubuntu-20.04
-
-    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
+  build_image:
 
     needs: test
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      
+    runs-on: ubuntu-latest
+    environment: gcp
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # - name: Google Auth
+      #   id: auth
+      #   uses: 'google-github-actions/auth@v0'
+      #   with:
+      #     credentials_json: '${{ secrets.CP_CREDENTIALS }}'
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v0'
         with:
-          fetch-depth: 0
+          token_format: 'access_token'
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
+      
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker
 
-      - name: Fetch tag annotations
-        # https://github.com/actions/checkout/issues/290
-        run: git fetch --tags --force
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build the production image
+      - name: Build the image
         run: |
           export COMMIT_TIME=$(git show -s --format=%cI ${GITHUB_SHA})
-          export COMMIT_VERSION=$(git describe --always)
+          export COMMIT_VERSION=$(git describe --tag)
           echo $GITHUB_SHA
           echo $COMMIT_TIME
           echo $COMMIT_VERSION
           docker buildx build --build-arg COMMIT_TIME --build-arg COMMIT_VERSION -t app .
-      - name: Push the image tagged as LATEST to the container registry
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
-        run: |
-          docker tag app ghcr.io/${{ github.repository }}:latest
-          docker push ghcr.io/${{ github.repository }}:latest
       - name: Push the image tagged with version to the container registry
-        if: startsWith(github.ref, 'refs/tags')
         run: |
-          docker tag app ghcr.io/${{ github.repository }}:${GITHUB_REF##*/}
-          docker push ghcr.io/${{ github.repository }}:${GITHUB_REF##*/}
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
+          docker tag app ${{ env.AR_LOCATION }}.gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.SERVICE_NAME }}:${{ github.sha }}
+          docker push ${{ env.AR_LOCATION }}.gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.SERVICE_NAME }}:${{ github.sha }}
