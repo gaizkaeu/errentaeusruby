@@ -5,9 +5,9 @@ import { Title } from "../Primitives";
 export const Actions = () => {
   return (
     <section className="relative px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-28">
-      <div className="absolute inset-x-0 blur-3xl transform-gpu overflow-hidden sm:top-[-20rem]">
+      <div className="absolute right-10 top-0 blur-3xl transform-gpu overflow-hidden rotate-180">
         <svg
-          className="relative left-[calc(50%-10rem)] -z-10 max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
+          className="relative -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           viewBox="0 0 800 800"

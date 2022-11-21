@@ -9,7 +9,8 @@ module Api
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
       devise :database_authenticatable, :registerable,
-            :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
+            :recoverable, :rememberable, :validatable, :confirmable,
+            :omniauthable, omniauth_providers: [:google_one_tap]
 
       after_create_commit :create_stripe_customer
 
@@ -46,6 +47,7 @@ module Api
           user.password = Devise.friendly_token[0, 20]
           user.first_name = auth.info.first_name # assuming the user model has a name
           user.last_name = auth.info.last_name # assuming the user model has a name
+          user.confirmed_at = Time.zone.today
           Rails.logger.debug auth.info
         end
       end

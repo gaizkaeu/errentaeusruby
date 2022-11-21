@@ -4,6 +4,7 @@ import BulletPoints from "../components/Home/BulletPoints";
 import CollapsePoints from "../components/Home/CollapsePoints";
 import Heading from "../components/Home/Heading";
 import Reviews from "../components/Home/Reviews";
+import { Step } from "../components/Home/Steps";
 
 // const topFeatures = [
 //   {
@@ -44,6 +45,7 @@ const HomePage = () => {
         <BulletPoints />
         {/*         <FeaturesGrid features={topFeatures} /> */}
         <Reviews />
+        <Step />
       </main>
     </Fragment>
   );

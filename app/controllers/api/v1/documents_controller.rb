@@ -14,7 +14,7 @@ module Api
       def delete_document_attachment
         doc = @document.files.find(params[:id_attachment])
         doc.purge_later
-        @document.delete_file!(current_api_v1_user, doc.filename.to_s)
+        @document.delete_file!(current_api_v1_user.id, doc.filename.to_s)
         render :show
       end
 
@@ -24,7 +24,7 @@ module Api
             break unless @document.upload_file?
 
             @document.files.attach(v)
-            @document.uploaded_file!(current_api_v1_user, v.original_filename)
+            @document.uploaded_file!(current_api_v1_user.id, v.original_filename)
           end
           render :show
         else
@@ -33,8 +33,8 @@ module Api
       end
 
       def export_document
-        CreatePdfFromDocumentAttachmentsJob.perform_later(@document)
-        @document.export!(current_api_v1_user)
+        @document.export!(current_api_v1_user.id)
+        CreatePdfFromDocumentAttachmentsJob.perform_async(@document.id)
         render :show
       end
 

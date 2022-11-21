@@ -12,9 +12,9 @@ export const AttachmentForm = (props: { document: Document }) => {
     helpers: FormikHelpers<any>
   ) => {
     helpers.setSubmitting(true);
-    addAttachment({ document_id: props.document.id, files: values.files }).then(
-      () => helpers.setSubmitting(false)
-    );
+    addAttachment({ document_id: props.document.id, files: values.files })
+      .unwrap()
+      .then(() => helpers.setSubmitting(false));
   };
 
   return (

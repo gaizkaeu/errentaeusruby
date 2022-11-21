@@ -16,8 +16,6 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '649255159fc8a88ca7ad
 
-  config.omniauth :google_oauth2, '321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com', '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', scope: 'user,public_repo',  provider_ignores_state: true
-
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
@@ -144,7 +142,7 @@ Devise.setup do |config|
   # without confirming their account.
   # Default is 0.days, meaning the user cannot access the website without
   # confirming their account.
-  # config.allow_unconfirmed_access_for = 2.days
+  config.allow_unconfirmed_access_for = nil
 
   # A period that the user is allowed to confirm their account before their
   # token becomes invalid. For example, if set to 3.days, the user can confirm

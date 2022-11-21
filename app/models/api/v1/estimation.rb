@@ -14,7 +14,7 @@ module Api
       private_constant :DISCOUNTS
       private_constant :BASE
 
-      after_create_commit { calculate_price }
+      after_initialize { calculate_price }
 
       def calculate_price
         price = BASE
@@ -30,6 +30,14 @@ module Api
         end
 
         update!(price:)
+      end
+
+      def as_estimation_jwt
+        JWT.encode(attributes.except("price", "id", "created_at", "updated_at", "user_id", "tax_income_id"), Rails.application.secrets.secret_key_base)
+      end
+
+      def self.decode_jwt_estimation(payload)
+        JWT.decode(payload, Rails.application.secrets.secret_key_base)
       end
     end
   end

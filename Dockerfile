@@ -11,5 +11,5 @@ COPY --from=Builder /etc/alpine-release /tmp/dummy
 
 USER app
 
-# Script to be executed every time the container starts
+LABEL fly_launch_runtime="rails"
 ENTRYPOINT ["docker/startup.sh"]

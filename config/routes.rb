@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  mount StripeEvent::Engine, at: '/api/v1/payments/webhook'
+  mount StripeEvent::Engine, at: '/api/v1/payments/webhook' 
+  mount Sidekiq::Web => '/sidekiq'
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
@@ -9,6 +11,7 @@ Rails.application.routes.draw do
       resources :estimations do
         post :estimate, on: :collection
         get :my_estimation, on: :collection
+        post :estimation_from_jwt, on: :collection
       end
       get 'lawyers/:id', to: 'lawyers#show'
       resources :tax_incomes do
@@ -18,6 +21,7 @@ Rails.application.routes.draw do
       end
       get :logged_in, to: 'accounts#logged_in'
       devise_for :users, module: 'api/v1/auth', class_name: "Api::V1::User", defaults: { format: :json }, controllers: { omniauth_callbacks: 'api/v1/auth/omniauth_callbacks'}
+
       resources :documents do
         delete 'delete_document_attachment/:id_attachment', on: :member, to: 'documents#delete_document_attachment'
         post :add_document_attachment, on: :member

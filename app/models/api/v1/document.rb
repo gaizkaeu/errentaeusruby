@@ -82,8 +82,8 @@ module Api
 
       private
 
-      def create_history_record(action, user_id, description = '')
-        LogDocumentHistoryJob.perform_later({user: user_id, document: self, description:, action:})
+      def create_history_record(action, user, description = '')
+        LogDocumentHistoryJob.perform_async({user_id: user, document_id: id, description:, action:}.stringify_keys)
       end
     end
   end

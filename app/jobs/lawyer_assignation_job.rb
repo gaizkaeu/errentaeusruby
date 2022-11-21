@@ -7,6 +7,8 @@ class LawyerAssignationJob < ApplicationJob
     lawyer_id = Api::V1::User.where(account_type: 1).first&.id
     return if lawyer_id.nil?
 
-    tax_income.waiting_for_meeting_creation! if tax_income.update!(lawyer_id:)
+    tax = Api::V1::TaxIncome.find(tax_income)
+
+    tax.waiting_for_meeting_creation! if tax.update!(lawyer_id:)
   end
 end

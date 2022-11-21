@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import { useDarkMode } from "usehooks-ts";
 import { useAuth } from "../../hooks/authHook";
+import { ErrentaUnderlined } from "../../utils/GlobalStyles";
 import { MoonIcon } from "../Icons/MoonIcon";
 import { SunIcon } from "../Icons/SunIcon";
 
@@ -75,7 +76,7 @@ const Navigation = () => {
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand>
         <Text b color="inherit">
-          ERRENTA
+          <ErrentaUnderlined />
         </Text>
       </Navbar.Brand>
       <Navbar.Content

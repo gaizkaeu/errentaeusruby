@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_18_124634) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_21_080105) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -79,16 +79,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_124634) do
 
   create_table "estimations", force: :cascade do |t|
     t.string "first_name"
-    t.boolean "first_time"
-    t.integer "home_changes"
-    t.integer "rentals_mortgages"
-    t.boolean "professional_company_activity"
-    t.integer "real_state_trade"
-    t.boolean "with_couple"
-    t.integer "income_rent"
-    t.integer "shares_trade"
-    t.boolean "outside_alava"
-    t.float "price"
+    t.boolean "first_time", default: 0
+    t.integer "home_changes", default: 0
+    t.integer "rentals_mortgages", default: 0
+    t.boolean "professional_company_activity", default: 0
+    t.integer "real_state_trade", default: 0
+    t.boolean "with_couple", default: 0
+    t.integer "income_rent", default: 0
+    t.integer "shares_trade", default: 0
+    t.boolean "outside_alava", default: 0
+    t.float "price", default: -1
     t.integer "tax_income_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -126,6 +126,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_124634) do
     t.string "stripe_customer_id"
     t.string "provider"
     t.string "uid"
+    t.datetime "confirmed_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

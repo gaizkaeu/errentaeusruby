@@ -1,15 +1,15 @@
 import { Modal, Text } from "@nextui-org/react";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthComponent from "../AuthComponent";
-import { useGoogleOAuthCallBackMutation } from "../../../storage/api";
+import { useGoogleOAuthOneTapCallBackMutation } from "../../../storage/api";
 
 const AuthModal = (props: { method: boolean }) => {
   const nav = useNavigate();
   const loc = useLocation();
   const [open, setOpen] = useState(true);
-  const [googleoAuthCallback] = useGoogleOAuthCallBackMutation();
+  const [googleoAuthCallback] = useGoogleOAuthOneTapCallBackMutation();
 
   const onClose = () => {
     setOpen(false);
@@ -25,13 +25,17 @@ const AuthModal = (props: { method: boolean }) => {
     }, 50);
   };
 
-  const googleLogin = useGoogleLogin({
+  /*   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
       googleoAuthCallback(codeResponse.code).unwrap().then(onAuth);
     },
     onError: (errorResponse) => console.log(errorResponse),
-  });
+  }); */
+  const oneTapSuccess = (res: CredentialResponse) => {
+    if (res.credential)
+      googleoAuthCallback(res.credential).unwrap().then(onAuth);
+  };
 
   return (
     <div>
@@ -57,7 +61,7 @@ const AuthModal = (props: { method: boolean }) => {
           <GoogleLogin
             useOneTap
             auto_select
-            onSuccess={googleLogin}
+            onSuccess={oneTapSuccess}
             onError={() => {
               console.log("Login Failed");
             }}

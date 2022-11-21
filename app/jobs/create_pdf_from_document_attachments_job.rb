@@ -3,8 +3,9 @@
 class CreatePdfFromDocumentAttachmentsJob < ApplicationJob
   queue_as :default
 
-  def perform(document)
+  def perform(document_id)
     # save PDF to disk
+    document = Api::V1::Document.find(document_id)
     pdf_path = Rails.root.join('tmp', "#{document.id}.pdf")
     File.open(pdf_path, 'wb') do |file|
       file << generate_pdf(document)

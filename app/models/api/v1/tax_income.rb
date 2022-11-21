@@ -60,7 +60,7 @@ module Api
       private
 
       def assign_lawyer
-        LawyerAssignationJob.perform_later(self)
+        LawyerAssignationJob.perform_async(id)
       end
     end
   end

@@ -9,4 +9,4 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Api::V1::User.create!(first_name: 'Carolina', last_name: 'Elizagarate', password: 'sjldkhfjhskdfhalkjhsdjncks',
-             email: 'carolina@elizaasesores.com', account_type: :lawyer)
+             email: 'carolina@elizaasesores.com', account_type: :lawyer, confirmed_at: "02-04-2002")

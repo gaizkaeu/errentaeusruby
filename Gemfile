@@ -14,9 +14,6 @@ gem 'devise'
 # Auth callbacks
 gem 'omniauth'
 
-# Google auth2 callback
-gem 'omniauth-google-oauth2'
-
 # Posgres connector
 gem 'pg'
 
@@ -83,6 +80,12 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+# Job execution
+gem "sidekiq", "~> 7.0"
+
+# Google Token Validator
+gem "googleauth", "~> 1.3"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -132,3 +135,5 @@ group :test do
   gem 'webdrivers'
   # Object generation
 end
+
+

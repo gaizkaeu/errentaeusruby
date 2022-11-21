@@ -76,7 +76,6 @@ export default function Calculator() {
     values: CalculatorValues,
     formikHelpers: FormikHelpers<any>
   ) {
-    const toastNotification = toast.loading("Procesando...");
     const action = await dispatch(
       calculateEstimation({
         first_name: values.first_name,
@@ -86,21 +85,14 @@ export default function Calculator() {
     );
 
     if (calculateEstimation.fulfilled.match(action)) {
-      toast.success("¡Listo!", {
-        id: toastNotification,
-      });
       dispatch(nextStep());
     } else {
       if (action.payload) {
         formikHelpers.setErrors(action.payload);
-        toast.error("Error en el formulario", {
-          id: toastNotification,
-        });
+        toast.error("Error en el formulario");
         dispatch(firstStep());
       } else {
-        toast.error("Error inesperado", {
-          id: toastNotification,
-        });
+        toast.error("Error inesperado");
       }
     }
 
@@ -139,7 +131,8 @@ export default function Calculator() {
             <Form id={formId} className="max-w-5xl ml-3 mr-3">
               <Progress
                 color="primary"
-                size="xs"
+                size="md"
+                indeterminated={isSubmitting}
                 value={(stepPersist / steps.length) * 100}
               />
               <Text h3>{steps[stepPersist]}</Text>

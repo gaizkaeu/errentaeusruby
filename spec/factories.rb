@@ -8,6 +8,7 @@ FactoryBot.define do
       email { generate(:email) }
       password { "test123" }
       password_confirmation { "test123" }
+      confirmed_at { "04-07-2002" }
     end
     factory :tax_income, class: "Api::V1::TaxIncome" do
       user

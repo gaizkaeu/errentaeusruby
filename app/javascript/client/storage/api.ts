@@ -207,6 +207,14 @@ export const api = createApi({
       }),
       invalidatesTags: (_result) => ["User"],
     }),
+    googleOAuthOneTapCallBack: build.mutation<void, string>({
+      query: (data) => ({
+        url: "users/auth/google_one_tap/callback",
+        method: "post",
+        data: { credential: data },
+      }),
+      invalidatesTags: (_result) => ["User"],
+    }),
   }),
 });
 
@@ -233,4 +241,5 @@ export const {
   useLoginAccountMutation,
   useLogOutMutation,
   useGoogleOAuthCallBackMutation,
+  useGoogleOAuthOneTapCallBackMutation,
 } = api;

@@ -95,6 +95,7 @@ export interface IUser {
   email: string;
   first_name: string;
   last_name: string;
+  confirmed: boolean;
   account_type: "user" | "lawyer";
 }
 
@@ -120,6 +121,7 @@ export interface Estimation extends EstimationData {
   price: number;
   id: number;
   first_name: string;
+  estimation_jwt: string;
 }
 
 export interface EstimationData {

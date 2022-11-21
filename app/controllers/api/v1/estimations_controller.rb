@@ -4,7 +4,8 @@ module Api
   module V1
     class EstimationsController < ApplicationController
       before_action :set_estimation, only: %i[show update destroy]
-      before_action :authenticate_api_v1_user!, except: %i[estimate my_estimation]
+      before_action :authenticate_api_v1_user!, except: %i[estimate my_estimation estimation_from_jwt]
+      skip_forgery_protection
 
       # GET /estimations
       def index
@@ -32,9 +33,8 @@ module Api
       def estimate
         @estimation = Estimation.new(estimation_params)
 
-        if @estimation.save
-          session[:estimation] = @estimation.id
-          render json: @estimation
+        if @estimation.valid?
+          render  :estimate 
         else
           render json: @estimation.errors, status: :unprocessable_entity
         end
@@ -49,6 +49,12 @@ module Api
             format.json { render @estimation }
           end
         end
+      end
+
+      def estimation_from_jwt
+        estimation_values = Estimation.decode_jwt_estimation(params[:estimation_jwt])
+        @estimation = Estimation.new(estimation_values[0]) 
+        render :show
       end
 
       # PATCH/PUT /estimations/1

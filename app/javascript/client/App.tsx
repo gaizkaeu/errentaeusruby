@@ -16,11 +16,14 @@ import i18next from "i18next";
 import { darkTheme, lightTheme } from "./theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useGetCurrentAccountQuery } from "./storage/api";
+import ConfirmationBanner from "./components/Authentication/ConfirmationBanner";
+import { useAuth } from "./hooks/authHook";
 
 const App = () => {
   const darkMode = useDarkMode();
   const dispatch = useAppDispatch();
   useGetCurrentAccountQuery();
+  const auth = useAuth();
 
   useEffect(() => {
     const token = document
@@ -42,6 +45,9 @@ const App = () => {
         <Toaster />
         <Navigation />
         <div className="min-h-screen">
+          {auth.status.loggedIn && !auth.currentUser?.confirmed && (
+            <ConfirmationBanner />
+          )}
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
