@@ -56,7 +56,6 @@ const Navigation = () => {
   const collapseItems = [
     [t("homepage.navbar"), "/"],
     [t("calculator.title"), "/calculator"],
-    [t("estimation.title"), "/estimation"],
     [t("taxincome.title"), "/mytaxincome"],
   ];
 

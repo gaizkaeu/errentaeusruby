@@ -3,13 +3,10 @@ import { useAppSelector } from "../storage/hooks";
 import { HeaderMin } from "../components/Header";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
-
-const SingleEstimation = React.lazy(
-  () => import("../components/Estimation/EstimationResume")
-);
-const ContinueEstimation = React.lazy(
-  () => import("../components/Estimation/ContinueEstimation")
-);
+import ContinueEstimation, {
+  SingleEstimation,
+} from "../components/Estimation/ResumePage/ContinueEstimation";
+import { InputEstimation } from "../components/Estimation/ResumePage/InputEstimation";
 
 function EstimationPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +15,7 @@ function EstimationPage() {
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     if (estimations) {
-      params.set("j", estimations.estimation_jwt);
+      params.set("j", estimations.token.data);
     } else {
       if (params.get("j")) {
         toast.success("recalculado..");
@@ -35,14 +32,16 @@ function EstimationPage() {
         subtitle="estimation.subtitle"
       />
       <main className="px-4 mx-auto max-w-7xl lg:px-8">
-        {/* {estimations ? ( */}
-        <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-10 self-center">
-          {estimations && <SingleEstimation estimation={estimations} />}
-          <ContinueEstimation />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {estimations ? (
+            <>
+              <ContinueEstimation estimation={estimations} />
+              <SingleEstimation estimation={estimations} />
+            </>
+          ) : (
+            <InputEstimation />
+          )}
         </div>
-        {/* ) : (
-          <Navigate to="/calculator" replace></Navigate>
-        )} */}
       </main>
     </Fragment>
   );

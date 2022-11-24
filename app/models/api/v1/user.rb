@@ -15,7 +15,7 @@ module Api
       after_create_commit :create_stripe_customer
 
       has_many :tax_incomes, dependent: :destroy, inverse_of: :user
-      has_many :estimations, dependent: :destroy, inverse_of: :user
+      has_many :estimations, dependent: :destroy, through: :tax_incomes
       has_many :appointments, dependent: :destroy, through: :tax_incomes
       has_many :requested_documents, foreign_key: :user, dependent: :destroy, class_name: 'Document', inverse_of: :user
       has_many :asked_documents, foreign_key: :lawyer, dependent: :destroy, class_name: 'Document',  inverse_of: :laywer

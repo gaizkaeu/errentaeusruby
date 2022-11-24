@@ -97,6 +97,13 @@ export const api = createApi({
       query: (id) => ({ url: `appointments/${id}`, method: "get" }),
       providesTags: (_result, _error, id) => [{ type: "Appointment", id }],
     }),
+    getEstimationByToken: build.query<Estimation, string>({
+      query: (id) => ({
+        url: `estimations/estimation_from_jwt`,
+        method: "post",
+        data: { estimation_jwt: id },
+      }),
+    }),
     getEstimationById: build.query<Estimation, string>({
       query: (id) => ({ url: `estimations/${id}`, method: "get" }),
       providesTags: (_result, _error, id) => [{ type: "Estimation", id }],
@@ -242,4 +249,5 @@ export const {
   useLogOutMutation,
   useGoogleOAuthCallBackMutation,
   useGoogleOAuthOneTapCallBackMutation,
+  useGetEstimationByTokenQuery,
 } = api;

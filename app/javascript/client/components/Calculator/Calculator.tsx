@@ -107,9 +107,9 @@ export default function Calculator() {
       _submitForm(values, formikHelpers);
     } else {
       formikHelpers.setTouched({});
-      formikHelpers.setSubmitting(false);
       dispatch(valuesChanged(values));
       dispatch(nextStep());
+      formikHelpers.setSubmitting(false);
     }
   }
 

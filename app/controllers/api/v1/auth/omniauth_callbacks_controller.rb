@@ -18,20 +18,18 @@ module Api
         rescue Google::Auth::IDTokens::SignatureError, Google::Auth::IDTokens::AudienceMismatchError
           render json: {error: "autenticity error"}
         end
-      
-      end
 
-      private 
-      
-      def params_parser_one_tap(payload)
-          auth = ActiveSupport::OrderedOptions.new
-          auth.info = ActiveSupport::OrderedOptions.new
-          auth.info.first_name = payload["given_name"]
-          auth.info.last_name = payload["family_name"]
-          auth.info.email = payload["email"]
-          auth.provider = "google_oauth2"
-          auth.uid = payload["uid"]
-          auth
+        private
+        def params_parser_one_tap(payload)
+            auth = ActiveSupport::OrderedOptions.new
+            auth.info = ActiveSupport::OrderedOptions.new
+            auth.info.first_name = payload["given_name"]
+            auth.info.last_name = payload["family_name"]
+            auth.info.email = payload["email"]
+            auth.provider = "google_oauth2"
+            auth.uid = payload["uid"]
+            auth
+        end
       end
     end
   end

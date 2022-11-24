@@ -19,7 +19,7 @@ export const RequiresAuthentication = (props: {
   };
 
   return (
-    <div>
+    <div className="grid grid-cols-1 place-content-center">
       <Text>Es necesario tener una cuenta para continuar</Text>
       <Text>
         <Link

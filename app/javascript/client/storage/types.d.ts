@@ -78,6 +78,9 @@ export type TaxIncomeStatus =
 
 export interface TaxIncomeData {
   observations: string;
+  estimation: {
+    token: string;
+  };
 }
 
 export type TaxIncomesResponse = TaxIncome[];
@@ -121,7 +124,10 @@ export interface Estimation extends EstimationData {
   price: number;
   id: number;
   first_name: string;
-  estimation_jwt: string;
+  token: {
+    data: string;
+    exp: string;
+  };
 }
 
 export interface EstimationData {

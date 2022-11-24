@@ -23,10 +23,10 @@ module Api
 
       # POST /tax_incomes or /tax_incomes.json
       def create
-        @tax_income = current_api_v1_user.tax_incomes.build(tax_income_params)
+        estimation_attr = Estimation.decode_jwt_estimation(nested_estimation_params[:token])
+        @tax_income = current_api_v1_user.tax_incomes.build(tax_income_params.merge(estimation: estimation_attr))
         respond_to do |format|
           if @tax_income.save
-            @tax_income.load_price_from_estimation(session[:estimation])
             format.json { render :show, status: :ok }
           else
             format.json { render json: @tax_income.errors, status: :unprocessable_entity }
@@ -92,6 +92,9 @@ module Api
       # Only allow a list of trusted parameters through.
       def tax_income_params
         params.require(:tax_income).permit(:observations)
+      end
+      def nested_estimation_params
+        params.require(:estimation).permit(:token)
       end
     end
   end

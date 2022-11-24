@@ -1,17 +1,21 @@
 import { Fragment } from "react";
 import { Button, Grid, Text, Textarea } from "@nextui-org/react";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useCreateTaxIncomeMutation } from "../../storage/api";
 import { TaxIncomeData } from "../../storage/types";
-import { useAppSelector } from "../../storage/hooks";
-import EstimationCard from "../Estimation/EstimationCard";
+import { EstimationFromJWTWrapper } from "../Estimation/EstimationCard";
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();
-  const estimation = useAppSelector((state) => state.estimations.estimation);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [addTaxIncome] = useCreateTaxIncomeMutation();
+
+  const deleteEstimation = () => {
+    searchParams.delete("j");
+    setSearchParams(searchParams);
+  };
 
   const submitForm = async (
     values: TaxIncomeData,
@@ -40,11 +44,21 @@ const NewTaxIncome = () => {
       <Text h4>Solo te llevará unos segundos más.</Text>
 
       <div>
-        <Formik initialValues={{ observations: "" }} onSubmit={submitForm}>
+        <Formik
+          initialValues={{
+            observations: "",
+            estimation: { token: searchParams.get("j") ?? "" },
+          }}
+          onSubmit={submitForm}
+        >
           <Form>
             <Grid.Container gap={3}>
               <Grid xs={12} md={6}>
-                <EstimationCard estimation={estimation} deletable />
+                <EstimationFromJWTWrapper
+                  token={searchParams.get("j") ?? undefined}
+                  deletable
+                  delete={deleteEstimation}
+                />
               </Grid>
               <Grid xs={12} md={6}>
                 <Textarea

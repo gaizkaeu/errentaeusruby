@@ -8,6 +8,8 @@ module Api
       has_one :appointment, dependent: :destroy
       has_many :documents, class_name: 'Document', dependent: :destroy, inverse_of: :tax_income
 
+      accepts_nested_attributes_for :estimation
+
       include AASM
 
       after_create_commit :assign_lawyer

@@ -4,8 +4,7 @@ module Api
   module V1
     class EstimationsController < ApplicationController
       before_action :set_estimation, only: %i[show update destroy]
-      before_action :authenticate_api_v1_user!, except: %i[estimate my_estimation estimation_from_jwt]
-      skip_forgery_protection
+      before_action :authenticate_api_v1_user!, except: %i[estimate estimation_from_jwt]
 
       # GET /estimations
       def index
@@ -19,19 +18,8 @@ module Api
         render json: @estimation
       end
 
-      # POST /estimations
-      def create
-        @estimation = Estimation.new(estimation_params)
-
-        if @estimation.save
-          render json: @estimation, status: :created, location: @estimation
-        else
-          render json: @estimation.errors, status: :unprocessable_entity
-        end
-      end
-
       def estimate
-        @estimation = Estimation.new(estimation_params)
+        @estimation = Estimation.new(estimation_params.merge(token: SecureRandom.base64(20)))
 
         if @estimation.valid?
           render  :estimate 
@@ -40,21 +28,13 @@ module Api
         end
       end
 
-      def my_estimation
-        @estimation = Estimation.find(session[:estimation]) if session[:estimation]
-        respond_to do |format|
-          if @estimation.nil?
-            format.json { render json: nil }
-          else
-            format.json { render @estimation }
-          end
-        end
-      end
-
       def estimation_from_jwt
-        estimation_values = Estimation.decode_jwt_estimation(params[:estimation_jwt])
-        @estimation = Estimation.new(estimation_values[0]) 
-        render :show
+        @estimation = Estimation.decode_jwt_estimation(params[:estimation_jwt])
+        if @estimation.nil?
+          render json: {error: "invalid token"}, status: :unprocessable_entity
+        else
+          render :show
+        end
       end
 
       # PATCH/PUT /estimations/1

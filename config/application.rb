@@ -22,6 +22,9 @@ module Errentaeusreact
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.x.estimation_sign_key = ENV.fetch('ESTIMATIONS_SIGN_SECRET', "dummy_password")
+
     config.middleware.use Rack::Deflater
   end
 end
