@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Text } from "@nextui-org/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { Link, Location } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CheckAnimated from "../Icons/CheckAnimated";
 import { useAuth } from "../../hooks/authHook";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
@@ -10,40 +10,49 @@ import { useGoogleOAuthOneTapCallBackMutation } from "../../storage/api";
 
 export const RequiresAuthentication = (props: {
   nextPage: string;
-  location: Location;
+  children: JSX.Element;
 }) => {
+  const location = useLocation();
   const [googleoAuthCallback] = useGoogleOAuthOneTapCallBackMutation();
+  const { status } = useAuth();
 
   const oneTapSuccess = (res: CredentialResponse) => {
     if (res.credential) googleoAuthCallback(res.credential);
   };
 
-  return (
-    <div className="grid grid-cols-1 place-content-center">
+  return status.loggedIn ? (
+    props.children
+  ) : (
+    <div className="grid grid-cols-1 place-items-center">
       <Text>Es necesario tener una cuenta para continuar</Text>
       <Text>
         <Link
           to="/auth/sign_in"
-          state={{ background: props.location, nextPage: props.nextPage }}
+          state={{ background: location, nextPage: props.nextPage }}
         >
           Iniciar sesión
         </Link>{" "}
         o{" "}
         <Link
           to="/auth/sign_up"
-          state={{ background: props.location, nextPage: props.nextPage }}
+          state={{ background: location, nextPage: props.nextPage }}
         >
           Registrarme
         </Link>
       </Text>
-      <GoogleLogin
-        useOneTap
-        auto_select
-        onSuccess={oneTapSuccess}
-        onError={() => {
-          console.log("Login Failed");
-        }}
-      />
+      <div className="w-fit">
+        <GoogleLogin
+          useOneTap
+          theme="filled_black"
+          size="large"
+          shape="pill"
+          auto_select
+          onSuccess={oneTapSuccess}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+      </div>
     </div>
   );
 };

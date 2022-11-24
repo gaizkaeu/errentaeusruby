@@ -1,23 +1,18 @@
 import { Button, Text, Textarea } from "@nextui-org/react";
 import { fromUnixTime, intervalToDuration } from "date-fns";
-import { useLocation, useNavigate } from "react-router-dom";
-import { firstStep } from "../../../storage/calculatorSlice";
-import { useAppDispatch, useAppSelector } from "../../../storage/hooks";
+import { useNavigate } from "react-router-dom";
 import { Estimation } from "../../../storage/types";
 import { RequiresAuthentication } from "../../Authentication/AuthComponent";
 import { ArrowIcon } from "../../Icons/ArrowIcon";
 import EstimationCard from "../EstimationCard";
 
 export default function ContinueEstimation(props: { estimation: Estimation }) {
-  const logged_in = useAppSelector((state) => state.authentication.logged_in);
-  const dispatch = useAppDispatch();
-  const location = useLocation();
   const nav = useNavigate();
 
   return (
     <div className="grid grid-cols-1 gap-y-8 place-content-center items-center">
       <EstimationCard estimation={props.estimation} deletable />
-      {logged_in ? (
+      <RequiresAuthentication nextPage="/mytaxincome/new">
         <Button
           rounded
           bordered
@@ -27,7 +22,6 @@ export default function ContinueEstimation(props: { estimation: Estimation }) {
           size={"lg"}
           iconRight={<ArrowIcon />}
           onPress={() => {
-            dispatch(firstStep());
             nav({
               pathname: "/mytaxincome/new",
               search: `?j=${props.estimation.token.data}`,
@@ -37,18 +31,7 @@ export default function ContinueEstimation(props: { estimation: Estimation }) {
         >
           ¡Todo listo! Continuar
         </Button>
-      ) : (
-        <div className="w-full">
-          <Text className="text-center">
-            Útilizamos las cuentas para poder <b>proteger tu información</b>.
-            <br />
-            <RequiresAuthentication
-              nextPage="/mytaxincome/new"
-              location={location}
-            />
-          </Text>
-        </div>
-      )}
+      </RequiresAuthentication>
     </div>
   );
 }
