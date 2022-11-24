@@ -8,6 +8,8 @@ module Api
           payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: "321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com")
 
           @user = User.from_omniauth(params_parser_one_tap(payload))
+          puts @user
+          puts params_parser_one_tap(payload)
     
           if @user.persisted?
             sign_in @user, event: :authentication
@@ -27,7 +29,7 @@ module Api
             auth.info.last_name = payload["family_name"]
             auth.info.email = payload["email"]
             auth.provider = "google_oauth2"
-            auth.uid = payload["uid"]
+            auth.uid = payload["sub"]
             auth
         end
       end
