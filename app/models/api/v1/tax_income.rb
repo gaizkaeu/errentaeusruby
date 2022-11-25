@@ -62,7 +62,8 @@ module Api
       private
 
       def assign_lawyer
-        LawyerAssignationJob.perform_async(id)
+        lawyer_id = User.where(account_type: 1).first&.id
+        waiting_for_meeting_creation! if update!(lawyer_id:)
       end
     end
   end

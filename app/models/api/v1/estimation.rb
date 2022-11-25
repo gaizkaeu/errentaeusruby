@@ -38,8 +38,9 @@ module Api
       end
 
       def self.decode_jwt_estimation(payload)
+        return if payload.nil?
         Estimation.new(JWT.decode(payload, Rails.application.config.x.estimation_sign_key, true, { algorithm: 'HS512' })[0]['data'])
-      rescue JWT::ExpiredSignature, JWT::VerificationError
+      rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
         nil
       end
     end
