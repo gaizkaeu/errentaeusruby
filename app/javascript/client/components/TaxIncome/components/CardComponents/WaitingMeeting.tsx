@@ -5,6 +5,8 @@ import { TaxIncome } from "../../../../storage/types";
 const WaitingMeeting = (props: { taxIncome: TaxIncome }) => {
   return (
     <div>
+      <AppointmentWrapper appointmentId={props.taxIncome.appointment} />
+      <Spacer />
       <Card variant="flat">
         <Card.Header>
           <Text b size="$xl">
@@ -14,8 +16,6 @@ const WaitingMeeting = (props: { taxIncome: TaxIncome }) => {
         <Card.Divider />
         <Card.Body>Tenemos una cita contigo.</Card.Body>
       </Card>
-      <Spacer />
-      <AppointmentWrapper appointmentId={props.taxIncome.appointment} />
     </div>
   );
 };

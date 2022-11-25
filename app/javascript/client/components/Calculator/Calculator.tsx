@@ -210,13 +210,12 @@ export const BottomSheetQuestions = () => {
       <BottomSheet
         open={open}
         onDismiss={onDismiss}
+        header={<p className="text-black text-2xl font-extrabold">Ayuda.</p>}
         defaultSnap={({ maxHeight }) => maxHeight * 0.2}
         snapPoints={({ maxHeight }) => [maxHeight * 0.2, maxHeight * 0.7]}
         expandOnContentDrag={true}
       >
-        <div className="p-2">
-          <p className="text-black text-2xl font-extrabold">Ayuda.</p>
-        </div>
+        <div className="p-2"></div>
       </BottomSheet>
     </>
   );
