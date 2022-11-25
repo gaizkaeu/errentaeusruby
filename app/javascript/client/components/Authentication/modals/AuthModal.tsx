@@ -1,40 +1,29 @@
 import { Modal, Text } from "@nextui-org/react";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthComponent from "../AuthComponent";
-import { useGoogleOAuthOneTapCallBackMutation } from "../../../storage/api";
+import { useAuth } from "../../../hooks/authHook";
 
 const AuthModal = (props: { method: boolean }) => {
   const nav = useNavigate();
   const loc = useLocation();
   const [open, setOpen] = useState(true);
-  const [googleoAuthCallback] = useGoogleOAuthOneTapCallBackMutation();
+  const { status, components } = useAuth();
+
+  useEffect(() => {
+    if (status.fetched && status.loggedIn) {
+      setOpen(false);
+    }
+  }, [status]);
 
   const onClose = () => {
-    setOpen(false);
     setTimeout(() => {
-      nav(loc.state?.background?.pathname ?? "/");
+      if (status.loggedIn) {
+        nav(loc.state.nextPage, { replace: true });
+      } else {
+        nav(loc.state?.background?.pathname ?? "/");
+      }
     }, 50);
-  };
-
-  const onAuth = () => {
-    setOpen(false);
-    setTimeout(() => {
-      nav(loc.state.nextPage, { replace: true });
-    }, 50);
-  };
-
-  /*   const googleLogin = useGoogleLogin({
-    flow: "auth-code",
-    onSuccess: async (codeResponse) => {
-      googleoAuthCallback(codeResponse.code).unwrap().then(onAuth);
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  }); */
-  const oneTapSuccess = (res: CredentialResponse) => {
-    if (res.credential)
-      googleoAuthCallback(res.credential).unwrap().then(onAuth);
   };
 
   return (
@@ -42,10 +31,9 @@ const AuthModal = (props: { method: boolean }) => {
       <Modal
         closeButton
         aria-labelledby="modal-title"
-        animated={false}
-        onClose={onClose}
         preventClose
         open={open}
+        onClose={onClose}
       >
         <Modal.Header>
           <Text id="modal-title" size={18}>
@@ -55,18 +43,9 @@ const AuthModal = (props: { method: boolean }) => {
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <AuthComponent method={props.method} onAuth={onAuth} />
+          <AuthComponent method={props.method} />
         </Modal.Body>
-        <Modal.Footer>
-          <GoogleLogin
-            useOneTap
-            auto_select
-            onSuccess={oneTapSuccess}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
-        </Modal.Footer>
+        <Modal.Footer>{components.google()}</Modal.Footer>
       </Modal>
     </div>
   );

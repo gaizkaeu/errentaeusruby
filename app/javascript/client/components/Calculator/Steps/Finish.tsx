@@ -23,6 +23,7 @@ const Finish = () => {
     if (status === "succeeded") {
       setTimeout(() => {
         navigation("/estimation");
+        dispatch(firstStep());
       }, 2000);
     }
   });

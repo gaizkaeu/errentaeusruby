@@ -214,7 +214,7 @@ export const api = createApi({
       }),
       invalidatesTags: (_result) => ["User"],
     }),
-    googleOAuthOneTapCallBack: build.mutation<void, string>({
+    googleOAuthOneTapCallBack: build.mutation<IUser, string>({
       query: (data) => ({
         url: "users/auth/google_one_tap/callback",
         method: "post",

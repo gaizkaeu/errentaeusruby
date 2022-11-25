@@ -1,8 +1,16 @@
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import {
+  CredentialResponse,
+  GoogleLogin,
+  googleLogout,
+} from "@react-oauth/google";
 import { FormikHelpers } from "formik";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useLoginAccountMutation, useLogOutMutation } from "../storage/api";
+import {
+  useGoogleOAuthOneTapCallBackMutation,
+  useLoginAccountMutation,
+  useLogOutMutation,
+} from "../storage/api";
 import { useAppSelector } from "../storage/hooks";
 import { SessionCreationData } from "../storage/types";
 
@@ -15,7 +23,27 @@ export const useAuth = () => {
   const { t } = useTranslation();
   const [signOut] = useLogOutMutation();
   const [signIn] = useLoginAccountMutation();
+  const [googleoAuthCallback] = useGoogleOAuthOneTapCallBackMutation();
 
+  const oneTapSuccess = (res: CredentialResponse) => {
+    if (res.credential) googleoAuthCallback(res.credential);
+  };
+
+  const GoogleLoginComponent = () => (
+    <div className="w-fit">
+      <GoogleLogin
+        useOneTap
+        theme="filled_black"
+        size="large"
+        shape="pill"
+        auto_select
+        onSuccess={oneTapSuccess}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
+    </div>
+  );
 
   const logoutHandle = async () => {
     const toastNotification = toast.loading(t("authentication.loggingOut"));
@@ -38,8 +66,7 @@ export const useAuth = () => {
   };
   const formLogIn = async (
     values: SessionCreationData,
-    formikHelpers: FormikHelpers<any>,
-    onSuccess: () => void
+    formikHelpers: FormikHelpers<any>
   ) => {
     const toastNotification = toast.loading(t("authentication.loggingIn"));
 
@@ -50,7 +77,6 @@ export const useAuth = () => {
           toast.success(t("authentication.loggedIn"), {
             id: toastNotification,
           });
-          onSuccess();
         },
         (err) => {
           formikHelpers.setFieldError("password", "Error");
@@ -68,6 +94,9 @@ export const useAuth = () => {
     actions: {
       logOut: logoutHandle,
       formLogIn: formLogIn,
+    },
+    components: {
+      google: GoogleLoginComponent,
     },
   };
 };

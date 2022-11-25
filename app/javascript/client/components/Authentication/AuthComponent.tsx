@@ -5,20 +5,13 @@ import SignUp from "./SignUp";
 import { Link, useLocation } from "react-router-dom";
 import CheckAnimated from "../Icons/CheckAnimated";
 import { useAuth } from "../../hooks/authHook";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { useGoogleOAuthOneTapCallBackMutation } from "../../storage/api";
 
 export const RequiresAuthentication = (props: {
   nextPage: string;
   children: JSX.Element;
 }) => {
   const location = useLocation();
-  const [googleoAuthCallback] = useGoogleOAuthOneTapCallBackMutation();
-  const { status } = useAuth();
-
-  const oneTapSuccess = (res: CredentialResponse) => {
-    if (res.credential) googleoAuthCallback(res.credential);
-  };
+  const { status, components } = useAuth();
 
   return status.loggedIn ? (
     props.children
@@ -40,24 +33,12 @@ export const RequiresAuthentication = (props: {
           Registrarme
         </Link>
       </Text>
-      <div className="w-fit">
-        <GoogleLogin
-          useOneTap
-          theme="filled_black"
-          size="large"
-          shape="pill"
-          auto_select
-          onSuccess={oneTapSuccess}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
-      </div>
+      {components.google()}
     </div>
   );
 };
 
-const AuthComponent = (props: { onAuth: () => void; method: boolean }) => {
+const AuthComponent = (props: { method: boolean }) => {
   const { status } = useAuth();
 
   return (
@@ -66,14 +47,7 @@ const AuthComponent = (props: { onAuth: () => void; method: boolean }) => {
         <CheckAnimated />
       ) : (
         <div className="w-full grid-cols-1 items-center align-center">
-          <Text b size="md">
-            {props.method ? "Iniciar sesión" : "Registro"}
-          </Text>
-          {props.method ? (
-            <SignIn loginSuccess={props.onAuth} />
-          ) : (
-            <SignUp loginSuccess={props.onAuth} />
-          )}
+          {props.method ? <SignIn /> : <SignUp />}
         </div>
       )}
     </Fragment>

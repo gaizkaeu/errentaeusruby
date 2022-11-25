@@ -8,7 +8,7 @@ import { useAppSelector } from "../../storage/hooks";
 import toast from "react-hot-toast";
 import { UserRegistrationData } from "../../storage/types";
 
-const SignUp = (props: { loginSuccess: () => void }) => {
+const SignUp = () => {
   const firstName = useAppSelector((state) => {
     return state.estimations.estimation?.first_name;
   });
@@ -18,8 +18,6 @@ const SignUp = (props: { loginSuccess: () => void }) => {
     formikHelpers: FormikHelpers<any>
   ) => {
     const toastNotification = toast.loading("Procesando...");
-
-    props.loginSuccess();
   };
 
   return (

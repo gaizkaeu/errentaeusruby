@@ -41,6 +41,16 @@ const authSlice = createSlice({
         api.endpoints.getCurrentAccount.matchFulfilled,
         (state, { payload }) => {
           state.status = "succeeded";
+          state.fetched = true;
+          state.user = payload;
+          state.logged_in = payload.id ? true : false;
+        }
+      )
+      .addMatcher(
+        api.endpoints.googleOAuthOneTapCallBack.matchFulfilled,
+        (state, { payload }) => {
+          state.status = "succeeded";
+          state.fetched = true;
           state.user = payload;
           state.logged_in = payload.id ? true : false;
         }

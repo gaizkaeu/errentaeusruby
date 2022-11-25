@@ -11,6 +11,7 @@ module Api
 
           if @user.persisted?
             sign_in @user, event: :authentication
+            render template: "api/v1/users/show"
           else
             session['devise.google_data'] = request.env['omniauth.auth'].except('extra') # Removing extra as it can overflow some session stores
             render json: {error: "found"}

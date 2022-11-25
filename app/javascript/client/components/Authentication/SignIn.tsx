@@ -5,7 +5,7 @@ import PasswordField from "../FormFields/PasswordField";
 import { Button, Spacer } from "@nextui-org/react";
 import { useAuth } from "../../hooks/authHook";
 
-const SignIn = (props: { loginSuccess: () => void }) => {
+const SignIn = () => {
   const { actions } = useAuth();
 
   return (
@@ -17,7 +17,7 @@ const SignIn = (props: { loginSuccess: () => void }) => {
           .min(6, "Too short!"),
         email: Yup.string().email("Invalid email address").required("Required"),
       })}
-      onSubmit={(v, e) => actions.formLogIn(v, e, props.loginSuccess)}
+      onSubmit={(v, e) => actions.formLogIn(v, e)}
     >
       {({ isSubmitting }) => (
         <Form className="ml-3 mr-3">
