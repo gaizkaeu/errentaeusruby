@@ -40,7 +40,7 @@ const PrivateRoute = (props: { children: JSX.Element }) => {
 
   return !isLoading ? (
     status.loggedIn ? (
-      props.children
+      <Suspense>{props.children}</Suspense>
     ) : (
       <Navigate
         to="/auth/sign_in"
@@ -60,11 +60,46 @@ const AppRoutes = () => {
   return (
     <Provider store={store}>
       <Routes location={background || location}>
-        <Route path="/" element={<App />}>
-          <Route index element={<HomePage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="calculator" element={<CalculatorPage />} />
-          <Route path="estimation" element={<EstimationPage />} />
+        <Route
+          path="/"
+          element={
+            <Suspense>
+              <App />
+            </Suspense>
+          }
+        >
+          <Route
+            index
+            element={
+              <Suspense>
+                <HomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <Suspense>
+                <ProfilePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="calculator"
+            element={
+              <Suspense>
+                <CalculatorPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="estimation"
+            element={
+              <Suspense>
+                <EstimationPage />
+              </Suspense>
+            }
+          />
           <Route
             path="auth/sign_up"
             element={
@@ -89,10 +124,38 @@ const AppRoutes = () => {
               </PrivateRoute>
             }
           >
-            <Route index element={<MenuTaxIncome />}></Route>
-            <Route path="new" element={<NewTaxIncome />}></Route>
-            <Route path=":tax_income_id/" element={<ShowTaxIncome />} />
-            <Route path=":tax_income_id/:page" element={<ShowTaxIncome />} />
+            <Route
+              index
+              element={
+                <Suspense>
+                  <MenuTaxIncome />
+                </Suspense>
+              }
+            ></Route>
+            <Route
+              path="new"
+              element={
+                <Suspense>
+                  <NewTaxIncome />
+                </Suspense>
+              }
+            ></Route>
+            <Route
+              path=":tax_income_id/"
+              element={
+                <Suspense>
+                  <ShowTaxIncome />
+                </Suspense>
+              }
+            />
+            <Route
+              path=":tax_income_id/:page"
+              element={
+                <Suspense>
+                  <ShowTaxIncome />
+                </Suspense>
+              }
+            />
           </Route>
           <Route path="appointment/:appointment_id">
             <Route

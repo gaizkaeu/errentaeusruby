@@ -1,3 +1,4 @@
+import { Button as NextButton, styled } from "@nextui-org/react";
 import { Fragment } from "react";
 
 export const ErrentaUnderlined = () => (
@@ -15,3 +16,7 @@ export const ErrentaUnderlined = () => (
     </span>
   </Fragment>
 );
+
+export const Button = styled(NextButton, {
+  zIndex: 0,
+});

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 import { register } from "register-service-worker";
 
@@ -33,14 +33,11 @@ register("/sw.js", {
   },
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-
-root.render(
+const root = ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AppRoutes />
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root") as HTMLElement
 );

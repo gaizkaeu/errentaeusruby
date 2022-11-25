@@ -1,5 +1,6 @@
-import { Fragment } from "react";
-import { Button, Loading, Progress, Text } from "@nextui-org/react";
+import { Fragment, useState } from "react";
+import { Loading, Progress, Text } from "@nextui-org/react";
+import { Button } from "../../utils/GlobalStyles";
 import { Form, Formik, FormikHelpers } from "formik";
 import calculatorFormModel from "./Model/calculatorFormModel";
 import Start from "./Steps/Start";
@@ -22,6 +23,9 @@ import {
 import { toast } from "react-hot-toast";
 import { CalculatorValues, QuestionWithNumber } from "../../storage/types";
 import { useTranslation } from "react-i18next";
+import { BottomSheet } from "react-spring-bottom-sheet";
+import "react-spring-bottom-sheet/dist/style.css";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 const steps = [
   "Información importante",
@@ -135,7 +139,14 @@ export default function Calculator() {
                 indeterminated={isSubmitting}
                 value={(stepPersist / steps.length) * 100}
               />
-              <Text h3>{steps[stepPersist]}</Text>
+              {stepPersist > 0 && (
+                <div className="flex gap-x-4 items-center">
+                  <Text h3 className="flex-1">
+                    {steps[stepPersist]}
+                  </Text>
+                  <BottomSheetQuestions />
+                </div>
+              )}
               {_renderStepContent(stepPersist)}
 
               <div className="flex gap-4 mt-10">
@@ -177,3 +188,36 @@ export default function Calculator() {
     </Fragment>
   );
 }
+
+export const BottomSheetQuestions = () => {
+  const [open, setOpen] = useState(false);
+
+  function onDismiss() {
+    setOpen(false);
+  }
+  return (
+    <>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setOpen(true);
+        }}
+        className="focus:outline-none  font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
+      >
+        <InformationCircleIcon height={25} />
+        <span className="sr-only">Ayuda</span>
+      </button>
+      <BottomSheet
+        open={open}
+        onDismiss={onDismiss}
+        defaultSnap={({ maxHeight }) => maxHeight * 0.2}
+        snapPoints={({ maxHeight }) => [maxHeight * 0.2, maxHeight * 0.7]}
+        expandOnContentDrag={true}
+      >
+        <div className="p-2">
+          <p className="text-black text-2xl font-extrabold">Ayuda.</p>
+        </div>
+      </BottomSheet>
+    </>
+  );
+};
