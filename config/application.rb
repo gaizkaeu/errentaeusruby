@@ -23,6 +23,21 @@ module Errentaeusreact
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              ENV.fetch('SMTP_HOST', nil),
+      port:                 ENV.fetch('SMTP_PORT', 465),
+      domain:               ENV.fetch('SMTP_DOMAIN', 'errenta.eus'),
+      user_name:            ENV.fetch('SMTP_USERNAME', 'asds@gmail.com'),
+      password:             ENV.fetch('SMTP_PASSWORD', 'notgoingtogetthishahha'),
+      authentication:       'plain',
+      enable_starttls_auto: true,
+      ssl:                  true,
+      tls:                  true,
+      open_timeout:         5,
+      read_timeout:         5 
+    }
+
     config.x.estimation_sign_key = ENV.fetch('ESTIMATIONS_SIGN_SECRET', "dummy_password")
 
     config.middleware.use Rack::Deflater

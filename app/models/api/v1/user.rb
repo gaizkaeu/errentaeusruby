@@ -13,6 +13,7 @@ module Api
             :omniauthable, omniauth_providers: [:google_one_tap]
 
       after_create_commit :create_stripe_customer
+      after_create_commit :send_welcome_email
 
       has_many :tax_incomes, dependent: :destroy, inverse_of: :user
       has_many :estimations, dependent: :destroy, through: :tax_incomes
@@ -34,6 +35,10 @@ module Api
                                           })
         # rubocop:enable Rails/SaveBang
         update!(stripe_customer_id: customer['id'])
+      end
+
+      def send_welcome_email
+        UserMailer.welcome_email(id).deliver_later!
       end
 
       # rubocop:disable Metrics/AbcSize

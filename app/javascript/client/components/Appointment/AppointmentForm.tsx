@@ -86,6 +86,7 @@ const AppointmentForm = (props: {
       onSubmit={props.onSubmit}
     >
       <Form>
+        <Text h3>Concertar tu cita</Text>
         <div className="flex flex-wrap place-content-center gap-4">
           <DatePickerField name="day" />
           <div>

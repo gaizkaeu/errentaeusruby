@@ -3,17 +3,17 @@ import { Button, Text } from "@nextui-org/react";
 import TaxIncomeResume from "./TaxIncomeResume";
 import { useNavigate } from "react-router-dom";
 import { ArrowIcon } from "../Icons/ArrowIcon";
-import { useAppSelector } from "../../storage/hooks";
 import { ShowMyAssignedTaxIncomes } from "./LawyerComponents/AssignedTaxIncomes";
+import { useAuth } from "../../hooks/authHook";
 
 const MenuTaxIncome = () => {
   const nav = useNavigate();
-  const account = useAppSelector((state) => state.authentication);
+  const { currentUser } = useAuth();
   return (
     <Fragment>
       <div className="flex">
         <div className="flex-1">
-          <Text h3>¡Hola!</Text>
+          <Text h3>Hola, {currentUser?.first_name}</Text>
         </div>
         <div>
           <Button
@@ -27,12 +27,12 @@ const MenuTaxIncome = () => {
           </Button>
         </div>
       </div>
-      {account.user?.account_type == "user" && (
+      {currentUser?.account_type == "user" && (
         <section className="mt-2">
           <TaxIncomeResume />
         </section>
       )}
-      {account.user?.account_type == "lawyer" && (
+      {currentUser?.account_type == "lawyer" && (
         <section className="mt-2">
           <Text h4> Mis declaraciones asignadas</Text>
           <ShowMyAssignedTaxIncomes />

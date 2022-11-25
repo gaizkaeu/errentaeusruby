@@ -38,6 +38,9 @@ Rails/SchemaComment:
 Rails/DefaultScope:
   Enabled: false
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 ### Bundler
 
 Bundler/OrderedGems:
