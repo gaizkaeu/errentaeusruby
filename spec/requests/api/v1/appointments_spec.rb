@@ -82,6 +82,7 @@ RSpec.describe "Appointments" do
       before do
         tax_income.pending_assignation!
       end
+
       it "does not create a new Api::V1::Appointment" do
         expect do
           post api_v1_appointments_url,
