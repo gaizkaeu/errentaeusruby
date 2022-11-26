@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_130547) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_26_111617) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -90,12 +90,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_130547) do
     t.boolean "outside_alava", default: false
     t.float "price", default: -1.0
     t.integer "tax_income_id"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "token"
     t.index ["tax_income_id"], name: "index_estimations_on_tax_income_id"
-    t.index ["user_id"], name: "index_estimations_on_user_id"
   end
 
   create_table "tax_incomes", force: :cascade do |t|
@@ -142,7 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_130547) do
   add_foreign_key "documents", "users", column: "exported_by_id"
   add_foreign_key "documents", "users", column: "lawyer_id"
   add_foreign_key "estimations", "tax_incomes"
-  add_foreign_key "estimations", "users"
   add_foreign_key "tax_incomes", "users"
   add_foreign_key "tax_incomes", "users", column: "lawyer_id"
 end

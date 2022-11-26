@@ -1,28 +1,18 @@
-import { Fragment, useEffect } from "react";
-import { useAppSelector } from "../storage/hooks";
+import { Fragment } from "react";
 import { HeaderMin } from "../components/Header";
 import { useSearchParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import ContinueEstimation, {
   SingleEstimation,
 } from "../components/Estimation/ResumePage/ContinueEstimation";
 import { InputEstimation } from "../components/Estimation/ResumePage/InputEstimation";
+import { useGetEstimationByTokenQuery } from "../storage/api";
 
 function EstimationPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const estimations = useAppSelector((state) => state.estimations.estimation);
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    if (estimations) {
-      params.set("j", estimations.token.data);
-    } else {
-      if (params.get("j")) {
-        toast.success("recalculado..");
-      }
-    }
-    setSearchParams(params);
-  }, []);
+  const [searchParams] = useSearchParams();
+  const { data, isLoading, isError } = useGetEstimationByTokenQuery(
+    searchParams.get("j") ?? "",
+    { skip: searchParams.get("j") ? false : true }
+  );
 
   return (
     <Fragment>
@@ -33,10 +23,10 @@ function EstimationPage() {
       />
       <main className="px-4 mx-auto max-w-7xl lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {estimations ? (
+          {data && !isLoading && !isError ? (
             <>
-              <ContinueEstimation estimation={estimations} />
-              <SingleEstimation estimation={estimations} />
+              <ContinueEstimation estimation={data} />
+              <SingleEstimation estimation={data} />
             </>
           ) : (
             <InputEstimation />

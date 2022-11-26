@@ -21,7 +21,7 @@ const AuthModal = (props: { method: boolean }) => {
       if (status.loggedIn) {
         nav(loc.state.nextPage, { replace: true });
       } else {
-        nav(loc.state?.background?.pathname ?? "/");
+        nav(-1);
       }
     }, 50);
   };

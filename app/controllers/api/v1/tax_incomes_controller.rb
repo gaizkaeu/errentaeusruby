@@ -23,7 +23,7 @@ module Api
 
       # POST /tax_incomes or /tax_incomes.json
       def create
-        estimation_attr = Estimation.decode_jwt_estimation(nested_estimation_params[:token])
+        estimation_attr = Estimation.decode_jwt_estimation(nested_estimation_params[:token])[0]
         @tax_income = current_api_v1_user.tax_incomes.build(tax_income_params.merge(estimation: estimation_attr))
         respond_to do |format|
           if @tax_income.save

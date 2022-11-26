@@ -8,11 +8,7 @@ import CheckAnimated from "../../Icons/CheckAnimated";
 
 const Finish = () => {
   const error = useAppSelector((state) => {
-    return state.estimations.error;
-  });
-
-  const status = useAppSelector((state) => {
-    return state.estimations.status;
+    return state.estimations;
   });
 
   const dispatch = useAppDispatch();
@@ -20,12 +16,13 @@ const Finish = () => {
   const navigation = useNavigate();
 
   useEffect(() => {
-    if (status === "succeeded") {
-      setTimeout(() => {
-        navigation("/estimation");
-        dispatch(firstStep());
-      }, 2000);
-    }
+    setTimeout(() => {
+      navigation({
+        pathname: "/estimation",
+        search: `&j=${error.estimation?.token.data}`,
+      });
+      dispatch(firstStep());
+    }, 2000);
   });
 
   return (
@@ -34,7 +31,7 @@ const Finish = () => {
         <Fragment>
           <Text h3>Ha ocurrido un error</Text>
           <Text h4 color="red">
-            {error}
+            {error.error}
           </Text>
           <Button
             rounded

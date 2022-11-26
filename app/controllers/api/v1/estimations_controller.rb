@@ -22,18 +22,20 @@ module Api
         @estimation = Estimation.new(estimation_params.merge(token: SecureRandom.base64(20)))
 
         if @estimation.valid?
-          render  :estimate 
+          render :estimate 
         else
           render json: @estimation.errors, status: :unprocessable_entity
         end
       end
 
       def estimation_from_jwt
-        @estimation = Estimation.decode_jwt_estimation(params[:estimation_jwt])
+        decoded = Estimation.decode_jwt_estimation(params[:estimation_jwt])
+        @estimation = decoded[0]
+        @token = decoded[1]
         if @estimation.nil?
           render json: {error: "invalid token"}, status: :unprocessable_entity
         else
-          render :show
+          render :estimation_from_jwt
         end
       end
 

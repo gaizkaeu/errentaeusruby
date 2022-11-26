@@ -3,6 +3,10 @@ module Api
     class Estimation < ApplicationRecord
       belongs_to :tax_income, optional: true
 
+      delegate :user, to: :tax_income, allow_nil: false
+
+      validates :first_name, length: {minimum: 5, maximum: 20}
+
       # PRICE_LIST = {first_time: 15, rentals_mortgages: 20, home_changes: 50, income_rent: 25, professional_company_activity: 75,
       # real_state_trade: 40, shares_trade: 30, outside_alava: 50 }.freeze
       PRICE_LIST = { first_time: 15, home_changes: 50 }.freeze
@@ -27,8 +31,7 @@ module Api
           number = send(key)
           price -= (number.to_i * value * price)
         end
-
-        update!(price:)
+        assign_attributes({price:})
       end
 
       def as_estimation_jwt
@@ -39,7 +42,8 @@ module Api
 
       def self.decode_jwt_estimation(payload)
         return if payload.nil?
-        Estimation.new(JWT.decode(payload, Rails.application.config.x.estimation_sign_key, true, { algorithm: 'HS512' })[0]['data'])
+        decoded = JWT.decode(payload, Rails.application.config.x.estimation_sign_key, true, { algorithm: 'HS512' })[0]
+        [Estimation.new(decoded['data']), {exp: decoded['exp'], token: payload}]
       rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
         nil
       end

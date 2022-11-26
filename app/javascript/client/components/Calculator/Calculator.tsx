@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Loading, Progress, Text } from "@nextui-org/react";
+import { Collapse, Loading, Progress, Text } from "@nextui-org/react";
 import { Button } from "../../utils/GlobalStyles";
 import { Form, Formik, FormikHelpers } from "formik";
 import calculatorFormModel from "./Model/calculatorFormModel";
@@ -215,7 +215,36 @@ export const BottomSheetQuestions = () => {
         snapPoints={({ maxHeight }) => [maxHeight * 0.2, maxHeight * 0.7]}
         expandOnContentDrag={true}
       >
-        <div className="p-2"></div>
+        <div className="p-2">
+          <Collapse.Group>
+            <Collapse
+              title="Option A"
+              subtitle="More description about Option A"
+            >
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </Text>
+            </Collapse>
+            <Collapse
+              title="Option B"
+              subtitle={
+                <>
+                  More description about <Text b>Option B</Text>
+                </>
+              }
+            >
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </Text>
+            </Collapse>
+          </Collapse.Group>
+        </div>
       </BottomSheet>
     </>
   );
