@@ -66,7 +66,7 @@ export const useAuth = () => {
   };
   const formLogIn = async (
     values: SessionCreationData,
-    formikHelpers: FormikHelpers<any>
+    formikHelpers: FormikHelpers<SessionCreationData>
   ) => {
     const toastNotification = toast.loading(t("authentication.loggingIn"));
 

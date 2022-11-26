@@ -6,6 +6,9 @@ module Api
 
       MEETING_OPTIONS = %w[phone office].freeze
 
+      validates_datetime :time, on_or_after: :today
+      validates_time :time, between: ['9:00am', '8:00pm']
+
       private_constant :MEETING_OPTIONS
 
       delegate :lawyer, to: :tax_income, allow_nil: false

@@ -5,7 +5,7 @@ import {
   useGetTaxIncomesQuery,
 } from "../../storage/api";
 import TaxIncomeCardMin from "./components/TaxIncomeCardMin";
-import AppointmentCard from "../Appointment/AppointmentCardMin";
+import { AppointmentCard } from "../Appointment/Appointment";
 
 const TaxIncomeResume = () => {
   const taxIncomes = useGetTaxIncomesQuery();

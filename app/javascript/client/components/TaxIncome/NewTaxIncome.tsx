@@ -19,7 +19,7 @@ const NewTaxIncome = () => {
 
   const submitForm = async (
     values: TaxIncomeData,
-    formikHelpers: FormikHelpers<any>
+    formikHelpers: FormikHelpers<TaxIncomeData>
   ) => {
     const toastNotification = toast.loading("Procesando...");
     addTaxIncome(values)

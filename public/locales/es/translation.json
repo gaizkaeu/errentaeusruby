@@ -30,7 +30,8 @@
         },
         "actions": {
             "next": "Siguiente",
-            "finish": "Finalizar"
+            "finish": "Finalizar",
+            "back": "Atrás"
         }
     },
     "documentation": {
@@ -71,6 +72,47 @@
     },
     "errors": {
         "unexpected": "Error inesperado"
+    },
+    "appointments": {
+        "myAppointment": "Mi cita",
+        "actions": {
+            "edit": "Editar"
+        },
+        "appointmentEdit": {
+            "modalTitle": "Editar mi cita"
+        },
+        "appointmentMethod": {
+            "phone": "Te llamaremos al teléfono indicado.",
+            "office": "Te esperamos en nuestras oficinas."
+        },
+        "officeAppointment": {
+            "directions" : "Dirección",
+            "directionLink": "https://g.page/eliza-asesores?share"
+        },
+        "form": {
+            "scheduleAppointment": "Concertar tu cita",
+            "fields": {
+              "time": {
+                "label": "Hora",
+                "error": "Hora inválida"
+              },
+              "method": {
+                "label": "¿Cómo quedamos?",
+                "types": {
+                  "phone": {
+                    "label": "Tu abogado te llamará",
+                    "text": "Cita telefónica",
+                    "phoneNumber": "Número de teléfono"
+                  }, 
+                  "office": {
+                    "label": "Te esperaremos en nuestra oficina.",
+                    "text": "Cita presencial"
+                  }
+                }
+              }
+            },
+            "submit": "Concerta cita"
+        }
     },
     "global": {
         "loading": "Cargando...",

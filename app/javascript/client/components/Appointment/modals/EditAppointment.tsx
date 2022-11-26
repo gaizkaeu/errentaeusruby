@@ -3,10 +3,12 @@ import AppointmentForm from "../AppointmentForm";
 import { useParams } from "react-router-dom";
 import { Modal } from "@nextui-org/react";
 import { useAppointment } from "../../../hooks/useAppointment";
+import { useTranslation } from "react-i18next";
 
 const EditAppointment = () => {
   const { appointment_id } = useParams();
-  const { modal, appointment } = useAppointment(appointment_id!);
+  const { modal, appointment } = useAppointment(appointment_id ?? "");
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -18,7 +20,7 @@ const EditAppointment = () => {
     >
       <Modal.Header>
         <Text id="modal-title" size={18} b>
-          Editar mi cita
+          {t("appointments.appointmentEdit.modalTitle")}
         </Text>
       </Modal.Header>
       <Modal.Body>

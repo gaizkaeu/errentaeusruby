@@ -13,10 +13,10 @@ const AssignedLawyerCard = (props: { lawyerId: string }) => {
         <div className="mt-3">
           {isLoading ? (
             <LawyerSkeleton />
-          ) : !data || isError ? (
+          ) : !data || isError || !data ? (
             <NoLawyerAvatar />
           ) : (
-            <LawyerAvatar size="md" lawyer={data!} />
+            <LawyerAvatar size="md" lawyer={data} />
           )}
         </div>
       </Card.Body>
@@ -58,7 +58,7 @@ export const AssignedLawyerSimple = (props: {
   ) : !data || isError ? (
     <NoLawyerAvatar />
   ) : (
-    <LawyerAvatar size={props.size} lawyer={data!} />
+    <LawyerAvatar size={props.size} lawyer={data} />
   );
 };
 

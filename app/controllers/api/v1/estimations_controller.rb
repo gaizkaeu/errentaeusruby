@@ -9,13 +9,10 @@ module Api
       # GET /estimations
       def index
         @estimations = current_api_v1_user.estimations.all
-
-        render json: @estimations
       end
 
       # GET /estimations/1
       def show
-        render json: @estimation
       end
 
       def estimate
@@ -42,7 +39,7 @@ module Api
       # PATCH/PUT /estimations/1
       def update
         if @estimation.update(estimation_params)
-          render json: @estimation
+          render :show
         else
           render json: @estimation.errors, status: :unprocessable_entity
         end

@@ -73,7 +73,7 @@ export const PaymentCompleted = (props: { taxIncome: TaxIncome }) => {
   );
   return !isLoading ? (
     <div>
-      {!isError ? (
+      {!isError && currentData ? (
         <Fragment>
           <Card variant="flat">
             <Card.Body>
@@ -93,7 +93,7 @@ export const PaymentCompleted = (props: { taxIncome: TaxIncome }) => {
           <br />
           <Card.Divider />
           <br />
-          <PaymentDetailsComponent paymentDetails={currentData!} />
+          <PaymentDetailsComponent paymentDetails={currentData} />
         </Fragment>
       ) : (
         <Text>Error</Text>

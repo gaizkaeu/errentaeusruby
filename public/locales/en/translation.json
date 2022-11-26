@@ -22,15 +22,16 @@
         "header": "Aquí podrás obtener un precio estimado para la realización de la declaración de la renta. Una vez obtenida la estimación podrás decidir si sigues adelante o no. "
     },
     "fields": {
-        "name": "Nombre"
+        "name": "Name"
     },
     "privacy": {
         "header": "Acerca de tu privacidad",
         "content": "La privacidad es importante para nosotros, por lo que no guardamos <b>nada de información</b> sobre tu estimación. Únicamente guardaremos tus datos si decides realizar la declaración con nosotros."
     },
     "actions": {
-        "next": "Siguiente",
-        "finish": "Finalizar"
+        "next": "Next",
+        "finish": "Finish",
+        "back": "Back"
     }
 },
   "documentation": {
@@ -70,6 +71,44 @@
     "status": {
       "completed": "Completed",
       "pending": "Pending"
+    }
+  },
+  "appointments": {
+    "myAppointment": "My Appointment",
+    "actions": {
+      "edit": "Editar"
+    },
+    "appointmentMethod": {
+      "phone": "We'll call you to the phone provided.",
+      "office": "We'll be waiting for you on our office"
+    },
+    "officeAppointment": {
+      "directions" : "Direction",
+      "directionLink": "https://g.page/eliza-asesores?share"
+    },
+    "form": {
+      "scheduleAppointment": "Schedule your appointment",
+      "fields": {
+        "time": {
+          "label": "Time",
+          "error": "Invalid time"
+        },
+        "method": {
+          "label": "How do we meet?",
+          "types": {
+            "phone": {
+              "label": "Your lawyer will call you",
+              "text": "Phone call",
+              "phoneNumber": "Phone number"
+            }, 
+            "office": {
+              "label": "You will meet your lawyer in our office",
+              "text": "In office"
+            }
+          }
+        }
+      },
+      "submit": "Schedule"
     }
   },
   "global": {

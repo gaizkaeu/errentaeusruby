@@ -47,7 +47,7 @@ module Api
       private
 
       def set_appointment
-        @appointment = Appointment.find_by(id: params[:id])
+        @appointment = current_api_v1_user.appointments.find_by(id: params[:id])
       end
 
       # Only allow a list of trusted parameters through.

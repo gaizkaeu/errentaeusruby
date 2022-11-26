@@ -4,6 +4,8 @@ module Api
   module V1
     require 'stripe'
     class TaxIncomesController < ApiBaseController
+      include TaxIncomesHelper
+
       before_action :set_tax_income, except: %i[index create]
       before_action :authenticate_api_v1_user!
 
@@ -23,8 +25,7 @@ module Api
 
       # POST /tax_incomes or /tax_incomes.json
       def create
-        estimation_attr = Estimation.decode_jwt_estimation(nested_estimation_params[:token])[0]
-        @tax_income = current_api_v1_user.tax_incomes.build(tax_income_params.merge(estimation: estimation_attr))
+        @tax_income = current_api_v1_user.tax_incomes.build(parse_params(tax_income_params, nested_estimation_params[:token]))
         respond_to do |format|
           if @tax_income.save
             format.json { render :show, status: :ok }

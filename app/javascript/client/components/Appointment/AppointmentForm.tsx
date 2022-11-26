@@ -3,8 +3,9 @@ import { Form, Formik, FormikHelpers, useField } from "formik";
 import DatePickerField from "../FormFields/DatePickerField";
 import InputField from "../FormFields/InputField";
 import { at } from "lodash";
-import * as Yup from "yup";
 import "react-day-picker/dist/style.css";
+import { useTranslation } from "react-i18next";
+import validationSchema from "./Model/validationSchema";
 
 interface Values {
   day: string;
@@ -18,6 +19,8 @@ const AppointmentTypeSelector = (props: {
   contactMethodFieldName: string;
   phone_field: string;
 }) => {
+  const { t } = useTranslation();
+
   const [methodField, methodMeta, methodHelpers] = useField(
     props.contactMethodFieldName
   );
@@ -32,7 +35,7 @@ const AppointmentTypeSelector = (props: {
   return (
     <Radio.Group
       name={props.contactMethodFieldName}
-      label="¿Como quedamos?"
+      label={t("appointments.form.fields.method.label")}
       onChange={(v) => {
         methodHelpers.setValue(v);
       }}
@@ -40,23 +43,23 @@ const AppointmentTypeSelector = (props: {
       <Radio
         name={props.contactMethodFieldName}
         value="phone"
-        description="Tu asesor te llamará."
+        description={t("appointments.form.fields.method.types.phone.label")}
       >
-        Cita telefónica
+        {t("appointments.form.fields.method.types.phone.text")}
       </Radio>
       {methodField.value === "phone" && (
         <InputField
           name={props.phone_field}
           bordered
-          label="Número de teléfono"
+          label={t("appointments.form.fields.method.types.phone.phoneNumber")}
         />
       )}
       <Radio
         name={props.contactMethodFieldName}
         value="office"
-        description="Tendrás que venir a nuestra oficina."
+        description={t("appointments.form.fields.method.types.office.label")}
       >
-        Cita presencial
+        {t("appointments.form.fields.method.types.office.text")}
       </Radio>
       <Text color="error">{_renderHelperText()}</Text>
     </Radio.Group>
@@ -66,6 +69,8 @@ const AppointmentTypeSelector = (props: {
 const AppointmentForm = (props: {
   onSubmit: (values: Values, formikHelpers: FormikHelpers<any>) => void;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Formik
       initialValues={{
@@ -74,26 +79,18 @@ const AppointmentForm = (props: {
         method: "office" as const,
         phone: "",
       }}
-      validationSchema={Yup.object({
-        day: Yup.date().required(),
-        hour: Yup.string().min(4, "Hora inválida").required(),
-        method: Yup.string(),
-        phone: Yup.number().when("method", {
-          is: "phone",
-          then: Yup.number().min(9).required(),
-        }),
-      })}
+      validationSchema={validationSchema}
       onSubmit={props.onSubmit}
     >
       <Form>
-        <Text h3>Concertar tu cita</Text>
+        <Text h3>{t("appointments.form.scheduleAppointment")}</Text>
         <div className="flex flex-wrap place-content-center gap-4">
           <DatePickerField name="day" />
           <div>
             <InputField
               name="hour"
               type="time"
-              label="¿Sobre que hora?"
+              label={t("appointments.form.fields.time.label")}
               rounded
               bordered
               fullWidth
@@ -107,7 +104,7 @@ const AppointmentForm = (props: {
         </div>
         <div className="flex mt-8">
           <Button color="primary" type="submit" className="flex-1">
-            Concertar cita
+            {t("appointments.form.submit")}
           </Button>
         </div>
       </Form>

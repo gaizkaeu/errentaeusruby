@@ -44,6 +44,9 @@ gem 'wkhtmltopdf-binary'
 # JWT ENCRYPTION
 gem "jwt"
 
+# DATETIME VALIDATION
+gem 'validates_timeliness', '~> 7.0.0.beta1'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.3', '>= 7.0.3.1'
 

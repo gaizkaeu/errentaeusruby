@@ -113,7 +113,7 @@ const Stepper = () => {
 const ShowTaxIncome = () => {
   const { tax_income_id, page } = useParams();
   const { currentData, isLoading, isError, error } = useGetTaxIncomeByIdQuery(
-    tax_income_id!,
+    tax_income_id ?? "0",
     {
       pollingInterval: 3000,
     }
@@ -143,7 +143,7 @@ const ShowTaxIncome = () => {
           <Fragment>
             <div className="flex-1">
               <TaxIncomeCard
-                taxIncome={currentData!}
+                taxIncome={currentData}
                 renderCard={page}
                 navCurrentState={navCurrentState()}
               ></TaxIncomeCard>

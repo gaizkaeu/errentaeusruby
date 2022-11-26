@@ -160,7 +160,7 @@ export default function Calculator() {
                     size={"md"}
                     auto
                   >
-                    Atrás
+                    {t("calculator.actions.back")}
                   </Button>
                 )}
                 <Button
@@ -175,7 +175,7 @@ export default function Calculator() {
                 >
                   {isLastStep
                     ? t("calculator.actions.finish")
-                    : t("calculator.actions.finish")}
+                    : t("calculator.actions.next")}
                   {isSubmitting && (
                     <Loading type="points" color="currentColor" size="sm" />
                   )}
@@ -218,30 +218,32 @@ export const BottomSheetQuestions = () => {
         <div className="p-2">
           <Collapse.Group>
             <Collapse
-              title="Option A"
-              subtitle="More description about Option A"
-            >
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </Text>
-            </Collapse>
-            <Collapse
-              title="Option B"
-              subtitle={
-                <>
-                  More description about <Text b>Option B</Text>
-                </>
+              title={
+                <p className="text-black text-xl font-extrabold">
+                  ¿Porque esta pregunta?
+                </p>
               }
             >
-              <Text>
+              <p className="text-black">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat.
-              </Text>
+              </p>
+            </Collapse>
+            <Collapse
+              title={
+                <p className="text-black text-xl font-extrabold">
+                  ¿Qué quiere decir?
+                </p>
+              }
+            >
+              <p className="text-black">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
             </Collapse>
           </Collapse.Group>
         </div>
