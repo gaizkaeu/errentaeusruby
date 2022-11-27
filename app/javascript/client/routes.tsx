@@ -40,7 +40,7 @@ const PrivateRoute = (props: { children: JSX.Element }) => {
 
   return !isLoading ? (
     status.loggedIn ? (
-      <Suspense>{props.children}</Suspense>
+      props.children
     ) : (
       <Navigate
         to="/auth/sign_in"
@@ -60,132 +60,27 @@ const AppRoutes = () => {
   return (
     <Provider store={store}>
       <Routes location={background || location}>
-        <Route
-          path="/"
-          element={
-            <Suspense>
-              <App />
-            </Suspense>
-          }
-        >
-          <Route
-            index
-            element={
-              <Suspense>
-                <HomePage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="profile"
-            element={
-              <Suspense>
-                <ProfilePage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="calculator"
-            element={
-              <Suspense>
-                <CalculatorPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="estimation"
-            element={
-              <Suspense>
-                <EstimationPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="auth/sign_up"
-            element={
-              <Suspense>
-                <AuthModal method={false} />
-              </Suspense>
-            }
-          />
-          <Route
-            path="auth/sign_in"
-            element={
-              <Suspense>
-                <AuthModal method={true} />
-              </Suspense>
-            }
-          />
-          <Route
-            path="mytaxincome"
-            element={
-              <PrivateRoute>
-                <TaxIncomePage />
-              </PrivateRoute>
-            }
-          >
-            <Route
-              index
-              element={
-                <Suspense>
-                  <MenuTaxIncome />
-                </Suspense>
-              }
-            ></Route>
-            <Route
-              path="new"
-              element={
-                <Suspense>
-                  <NewTaxIncome />
-                </Suspense>
-              }
-            ></Route>
-            <Route
-              path=":tax_income_id/"
-              element={
-                <Suspense>
-                  <ShowTaxIncome />
-                </Suspense>
-              }
-            />
-            <Route
-              path=":tax_income_id/:page"
-              element={
-                <Suspense>
-                  <ShowTaxIncome />
-                </Suspense>
-              }
-            />
+        <Route path="/" element={<App />}>
+          <Route index element={<HomePage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="calculator" element={<CalculatorPage />} />
+          <Route path="estimation" element={<EstimationPage />} />
+          <Route path="auth/sign_up" element={<AuthModal method={false} />} />
+          <Route path="auth/sign_in" element={<AuthModal method={true} />} />
+          <Route path="mytaxincome" element={<TaxIncomePage />}>
+            <Route index element={<MenuTaxIncome />}></Route>
+            <Route path="new" element={<NewTaxIncome />}></Route>
+            <Route path=":tax_income_id/" element={<ShowTaxIncome />} />
+            <Route path=":tax_income_id/:page" element={<ShowTaxIncome />} />
           </Route>
           <Route path="appointment/:appointment_id">
-            <Route
-              path="edit"
-              element={
-                <Suspense>
-                  <EditAppointment />
-                </Suspense>
-              }
-            />
+            <Route path="edit" element={<EditAppointment />} />
           </Route>
           <Route path="estimation/:estimation_id">
-            <Route
-              path="edit"
-              element={
-                <Suspense>
-                  <EstimationEditModal />
-                </Suspense>
-              }
-            />
+            <Route path="edit" element={<EstimationEditModal />} />
           </Route>
           <Route path="documents/:document_id">
-            <Route
-              path="history"
-              element={
-                <Suspense>
-                  <ShowDocumentHistory />
-                </Suspense>
-              }
-            />
+            <Route path="history" element={<ShowDocumentHistory />} />
           </Route>
         </Route>
       </Routes>
