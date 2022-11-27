@@ -15,13 +15,11 @@ module Api
       after_create_commit :create_stripe_customer
       after_create_commit :send_welcome_email
 
-      has_many :tax_incomes, dependent: :destroy, inverse_of: :user
+      has_many :tax_incomes, dependent: :destroy, inverse_of: :client, foreign_key: :client
       has_many :estimations, dependent: :destroy, through: :tax_incomes
       has_many :appointments, dependent: :destroy, through: :tax_incomes
       has_many :requested_documents, foreign_key: :user, dependent: :destroy, class_name: 'Document', inverse_of: :user
       has_many :asked_documents, foreign_key: :lawyer, dependent: :destroy, class_name: 'Document',  inverse_of: :laywer
-
-      has_many :assigned_tax_incomes, foreign_key: :lawyer, class_name: 'TaxIncome', dependent: :destroy,  inverse_of: :lawyer
 
       enum account_type: { user: 0, lawyer: 1 }
 

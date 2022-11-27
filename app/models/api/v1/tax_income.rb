@@ -2,7 +2,7 @@
 module Api
   module V1
     class TaxIncome < ApplicationRecord
-      belongs_to :user
+      belongs_to :client, class_name: 'User'
       belongs_to :lawyer, class_name: 'User', optional: true
       has_one :estimation, dependent: :destroy, required: false
       has_one :appointment, dependent: :destroy

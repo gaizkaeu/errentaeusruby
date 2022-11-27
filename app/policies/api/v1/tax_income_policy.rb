@@ -12,14 +12,14 @@ module Api
 
       def permitted_attributes
         if user.lawyer?
-          [:user_id, :observations, :price, :lawyer_id]
+          [:user_id, :observations, :price, :lawyer_id, :id, :state]
         else
           [:observations]
         end
       end
 
       def index?
-        record.user = user || record.lawyer = user
+        record.client == user || record.lawyer = user
       end
 
       def show?
@@ -27,7 +27,7 @@ module Api
       end
 
       def create?
-        record.user = user || user.account_type = "lawyer"
+        record.client == user || user.lawyer?
       end
 
       def update?
@@ -36,6 +36,10 @@ module Api
 
       def destroy?
         false
+      end
+
+      def checkout?
+        record.client == user
       end
 
       class Scope
@@ -48,7 +52,7 @@ module Api
           if user.lawyer?
             scope.where(lawyer: user)
           else
-            scope.where(user:)
+            scope.where(client: user)
           end
         end
 

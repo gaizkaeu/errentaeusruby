@@ -2,6 +2,7 @@ export interface TaxIncome {
   id: string;
   price: number;
   state: TaxIncomeStatus;
+  user: string;
   estimation: string;
   lawyer: string;
   appointment: string;
@@ -60,6 +61,7 @@ export interface PaymentDetails {
 export interface Appointment {
   id: string;
   lawyer_id: string;
+  client_id: string;
   tax_income_id: string;
   phone: string;
   time: string;

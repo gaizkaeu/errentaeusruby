@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Api
   module V1
-    class AppointmentPolicy < ApplicationPolicy
+    class UserPolicy < ApplicationPolicy
       attr_reader :user, :record
 
       def initialize(user, record)
@@ -11,15 +11,15 @@ module Api
       end
 
       def index?
-        record.client == user || user.lawyer?
+        false
       end
 
       def show?
-        index?
+        user.lawyer?
       end
 
       def create?
-        record.client == user || user.lawyer?
+        false
       end
 
       def update?
@@ -37,11 +37,9 @@ module Api
         end
 
         def resolve
-          if user.lawyer?
-            scope.joins(:tax_income).where(tax_incomes: { lawyer: user })
-          else
-            scope.joins(:tax_income).where(tax_incomes: { client: user })
-          end
+          return unless user.lawyer?
+            scope
+          
         end
 
         private

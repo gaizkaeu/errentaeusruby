@@ -19,7 +19,10 @@ Rails.application.routes.draw do
         get :payment_data, on: :member
         get :documents, on: :member
       end
+
       get :logged_in, to: 'accounts#logged_in'
+      get 'accounts/:id', to: 'accounts#show'
+
       devise_for :users, module: 'api/v1/auth', class_name: "Api::V1::User", defaults: { format: :json }, controllers: { omniauth_callbacks: 'api/v1/auth/omniauth_callbacks'}
 
       resources :documents do

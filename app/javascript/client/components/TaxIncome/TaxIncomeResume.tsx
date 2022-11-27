@@ -15,7 +15,7 @@ const TaxIncomeResume = () => {
     <Fragment>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="">
-          <Text h3>Mis declaraciones</Text>
+          <Text h3>Declaraciones</Text>
           <div className="grid grid-cols-1 gap-4">
             {taxIncomes.isLoading ||
             taxIncomes.isError ||
@@ -31,7 +31,7 @@ const TaxIncomeResume = () => {
           </div>
         </div>
         <div className="">
-          <Text h3>Mis citas</Text>
+          <Text h3>Citas</Text>
           <div className="grid grid-cols-1 gap-4">
             {appointments.isLoading ||
             appointments.isError ||

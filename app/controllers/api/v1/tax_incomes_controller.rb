@@ -25,7 +25,7 @@ module Api
 
       # POST /tax_incomes or /tax_incomes.json
       def create
-        @tax_income = TaxIncome.new
+        @tax_income = current_api_v1_user.tax_incomes.build
         authorize @tax_income
         @tax_income.update!(parse_params(tax_income_params, nested_estimation_params[:token]))
 
@@ -44,9 +44,10 @@ module Api
       end
 
       def checkout
+        authorize @tax_income
         if @tax_income.waiting_payment?
           payment_intent = BillingService::StripeService.create_payment_intent(
-            @tax_income.price, {id: @tax_income.id}, @tax_income.user.stripe_customer_id
+            @tax_income.price, {id: @tax_income.id}, @tax_income.client.stripe_customer_id
           )
           render json: { clientSecret: payment_intent }
         else

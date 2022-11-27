@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_26_111617) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_27_143126) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_111617) do
   end
 
   create_table "tax_incomes", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "client_id", null: false
     t.boolean "paid"
     t.integer "price"
     t.string "observations"
@@ -106,8 +106,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_111617) do
     t.integer "state", default: 0
     t.integer "lawyer_id"
     t.string "payment"
+    t.index ["client_id"], name: "index_tax_incomes_on_client_id"
     t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
-    t.index ["user_id"], name: "index_tax_incomes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -140,6 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_111617) do
   add_foreign_key "documents", "users", column: "exported_by_id"
   add_foreign_key "documents", "users", column: "lawyer_id"
   add_foreign_key "estimations", "tax_incomes"
-  add_foreign_key "tax_incomes", "users"
+  add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "tax_incomes", "users", column: "lawyer_id"
 end

@@ -67,7 +67,7 @@ RSpec.describe "/api/v1/estimations" do
 
   describe "GET /index" do
     before do
-      sign_in(tax_income.user)
+      sign_in(tax_income.client)
     end
 
     it "renders a successful response" do
@@ -79,7 +79,7 @@ RSpec.describe "/api/v1/estimations" do
 
   describe "GET /show" do
     before do
-      sign_in(tax_income.user)
+      sign_in(tax_income.client)
     end
 
     it "renders a successful response" do
@@ -125,7 +125,7 @@ RSpec.describe "/api/v1/estimations" do
 
   describe "PATCH /update" do
     before do
-      sign_in(tax_income.user)
+      sign_in(tax_income.client)
     end
 
     context "with valid parameters" do
@@ -155,7 +155,7 @@ RSpec.describe "/api/v1/estimations" do
 
   describe "DELETE /destroy" do
     before do
-      sign_in(tax_income.user)
+      sign_in(tax_income.client)
     end
 
     it "destroys the requested api_v1_estimation" do

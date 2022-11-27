@@ -5,6 +5,8 @@ import TaxIncomeCard from "./components/TaxIncomeCard";
 import AssignedLawyerCard from "../Lawyer/AssignedLawyer";
 import { useGetTaxIncomeByIdQuery } from "../../storage/api";
 import { EstimationWrapper } from "../Estimation/EstimationCard";
+import { useAuth } from "../../hooks/authHook";
+import { TaxIncomeAdminPanel } from "./LawyerComponents/TaxIncomeAdminPanel";
 
 const Stepper = () => {
   return (
@@ -112,6 +114,7 @@ const Stepper = () => {
 
 const ShowTaxIncome = () => {
   const { tax_income_id, page } = useParams();
+  const { currentUser } = useAuth();
   const { currentData, isLoading, isError, error } = useGetTaxIncomeByIdQuery(
     tax_income_id ?? "0",
     {
@@ -135,48 +138,46 @@ const ShowTaxIncome = () => {
     ></Navigate>
   );
 
-  return (
+  return isLoading || !currentData ? (
+    <Loading />
+  ) : !isError ? (
     <Fragment>
       <Stepper />
       <div className="flex flex-wrap gap-10 p-3 md:mt-10">
-        {!isLoading && currentData && !isError ? (
-          <Fragment>
-            <div className="flex-1">
-              <TaxIncomeCard
-                taxIncome={currentData}
-                renderCard={page}
-                navCurrentState={navCurrentState()}
-              ></TaxIncomeCard>
-            </div>
-            <div className="w-full lg:w-auto">
-              {currentData.lawyer && (
-                <AssignedLawyerCard lawyerId={currentData.lawyer} />
-              )}
-              <Spacer />
-              <EstimationWrapper estimationId={currentData.estimation} />
-            </div>
-          </Fragment>
-        ) : (
-          <Loading />
-        )}
-        {isError && error && (
-          <Modal closeButton blur aria-labelledby="modal-title" open={isError}>
-            <Modal.Header>
-              <Text id="modal-title" size={18}>
-                Error
-                <Text b size={18}>
-                  Acceso
-                </Text>
-              </Text>
-            </Modal.Header>
-            <Modal.Body>
-              <Text b>No puedes acceder</Text>
-              <Text>{JSON.stringify(error.data)}</Text>
-            </Modal.Body>
-          </Modal>
-        )}
+        <div className="flex-1">
+          <TaxIncomeCard
+            taxIncome={currentData}
+            renderCard={page}
+            navCurrentState={navCurrentState()}
+          ></TaxIncomeCard>
+        </div>
+        <div className="w-full lg:w-auto">
+          {currentData.lawyer && (
+            <AssignedLawyerCard lawyerId={currentData.lawyer} />
+          )}
+          <Spacer />
+          <EstimationWrapper estimationId={currentData.estimation} />
+        </div>
       </div>
+      {currentUser?.account_type == "lawyer" && (
+        <TaxIncomeAdminPanel taxIncome={currentData} />
+      )}
     </Fragment>
+  ) : (
+    <Modal closeButton blur aria-labelledby="modal-title" open={isError}>
+      <Modal.Header>
+        <Text id="modal-title" size={18}>
+          Error
+          <Text b size={18}>
+            Acceso
+          </Text>
+        </Text>
+      </Modal.Header>
+      <Modal.Body>
+        <Text b>No puedes acceder</Text>
+        <Text>{JSON.stringify(error.data)}</Text>
+      </Modal.Body>
+    </Modal>
   );
 };
 

@@ -14,7 +14,7 @@ RSpec.describe "Appointments" do
 
   context "when logged in" do 
     before do 
-      sign_in(tax_income.user)
+      sign_in(tax_income.client)
     end
 
     describe "GET /index" do

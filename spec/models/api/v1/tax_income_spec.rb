@@ -5,15 +5,15 @@ RSpec.describe Api::V1::TaxIncome do
   let(:lawyer) {create(:lawyer)}
   
   let(:valid_attributes) do
-    {observations: "this is a test", user_id: user.id}
+    {observations: "this is a test", client_id: user.id}
   end
 
   let(:valid_attributes_with_lawyer) do
-    {observations: "this is a test", user_id: user.id, lawyer_id: lawyer.id}
+    {observations: "this is a test", client_id: user.id, lawyer_id: lawyer.id}
   end
 
   let(:invalid_attributes) do
-    {observations: "this is a test", user_id: -1}
+    {observations: "this is a test", client_id: -1}
   end
 
   describe "state machine testing" do
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::TaxIncome do
   end
  
   describe "associations" do
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:client) }
     it { is_expected.to have_one(:estimation) }
     it { is_expected.to have_one(:appointment) }
     it { is_expected.to have_many(:documents) }

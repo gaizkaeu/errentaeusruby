@@ -2,7 +2,7 @@ FactoryBot.define do
     sequence :email do |n|
       "person#{n}@example.com"
     end
-    factory :user, class: "Api::V1::User" do
+    factory :user, class: "Api::V1::User", aliases: [:client] do
       first_name { "John" }
       last_name  { "Doe" }
       email { generate(:email) }
@@ -22,6 +22,6 @@ FactoryBot.define do
     end
 
     factory :tax_income, class: "Api::V1::TaxIncome" do
-      user
+      client
     end
   end

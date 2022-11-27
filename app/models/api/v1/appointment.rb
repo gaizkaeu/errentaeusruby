@@ -12,7 +12,7 @@ module Api
       private_constant :MEETING_OPTIONS
 
       delegate :lawyer, to: :tax_income, allow_nil: false
-      delegate :user, to: :tax_income, allow_nil: false
+      delegate :client, to: :tax_income, allow_nil: false
 
       after_create_commit :notify_creation_to_tax_income
       after_destroy_commit :notify_deletion_to_tax_income

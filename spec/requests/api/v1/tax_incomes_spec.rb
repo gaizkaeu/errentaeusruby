@@ -17,11 +17,11 @@ RSpec.describe "/api/v1/tax_incomes" do
   let(:user) {create(:user)}
   
   let(:valid_attributes) do
-    {observations: "this is a test", user_id: user.id}
+    {observations: "this is a test", client_id: user.id}
   end
 
   let(:invalid_attributes) do
-    {observations: 3, id: 4, user_id: 3}
+    {observations: 3, id: 4, client_id: 3}
   end
 
   describe "GET /index authenticated" do

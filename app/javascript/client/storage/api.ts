@@ -73,6 +73,16 @@ export const api = createApi({
       query: (data) => ({ url: `tax_incomes`, method: "post", data: data }),
       invalidatesTags: [{ type: "TaxIncome", id: "LIST" }],
     }),
+    updateTaxIncome: build.mutation<TaxIncome, Partial<TaxIncome>>({
+      query: (data) => ({
+        url: `tax_incomes/${data.id}`,
+        method: "put",
+        data: data,
+      }),
+      invalidatesTags: (result, _error) => [
+        { type: "TaxIncome", id: result?.id },
+      ],
+    }),
     getAppointments: build.query<Appointment[], void>({
       query: () => ({ url: "appointments", method: "get" }),
       providesTags: (result) =>
@@ -222,6 +232,9 @@ export const api = createApi({
       }),
       invalidatesTags: (_result) => ["User"],
     }),
+    getUserById: build.query<IUser, string>({
+      query: (data) => ({ url: `accounts/${data}`, method: "get" }),
+    }),
   }),
 });
 
@@ -250,4 +263,6 @@ export const {
   useGoogleOAuthCallBackMutation,
   useGoogleOAuthOneTapCallBackMutation,
   useGetEstimationByTokenQuery,
+  useGetUserByIdQuery,
+  useUpdateTaxIncomeMutation,
 } = api;
