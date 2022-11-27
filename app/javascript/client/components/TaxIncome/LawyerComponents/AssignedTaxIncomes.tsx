@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import TaxIncomeResume from "../TaxIncomeResume";
 export const ShowMyAssignedTaxIncomes = () => {
-  return <Text>Lo que queda...</Text>;
+  return <TaxIncomeResume />;
 };

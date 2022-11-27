@@ -8,7 +8,7 @@ module Api
 
       # GET /tax_incomes or /tax_incomes.json
       def index
-        @tax_incomes = current_api_v1_user.tax_incomes.includes(:lawyer)
+        @tax_incomes = policy_scope(TaxIncome)
       end
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
