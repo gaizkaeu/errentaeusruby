@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class LawyerAssignationJob < ApplicationJob
-  queue_as :default
 
   def perform(tax_income)
     lawyer_id = Api::V1::User.where(account_type: 1).first&.id

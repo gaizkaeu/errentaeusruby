@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CreatePdfFromDocumentAttachmentsJob < ApplicationJob
-  queue_as :default
 
   def perform(document_id)
     # save PDF to disk

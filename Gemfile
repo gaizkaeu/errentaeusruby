@@ -81,7 +81,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootsnap', require: false
 
 # Job execution
-gem "sidekiq", "~> 7.0"
+gem 'cloudtasker'
 
 # Google Token Validator
 gem "googleauth", "~> 1.3"
