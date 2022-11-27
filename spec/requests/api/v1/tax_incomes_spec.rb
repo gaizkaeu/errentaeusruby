@@ -24,11 +24,11 @@ RSpec.describe "/api/v1/tax_incomes" do
     {observations: 3, id: 4, user_id: 3}
   end
 
-  before do
-    sign_in(user)
-  end
+  describe "GET /index authenticated" do
+    before do
+      sign_in(user)
+    end
 
-  describe "GET /index" do
     it "renders a successful response" do
       Api::V1::TaxIncome.create! valid_attributes
       get api_v1_tax_incomes_url
@@ -36,7 +36,11 @@ RSpec.describe "/api/v1/tax_incomes" do
     end
   end
 
-  describe "GET /show" do
+  describe "GET /show authenticated" do
+    before do
+      sign_in(user)
+    end
+
     it "renders a successful response" do
       tax_income = Api::V1::TaxIncome.create! valid_attributes
       get api_v1_tax_income_url(tax_income)
@@ -44,7 +48,11 @@ RSpec.describe "/api/v1/tax_incomes" do
     end
   end
 
-  describe "POST /create" do
+  describe "POST /create authenticated" do
+    before do
+      sign_in(user)
+    end
+
     context "with valid parameters" do
       it "creates a new Api::V1::TaxIncome" do
         expect do
@@ -55,50 +63,40 @@ RSpec.describe "/api/v1/tax_incomes" do
     end
   end
 
-  # describe "PATCH /update" do
-  #   context "with valid parameters" do
-  #     let(:new_attributes) do
-  #       skip("Add a hash of attributes valid for your model")
-  #     end
+  describe "PATCH /update authenticated" do
+    before do
+      sign_in(user)
+    end
 
-  #     it "updates the requested api_v1_tax_income" do
-  #       tax_income = Api::V1::TaxIncome.create! valid_attributes
-  #       patch api_v1_tax_income_url(tax_income), params: { api_v1_tax_income: new_attributes }
-  #       tax_income.reload
-  #       skip("Add assertions for updated state")
-  #     end
+    context "with valid parameters" do
+      let(:new_attributes) do
+        {observations: "nothing to tell"}
+      end
 
-  #     it "redirects to the api_v1_tax_income" do
-  #       tax_income = Api::V1::TaxIncome.create! valid_attributes
-  #       patch api_v1_tax_income_url(tax_income), params: { api_v1_tax_income: new_attributes }
-  #       tax_income.reload
-  #       expect(response).to redirect_to(api_v1_tax_income_url(tax_income))
-  #     end
-  #   end
+      it "updates the requested api_v1_tax_income" do
+        tax_income = Api::V1::TaxIncome.create! valid_attributes
+        patch api_v1_tax_income_url(tax_income), params: { tax_income: new_attributes }
+        tax_income.reload
+        expect(tax_income.observations).to match(new_attributes[:observations])
+      end
+    end
+  end
 
-  #   context "with invalid parameters" do
-    
-  #     it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-  #       tax_income = Api::V1::TaxIncome.create! valid_attributes
-  #       patch api_v1_tax_income_url(tax_income), params: { api_v1_tax_income: invalid_attributes }
-  #       expect(response).to have_http_status(:unprocessable_entity)
-  #     end
-    
-  #   end
-  # end
+  context "when not logged in" do
+    describe "renders a error/unauthorized response" do
+      it "GET /index" do
+        Api::V1::TaxIncome.create! valid_attributes
+        get api_v1_tax_incomes_url
+        expect(response.body).to match("sign in or sign up")
+        expect(response).to have_http_status(:unauthorized) 
+      end
+    end
 
-  # describe "DELETE /destroy" do
-  #   it "destroys the requested api_v1_tax_income" do
-  #     tax_income = Api::V1::TaxIncome.create! valid_attributes
-  #     expect do
-  #       delete api_v1_tax_income_url(tax_income)
-  #     end.to change(Api::V1::TaxIncome, :count).by(-1)
-  #   end
-
-  #   it "redirects to the api_v1_tax_incomes list" do
-  #     tax_income = Api::V1::TaxIncome.create! valid_attributes
-  #     delete api_v1_tax_income_url(tax_income)
-  #     expect(response).to redirect_to(api_v1_tax_incomes_url)
-  #   end
-  # end
+    it "GET /show" do
+      tax_income = Api::V1::TaxIncome.create! valid_attributes
+      get api_v1_tax_income_url(tax_income)
+      expect(response.body).to match("sign in or sign up")
+      expect(response).to have_http_status(:unauthorized) 
+    end
+  end
 end

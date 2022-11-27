@@ -1,13 +1,10 @@
-# frozen_string_literal: true
-
 module Api
   module V1
     require 'stripe'
     class TaxIncomesController < ApiBaseController
       include TaxIncomesHelper
-
-      before_action :set_tax_income, except: %i[index create]
       before_action :authenticate_api_v1_user!
+      before_action :set_tax_income, except: %i[index create]
 
       # GET /tax_incomes or /tax_incomes.json
       def index

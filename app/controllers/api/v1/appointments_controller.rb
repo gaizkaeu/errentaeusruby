@@ -3,8 +3,8 @@
 module Api
   module V1
     class AppointmentsController < ApiBaseController
-      before_action :set_appointment, only: %i[show update destroy]
       before_action :authenticate_api_v1_user!
+      before_action :set_appointment, only: %i[show update destroy]
       rescue_from ActiveRecord::RecordNotFound, with: :handler  
 
       def index
