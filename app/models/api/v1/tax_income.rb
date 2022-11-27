@@ -43,27 +43,44 @@ module Api
         state :refunded
 
         event :assigned_lawyer do
-          transitions from: :pending_assignation, to: :waiting_for_meeting_creation
+          transitions from: :pending_assignation, to: :waiting_for_meeting_creation, guard: :lawyer_assigned?
         end
         event :appointment_created do
-          transitions from: :waiting_for_meeting_creation, to: :waiting_for_meeting
+          transitions from: :waiting_for_meeting_creation, to: :waiting_for_meeting, guard: :appointment_assigned?
         end
         event :appointment_deleted do
           transitions from: :waiting_for_meeting, to: :waiting_for_meeting_creation
         end
         event :paid do
-          transitions from: :waiting_payment, to: :pending_documentation
+          transitions from: :waiting_payment, to: :pending_documentation, guard: :payment_present?
         end
         event :refund do
           transitions to: :refunded
         end
       end
 
+      def lawyer_assigned?
+        !lawyer_id.nil?
+      end
+
       private
 
       def assign_lawyer
+        unless lawyer_id.nil?
+          assigned_lawyer!
+          return
+        end
+
         lawyer_id = User.where(account_type: 1).first&.id
         waiting_for_meeting_creation! if update!(lawyer_id:)
+      end
+
+      def appointment_assigned?
+        !appointment.nil?
+      end
+
+      def payment_present?
+        !payment.nil?
       end
     end
   end

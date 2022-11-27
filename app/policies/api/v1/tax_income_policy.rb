@@ -10,6 +10,14 @@ module Api
         super
       end
 
+      def permitted_attributes
+        if user.lawyer?
+          [:user_id, :observations, :price, :lawyer_id]
+        else
+          [:observations]
+        end
+      end
+
       def index?
         record.user = user || record.lawyer = user
       end
@@ -37,7 +45,7 @@ module Api
         end
 
         def resolve
-          if user.account_type == "lawyer"
+          if user.lawyer?
             scope.where(lawyer: user)
           else
             scope.where(user:)

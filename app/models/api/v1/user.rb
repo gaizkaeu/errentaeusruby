@@ -24,6 +24,10 @@ module Api
 
       enum account_type: { user: 0, lawyer: 1 }
 
+      def lawyer?
+        account_type == "lawyer"
+      end
+
       def create_stripe_customer
         # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create({
