@@ -1,5 +1,7 @@
 FROM ghcr.io/ledermann/rails-base-builder:3.1.2-alpine AS Builder
 
+RUN apk add libc6-compat
+
 # Remove some files not needed in resulting image.
 # Because they are required for building the image, they can't be added to .dockerignore
 RUN rm -r package.json tailwind.config.js postcss.config.js vite.config.ts
