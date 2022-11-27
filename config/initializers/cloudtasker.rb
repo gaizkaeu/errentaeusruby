@@ -9,5 +9,5 @@ Cloudtasker.configure do |config|
     # This secret is used to authenticate jobs sent to the processing endpoint
     # of your application.
     #
-    # config.secret = 'some-long-token'
+    config.secret = ENV.fetch('SECRET_KEY_BASE', "dummy")
   end
