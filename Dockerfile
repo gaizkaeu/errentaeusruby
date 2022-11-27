@@ -16,5 +16,5 @@ COPY --from=Builder /etc/alpine-release /tmp/dummy
 
 USER app
 
-LABEL fly_launch_runtime="rails"
+
 ENTRYPOINT ["docker/startup.sh"]
