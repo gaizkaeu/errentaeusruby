@@ -59,7 +59,7 @@ jobs:
         run: bin/yarn lint
   
       - uses: rwx-research/setup-captain@v1
-      - name: Run RSpec
+      - name: Run RSpec \w Captain
         run: |
           captain run \
             --suite-id errentaeus-rspec \
@@ -69,8 +69,14 @@ jobs:
               --format json --out tmp/rspec.json \
               --format progress
 
-      - name: Run Jest
-        run: bin/yarn test
+      - uses: rwx-research/setup-captain@v1
+      - name: Run Jest \w Captain
+        run: |
+          captain run \
+            --suite-id errentaeus-jest \
+            --test-results tmp/jest.json \
+            --  \
+            bin/yarn test -- --json --outputFile=tmp/jest.json --testLocationInResults
 
       - name: Setup PostgreSQL
         run: bin/rails db:create
