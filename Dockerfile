@@ -3,7 +3,7 @@ FROM ghcr.io/ledermann/rails-base-builder:3.1.2-alpine AS Builder
 RUN apk add libc6-compat
 RUN apk add --no-cache libstdc++ gcompat
 
-RUN ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
 
 # Remove some files not needed in resulting image.
 # Because they are required for building the image, they can't be added to .dockerignore
