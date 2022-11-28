@@ -86,6 +86,9 @@ gem 'cloudtasker'
 # Google Token Validator
 gem "googleauth", "~> 1.3"
 
+# Error tracking
+gem "honeybadger", "~> 5.0"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
