@@ -69,14 +69,13 @@ jobs:
               --format json --out tmp/rspec.json \
               --format progress
 
-      - uses: rwx-research/setup-captain@v1
       - name: Run Jest \w Captain
         run: |
           captain run \
             --suite-id errentaeus-jest \
             --test-results tmp/jest.json \
             --  \
-            bin/yarn test -- --json --outputFile=tmp/jest.json --testLocationInResults
+            bin/yarn test 
 
       - name: Setup PostgreSQL
         run: bin/rails db:create
@@ -86,28 +85,6 @@ jobs:
 
       - name: Check JS size limit
         run: yarn size-limit
-      
-      - name: Upload test results to Captain
-        uses: rwx-research/upload-captain-artifact@v1
-        if: always()
-        continue-on-error: true
-        with:
-          artifacts: |
-            [
-              {
-                "name": "RSpec",
-                "path": "tmp/**/rspec.json",
-                "kind": "test_results",
-                "parser": "rspec_json"
-              },
-              {
-                "name": "Jest",
-                "path": "tmp/jest.json",
-                "kind": "test_results",
-                "parser": "jest_json"
-              }
-            ]
-          captain-token: '${{ secrets.RWX_ACCESS_TOKEN }}'
 
   build_image:
 
