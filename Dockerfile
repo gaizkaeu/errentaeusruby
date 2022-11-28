@@ -1,9 +1,7 @@
 FROM ghcr.io/ledermann/rails-base-builder:3.1.2-alpine AS Builder
 
 RUN apk add libc6-compat
-RUN apk add gcompat
-
-RUN gem install grpc --platform ruby -- --with-cflags=-D__va_copy=va_copy
+RUN apk add --no-cache libstdc++ gcompat
 
 # Remove some files not needed in resulting image.
 # Because they are required for building the image, they can't be added to .dockerignore
