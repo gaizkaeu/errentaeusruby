@@ -16,5 +16,4 @@ COPY --from=Builder /etc/alpine-release /tmp/dummy
 
 USER app
 
-
 ENTRYPOINT ["docker/startup.sh"]
