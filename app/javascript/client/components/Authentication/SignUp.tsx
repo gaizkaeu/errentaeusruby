@@ -7,31 +7,37 @@ import { Button, Grid, Spacer } from "@nextui-org/react";
 import { useAppSelector } from "../../storage/hooks";
 import toast from "react-hot-toast";
 import { UserRegistrationData } from "../../storage/types";
+import { useCreateNewAccountMutation } from "../../storage/api";
 
 const SignUp = () => {
   const firstName = useAppSelector((state) => {
     return state.estimations.estimation?.first_name;
   });
+  const [createAccount] = useCreateNewAccountMutation();
 
   const submitForm = async (
     values: UserRegistrationData,
     formikHelpers: FormikHelpers<any>
   ) => {
     const toastNotification = toast.loading("Procesando...");
+    createAccount(values)
+      .unwrap()
+      .then(() => toast.success("¡Bienvenido!", { id: toastNotification }))
+      .catch(() => toast.error("Error", { id: toastNotification }));
   };
 
   return (
     <Formik
       initialValues={{
-        name: firstName ?? "",
-        surname: "",
+        first_name: firstName ?? "",
+        last_name: "",
         password_confirmation: "",
         password: "",
         email: "",
       }}
       validationSchema={Yup.object({
-        name: Yup.string().required("Necesario").min(4, "Too short!"),
-        surname: Yup.string().required("Necesario").min(4, "Too short!"),
+        first_name: Yup.string().required("Necesario").min(4, "Too short!"),
+        last_name: Yup.string().required("Necesario").min(4, "Too short!"),
         password: Yup.string()
           .required("Password is required")
           .min(6, "Too short!"),
@@ -48,7 +54,7 @@ const SignUp = () => {
           <Grid.Container gap={1}>
             <Grid xs={12} md={6}>
               <InputField
-                name="name"
+                name="first_name"
                 label="Nombre"
                 size="xl"
                 fullWidth
@@ -57,7 +63,7 @@ const SignUp = () => {
             </Grid>
             <Grid xs={12} md={6}>
               <InputField
-                name="surname"
+                name="last_name"
                 label="Apellido"
                 size="xl"
                 fullWidth

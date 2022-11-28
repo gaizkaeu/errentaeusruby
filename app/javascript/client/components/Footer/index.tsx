@@ -1,4 +1,5 @@
 import { Text } from "@nextui-org/react";
+import { metaContent } from "../../utils/utilFunctions";
 
 export default function footer() {
   return (
@@ -37,7 +38,7 @@ export default function footer() {
         <a href="https://elizaasesores.com" className="hover:underline">
           Eliza Asesores S.L.
         </a>
-        . Todos los derechos reservados.
+        . Todos los derechos reservados. - #{metaContent("git-commit-version")}
       </span>
     </footer>
   );

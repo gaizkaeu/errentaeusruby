@@ -201,7 +201,11 @@ export const api = createApi({
       providesTags: (_result, _error, _id) => ["User"],
     }),
     createNewAccount: build.mutation<IUser, UserRegistrationData>({
-      query: (data) => ({ url: "users", method: "post", data: data }),
+      query: (data) => ({
+        url: "users",
+        method: "post",
+        data: { api_v1_user: data },
+      }),
       invalidatesTags: (_result) => ["User"],
     }),
     loginAccount: build.mutation<IUser, SessionCreationData>({

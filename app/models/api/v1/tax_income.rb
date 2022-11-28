@@ -13,6 +13,7 @@ module Api
       include AASM
 
       after_create_commit :assign_lawyer
+      after_create_commit :send_confirmation_email
 
       def load_price_from_estimation(estimation)
         estimation = Estimation.find(estimation) unless estimation.nil?
@@ -64,6 +65,10 @@ module Api
       end
 
       private
+
+      def send_confirmation_email
+        TaxIncomeMailer.creation(id).deliver_later!
+      end
 
       def assign_lawyer
         unless lawyer_id.nil?
