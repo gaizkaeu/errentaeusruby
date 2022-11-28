@@ -61,9 +61,12 @@ jobs:
   
       - name: Run RSpec
         run: captain run \
-            --errentaeus-rspec rspec \
+            --suite-id errenta-eus-rspec \
             --test-results tmp/rspec.json \
-            -- bin/rspec --format json --out tmp/rspec.json --format documentation
+            -- \
+            bin/rspec \
+              --format json --out tmp/rspec.json \
+              --format documentation
 
       - name: Run Jest
         run: bin/yarn test
