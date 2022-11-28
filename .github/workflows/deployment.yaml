@@ -132,10 +132,14 @@ jobs:
           docker push ${{ env.AR_LOCATION }}.gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.SERVICE_NAME }}:${{ github.sha }}
 
   launch_deployment:
-    needs: test
+    needs: build_image
     environment: gcp
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v3
