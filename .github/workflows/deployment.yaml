@@ -163,6 +163,4 @@ jobs:
             DB_PASSWORD=ERRENTA-DBPASSWORD:1
             STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:1
             STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:1
-          flags: |
-            --set-cloudsql-instances=eliza-asesores:europe-west4:errenta
-            --execution-environment=gen2
+          flags: '--set-cloudsql-instances=eliza-asesores:europe-west4:errenta'
