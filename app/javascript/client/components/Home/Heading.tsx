@@ -7,11 +7,11 @@ import { ArrowIcon } from "../Icons/ArrowIcon";
 const Heading = () => {
   return (
     <div className="relative isolate">
-      <div className="hidden lg:visible absolute top-25 inset-x-0 -z-50">
+      <div className="invisible lg:visible absolute top-25 inset-x-0 -z-50">
         <img
-          className="hidden lg:visible relative left-[calc(50%-8rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-34rem)] sm:h-[42.375rem]"
+          className="invisible lg:visible relative left-[calc(50%-8rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-34rem)] sm:h-[42.375rem]"
           alt="App image tax income appointment"
-          src="/iphone-landing.png"
+          src="/iphone-landing.webp"
           width="340px"
         ></img>
       </div>
@@ -82,7 +82,7 @@ const Heading = () => {
             <img
               alt="App image tax income appointment"
               className="relative -z-10 max-w-none mx-auto"
-              src="/iphone-landing-mobile.png"
+              src="/iphone-landing-mobile.webp"
               width="300px"
             ></img>
           </div>
