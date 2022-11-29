@@ -16,7 +16,6 @@ const HomePage = () => {
         <CollapsePoints />
         <Actions />
         <BulletPoints />
-        {/*         <FeaturesGrid features={topFeatures} /> */}
         <Reviews />
         <Step />
       </main>

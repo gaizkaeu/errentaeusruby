@@ -15,7 +15,7 @@ function ProfilePage() {
             <div>
               <nav className="space-y-3">
                 <a
-                  href="https://account.rwx.com/gaizkaurd/manage/overview"
+                  href="foto/gaizkaurd/manage/overview"
                   className="bg-gray-50 text-blue-500 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
                   aria-current="page"
                 >
@@ -63,7 +63,7 @@ function ProfilePage() {
                   <Text className="ml-3">Contraseña</Text>
                 </a>
                 <a
-                  href="https://account.rwx.com/gaizkaurd/manage/support"
+                  href="foto/gaizkaurd/manage/support"
                   className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
                   aria-current="page"
                 >
@@ -93,7 +93,7 @@ function ProfilePage() {
               </div>
               <nav className="space-y-3">
                 <a
-                  href="https://account.rwx.com/gaizkaurd/manage/integrations"
+                  href="foto/gaizkaurd/manage/integrations"
                   className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
                   aria-current="page"
                 >
@@ -116,7 +116,7 @@ function ProfilePage() {
                   <Text className="ml-3">Pagos</Text>
                 </a>
                 <a
-                  href="https://account.rwx.com/gaizkaurd/manage/hidden_repositories"
+                  href="foto/gaizkaurd/manage/hidden_repositories"
                   className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
                   aria-current="page"
                 >
@@ -139,7 +139,7 @@ function ProfilePage() {
                   <Text className="ml-3">Mi historial</Text>
                 </a>
                 <a
-                  href="https://account.rwx.com/gaizkaurd/manage/notifications"
+                  href="foto/gaizkaurd/manage/notifications"
                   className="text-slate-600 group rounded-md p-2 flex items-center text-sm font-medium hover:text-blue-700"
                   aria-current="page"
                 >
