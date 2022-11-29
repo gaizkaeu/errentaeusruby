@@ -5,7 +5,7 @@ export default function ConfirmationBanner() {
   const [show, setShow] = useState(true);
 
   return (
-    <div className={`bg-indigo-600 ${!show && "hidden"} z-1`}>
+    <div className={`bg-indigo-600 ${!show && "hidden"} z-50`}>
       <div className="mx-auto max-w-7xl py-3 px-3 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex w-0 flex-1 items-center">

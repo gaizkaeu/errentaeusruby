@@ -7,12 +7,17 @@ import { ArrowIcon } from "../Icons/ArrowIcon";
 const Heading = () => {
   return (
     <div className="relative isolate">
-      <div className="invisible lg:visible absolute top-32 right-[2rem]">
-        <img className="relative" src="/iphone-landing.png" width="340px"></img>
+      <div className="hidden lg:visible absolute top-25 inset-x-0 -z-50">
+        <img
+          className="hidden lg:visible relative left-[calc(50%-8rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-34rem)] sm:h-[42.375rem]"
+          alt="App image tax income appointment"
+          src="/iphone-landing.png"
+          width="340px"
+        ></img>
       </div>
-      <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+      <div className="absolute inset-x-0 top-[-10rem] transform-gpu overflow-hidden blur-3xl sm:top-[-20rem] -z-50">
         <svg
-          className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
+          className="relative left-[calc(50%-11rem)] h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem] -z-50"
           viewBox="0 0 1155 678"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +78,15 @@ const Heading = () => {
               <HeaderActions />
             </div>
           </div>
-          <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+          <div className="absolute inset-x-0 z-10 bottom-[-6rem] visible lg:hidden">
+            <img
+              alt="App image tax income appointment"
+              className="relative -z-10 max-w-none mx-auto"
+              src="/iphone-landing-mobile.png"
+              width="300px"
+            ></img>
+          </div>
+          <div className="absolute inset-x-0 top-[calc(100%-13rem)] transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)] -z-10">
             <svg
               className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
               viewBox="0 0 1155 678"

@@ -40,10 +40,10 @@ const App = () => {
       <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
         <Toaster />
         <Navigation />
+        {auth.status.loggedIn && !auth.currentUser?.confirmed && (
+          <ConfirmationBanner />
+        )}
         <div className="min-h-screen">
-          {auth.status.loggedIn && !auth.currentUser?.confirmed && (
-            <ConfirmationBanner />
-          )}
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
