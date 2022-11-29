@@ -30,12 +30,20 @@ module Api
         record.client == user || user.lawyer?
       end
 
+      def documents
+        index?
+      end
+
+      def payment_data
+        index?
+      end
+
       def update?
         create?
       end
 
       def destroy?
-        false
+        record.client == user || record.lawyer = user
       end
 
       def checkout?

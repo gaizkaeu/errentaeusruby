@@ -12,7 +12,17 @@
     "subtitle": "Thank you for reaching this step."
   },
   "taxincome": {
-    "title": "My Tax Income"
+    "title": "My Tax Income",
+    "actions": {
+      "delete": {
+          "button": "Delete",
+          "success": "Deleted successfully",
+          "confirmButton": "Delete permanently",
+          "modalTitle": "Delete this tax income",
+          "disclaimer": "This action can't be undone",
+          "cancel": "Cancel"
+      }
+  }
   },
   "calculator": {
     "title": "Calculator",

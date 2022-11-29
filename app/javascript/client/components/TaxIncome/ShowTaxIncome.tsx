@@ -1,12 +1,18 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Loading, Modal, Spacer, Text } from "@nextui-org/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import TaxIncomeCard from "./components/TaxIncomeCard";
 import AssignedLawyerCard from "../Lawyer/AssignedLawyer";
-import { useGetTaxIncomeByIdQuery } from "../../storage/api";
+import {
+  useDeleteTaxIncomeMutation,
+  useGetTaxIncomeByIdQuery,
+} from "../../storage/api";
 import { EstimationWrapper } from "../Estimation/EstimationCard";
 import { useAuth } from "../../hooks/authHook";
 import { TaxIncomeAdminPanel } from "./LawyerComponents/TaxIncomeAdminPanel";
+import { Button } from "../../utils/GlobalStyles";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const Stepper = () => {
   return (
@@ -112,6 +118,60 @@ const Stepper = () => {
   );
 };
 
+const TaxIncomeDeleteComponent = (props: { taxIncomeId: string }) => {
+  const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
+  const nav = useNavigate();
+  const handler = () => setVisible(true);
+  const closeHandler = () => {
+    setVisible(false);
+  };
+
+  const confirmDelete = () => {
+    deleteTaxIncome(props.taxIncomeId)
+      .unwrap()
+      .then(() => {
+        setVisible(false);
+        toast.success(t("taxincome.actions.delete.success"));
+        nav("/mytaxincome", { replace: true });
+      });
+  };
+
+  const [deleteTaxIncome] = useDeleteTaxIncomeMutation();
+
+  return (
+    <div>
+      <Button auto color="error" onClick={handler}>
+        {t("taxincome.actions.delete.button")}
+      </Button>
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="modal-title"
+        open={visible}
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18}>
+            {t("taxincome.actions.delete.modalTitle")}
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Text>{t("taxincome.actions.delete.disclaimer")}</Text>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="error" onClick={confirmDelete}>
+            {t("taxincome.actions.delete.confirmButton")}
+          </Button>
+          <Button auto onClick={closeHandler}>
+            {t("taxincome.actions.delete.cancel")}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+};
+
 const ShowTaxIncome = () => {
   const { tax_income_id, page } = useParams();
   const { currentUser } = useAuth();
@@ -142,7 +202,12 @@ const ShowTaxIncome = () => {
     <Loading />
   ) : !isError ? (
     <Fragment>
-      <Stepper />
+      <div className="flex flex-wrap items-center">
+        <div className="flex-1">
+          <Stepper />
+        </div>
+        <TaxIncomeDeleteComponent taxIncomeId={currentData.id} />
+      </div>
       <div className="flex flex-wrap gap-10 p-3 md:mt-10">
         <div className="flex-1">
           <TaxIncomeCard

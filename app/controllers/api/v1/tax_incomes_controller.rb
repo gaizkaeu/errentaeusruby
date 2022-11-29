@@ -39,6 +39,7 @@ module Api
       end
 
       def documents
+        authorize @tax_income
         @documents = @tax_income.documents.with_attached_files
         render 'api/v1/documents/index'
       end
@@ -80,6 +81,7 @@ module Api
 
       # DELETE /tax_incomes/1 or /tax_incomes/1.json
       def destroy
+        authorize @tax_income
         @tax_income.destroy!
 
         respond_to do |format|

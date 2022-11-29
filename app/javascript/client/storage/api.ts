@@ -83,6 +83,13 @@ export const api = createApi({
         { type: "TaxIncome", id: result?.id },
       ],
     }),
+    deleteTaxIncome: build.mutation<void, string>({
+      query: (data) => ({
+        url: `tax_incomes/${data}`,
+        method: "delete",
+      }),
+      invalidatesTags: (result, _error, id) => [{ type: "TaxIncome", id: id }],
+    }),
     getAppointments: build.query<Appointment[], void>({
       query: () => ({ url: "appointments", method: "get" }),
       providesTags: (result) =>
@@ -269,4 +276,5 @@ export const {
   useGetEstimationByTokenQuery,
   useGetUserByIdQuery,
   useUpdateTaxIncomeMutation,
+  useDeleteTaxIncomeMutation,
 } = api;

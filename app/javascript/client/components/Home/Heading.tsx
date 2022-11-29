@@ -78,11 +78,11 @@ const Heading = () => {
               <HeaderActions />
             </div>
           </div>
-          <div className="absolute inset-x-0 z-10 bottom-[-6rem] visible lg:hidden w-fit h-fit">
+          <div className="absolute inset-x-0 z-10 bottom-[-6rem] visible lg:hidden">
             <img
               alt="App image tax income appointment"
               width="300px"
-              className="relative -z-10 max-w-none mx-auto"
+              className="relative -z-10 mx-auto"
               src="/iphone-landing-mobile.webp"
             ></img>
           </div>

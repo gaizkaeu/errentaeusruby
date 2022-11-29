@@ -12,7 +12,17 @@
         "subtitle": "Gracias por llegar hasta aqui. Esta información es solo visible para ti."
     },
     "taxincome": {
-        "title": "Mi declaración"
+        "title": "Mi declaración",
+        "actions": {
+            "delete": {
+                "button": "Eliminar",
+                "success": "Eliminado correctamente",
+                "confirmButton": "Eliminar permanentemente",
+                "modalTitle": "Eliminar esta declaración",
+                "disclaimer": "Esta acción no es reversible",
+                "cancel": "Cancelar"
+            }
+        }
     },
     "calculator": {
         "title": "Calculadora",
