@@ -10,10 +10,10 @@ module Api
       # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
       devise :database_authenticatable, :registerable,
             :recoverable, :rememberable, :validatable, :confirmable,
-            :omniauthable, omniauth_providers: [:google_one_tap]
+            :trackable, :omniauthable,
+             omniauth_providers: [:google_one_tap]
 
-      after_create_commit :create_stripe_customer
-      after_create_commit :send_welcome_email
+      after_create_commit :create_stripe_customer, :send_welcome_email
 
       has_many :tax_incomes, dependent: :destroy, inverse_of: :client, foreign_key: :client
       has_many :estimations, dependent: :destroy, through: :tax_incomes
@@ -42,6 +42,7 @@ module Api
 
       def send_welcome_email
         UserMailer.welcome_email(id).deliver_later!
+        send_confirmation_instructions unless confirmed?
       end
 
       # rubocop:disable Metrics/AbcSize
@@ -52,7 +53,6 @@ module Api
           user.first_name = auth.info.first_name # assuming the user model has a name
           user.last_name = auth.info.last_name # assuming the user model has a name
           user.confirmed_at = Time.zone.today
-          Rails.logger.debug auth.info
         end
       end
       # rubocop:enable Metrics/AbcSize

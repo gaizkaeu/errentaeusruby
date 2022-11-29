@@ -6,7 +6,10 @@ import { ArrowIcon } from "../Icons/ArrowIcon";
 
 const Heading = () => {
   return (
-    <div className="isolate">
+    <div className="relative isolate">
+      <div className="invisible lg:visible absolute top-32 right-[2rem]">
+        <img className="relative" src="/iphone-landing.png" width="340px"></img>
+      </div>
       <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
         <svg
           className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
