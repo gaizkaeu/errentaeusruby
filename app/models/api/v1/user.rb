@@ -46,8 +46,8 @@ module Api
       end
 
       def resend_confirmation_instructions?
-        if !confirmed? && confirmation_sent_at < (DateTime.current - 10.minutes)
-          update!(confirmation_sent_at: DateTime.current)
+        if !confirmed? && confirmation_sent_at < (10.minutes.ago)
+          update!(confirmation_sent_at: Time.current)
           send_confirmation_instructions
           true
         else
