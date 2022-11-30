@@ -13,6 +13,7 @@ import { TaxIncomeAdminPanel } from "./LawyerComponents/TaxIncomeAdminPanel";
 import { Button } from "../../utils/GlobalStyles";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { DeletedSuccessfully } from "../Toasts/TaxIncome";
 
 const Stepper = () => {
   return (
@@ -132,7 +133,7 @@ const TaxIncomeDeleteComponent = (props: { taxIncomeId: string }) => {
       .unwrap()
       .then(() => {
         setVisible(false);
-        toast.success(t("taxincome.actions.delete.success"));
+        toast.custom((t) => <DeletedSuccessfully t={t} />);
         nav("/mytaxincome", { replace: true });
       });
   };

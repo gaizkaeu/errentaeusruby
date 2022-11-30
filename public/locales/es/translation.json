@@ -2,6 +2,9 @@
     "header": {
         "elizaasesoresservice": "UN SERVICIO DE ELIZA ASESORES"
     },
+    "toasts": {
+        "close": "Cerrar"
+    },
     "homepage": {
         "navbar": "Inicio",
         "title": "ERRENTA.EUS",
@@ -16,12 +19,17 @@
         "actions": {
             "delete": {
                 "button": "Eliminar",
-                "success": "Eliminado correctamente",
                 "confirmButton": "Eliminar permanentemente",
                 "modalTitle": "Eliminar esta declaración",
                 "disclaimer": "Esta acción no es reversible",
                 "cancel": "Cancelar"
             }
+        },
+        "toasts": {
+          "title": "Declaración",
+          "actions": {
+            "deleteSuccess": "Eliminada correctamente"
+          }
         }
     },
     "calculator": {

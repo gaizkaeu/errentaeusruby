@@ -14,6 +14,16 @@ module Api
         authorize @user
       end
 
+      def resend_confirmation
+        user = User.find(params[:id])
+        authorize user
+        if user.resend_confirmation_instructions?
+          render json: {status: "sent"}
+        else
+          render json: {status: "error"}
+        end
+      end
+
     end
   end
 end

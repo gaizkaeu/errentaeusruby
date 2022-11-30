@@ -18,6 +18,10 @@ module Api
         user.lawyer?
       end
 
+      def resend_confirmation?
+        record == user
+      end
+
       def create?
         false
       end

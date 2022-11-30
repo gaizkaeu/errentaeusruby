@@ -246,6 +246,12 @@ export const api = createApi({
     getUserById: build.query<IUser, string>({
       query: (data) => ({ url: `accounts/${data}`, method: "get" }),
     }),
+    requestResendConfirmation: build.mutation<{ status: string }, string>({
+      query: (data) => ({
+        url: `accounts/${data}/resend_confirmation`,
+        method: "get",
+      }),
+    }),
   }),
 });
 
@@ -277,4 +283,5 @@ export const {
   useGetUserByIdQuery,
   useUpdateTaxIncomeMutation,
   useDeleteTaxIncomeMutation,
+  useRequestResendConfirmationMutation,
 } = api;

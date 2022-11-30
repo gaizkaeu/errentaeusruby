@@ -2,6 +2,9 @@
   "header": {
     "elizaasesoresservice": "SERVICE PROVIDED BY ELIZA ASESORES"
   },
+  "toasts": {
+    "close": "Close"
+  },
   "homepage": {
     "navbar": "Home",
     "title": "ERRENTA.EUS",
@@ -16,13 +19,18 @@
     "actions": {
       "delete": {
           "button": "Delete",
-          "success": "Deleted successfully",
           "confirmButton": "Delete permanently",
           "modalTitle": "Delete this tax income",
           "disclaimer": "This action can't be undone",
           "cancel": "Cancel"
       }
-  }
+    },
+    "toasts": {
+      "title": "Tax Income",
+      "actions": {
+        "deleteSuccess": "Deleted successfully"
+      }
+    }
   },
   "calculator": {
     "title": "Calculator",

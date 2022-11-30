@@ -45,6 +45,16 @@ module Api
         send_confirmation_instructions unless confirmed?
       end
 
+      def resend_confirmation_instructions?
+        if !confirmed? && confirmation_sent_at < (DateTime.current - 10.minutes)
+          update!(confirmation_sent_at: DateTime.current)
+          send_confirmation_instructions
+          true
+        else
+          false
+        end
+      end
+
       # rubocop:disable Metrics/AbcSize
       def self.from_omniauth(auth)
         where(provider: auth.provider, uid: auth.uid).first_or_create! do |user|

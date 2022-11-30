@@ -19,7 +19,7 @@ const AuthModal = (props: { method: boolean }) => {
   const onClose = () => {
     setTimeout(() => {
       if (status.loggedIn) {
-        nav(loc.state.nextPage, { replace: true });
+        nav(loc.state.nextPage ?? "/mytaxincome", { replace: true });
       } else {
         nav(-1);
       }
