@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Loading, Modal, Spacer, Text } from "@nextui-org/react";
+import { Modal, Spacer, Switch, Text } from "@nextui-org/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import TaxIncomeCard from "./components/TaxIncomeCard";
 import AssignedLawyerCard from "../Lawyer/AssignedLawyer";
@@ -14,6 +14,7 @@ import { Button } from "../../utils/GlobalStyles";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { DeletedSuccessfully } from "../Toasts/TaxIncome";
+import { CpuChipIcon } from "@heroicons/react/24/outline";
 
 const Stepper = () => {
   return (
@@ -173,13 +174,40 @@ const TaxIncomeDeleteComponent = (props: { taxIncomeId: string }) => {
   );
 };
 
+const ShowTaxIncomeSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-5 p-2 mx-auto select-none sm:p-4 sm:h-64 rounded-2xl sm:flex-row ">
+      <div className="flex flex-col flex-1 gap-5 sm:p-2">
+        <div className="flex flex-col flex-1 gap-3">
+          <div className="w-full bg-gray-400 animate-pulse h-14 rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+          <div className="w-full h-3 bg-gray-400 animate-pulse rounded-2xl"></div>
+        </div>
+        <div className="flex gap-3 mt-auto">
+          <div className="w-20 h-8 bg-gray-400 rounded-full animate-pulse"></div>
+          <div className="w-20 h-8 bg-gray-400 rounded-full animate-pulse"></div>
+          <div className="w-20 h-8 ml-auto bg-gray-400 rounded-full animate-pulse"></div>
+        </div>
+      </div>
+      <div className="bg-gray-400 h-64 sm:h-full sm:w-72 rounded-xl animate-pulse"></div>
+    </div>
+  );
+};
+
 const ShowTaxIncome = () => {
   const { tax_income_id, page } = useParams();
   const { currentUser } = useAuth();
+  const [refetch, setRefetch] = useState(true);
   const { currentData, isLoading, isError, error } = useGetTaxIncomeByIdQuery(
     tax_income_id ?? "0",
     {
       pollingInterval: 3000,
+      skip: !refetch,
     }
   );
   const nav = useNavigate();
@@ -199,9 +227,7 @@ const ShowTaxIncome = () => {
     ></Navigate>
   );
 
-  return isLoading || !currentData ? (
-    <Loading />
-  ) : !isError ? (
+  return !isError && currentData && refetch ? (
     <Fragment>
       <div className="flex flex-wrap items-center">
         <div className="flex-1">
@@ -229,19 +255,33 @@ const ShowTaxIncome = () => {
         <TaxIncomeAdminPanel taxIncome={currentData} />
       )}
     </Fragment>
+  ) : isLoading ? (
+    <ShowTaxIncomeSkeleton />
   ) : (
-    <Modal closeButton blur aria-labelledby="modal-title" open={isError}>
+    <Modal
+      closeButton
+      blur
+      aria-labelledby="modal-title"
+      open={isError || !currentData}
+    >
       <Modal.Header>
         <Text id="modal-title" size={18}>
           Error
-          <Text b size={18}>
-            Acceso
-          </Text>
         </Text>
       </Modal.Header>
       <Modal.Body>
         <Text b>No puedes acceder</Text>
-        <Text>{JSON.stringify(error.data)}</Text>
+        <Text>{JSON.stringify(error?.data)}</Text>
+        <div className="flex items-center gap-4">
+          <Text>¿Reintentar?</Text>
+          <Switch
+            checked={refetch}
+            size="xl"
+            onChange={() => setRefetch((r) => !r)}
+            color="secondary"
+            icon={<CpuChipIcon />}
+          />
+        </div>
       </Modal.Body>
     </Modal>
   );
