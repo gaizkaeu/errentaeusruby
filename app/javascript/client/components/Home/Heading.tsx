@@ -81,8 +81,9 @@ const Heading = () => {
           <div className="absolute inset-x-0 z-10 bottom-[-6rem] visible lg:hidden">
             <img
               alt="App image tax income appointment"
-              width="300px"
-              className="relative -z-10 mx-auto"
+              width="407px"
+              height="614px"
+              className="relative -z-10 mx-auto max-w-xs"
               src="/iphone-landing-mobile.webp"
             ></img>
           </div>

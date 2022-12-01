@@ -1,16 +1,27 @@
-import { ExclamationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  CheckBadgeIcon,
+  ExclamationCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { Loading } from "@nextui-org/react";
 import { useState } from "react";
 import { useAuth } from "../../hooks/authHook";
 import { useRequestResendConfirmationMutation } from "../../storage/api";
+import { Button } from "../../utils/GlobalStyles";
 
 export default function ConfirmationBanner() {
   const [show, setShow] = useState(true);
   const auth = useAuth();
-  const [resend] = useRequestResendConfirmationMutation();
+  const [resend, { isLoading, isSuccess, isError, error }] =
+    useRequestResendConfirmationMutation();
 
   return (
     auth.currentUser && (
-      <div className={`bg-indigo-600 ${!show && "hidden"} z-50`}>
+      <div
+        className={`${isError ? "bg-red-500" : "bg-indigo-600"} ${
+          !show && "hidden"
+        } z-50`}
+      >
         <div className="mx-auto max-w-7xl py-3 px-3 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between">
             <div className="flex w-0 flex-1 items-center">
@@ -20,23 +31,52 @@ export default function ConfirmationBanner() {
                   aria-hidden="true"
                 />
               </span>
-              <p className="ml-3 truncate font-medium text-white">
-                <span className="md:hidden">Confirma tu correo.</span>
-                <span className="hidden md:inline">
-                  Confirmación de correo pendiente.
-                </span>
-              </p>
+              {isError ? (
+                <p className="ml-3 truncate font-medium text-white">
+                  <span className="md:hidden">Error</span>
+                  <span className="hidden md:inline">
+                    {JSON.stringify(error)}
+                  </span>
+                </p>
+              ) : (
+                <p className="ml-3 truncate font-medium text-white">
+                  <span className="md:hidden">Confirma tu correo.</span>
+                  <span className="hidden md:inline">
+                    Confirmación de correo pendiente.
+                  </span>
+                </p>
+              )}
             </div>
             <div className="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
-              <a
-                href="#"
-                onClick={() => {
-                  resend(auth.currentUser.id);
-                }}
-                className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-indigo-600 shadow-sm hover:bg-indigo-50"
-              >
-                Reenviar
-              </a>
+              {!isLoading ? (
+                !isSuccess ? (
+                  <a
+                    href="#"
+                    onClick={() => {
+                      resend(auth.currentUser.id);
+                    }}
+                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-indigo-600 shadow-sm hover:bg-indigo-50"
+                  >
+                    Reenviar
+                  </a>
+                ) : (
+                  <Button
+                    auto
+                    color="success"
+                    icon={<CheckBadgeIcon width="30px" />}
+                  />
+                )
+              ) : (
+                <Button
+                  disabled
+                  auto
+                  bordered
+                  color="primary"
+                  css={{ px: "$13" }}
+                >
+                  <Loading color="currentColor" size="sm" />
+                </Button>
+              )}
             </div>
             <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
               <button

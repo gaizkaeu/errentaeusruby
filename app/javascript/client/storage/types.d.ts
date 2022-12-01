@@ -1,3 +1,11 @@
+export type BaseQueryError = BaseQueryMultipleErrors | BaseQuerySingleErrors;
+
+export interface BaseQueryMultipleErrors {
+  errors: string[] | unknown;
+}
+export interface BaseQuerySingleErrors {
+  error: string | unknown;
+}
 export interface TaxIncome {
   id: string;
   price: number;

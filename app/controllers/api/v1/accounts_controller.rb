@@ -20,7 +20,7 @@ module Api
         if user.resend_confirmation_instructions?
           render json: {status: "sent"}
         else
-          render json: {status: "error"}
+          render json: {status: "error"}, status: :unprocessable_entity
         end
       end
 

@@ -1,10 +1,15 @@
 /* eslint-disable */
 import ReactDOM from "react-dom";
 import "./index.css";
+
 import { register } from "register-service-worker";
 
-import AppRoutes from "../client/routes";
+const AppRoutes = React.lazy(
+  () => import("../client/routes")
+);
+
 import { BrowserRouter } from "react-router-dom";
+import { Suspense } from "react";
 
 register("/sw.js", {
   registrationOptions: { scope: "./" },
@@ -35,9 +40,11 @@ register("/sw.js", {
 
 const root = ReactDOM.render(
   <React.StrictMode>
+    <Suspense>
     <BrowserRouter>
       <AppRoutes />
     </BrowserRouter>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById("root") as HTMLElement
 );
