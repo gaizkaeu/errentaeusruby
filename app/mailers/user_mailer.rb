@@ -8,4 +8,10 @@ class UserMailer < ApplicationMailer
     attachments.inline["img2"] = File.read('./public/android-chrome-192x192.png')
     mail(to: @user.email, subject: 'Bienvenido a ERRENTA.EUS! 🎉')
   end
+
+  def prueba(user_id)
+    @user = Api::V1::User.find(user_id)
+
+    mail(to: @user.email, subject: 'Bienvenido a ERRENTA.EUS! 🎉')
+  end
 end

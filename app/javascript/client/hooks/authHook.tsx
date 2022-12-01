@@ -2,6 +2,7 @@ import {
   CredentialResponse,
   GoogleLogin,
   googleLogout,
+  GoogleOAuthProvider,
 } from "@react-oauth/google";
 import { FormikHelpers } from "formik";
 import toast from "react-hot-toast";
@@ -30,19 +31,21 @@ export const useAuth = () => {
   };
 
   const GoogleLoginComponent = () => (
-    <div className="w-fit">
-      <GoogleLogin
-        useOneTap
-        theme="filled_black"
-        size="large"
-        shape="pill"
-        auto_select
-        onSuccess={oneTapSuccess}
-        onError={() => {
-          console.log("Login Failed");
-        }}
-      />
-    </div>
+    <GoogleOAuthProvider clientId="321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com">
+      <div className="w-fit">
+        <GoogleLogin
+          useOneTap
+          theme="filled_black"
+          size="large"
+          shape="pill"
+          auto_select
+          onSuccess={oneTapSuccess}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+      </div>
+    </GoogleOAuthProvider>
   );
 
   const logoutHandle = async () => {

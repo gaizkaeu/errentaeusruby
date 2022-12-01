@@ -95,7 +95,7 @@ export const Actions = () => {
               </g>
             </svg>
             <Link className="opacity-0 absolute inset-0" to="/calculator">
-              Ir
+              Calcular
             </Link>
           </li>
           <li className="group w-full relative flex items-start xl:items-center rounded-3xl border border-transparent transform-gpu hover:scale-95 transition-transform ease-out duration-200 focus-within:border-purple-400 focus-within:ring focus-within:ring-blue-500">

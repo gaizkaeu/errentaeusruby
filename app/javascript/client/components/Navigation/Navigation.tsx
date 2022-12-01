@@ -72,7 +72,7 @@ const Navigation = () => {
 
   return (
     <Navbar maxWidth="fluid">
-      <Navbar.Toggle showIn="xs" />
+      <Navbar.Toggle showIn="xs" aria-label="toggle navbar" />
       <Navbar.Brand>
         <Text b color="inherit">
           <ErrentaUnderlined />
@@ -92,6 +92,7 @@ const Navigation = () => {
       </Navbar.Content>
       <Navbar.Content>
         <Switch
+          aria-label="dark mode toggle"
           checked={darkMode.isDarkMode}
           onChange={darkMode.toggle}
           button-name="night-mode"
@@ -99,6 +100,7 @@ const Navigation = () => {
           iconOn={
             <SunIcon
               filled
+              aria-label="light mode"
               size={undefined}
               height={undefined}
               width={undefined}
@@ -108,6 +110,7 @@ const Navigation = () => {
           iconOff={
             <MoonIcon
               filled
+              aria-label="dark mode"
               size={undefined}
               height={undefined}
               width={undefined}

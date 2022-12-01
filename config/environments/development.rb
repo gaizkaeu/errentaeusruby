@@ -48,8 +48,6 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_caching = false
 
-  # Devise
-  config.action_mailer.default_url_options = {host: ENV.fetch('APP_HOST', 'https://errenta.eus') } # ex. localhost:3000
   config.action_mailer.default charset: "utf-8"
 
   # Print deprecation notices to the Rails logger.
