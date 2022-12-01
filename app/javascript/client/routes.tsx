@@ -5,6 +5,7 @@ import { Loading } from "@nextui-org/react";
 import { Suspense } from "react";
 import { useAuth } from "./hooks/authHook";
 import { useGetCurrentAccountQuery } from "./storage/api";
+
 const ShowDocumentHistory = React.lazy(
   () => import("./components/Document/modals/DocumentHistoryModal")
 );
@@ -60,14 +61,7 @@ const AppRoutes = () => {
   return (
     <Provider store={store}>
       <Routes location={background || location}>
-        <Route
-          path="/"
-          element={
-            <Suspense>
-              <App />
-            </Suspense>
-          }
-        >
+        <Route path="/" element={<App />}>
           <Route
             index
             element={

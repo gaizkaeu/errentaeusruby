@@ -1,0 +1,145 @@
+{
+    "header": {
+        "elizaasesoresservice": "UN SERVICIO DE ELIZA ASESORES"
+    },
+    "toasts": {
+        "close": "Cerrar"
+    },
+    "homepage": {
+        "navbar": "Inicio",
+        "title": "ERRENTA.EUS",
+        "subtitle": "Declaración de la renta en Vitoria Gasteiz"
+    },
+    "estimation": {
+        "title": "Estimation",
+        "subtitle": "Gracias por llegar hasta aqui. Esta información es solo visible para ti."
+    },
+    "taxincome": {
+        "title": "Mi declaración",
+        "actions": {
+            "delete": {
+                "button": "Eliminar",
+                "confirmButton": "Eliminar permanentemente",
+                "modalTitle": "Eliminar esta declaración",
+                "disclaimer": "Esta acción no es reversible",
+                "cancel": "Cancelar"
+            }
+        },
+        "toasts": {
+          "title": "Declaración",
+          "actions": {
+            "deleteSuccess": "Eliminada correctamente"
+          }
+        }
+    },
+    "calculator": {
+        "title": "Calculadora",
+        "home": {
+            "importantInformation": "Información importante",
+            "welcome": "Bienvenido al apartado de estimación.",
+            "header": "Aquí podrás obtener un precio estimado para la realización de la declaración de la renta. Una vez obtenida la estimación podrás decidir si sigues adelante o no. "
+        },
+        "fields": {
+            "name": "Nombre"
+        },
+        "privacy": {
+            "header": "Acerca de tu privacidad",
+            "content": "La privacidad es importante para nosotros, por lo que no guardamos <b>nada de información</b> sobre tu estimación. Únicamente guardaremos tus datos si decides realizar la declaración con nosotros."
+        },
+        "actions": {
+            "next": "Siguiente",
+            "finish": "Finalizar",
+            "back": "Atrás"
+        }
+    },
+    "documentation": {
+        "title": "Documentación"
+    },
+    "authentication": {
+        "loggedIn": "Has iniciado sesión",
+        "loggedOut": "¡Hasta luego!",
+        "loggingOut": "Cerrando sesión...",
+        "loggingIn": "Iniciando sesión..."
+    },
+    "lawyers": {
+        "assignedLawyer": "Tu abogado",
+        "email": "Email",
+        "phone": "Teléfono"
+    },
+    "documents": {
+        "history": {
+            "action": "ACCIÓN",
+            "user": "USUARIO",
+            "date": "FECHA",
+            "description": "DESCRIPCIÓN"
+        },
+        "actions": {
+            "export": "Exportar documento",
+            "viewDocument": "Ver documento",
+            "delete": "Eliminar"
+        },
+        "info": {
+            "history": "Historial",
+            "askedBy": "Solicitado por",
+            "lastUpdate": "Ultima actualización"
+        },
+        "status": {
+            "completed": "Completado",
+            "pending": "Pediente"
+        }
+    },
+    "errors": {
+        "unexpected": "Error inesperado"
+    },
+    "appointments": {
+        "myAppointment": "Mi cita",
+        "actions": {
+            "edit": "Editar"
+        },
+        "appointmentEdit": {
+            "modalTitle": "Editar mi cita"
+        },
+        "appointmentMethod": {
+            "phone": "Te llamaremos al teléfono indicado.",
+            "office": "Te esperamos en nuestras oficinas."
+        },
+        "officeAppointment": {
+            "directions" : "Dirección",
+            "directionLink": "https://g.page/eliza-asesores?share"
+        },
+        "form": {
+            "scheduleAppointment": "Concertar tu cita",
+            "fields": {
+              "time": {
+                "label": "Hora",
+                "error": "Hora inválida"
+              },
+              "method": {
+                "label": "¿Cómo quedamos?",
+                "types": {
+                  "phone": {
+                    "label": "Tu abogado te llamará",
+                    "text": "Cita telefónica",
+                    "phoneNumber": "Número de teléfono"
+                  }, 
+                  "office": {
+                    "label": "Te esperaremos en nuestra oficina.",
+                    "text": "Cita presencial"
+                  }
+                }
+              }
+            },
+            "submit": "Concerta cita"
+        }
+    },
+    "global": {
+        "loading": "Cargando...",
+        "ok": "¡Listo!"
+    },
+    "navbar": {
+        "myProfile": "Mi cuenta"
+    },
+    "profile": {
+        "title": "Mi cuenta"
+    }
+}
