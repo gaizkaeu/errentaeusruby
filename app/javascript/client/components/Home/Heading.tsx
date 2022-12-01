@@ -7,6 +7,9 @@ import { ArrowIcon } from "../Icons/ArrowIcon";
 const Heading = () => {
   return (
     <div className="relative isolate">
+      <link rel="preload" as="image" href="/iphone-landing.webp" />
+      <link rel="preload" as="image" href="/iphone-landing-mobile.webp" />
+
       <div className="invisible lg:visible absolute top-25 inset-x-0 -z-50">
         <img
           className="invisible lg:visible relative left-[calc(50%-8rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-34rem)] sm:h-[42.375rem]"
