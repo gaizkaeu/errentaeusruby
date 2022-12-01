@@ -9,6 +9,7 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 
+import "./i18n";
 import i18next from "i18next";
 import { darkTheme, lightTheme } from "./theme";
 import { useGetCurrentAccountQuery } from "./storage/api";
