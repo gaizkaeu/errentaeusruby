@@ -5,6 +5,7 @@ import { Loading } from "@nextui-org/react";
 import { Suspense } from "react";
 import { useAuth } from "./hooks/authHook";
 import { useGetCurrentAccountQuery } from "./storage/api";
+import App from "./App";
 
 const ShowDocumentHistory = React.lazy(
   () => import("./components/Document/modals/DocumentHistoryModal")
@@ -31,7 +32,6 @@ const EditAppointment = React.lazy(
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const EstimationPage = React.lazy(() => import("./pages/EstimationPage"));
 const CalculatorPage = React.lazy(() => import("./pages/CalculatorPage"));
-const App = React.lazy(() => import("./App"));
 const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 
 const PrivateRoute = (props: { children: JSX.Element }) => {

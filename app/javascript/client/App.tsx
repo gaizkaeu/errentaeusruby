@@ -9,13 +9,14 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 
-import "./i18n";
 import i18next from "i18next";
 import { darkTheme, lightTheme } from "./theme";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useGetCurrentAccountQuery } from "./storage/api";
-import ConfirmationBanner from "./components/Authentication/ConfirmationBanner";
 import { useAuth } from "./hooks/authHook";
+
+const ConfirmationBanner = React.lazy(
+  () => import("./components/Authentication/ConfirmationBanner")
+);
 
 const App = () => {
   const darkMode = useDarkMode();
@@ -36,21 +37,19 @@ const App = () => {
   });
 
   return (
-    <GoogleOAuthProvider clientId="321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com">
-      <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
-        <Toaster />
-        <Navigation />
-        {auth.status.loggedIn && !auth.currentUser?.confirmed && (
-          <ConfirmationBanner />
-        )}
-        <div className="min-h-screen">
-          <Suspense fallback={<Loader />}>
-            <Outlet />
-          </Suspense>
-        </div>
-        <Footer />
-      </NextUIProvider>
-    </GoogleOAuthProvider>
+    <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
+      <Toaster />
+      <Navigation />
+      <div className="min-h-screen">
+        <Suspense fallback={<Loader />}>
+          {auth.status.loggedIn && !auth.currentUser?.confirmed && (
+            <ConfirmationBanner />
+          )}
+          <Outlet />
+        </Suspense>
+      </div>
+      <Footer />
+    </NextUIProvider>
   );
 };
 

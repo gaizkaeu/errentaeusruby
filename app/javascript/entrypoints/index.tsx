@@ -1,5 +1,5 @@
 /* eslint-disable */
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import "./index.css";
 
 import AppRoutes from "../client/routes"
@@ -33,11 +33,10 @@ register("/sw.js", {
   },
 });
 
-const root = ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root") as HTMLElement
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(
+  <BrowserRouter>
+    <AppRoutes />
+  </BrowserRouter>
 );
