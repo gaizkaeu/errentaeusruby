@@ -1,6 +1,6 @@
 import { Card, Spacer, Text } from "@nextui-org/react";
+import { TaxIncome } from "../../../../storage/models/TaxIncome";
 import { AppointmentWrapper } from "../../../Appointment/Appointment";
-import { TaxIncome } from "../../../../storage/types";
 
 const WaitingMeeting = (props: { taxIncome: TaxIncome }) => {
   return (

@@ -4,8 +4,8 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useCreateTaxIncomeMutation } from "../../../storage/api";
-import { TaxIncomeData } from "../../../storage/types";
 import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
+import { TaxIncomeData } from "../../../storage/models/TaxIncome";
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();

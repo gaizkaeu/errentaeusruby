@@ -6,17 +6,6 @@ export interface BaseQueryMultipleErrors {
 export interface BaseQuerySingleErrors {
   error: string | unknown;
 }
-export interface TaxIncome {
-  id: string;
-  price: number;
-  state: TaxIncomeStatus;
-  user: string;
-  estimation: string;
-  lawyer: string;
-  appointment: string;
-  created_at: string;
-  updated_at: string;
-}
 
 export interface Document {
   id: string;
@@ -75,25 +64,6 @@ export interface Appointment {
   time: string;
   method: "office" | "phone";
 }
-
-export type TaxIncomeStatus =
-  | "pending_assignation"
-  | "waiting_for_meeting_creation"
-  | "waiting_payment"
-  | "waiting_for_meeting"
-  | "rejected"
-  | "pending_documentation"
-  | "in_progress"
-  | "finished";
-
-export interface TaxIncomeData {
-  observations: string;
-  estimation: {
-    token: string;
-  };
-}
-
-export type TaxIncomesResponse = TaxIncome[];
 
 export interface AuthState {
   status: "succeeded" | "loading" | "failed";

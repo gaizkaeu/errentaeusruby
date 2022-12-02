@@ -8,9 +8,9 @@ import { EstimationWrapper } from "../../Estimation/EstimationCard";
 import { useAuth } from "../../../hooks/authHook";
 import { TaxIncomeAdminPanel } from "../LawyerComponents/TaxIncomeAdminPanel";
 import { CpuChipIcon } from "@heroicons/react/24/outline";
-import { TaxIncome } from "../../../storage/types";
 import { TaxIncomeDeleteComponent } from "../components/DeleteTaxIncome";
 import { Stepper } from "../components/Stepper";
+import { TaxIncome } from "../../../storage/models/TaxIncome";
 
 const ShowTaxIncomeSkeleton = () => {
   return (

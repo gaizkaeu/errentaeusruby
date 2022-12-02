@@ -1,5 +1,5 @@
+import { TaxIncome } from "../../../../storage/models/TaxIncome";
 import NewAppointmentForm from "../../../Appointment/NewAppointment";
-import { TaxIncome } from "../../../../storage/types";
 
 const MeetingCreation = (props: { taxIncome: TaxIncome }) => {
   const { taxIncome } = props;

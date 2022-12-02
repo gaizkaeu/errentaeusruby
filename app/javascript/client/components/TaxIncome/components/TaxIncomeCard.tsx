@@ -1,6 +1,6 @@
 import { Text } from "@nextui-org/react";
 import { Navigate } from "react-router-dom";
-import { TaxIncome } from "../../../storage/types";
+import { TaxIncome } from "../../../storage/models/TaxIncome";
 import MeetingCreation from "./CardComponents/MeetingCreation";
 import WaitingPayment, { PaymentCompleted } from "./CardComponents/Payment";
 import DocumentationUpload from "./CardComponents/WaitingDocumentation";

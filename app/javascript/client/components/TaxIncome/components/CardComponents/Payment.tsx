@@ -1,5 +1,4 @@
 import { Button, Card, Loading, Spacer, Text } from "@nextui-org/react";
-import { TaxIncome } from "../../../../storage/types";
 import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
@@ -10,6 +9,7 @@ import CheckAnimated from "../../../Icons/CheckAnimated";
 import { useNavigate } from "react-router-dom";
 import { useGetPaymentDataOfTaxIncomeQuery } from "../../../../storage/api";
 import { PaymentDetailsComponent } from "../../../Checkout/PaymentDetails";
+import { TaxIncome } from "../../../../storage/models/TaxIncome";
 
 const stripePromise = loadStripe(
   "pk_test_51LxvpDGrlIhNYf6eC8Bfb4jKtTzFRPBEkpNLHWRjq6sgMFtlb6bQ0dmuIEWANdwCkeV1laTQNAXWJjYEYmmen5me00SA8Wd4kJ"

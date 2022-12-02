@@ -1,5 +1,4 @@
 import { Button, Card, Text } from "@nextui-org/react";
-import { TaxIncome } from "../../../storage/types";
 import { RightArrowIcon } from "../../Icons/RightArrowIcon";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,6 +7,7 @@ import {
 } from "../../Lawyer/AssignedLawyer";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
+import { TaxIncome } from "../../../storage/models/TaxIncome";
 
 const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   const nav = useNavigate();
@@ -49,7 +49,7 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
         <div className="flex flex-wrap items-center">
           <div className="flex-1">
             {taxIncome.lawyer ? (
-              <AssignedLawyerSimple lawyerId={taxIncome.lawyer} />
+              <AssignedLawyerSimple lawyerId={taxIncome.lawyer} size={"xs"} />
             ) : (
               <LawyerSkeleton />
             )}
@@ -58,6 +58,7 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
             auto
             color="warning"
             rounded
+            aria-label="show tax income"
             onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}
             iconRight={
               <RightArrowIcon

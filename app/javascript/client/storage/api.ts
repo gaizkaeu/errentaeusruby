@@ -1,10 +1,8 @@
 import { BaseQueryFn, createApi } from "@reduxjs/toolkit/query/react";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { TaxIncomesResponse, TaxIncome, TaxIncomeData } from "./models/TaxIncome";
 import {
-  TaxIncomesResponse,
   Appointment,
-  TaxIncome,
-  TaxIncomeData,
   Estimation,
   IUser,
   PaymentDetails,
