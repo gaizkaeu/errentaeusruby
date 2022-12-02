@@ -2,9 +2,11 @@ FactoryBot.define do
     sequence :email do |n|
       "person#{n}@example.com"
     end
+
+
     factory :user, class: "Api::V1::User", aliases: [:client] do
-      first_name { "John" }
-      last_name  { "Doe" }
+      first_name { "My Excellent" }
+      last_name  { "Lawyer" }
       email { generate(:email) }
       password { "test123" }
       password_confirmation { "test123" }

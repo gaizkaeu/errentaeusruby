@@ -3,9 +3,9 @@ import { Loading, Text } from "@nextui-org/react";
 import {
   useGetAppointmentsQuery,
   useGetTaxIncomesQuery,
-} from "../../storage/api";
-import TaxIncomeCardMin from "./components/TaxIncomeCardMin";
-import { AppointmentCard } from "../Appointment/Appointment";
+} from "../../../storage/api";
+import TaxIncomeCardMin from "./TaxIncomeCardMin";
+import { AppointmentCard } from "../../Appointment/Appointment";
 
 const TaxIncomeResume = () => {
   const taxIncomes = useGetTaxIncomesQuery();

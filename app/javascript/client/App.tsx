@@ -14,10 +14,7 @@ import i18next from "i18next";
 import { darkTheme, lightTheme } from "./theme";
 import { useGetCurrentAccountQuery } from "./storage/api";
 import { useAuth } from "./hooks/authHook";
-
-const ConfirmationBanner = React.lazy(
-  () => import("./components/Authentication/ConfirmationBanner")
-);
+import ConfirmationBanner from "./components/Authentication/ConfirmationBanner";
 
 const App = () => {
   const darkMode = useDarkMode();
@@ -41,11 +38,11 @@ const App = () => {
     <NextUIProvider theme={darkMode.isDarkMode ? darkTheme : lightTheme}>
       <Toaster />
       <Navigation />
+      {auth.status.loggedIn && !auth.currentUser?.confirmed && (
+        <ConfirmationBanner />
+      )}
       <div className="min-h-screen">
         <Suspense fallback={<Loader />}>
-          {auth.status.loggedIn && !auth.currentUser?.confirmed && (
-            <ConfirmationBanner />
-          )}
           <Outlet />
         </Suspense>
       </div>

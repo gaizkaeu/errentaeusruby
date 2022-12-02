@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import { Button, Text } from "@nextui-org/react";
-import TaxIncomeResume from "./TaxIncomeResume";
+import TaxIncomeResume from "../components/TaxIncomeResume";
 import { useNavigate } from "react-router-dom";
-import { ArrowIcon } from "../Icons/ArrowIcon";
-import { ShowMyAssignedTaxIncomes } from "./LawyerComponents/AssignedTaxIncomes";
-import { useAuth } from "../../hooks/authHook";
+import { ShowMyAssignedTaxIncomes } from "../LawyerComponents/AssignedTaxIncomes";
+import { useAuth } from "../../../hooks/authHook";
+import { NewspaperIcon } from "@heroicons/react/24/outline";
 
 const MenuTaxIncome = () => {
   const nav = useNavigate();
@@ -21,9 +21,10 @@ const MenuTaxIncome = () => {
             color="success"
             auto
             onPress={() => nav("new")}
-            iconRight={<ArrowIcon />}
+            aria-label="create new tax income"
+            iconRight={<NewspaperIcon height="15px" />}
           >
-            Nueva declaración
+            <span className="hidden md:inline">Nueva declaración</span>
           </Button>
         </div>
       </div>

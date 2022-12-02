@@ -27,7 +27,16 @@ export const useAuth = () => {
   const [googleoAuthCallback] = useGoogleOAuthOneTapCallBackMutation();
 
   const oneTapSuccess = (res: CredentialResponse) => {
-    if (res.credential) googleoAuthCallback(res.credential);
+    const toastLogin = toast.loading("Iniciando sesión con google");
+    if (res.credential)
+      googleoAuthCallback(res.credential)
+        .unwrap()
+        .then(() => {
+          toast.success("¡Hola!", { id: toastLogin });
+        })
+        .catch(() => {
+          toast.error("Error", { id: toastLogin });
+        });
   };
 
   const GoogleLoginComponent = () => (

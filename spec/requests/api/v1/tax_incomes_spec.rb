@@ -15,7 +15,8 @@ require 'rails_helper'
 RSpec.describe "/api/v1/tax_incomes" do
  
   let(:user) {create(:user)}
-  
+  let(:lawyer) {create(:lawyer)}
+
   let(:valid_attributes) do
     {observations: "this is a test", client_id: user.id}
   end
@@ -23,6 +24,132 @@ RSpec.describe "/api/v1/tax_incomes" do
   let(:invalid_attributes) do
     {observations: 3, id: 4, client_id: 3}
   end
+
+  context "with estimation integration" do
+    before do
+      sign_in(user)
+    end
+
+    let(:valid_attributes) do
+      {observations: "this is a test", client_id: user.id}
+    end
+    let(:estimation_params) do
+      {first_name:"Gaizka",
+      first_time:false,
+      home_changes:0,
+      rentals_mortgages:0,
+      professional_company_activity:false,
+      real_state_trade:0,
+      with_couple:false,
+      income_rent:0,
+      shares_trade:0,
+      outside_alava:false}
+    end
+
+    it "creates a tax income with new estimation"  do
+      post estimate_api_v1_estimations_url, params: { estimation: estimation_params }
+      token = JSON.parse(response.body)['token']['data']
+
+      expect do
+        post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: {token:} }
+      end.to change(Api::V1::TaxIncome, :count).by(1)
+      expect(Api::V1::TaxIncome.last.estimation).not_to be_nil
+      expect(Api::V1::TaxIncome.last.estimation.attributes.symbolize_keys!).to match(a_hash_including(estimation_params))
+    end
+
+    it "creates a tax income with invalid estimation"  do
+      post estimate_api_v1_estimations_url, params: { estimation: estimation_params }
+      token = "#{JSON.parse(response.body)['token']['data']}hahaha invalidating jwt"
+
+      expect do
+        post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: {token:} }
+      end.to change(Api::V1::TaxIncome, :count).by(1)
+      expect(Api::V1::TaxIncome.last.estimation).to be_nil
+    end
+  end
+
+  context "with lawyer access assigned" do
+    let(:valid_attributes) do
+      {observations: "this is a test", client_id: user.id, lawyer_id: lawyer.id}
+    end
+
+    describe "GET /index authenticated" do
+      before do
+        sign_in(lawyer)
+      end
+
+      it "renders a successful response" do
+        Api::V1::TaxIncome.create! valid_attributes
+        get api_v1_tax_incomes_url
+        expect(response).to be_successful
+      end
+    end
+
+    describe "GET /show authenticated" do
+      before do
+        sign_in(lawyer)
+      end
+  
+      it "renders a successful response" do
+        tax_income = Api::V1::TaxIncome.create! valid_attributes
+        get api_v1_tax_income_url(tax_income)
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  context "with lawyer access not assigned" do
+    let(:valid_attributes) do
+      {observations: "this is a test", client_id: user.id, lawyer_id: lawyer.id}
+    end
+
+    describe "GET /index authenticated" do
+      before do
+        sign_in(lawyer)
+      end
+
+      it "renders a successful response" do
+        Api::V1::TaxIncome.create! valid_attributes
+        get api_v1_tax_incomes_url
+        expect(response).to be_successful
+      end
+    end
+
+    describe "GET /show authenticated" do
+      let(:evil_lawyer) {create(:lawyer)}
+
+      before do
+        sign_in(evil_lawyer)
+      end
+  
+      it "renders a successful response" do
+        tax_income = Api::V1::TaxIncome.create! valid_attributes
+        get api_v1_tax_income_url(tax_income)
+        expect(response).not_to be_successful
+      end
+    end
+  end
+
+  context "with user with no access" do
+    let(:evil) {create(:user)}
+
+    before do
+      sign_in(evil)
+    end
+
+    it "can index his tax incomes" do
+      Api::V1::TaxIncome.create! valid_attributes
+      get api_v1_tax_incomes_url
+      expect(response).to be_successful
+    end
+
+    it "can not see other tax incomes" do
+      tax_income = Api::V1::TaxIncome.create! valid_attributes
+      get api_v1_tax_income_url(tax_income)
+      expect(response).not_to be_successful
+    end
+  end
+
 
   describe "GET /index authenticated" do
     before do

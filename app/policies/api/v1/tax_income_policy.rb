@@ -30,11 +30,11 @@ module Api
         record.client == user || user.lawyer?
       end
 
-      def documents
+      def documents?
         index?
       end
 
-      def payment_data
+      def payment_data?
         index?
       end
 

@@ -3,9 +3,9 @@ import { Button, Grid, Text, Textarea } from "@nextui-org/react";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useCreateTaxIncomeMutation } from "../../storage/api";
-import { TaxIncomeData } from "../../storage/types";
-import { EstimationFromJWTWrapper } from "../Estimation/EstimationCard";
+import { useCreateTaxIncomeMutation } from "../../../storage/api";
+import { TaxIncomeData } from "../../../storage/types";
+import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();

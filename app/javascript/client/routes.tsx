@@ -19,13 +19,13 @@ const AuthModal = React.lazy(
   () => import("./components/Authentication/modals/AuthModal")
 );
 const NewTaxIncome = React.lazy(
-  () => import("./components/TaxIncome/NewTaxIncome")
+  () => import("./components/TaxIncome/pages/NewTaxIncome")
 );
 const ShowTaxIncome = React.lazy(
-  () => import("./components/TaxIncome/ShowTaxIncome")
+  () => import("./components/TaxIncome/pages/ShowTaxIncome")
 );
 const MenuTaxIncome = React.lazy(
-  () => import("./components/TaxIncome/MenuTaxIncome")
+  () => import("./components/TaxIncome/pages/MenuTaxIncome")
 );
 const TaxIncomePage = React.lazy(() => import("./pages/TaxIncomePage"));
 const EditAppointment = React.lazy(
