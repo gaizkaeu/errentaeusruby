@@ -158,9 +158,8 @@ jobs:
             STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:LATEST
             STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:LATEST
           flags: |
-            --set-cloudsql-instances=eliza-asesores:europe-west4:errenta \
-            --command=\
-              'bundle exec puma -C config/puma.rb'
+            --set-cloudsql-instances=eliza-asesores:europe-west4:errenta
+
 
       - name: 'Notify deployment'
         uses: honeybadger-io/github-notify-deploy-action@v1
