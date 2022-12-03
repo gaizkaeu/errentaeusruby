@@ -4,16 +4,21 @@ module BillingService
         require 'stripe'
 
         def create_payment_intent(amount, metadata, customer=nil)
-            # rubocop:disable Rails/SaveBang
-            payment_intent = Stripe::PaymentIntent.create(
+            Stripe::PaymentIntent.create(
                 amount:,
                 currency: 'eur',
                 payment_method_types: [:card],
                 metadata:,
                 customer:,
             )
-            # rubocop:enable Rails/SaveBang
-            payment_intent['client_secret']
+                        
+        end
+
+        def retrieve_payment_intent(payment_intent)
+            Stripe::PaymentIntent.retrieve(
+                payment_intent
+              )
+                        
         end
     end
 end

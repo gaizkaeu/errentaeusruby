@@ -18,6 +18,7 @@ import { CpuChipIcon } from "@heroicons/react/24/outline";
 import { TaxIncomeDeleteComponent } from "../components/DeleteTaxIncome";
 import { Stepper } from "../components/Stepper";
 import { TaxIncome } from "../../../storage/models/TaxIncome";
+import { Documents } from "../../Document/Document";
 
 const ShowTaxIncomeSkeleton = () => {
   return (
@@ -150,6 +151,9 @@ const LawyerView = (props: { data: TaxIncome; page: string }) => (
       <Container css={{ pointerEvents: "none" }}>
         <UserView data={props.data} page={props.page} />
       </Container>
+    </Collapse>
+    <Collapse title="Documents">
+      <Documents taxIncomeId={props.data.id} />
     </Collapse>
     <Collapse title="Panel de administrador">
       <TaxIncomeAdminPanel taxIncome={props.data} />

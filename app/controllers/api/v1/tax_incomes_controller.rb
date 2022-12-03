@@ -47,10 +47,8 @@ module Api
       def checkout
         authorize @tax_income
         if @tax_income.waiting_payment?
-          payment_intent = BillingService::StripeService.create_payment_intent(
-            @tax_income.price, {id: @tax_income.id}, @tax_income.client.stripe_customer_id
-          )
-          render json: { clientSecret: payment_intent }
+          intent = @tax_income.retrieve_payment_intent
+          render json: { clientSecret: intent[0], amount: intent[1]}
         else
           render json: { error: 'Not able to pay' }, status: :unprocessable_entity
         end

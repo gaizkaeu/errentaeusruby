@@ -154,10 +154,10 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           region: europe-west1
           secrets: |
-            DB_PASSWORD=ERRENTA-DBPASSWORD:1
-            STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:1
-            STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:1
-          flags: '--set-cloudsql-instances=eliza-asesores:europe-west4:errenta'
+            DB_PASSWORD=ERRENTA-DBPASSWORD:LATEST
+            STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:LATEST
+            STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:LATEST
+          flags: '--set-cloudsql-instances=eliza-asesores:europe-west4:errenta --command=bundle exec puma -C config/puma.rb'
 
       - name: 'Notify deployment'
         uses: honeybadger-io/github-notify-deploy-action@v1

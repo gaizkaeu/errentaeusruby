@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_29_115416) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_125649) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -64,17 +64,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_115416) do
     t.integer "state"
     t.string "name"
     t.integer "tax_income_id", null: false
-    t.integer "user_id", null: false
-    t.integer "lawyer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "export_status"
     t.integer "exported_by_id"
     t.integer "document_number"
     t.index ["exported_by_id"], name: "index_documents_on_exported_by_id"
-    t.index ["lawyer_id"], name: "index_documents_on_lawyer_id"
     t.index ["tax_income_id"], name: "index_documents_on_tax_income_id"
-    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "estimations", force: :cascade do |t|
@@ -145,9 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_115416) do
   add_foreign_key "document_histories", "documents"
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
-  add_foreign_key "documents", "users"
   add_foreign_key "documents", "users", column: "exported_by_id"
-  add_foreign_key "documents", "users", column: "lawyer_id"
   add_foreign_key "estimations", "tax_incomes"
   add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "tax_incomes", "users", column: "lawyer_id"

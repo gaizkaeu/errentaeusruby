@@ -5,13 +5,14 @@ module Api
       include AASM
 
       belongs_to :tax_income
-      belongs_to :user, class_name: 'User'
-      belongs_to :lawyer, class_name: 'User'
 
       has_many_attached :files
       has_one_attached :exported_document
 
       validates :document_number, presence: true
+
+      delegate :lawyer, to: :tax_income, allow_nil: false
+      delegate :client, to: :tax_income, allow_nil: false
 
       validates :files, content_type: ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']
       validates :files, size: { between: (1.kilobyte)..(5.megabytes)}

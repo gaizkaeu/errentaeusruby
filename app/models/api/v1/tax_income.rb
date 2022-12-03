@@ -64,7 +64,29 @@ module Api
         !lawyer_id.nil?
       end
 
+
+
+
+      def retrieve_payment_intent
+        return create_pi if payment.nil?
+          payment_intent = BillingService::StripeService.retrieve_payment_intent(
+            payment
+          )
+          if payment_intent['amount'] != price
+            return create_pi
+          end
+        [payment_intent['client_secret'], payment_intent['amount']]
+      end
+
       private
+
+      def create_pi
+        payment_intent = BillingService::StripeService.create_payment_intent(
+          price, {id: }, client.stripe_customer_id
+        )
+        update!(payment: payment_intent['id'])
+        [payment_intent['client_secret'], payment_intent['amount']]
+      end
 
       def send_confirmation_email
         TaxIncomeMailer.creation(id).deliver_later!

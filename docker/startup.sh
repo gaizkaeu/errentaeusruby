@@ -10,4 +10,4 @@ echo "Preparing database..."
 bin/rails db:prepare
 echo "Database is ready!"
 
-bundle exec puma -C config/puma.rb
+exec "$@"

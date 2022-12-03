@@ -98,7 +98,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def document_create_params
-        params.require(:document).permit(:name, :lawyer_id, :tax_income_id, :user_id, :files, :document_number)
+        params.require(:document).permit(:name, :tax_income_id, :files, :document_number)
       end
     end
   end

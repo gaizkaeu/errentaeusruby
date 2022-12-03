@@ -1,6 +1,10 @@
 import { BaseQueryFn, createApi } from "@reduxjs/toolkit/query/react";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { TaxIncomesResponse, TaxIncome, TaxIncomeData } from "./models/TaxIncome";
+import {
+  TaxIncomesResponse,
+  TaxIncome,
+  TaxIncomeData,
+} from "./models/TaxIncome";
 import {
   Appointment,
   Estimation,
@@ -176,15 +180,13 @@ export const api = createApi({
         { type: "Document", id: result?.id },
       ],
     }),
-    createDocument: build.mutation<Document, { files: any }>({
+    createDocument: build.mutation<Document, Partial<Document>>({
       query: (data) => ({
         url: `documents`,
         method: "post",
-        body: { files: data.files },
+        data: data,
       }),
-      invalidatesTags: (result, _error) => [
-        { type: "Document", id: result?.id },
-      ],
+      invalidatesTags: (_error) => [{ type: "Document", id: "LIST" }],
     }),
     exportDocumentById: build.mutation<Document, string>({
       query: (data) => ({

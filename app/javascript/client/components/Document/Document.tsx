@@ -9,17 +9,46 @@ import {
 } from "@nextui-org/react";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
+import { Form, Formik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../hooks/authHook";
 import {
+  useCreateDocumentMutation,
   useDeleteDocumentAttachmentByIdMutation,
   useExportDocumentByIdMutation,
   useGetDocumentHistoryByIdQuery,
+  useGetDocumentsOfTaxIncomeQuery,
 } from "../../storage/api";
 import { useAppSelector } from "../../storage/hooks";
 import { Document } from "../../storage/types";
+import InputField from "../FormFields/InputField";
 import { AssignedLawyerSimple } from "../Lawyer/AssignedLawyer";
 import { AttachmentForm } from "./AttachmentForm";
+
+export const Documents = (props: { taxIncomeId: string }) => {
+  const { currentUser } = useAuth();
+  const { currentData, isLoading, isError } = useGetDocumentsOfTaxIncomeQuery(
+    props.taxIncomeId,
+    {
+      pollingInterval: 3000,
+    }
+  );
+
+  return (
+    <div className="grid grid-cols-1 gap-4">
+      {currentUser && currentUser.account_type == "lawyer" && (
+        <DocumentCreationComponent taxIncomeId={props.taxIncomeId} />
+      )}
+      {currentData &&
+        !isLoading &&
+        !isError &&
+        currentData.map((doc, index) => (
+          <DocumentComponent document={doc} key={index} />
+        ))}
+    </div>
+  );
+};
 
 export const DocumentHistory = (props: { documentId: string }) => {
   const { t } = useTranslation();
@@ -110,6 +139,36 @@ const DocumentActions = (props: { document: Document }) => {
           </Button>
         )}
     </div>
+  );
+};
+
+export const DocumentCreationComponent = (props: { taxIncomeId: string }) => {
+  const [createDocument] = useCreateDocumentMutation();
+  const onSubmit = (values: Partial<Document>) => {
+    createDocument(values);
+  };
+
+  return (
+    <Card variant="flat" role="article">
+      <Card.Header>Nuevo documento</Card.Header>
+      <Card.Divider />
+      <Card.Body>
+        <div>
+          <Formik
+            initialValues={{
+              tax_income_id: props.taxIncomeId,
+            }}
+            onSubmit={onSubmit}
+          >
+            <Form>
+              <InputField name="name"></InputField>
+              <InputField name="document_number"></InputField>
+              <button type="submit">enviar</button>
+            </Form>
+          </Formik>
+        </div>
+      </Card.Body>
+    </Card>
   );
 };
 
