@@ -154,9 +154,9 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           region: europe-west1
           secrets: |
-            DB_PASSWORD=ERRENTA-DBPASSWORD:LATEST
-            STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:LATEST
-            STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:LATEST
+            DB_PASSWORD=ERRENTA-DBPASSWORD:latest
+            STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:latest
+            STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:latest
           flags: |
             --set-cloudsql-instances=eliza-asesores:europe-west4:errenta
 
