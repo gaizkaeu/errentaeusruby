@@ -1,5 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
-import { Collapse, Container, Modal, Spacer, Switch, Text } from "@nextui-org/react";
+import {
+  Collapse,
+  Container,
+  Modal,
+  Spacer,
+  Switch,
+  Text,
+} from "@nextui-org/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import TaxIncomeCard from "../components/TaxIncomeCard";
 import AssignedLawyerCard from "../../Lawyer/AssignedLawyer";
