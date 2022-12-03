@@ -1,7 +1,9 @@
 module StripeWebhooks
     class PaymentSucceeded
-        def call(_event)
-            Rails.logger.debug "llego"
+        def call(event)
+            tax_income = Api::V1::TaxIncome.find(event["data"]["object"]["metadata"]["id"])
+            tax_income.update!(payment: event["data"]["object"]["id"])
+            tax_income.paid!
         end
     end
 end

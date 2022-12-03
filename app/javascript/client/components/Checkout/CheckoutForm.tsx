@@ -60,10 +60,10 @@ const CheckoutForm = () => {
 
     const { error } = await stripe.confirmPayment({
       elements,
-      redirect: "always",
+      redirect: "if_required",
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://errentaeusreact.test${loc.pathname}`,
+        return_url: `https://errenta.eus${loc.pathname}`,
       },
     });
 
@@ -74,10 +74,9 @@ const CheckoutForm = () => {
     // redirected to the `return_url`.
     if (error?.type === "card_error" || error?.type === "validation_error") {
       setMessage(error?.message);
+      setIsLoading(false);
       return;
     }
-
-    setIsLoading(false);
   };
 
   return (

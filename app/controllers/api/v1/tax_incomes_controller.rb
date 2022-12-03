@@ -57,6 +57,7 @@ module Api
       end
 
       def payment_data
+        authorize @tax_income
         if @tax_income.payment
           payment_data = Stripe::PaymentIntent.retrieve(
             @tax_income.payment

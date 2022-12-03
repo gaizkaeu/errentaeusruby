@@ -16,6 +16,7 @@ const TaxIncomeCard = (props: {
 
   const renderStatus = () => {
     const to_render = props.renderCard ?? taxIncome.state;
+
     switch (to_render) {
       case "pending_assignation":
         return taxIncome.state == "pending_assignation" ? (

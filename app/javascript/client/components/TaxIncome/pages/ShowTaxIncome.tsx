@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Collapse, Modal, Spacer, Switch, Text } from "@nextui-org/react";
+import { Collapse, Container, Modal, Spacer, Switch, Text } from "@nextui-org/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import TaxIncomeCard from "../components/TaxIncomeCard";
 import AssignedLawyerCard from "../../Lawyer/AssignedLawyer";
@@ -139,8 +139,10 @@ const UserView = (props: { data: TaxIncome; page: string }) => {
 
 const LawyerView = (props: { data: TaxIncome; page: string }) => (
   <>
-    <Collapse title="Vista de Usuario">
-      <UserView data={props.data} page={props.page} />
+    <Collapse title="Vista de Usuario" subtitle="Solo ver">
+      <Container css={{ pointerEvents: "none" }}>
+        <UserView data={props.data} page={props.page} />
+      </Container>
     </Collapse>
     <Collapse title="Panel de administrador">
       <TaxIncomeAdminPanel taxIncome={props.data} />
