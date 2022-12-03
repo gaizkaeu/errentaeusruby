@@ -58,9 +58,9 @@ module Api
 
         def resolve
           if user.lawyer?
-            scope.where(lawyer: user)
+            scope.where(lawyer: user).includes(:client, :lawyer)
           else
-            scope.where(client: user)
+            scope.where(client: user).includes(:client, :lawyer)
           end
         end
 

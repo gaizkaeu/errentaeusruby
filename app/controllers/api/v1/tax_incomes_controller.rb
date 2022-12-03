@@ -14,7 +14,7 @@ module Api
 
       # GET /tax_incomes or /tax_incomes.json
       def index
-        @tax_incomes = policy_scope(TaxIncome)
+        @tax_incomes = policy_scope(TaxIncome).order(updated_at: :desc)
       end
 
       # GET /tax_incomes/1 or /tax_incomes/1.json

@@ -29,11 +29,11 @@ module Api
       private
 
       def notify_creation_to_tax_income
-        tax_income.appointment_created!
+        tax_income&.appointment_created!
       end
 
       def notify_deletion_to_tax_income
-        tax_income.appointment_deleted!
+        tax_income&.appointment_deleted!
       end
     end
 end

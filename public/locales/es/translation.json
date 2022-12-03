@@ -16,6 +16,16 @@
     },
     "taxincome": {
         "title": "Mi declaración",
+        "statuses": {
+            "pending_assignation": "Asignando abogado",
+            "waiting_for_meeting_creation": "Cita",
+            "waiting_for_meeting": "Esperando cita",
+            "waiting_payment": "Pago",
+            "rejected": "Rechazado",
+            "pending_documentation": "Documentación",
+            "in_progress": "En curso",
+            "finished": "Terminado"
+        },
         "actions": {
             "delete": {
                 "button": "Eliminar",

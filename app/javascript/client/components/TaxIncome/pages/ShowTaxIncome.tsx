@@ -19,6 +19,7 @@ import { TaxIncomeDeleteComponent } from "../components/DeleteTaxIncome";
 import { Stepper } from "../components/Stepper";
 import { TaxIncome } from "../../../storage/models/TaxIncome";
 import { Documents } from "../../Document/Document";
+import { t } from "i18next";
 
 const ShowTaxIncomeSkeleton = () => {
   return (
@@ -126,20 +127,25 @@ const UserView = (props: { data: TaxIncome; page: string }) => {
   );
 
   return (
-    <div className="flex flex-wrap gap-10 p-3 md:mt-10">
-      <div className="flex-1">
-        <TaxIncomeCard
-          taxIncome={props.data}
-          renderCard={props.page}
-          navCurrentState={navCurrentState()}
-        ></TaxIncomeCard>
-      </div>
-      <div className="w-full lg:w-auto">
-        {props.data.lawyer && (
-          <AssignedLawyerCard lawyerId={props.data.lawyer} />
-        )}
-        <Spacer />
-        <EstimationWrapper estimationId={props.data.estimation} />
+    <div className="md:mt-10 p-3">
+      <Text h3 b>
+        {t(`taxincome.statuses.${props.data.state}`)}
+      </Text>
+      <div className="flex flex-wrap gap-10">
+        <div className="flex-1">
+          <TaxIncomeCard
+            taxIncome={props.data}
+            renderCard={props.page}
+            navCurrentState={navCurrentState()}
+          ></TaxIncomeCard>
+        </div>
+        <div className="w-full lg:w-auto">
+          {props.data.lawyer && (
+            <AssignedLawyerCard lawyerId={props.data.lawyer} />
+          )}
+          <Spacer />
+          <EstimationWrapper estimationId={props.data.estimation} />
+        </div>
       </div>
     </div>
   );

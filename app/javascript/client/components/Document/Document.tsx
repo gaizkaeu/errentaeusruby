@@ -9,7 +9,7 @@ import {
 } from "@nextui-org/react";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/authHook";
@@ -91,7 +91,7 @@ export const DocumentHistory = (props: { documentId: string }) => {
         <Table.Column>{t("documents.history.description")}</Table.Column>
       </Table.Header>
       <Table.Body>
-        {currentData!.map((action, ind) => (
+        {currentData.map((action, ind) => (
           <Table.Row key={ind}>
             <Table.Cell>{action.action}</Table.Cell>
             <Table.Cell>
@@ -144,8 +144,13 @@ const DocumentActions = (props: { document: Document }) => {
 
 export const DocumentCreationComponent = (props: { taxIncomeId: string }) => {
   const [createDocument] = useCreateDocumentMutation();
-  const onSubmit = (values: Partial<Document>) => {
-    createDocument(values);
+  const onSubmit = (values: Partial<Document>, helpers: FormikHelpers<any>) => {
+    createDocument(values)
+      .unwrap()
+      .then(() => helpers.resetForm())
+      .catch((e) => {
+        helpers.setErrors(e.data);
+      });
   };
 
   return (
@@ -157,12 +162,24 @@ export const DocumentCreationComponent = (props: { taxIncomeId: string }) => {
           <Formik
             initialValues={{
               tax_income_id: props.taxIncomeId,
+              name: "",
+              document_number: 1,
             }}
             onSubmit={onSubmit}
           >
             <Form>
-              <InputField name="name"></InputField>
-              <InputField name="document_number"></InputField>
+              <InputField
+                name="name"
+                label="Nombre del documento"
+                rounded
+                bordered
+              ></InputField>
+              <InputField
+                name="document_number"
+                label="Numero de documentos"
+                rounded
+                bordered
+              ></InputField>
               <button type="submit">enviar</button>
             </Form>
           </Formik>

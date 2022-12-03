@@ -1,6 +1,6 @@
 import { Card, Text } from "@nextui-org/react";
-import LawyerAvatar, { NoLawyerAvatar } from "./Lawyer";
-import { useGetLawyerByIdQuery } from "../../storage/api";
+import { NoUserAvatar, UserAvatar } from "./Lawyer";
+import { useGetLawyerByIdQuery, useGetUserByIdQuery } from "../../storage/api";
 import { useTranslation } from "react-i18next";
 
 const AssignedLawyerCard = (props: { lawyerId: string }) => {
@@ -14,9 +14,9 @@ const AssignedLawyerCard = (props: { lawyerId: string }) => {
           {isLoading ? (
             <LawyerSkeleton />
           ) : !data || isError || !data ? (
-            <NoLawyerAvatar />
+            <NoUserAvatar />
           ) : (
-            <LawyerAvatar size="md" lawyer={data} />
+            <UserAvatar size="md" user={data} />
           )}
         </div>
       </Card.Body>
@@ -56,9 +56,23 @@ export const AssignedLawyerSimple = (props: {
   return isLoading ? (
     <LawyerSkeleton />
   ) : !data || isError ? (
-    <NoLawyerAvatar />
+    <NoUserAvatar />
   ) : (
-    <LawyerAvatar size={props.size} lawyer={data} />
+    <UserAvatar size={props.size} user={data} />
+  );
+};
+
+export const AssignedUserSimple = (props: {
+  userId: string;
+  size: "xs" | "sm" | "md";
+}) => {
+  const { data, isLoading, isError } = useGetUserByIdQuery(props.userId);
+  return isLoading ? (
+    <LawyerSkeleton />
+  ) : !data || isError ? (
+    <NoUserAvatar />
+  ) : (
+    <UserAvatar size={props.size} user={data} />
   );
 };
 

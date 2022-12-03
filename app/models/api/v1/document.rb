@@ -6,8 +6,8 @@ module Api
 
       belongs_to :tax_income
 
-      has_many_attached :files
-      has_one_attached :exported_document
+      has_many_attached :files, dependent: :destroy
+      has_one_attached :exported_document, dependent: :destroy
 
       validates :document_number, presence: true
 

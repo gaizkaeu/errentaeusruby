@@ -16,6 +16,16 @@
   },
   "taxincome": {
     "title": "My Tax Income",
+    "statuses": {
+      "pending_assignation": "Pending assignation",
+      "waiting_for_meeting_creation": "Appointment creation",
+      "waiting_for_meeting": "Waiting Appointment",
+      "waiting_payment": "Payment",
+      "rejected": "Rejected",
+      "pending_documentation": "Documentation",
+      "in_progress": "In progress",
+      "finished": "Finished"
+    },
     "actions": {
       "delete": {
           "button": "Delete",

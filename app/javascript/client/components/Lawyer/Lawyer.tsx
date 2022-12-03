@@ -3,21 +3,24 @@ import { User } from "@nextui-org/react";
 import { IUser } from "../../storage/types";
 import { useTranslation } from "react-i18next";
 
-const LawyerAvatar = (props: { lawyer: IUser; size: "xs" | "sm" | "md" }) => {
-  const { lawyer } = props;
+export const UserAvatar = (props: {
+  user: IUser;
+  size: "xs" | "sm" | "md";
+}) => {
+  const { user } = props;
   return (
     <Fragment>
       <User
-        text={lawyer.first_name}
-        name={lawyer.first_name}
-        description={props.size == "md" ? lawyer.last_name : undefined}
+        text={user.first_name}
+        name={user.first_name}
+        description={props.size == "md" ? user.last_name : undefined}
         size={props.size}
       />
     </Fragment>
   );
 };
 
-export const NoLawyerAvatar = () => {
+export const NoUserAvatar = () => {
   const { t } = useTranslation();
 
   return (
@@ -42,5 +45,3 @@ const LawyerHover = () => {
     </Fragment>
   );
 }; */
-
-export default LawyerAvatar;

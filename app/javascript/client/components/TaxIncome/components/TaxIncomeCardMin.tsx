@@ -3,14 +3,17 @@ import { RightArrowIcon } from "../../Icons/RightArrowIcon";
 import { useNavigate } from "react-router-dom";
 import {
   AssignedLawyerSimple,
+  AssignedUserSimple,
   LawyerSkeleton,
 } from "../../Lawyer/AssignedLawyer";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
 import { TaxIncome } from "../../../storage/models/TaxIncome";
+import { useAuth } from "../../../hooks/authHook";
 
 const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   const nav = useNavigate();
+  const { currentUser } = useAuth();
 
   const { taxIncome } = props;
 
@@ -48,7 +51,9 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
       <Card.Body>
         <div className="flex flex-wrap items-center">
           <div className="flex-1">
-            {taxIncome.lawyer ? (
+            {currentUser && currentUser.account_type == "lawyer" ? (
+              <AssignedUserSimple userId={taxIncome.user} size={"md"} />
+            ) : taxIncome.lawyer ? (
               <AssignedLawyerSimple lawyerId={taxIncome.lawyer} size={"xs"} />
             ) : (
               <LawyerSkeleton />

@@ -1,5 +1,6 @@
 import { Text } from "@nextui-org/react";
 import { Field, Form, Formik } from "formik";
+import { t } from "i18next";
 import {
   useGetUserByIdQuery,
   useUpdateTaxIncomeMutation,
@@ -33,7 +34,7 @@ export const TaxIncomeAdminPanel = (props: { taxIncome: TaxIncome }) => {
             {TaxIncomeStatuses.map((val, id) => {
               return (
                 <option key={id} value={val}>
-                  {val}
+                  {t(`taxincome.statuses.${val}`)}
                 </option>
               );
             })}
