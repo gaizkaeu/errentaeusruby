@@ -83,6 +83,10 @@ GEM
     brotli (0.4.0)
     builder (3.2.4)
     childprocess (4.1.0)
+    cloudflare-rails (2.4.0)
+      actionpack (>= 5.2, < 7.1.0)
+      activesupport (>= 5.2, < 7.1.0)
+      railties (>= 5.2, < 7.1.0)
     cloudtasker (0.13.0)
       activesupport
       connection_pool
@@ -403,6 +407,7 @@ DEPENDENCIES
   aasm
   active_storage_validations
   bootsnap
+  cloudflare-rails
   cloudtasker
   debug
   devise
