@@ -1,5 +1,8 @@
 import { Text, Loading, Card } from "@nextui-org/react";
-import { useGetAppointmentByIdQuery } from "../../storage/api";
+import {
+  useGetAppointmentByIdQuery,
+  useGetAppointmentsQuery,
+} from "../../storage/api";
 import { DayPicker } from "react-day-picker";
 import { formatRelative } from "date-fns";
 import { es } from "date-fns/locale";
@@ -7,6 +10,23 @@ import es_day from "date-fns/locale/es";
 import { Appointment } from "../../storage/types";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+export const AppointmentList = () => {
+  const appointments = useGetAppointmentsQuery();
+  return (
+    <div className="grid grid-cols-1 gap-4">
+      {appointments.isLoading ||
+      appointments.isError ||
+      !appointments.currentData ? (
+        <Loading type="points" />
+      ) : (
+        appointments.currentData?.map((v, ind) => {
+          return <AppointmentCard appointment={v} key={ind}></AppointmentCard>;
+        })
+      )}
+    </div>
+  );
+};
 
 export const AppointmentWrapper = (props: { appointmentId: string }) => {
   const { currentData, isError, isLoading } = useGetAppointmentByIdQuery(

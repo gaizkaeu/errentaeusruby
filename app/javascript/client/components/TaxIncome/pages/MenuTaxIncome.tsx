@@ -1,19 +1,35 @@
-import { Fragment } from "react";
-import { Button, Text } from "@nextui-org/react";
-import TaxIncomeResume from "../components/TaxIncomeResume";
+import { Text } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { ShowMyAssignedTaxIncomes } from "../LawyerComponents/AssignedTaxIncomes";
 import { useAuth } from "../../../hooks/authHook";
-import { NewspaperIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { Button, MainDiv } from "../../../utils/GlobalStyles";
+import { AppointmentList } from "../../Appointment/Appointment";
+import { TaxIncomeCardMinList } from "../components/TaxIncomeCard";
+
+const TaxIncomeResume = () => {
+  return (
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 mx-auto max-w-7xl sm:px-6 lg:px-8 px-4">
+      <div className="-translate-y-16">
+        <TaxIncomeCardMinList />
+      </div>
+      <div className="-translate-y-9">
+        <Text h3 b>
+          Citas
+        </Text>
+        <AppointmentList />
+      </div>
+    </div>
+  );
+};
 
 const MenuTaxIncome = () => {
   const nav = useNavigate();
   const { currentUser } = useAuth();
   return (
-    <Fragment>
-      <div className="flex">
+    <>
+      <div className="flex px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex-1">
-          <Text h3>Hola, {currentUser?.first_name}</Text>
+          <Text h3>Hola, {currentUser?.first_name}. 👋</Text>
         </div>
         <div>
           <Button
@@ -22,24 +38,16 @@ const MenuTaxIncome = () => {
             auto
             onPress={() => nav("new")}
             aria-label="create new tax income"
-            iconRight={<NewspaperIcon height="15px" />}
+            icon={<PlusCircleIcon height="25px" />}
           >
             <span className="hidden md:inline">Nueva declaración</span>
           </Button>
         </div>
       </div>
-      {currentUser?.account_type == "user" && (
-        <section className="mt-2">
-          <TaxIncomeResume />
-        </section>
-      )}
-      {currentUser?.account_type == "lawyer" && (
-        <section className="mt-2">
-          <Text h4> Mis declaraciones asignadas</Text>
-          <ShowMyAssignedTaxIncomes />
-        </section>
-      )}
-    </Fragment>
+      <MainDiv className="mt-20">
+        <TaxIncomeResume />
+      </MainDiv>
+    </>
   );
 };
 

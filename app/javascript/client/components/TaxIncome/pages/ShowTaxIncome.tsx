@@ -97,20 +97,22 @@ const ShowTaxIncome = () => {
   );
 
   return !isError && currentData && refetch && page ? (
-    <Fragment>
+    <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center">
         <div className="flex-1">
           <Stepper />
         </div>
         <TaxIncomeDeleteComponent taxIncomeId={currentData.id} />
       </div>
-      <Spacer y={2} />
       {currentUser?.account_type === "lawyer" ? (
-        <LawyerView data={currentData} page={page} />
+        <>
+          <Spacer y={2} />
+          <LawyerView data={currentData} page={page} />
+        </>
       ) : (
         <UserView data={currentData} page={page} />
       )}
-    </Fragment>
+    </div>
   ) : isLoading ? (
     <ShowTaxIncomeSkeleton />
   ) : (

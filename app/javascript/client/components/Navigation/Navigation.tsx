@@ -71,7 +71,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar maxWidth="fluid">
+    <Navbar maxWidth="fluid" variant="floating">
       <Navbar.Toggle showIn="xs" aria-label="toggle navbar" />
       <Navbar.Brand>
         <Text b color="inherit">

@@ -20,3 +20,7 @@ export const ErrentaUnderlined = () => (
 export const Button = styled(NextButton, {
   zIndex: 0,
 });
+
+export const MainDiv = styled("div", {
+  backgroundColor: "$accents2",
+});

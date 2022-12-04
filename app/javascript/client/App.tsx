@@ -41,11 +41,9 @@ const App = () => {
       {auth.status.loggedIn && !auth.currentUser?.confirmed && (
         <ConfirmationBanner />
       )}
-      <div className="min-h-screen">
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
-      </div>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
       <Footer />
     </NextUIProvider>
   );

@@ -10,9 +10,9 @@ function TaxIncomePage() {
         gradient="45deg, $blue600 -20%, $pink600 50%"
         textClass="text-4xl font-bold text-black sm:text-5xl xl:text-6xl"
       />
-      <main className="max-w-7xl px-4 mx-auto sm:px-6 lg:px-8">
+      <div>
         <Outlet />
-      </main>
+      </div>
     </Fragment>
   );
 }

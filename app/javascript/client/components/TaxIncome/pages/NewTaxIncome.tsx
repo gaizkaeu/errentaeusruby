@@ -1,11 +1,11 @@
-import { Fragment } from "react";
-import { Button, Grid, Text, Textarea } from "@nextui-org/react";
+import { Grid, Text, Textarea } from "@nextui-org/react";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useCreateTaxIncomeMutation } from "../../../storage/api";
 import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
 import { TaxIncomeData } from "../../../storage/models/TaxIncome";
+import { Button } from "../../../utils/GlobalStyles";
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const NewTaxIncome = () => {
   };
 
   return (
-    <Fragment>
+    <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <Text h2>Nueva declaración.</Text>
       <Text h4>Solo te llevará unos segundos más.</Text>
 
@@ -82,7 +82,7 @@ const NewTaxIncome = () => {
           </Form>
         </Formik>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
