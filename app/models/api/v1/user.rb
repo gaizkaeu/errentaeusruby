@@ -20,6 +20,7 @@ module Api
       has_many :appointments, dependent: :destroy, through: :tax_incomes
       has_many :requested_documents, foreign_key: :user, dependent: :destroy, class_name: 'Document', inverse_of: :user
       has_many :asked_documents, foreign_key: :lawyer, dependent: :destroy, class_name: 'Document',  inverse_of: :laywer
+      has_many :account_histories, dependent: :destroy
 
       enum account_type: { user: 0, lawyer: 1 }
 
@@ -66,6 +67,14 @@ module Api
         end
       end
       # rubocop:enable Metrics/AbcSize
+
+      def after_database_authentication
+        LogAccountLoginJob.perform_async({user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at,}.stringify_keys)
+      end
+
+      def after_provider_authentication(provider_data)
+        LogAccountLoginJob.perform_async({user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at,}.merge(provider_data).stringify_keys)
+      end
     end
   end
 end

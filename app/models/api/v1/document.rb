@@ -5,6 +5,7 @@ module Api
       include AASM
 
       belongs_to :tax_income
+      has_many :document_histories, dependent: :destroy
 
       has_many_attached :files, dependent: :destroy
       has_one_attached :exported_document, dependent: :destroy
