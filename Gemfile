@@ -83,6 +83,9 @@ gem 'bootsnap', require: false
 # Google Token Validator
 gem "googleauth", "~> 1.3"
 
+# Job execution
+gem 'cloudtasker'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -95,8 +98,6 @@ group :production do
   # Error tracking
   gem "honeybadger", "~> 5.0"
 
-  # Job execution
-  gem 'cloudtasker'
 end
 
 group :development, :test do
