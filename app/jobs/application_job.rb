@@ -6,5 +6,5 @@ class ApplicationJob
 
   # Most jobs are safe to ignore if the underlying records are no longer available
   # discard_on ActiveJob::DeserializationError
-  include Cloudtasker::Worker
+  include Cloudtasker::Worker if Rails.env.production?
 end

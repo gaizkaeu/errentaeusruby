@@ -15,4 +15,4 @@ Cloudtasker.configure do |config|
 
     config.gcp_location_id = ENV.fetch('LOCATION', "europe-west1")
     config.gcp_project_id = ENV.fetch('PROJECT_ID', "eliza-asesores")
-  end
+  end if Rails.env.production?
