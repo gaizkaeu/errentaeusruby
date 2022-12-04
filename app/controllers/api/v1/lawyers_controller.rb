@@ -4,6 +4,7 @@ module Api
   module V1
     class LawyersController < ApiBaseController
       before_action :set_lawyer
+
       def show
         render partial: 'api/v1/lawyers/lawyer'
       end

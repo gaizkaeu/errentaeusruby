@@ -10,7 +10,6 @@ module Api
       after_action :verify_authorized, except: :index
       after_action :verify_policy_scoped, only: :index
 
-      rescue_from ActiveRecord::RecordNotFound, with: :tax_income_not_found
 
       # GET /tax_incomes or /tax_incomes.json
       def index
@@ -101,10 +100,6 @@ module Api
       end
       def nested_estimation_params
         params.require(:estimation).permit(:token)
-      end
-
-      def tax_income_not_found
-        render json: {error: "tax income not found"}, status: :unprocessable_entity
       end
     end
   end

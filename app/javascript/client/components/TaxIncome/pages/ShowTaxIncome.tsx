@@ -21,7 +21,7 @@ import { TaxIncome } from "../../../storage/models/TaxIncome";
 import { Documents } from "../../Document/Document";
 import { t } from "i18next";
 
-const ShowTaxIncomeSkeleton = () => {
+export const ShowTaxIncomeSkeleton = () => {
   return (
     <div className="flex flex-col gap-5 p-2 mx-auto select-none sm:p-4 sm:h-64 rounded-2xl sm:flex-row ">
       <div className="flex flex-col flex-1 gap-5 sm:p-2">
@@ -136,6 +136,7 @@ const UserView = (props: { data: TaxIncome; page: string }) => {
       <div className="flex flex-wrap gap-10">
         <div className="flex-1">
           <TaxIncomeCard
+            lawyer={false}
             taxIncome={props.data}
             renderCard={props.page}
             navCurrentState={navCurrentState()}
@@ -161,7 +162,7 @@ const LawyerView = (props: { data: TaxIncome; page: string }) => (
       </Container>
     </Collapse>
     <Collapse title="Documents">
-      <Documents taxIncomeId={props.data.id} />
+      <Documents lawyer={true} taxIncomeId={props.data.id} />
     </Collapse>
     <Collapse title="Panel de administrador">
       <TaxIncomeAdminPanel taxIncome={props.data} />

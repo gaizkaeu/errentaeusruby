@@ -155,6 +155,13 @@ export const api = createApi({
       query: (id) => ({ url: `documents/${id}`, method: "get" }),
       providesTags: (_result, _error, id) => [{ type: "Document", id }],
     }),
+    deleteDocumentById: build.mutation<void, string>({
+      query: (data) => ({
+        url: `documents/${data}`,
+        method: "delete",
+      }),
+      invalidatesTags: (result, _error, id) => [{ type: "Document", id: id }],
+    }),
     deleteDocumentAttachmentById: build.mutation<
       Document,
       { document_id: string; attachment_id: string }
@@ -260,6 +267,7 @@ export const {
   useGetAppointmentByIdQuery,
   useGetEstimationByIdQuery,
   useGetLawyerByIdQuery,
+  useDeleteDocumentByIdMutation,
   useGetAppointmentsQuery,
   useUpdateAppointmentByIdMutation,
   useGetPaymentDataOfTaxIncomeQuery,

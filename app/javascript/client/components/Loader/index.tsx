@@ -2,7 +2,7 @@ import { Text } from "@nextui-org/react";
 import "./index.css";
 export default function Loader() {
   return (
-    <div className="loader">
+    <div className="loader h-screen">
       <div className="load-text">
         <div className="loaded-text">
           <Text

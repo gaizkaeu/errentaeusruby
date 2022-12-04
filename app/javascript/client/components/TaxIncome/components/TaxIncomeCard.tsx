@@ -1,6 +1,8 @@
 import { Button, Card, Loading, Text } from "@nextui-org/react";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
+import { t } from "i18next";
+import { Suspense } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/authHook";
 import { useGetTaxIncomesQuery } from "../../../storage/api";
@@ -11,6 +13,7 @@ import {
   AssignedLawyerSimple,
   LawyerSkeleton,
 } from "../../Lawyer/AssignedLawyer";
+import { ShowTaxIncomeSkeleton } from "../pages/ShowTaxIncome";
 import MeetingCreation from "./CardComponents/MeetingCreation";
 import WaitingPayment, { PaymentCompleted } from "./CardComponents/Payment";
 import DocumentationUpload from "./CardComponents/WaitingDocumentation";
@@ -26,7 +29,7 @@ export const TaxIncomeCardMinList = () => {
         <Loading type="points" />
       ) : (
         currentData.map((v, ind) => {
-          return <TaxIncomeCardMin taxIncome={v} key={ind}></TaxIncomeCardMin>;
+          return <TaxIncomeCardMin taxIncome={v} key={ind} />;
         })
       )}
     </div>
@@ -39,29 +42,6 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
 
   const { taxIncome } = props;
 
-  const renderStatus = () => {
-    switch (taxIncome.state) {
-      case "pending_assignation":
-        return <Text b>Te estamos asignando un asesor</Text>;
-      case "waiting_for_meeting_creation":
-        return <Text b>Pendiente cita</Text>;
-      case "waiting_for_meeting":
-        return <Text b>Esperando a la cita</Text>;
-      case "waiting_payment":
-        return <Text b>Esperando pago</Text>;
-      case "pending_documentation":
-        return <Text b>Esperando documentación</Text>;
-      case "in_progress":
-        return <Text b>In progress</Text>;
-      case "finished":
-        return <Text b> finished</Text>;
-      case "rejected":
-        return <Text b>rejected</Text>;
-      default:
-        return <Text> No sabemos que ha pasado</Text>;
-    }
-  };
-
   return (
     <Card
       variant="flat"
@@ -70,7 +50,9 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
       isPressable
       onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}
     >
-      <Card.Header>{renderStatus()}</Card.Header>
+      <Card.Header>
+        {t(`taxincome.statuses.${props.taxIncome.state}`)}
+      </Card.Header>
       <Card.Divider />
       <Card.Body>
         <div className="flex flex-wrap items-center">
@@ -78,7 +60,7 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
             {currentUser && currentUser.account_type == "lawyer" ? (
               <AssignedUserSimple userId={taxIncome.user} size={"md"} />
             ) : taxIncome.lawyer ? (
-              <AssignedLawyerSimple lawyerId={taxIncome.lawyer} size={"xs"} />
+              <AssignedLawyerSimple lawyerId={taxIncome.lawyer} size={"md"} />
             ) : (
               <LawyerSkeleton />
             )}
@@ -118,6 +100,7 @@ const TaxIncomeCard = (props: {
   taxIncome: TaxIncome;
   renderCard?: string;
   navCurrentState: JSX.Element;
+  lawyer: boolean;
 }) => {
   const { taxIncome } = props;
 
@@ -152,7 +135,9 @@ const TaxIncomeCard = (props: {
       case "payment_completed":
         return <PaymentCompleted taxIncome={taxIncome} />;
       case "pending_documentation":
-        return <DocumentationUpload taxIncome={taxIncome} />;
+        return (
+          <DocumentationUpload taxIncome={taxIncome} lawyer={props.lawyer} />
+        );
       case "in_progress":
         return <Text>In progress</Text>;
       case "finished":
@@ -164,7 +149,9 @@ const TaxIncomeCard = (props: {
     }
   };
 
-  return renderStatus();
+  return (
+    <Suspense fallback={<ShowTaxIncomeSkeleton />}>{renderStatus()}</Suspense>
+  );
 };
 
 export default TaxIncomeCard;

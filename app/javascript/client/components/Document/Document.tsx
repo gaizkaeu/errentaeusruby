@@ -12,7 +12,6 @@ import es from "date-fns/locale/es";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../../hooks/authHook";
 import {
   useCreateDocumentMutation,
   useDeleteDocumentAttachmentByIdMutation,
@@ -25,9 +24,9 @@ import { Document } from "../../storage/types";
 import InputField from "../FormFields/InputField";
 import { AssignedLawyerSimple } from "../Lawyer/AssignedLawyer";
 import { AttachmentForm } from "./AttachmentForm";
+import { DocumentDeleteModal } from "./modals/DocumentDeleteModal";
 
-export const Documents = (props: { taxIncomeId: string }) => {
-  const { currentUser } = useAuth();
+export const Documents = (props: { taxIncomeId: string; lawyer: boolean }) => {
   const { currentData, isLoading, isError } = useGetDocumentsOfTaxIncomeQuery(
     props.taxIncomeId,
     {
@@ -37,14 +36,14 @@ export const Documents = (props: { taxIncomeId: string }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4">
-      {currentUser && currentUser.account_type == "lawyer" && (
+      {props.lawyer && (
         <DocumentCreationComponent taxIncomeId={props.taxIncomeId} />
       )}
       {currentData &&
         !isLoading &&
         !isError &&
         currentData.map((doc, index) => (
-          <DocumentComponent document={doc} key={index} />
+          <DocumentComponent document={doc} key={index} lawyer={props.lawyer} />
         ))}
     </div>
   );
@@ -189,7 +188,10 @@ export const DocumentCreationComponent = (props: { taxIncomeId: string }) => {
   );
 };
 
-export const DocumentComponent = (props: { document: Document }) => {
+export const DocumentComponent = (props: {
+  document: Document;
+  lawyer: boolean;
+}) => {
   const { document } = props;
   const { t } = useTranslation();
   const location = useLocation();
@@ -198,7 +200,7 @@ export const DocumentComponent = (props: { document: Document }) => {
   return (
     <Card variant="flat" role="article">
       <Card.Header>
-        <div className="flex w-full">
+        <div className="flex w-full items-center gap-4">
           <div className="grow">
             <Text b>{document.name}</Text>
           </div>
@@ -216,6 +218,9 @@ export const DocumentComponent = (props: { document: Document }) => {
               </Text>
             )}
           </div>
+          {props.lawyer && (
+            <DocumentDeleteModal documentId={props.document.id} />
+          )}
         </div>
       </Card.Header>
       <Card.Divider />
@@ -248,24 +253,18 @@ export const DocumentComponent = (props: { document: Document }) => {
       <Card.Divider />
       <Card.Footer>
         <div className="flex gap-2 w-full flex-wrap">
-          <div className="flex-1">
-            <Text size="small">
-              <Link
-                to={`/documents/${document.id}/history`}
-                state={{ background: location }}
-              >
-                {t("documents.info.history")}
-              </Link>{" "}
-              {t("documents.info.lastUpdate")}{" "}
-              {formatRelative(new Date(document.updated_at), new Date(), {
-                locale: es,
-              })}
-            </Text>
-          </div>
-          <div className="flex items-center">
-            <Text size="small">{t("documents.info.askedBy")}</Text>
-            <AssignedLawyerSimple size="xs" lawyerId={document.lawyer_id} />
-          </div>
+          <Text size="small">
+            <Link
+              to={`/documents/${document.id}/history`}
+              state={{ background: location }}
+            >
+              {t("documents.info.history")}
+            </Link>{" "}
+            {t("documents.info.lastUpdate")}{" "}
+            {formatRelative(new Date(document.updated_at), new Date(), {
+              locale: es,
+            })}
+          </Text>
         </div>
       </Card.Footer>
     </Card>
