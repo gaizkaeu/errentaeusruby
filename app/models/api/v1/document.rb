@@ -29,7 +29,7 @@ module Api
         export_successful: 2
       }
 
-      aasm column: :state, enum: true do
+      aasm :state, column: :state, enum: true do
         state :pending, initial: true
         state :ready
 
