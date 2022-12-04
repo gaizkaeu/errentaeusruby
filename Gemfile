@@ -97,7 +97,6 @@ group :production do
   gem 'cloudflare-rails'
   # Error tracking
   gem "honeybadger", "~> 5.0"
-
 end
 
 group :development, :test do

@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'cloudtasker/testing'
 
 SimpleCov.start 'rails' do
   add_filter 'app/jobs/application_job.rb'
@@ -26,6 +27,8 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+Cloudtasker::Testing.inline!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
