@@ -1,4 +1,6 @@
 class Api::V1::PushController < ApplicationController
+
+    # rubocop:disable Metrics/AbcSize
     def send_push
         Webpush.payload_send(
             message: "asds",
@@ -15,4 +17,5 @@ class Api::V1::PushController < ApplicationController
             read_timeout: 5 # value for Net::HTTP#read_timeout=, optional
         )
     end
+    # rubocop:enable Metrics/AbcSize
 end

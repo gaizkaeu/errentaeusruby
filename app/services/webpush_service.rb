@@ -1,6 +1,7 @@
 module WebpushService
     module_function
 
+    # rubocop:disable Metrics/AbcSize
     def send_push_notification(params)
         Webpush.payload_send(
             message: params[:message],
@@ -17,4 +18,5 @@ module WebpushService
             read_timeout: 5 # value for Net::HTTP#read_timeout=, optional
         ) 
     end
+    # rubocop:enable Metrics/AbcSize
 end
