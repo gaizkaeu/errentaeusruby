@@ -45,15 +45,16 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   return (
     <Card
       variant="flat"
-      className="shadow-lg hover:shadow-xl"
-      css={{ backgroundColor: "$background" }}
+      className="hover:transition-all shadow-lg hover:shadow-xl hover:rounded-xl"
+      css={{ backgroundColor: "$background", borderRadius: 8 }}
       isPressable
       onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}
     >
       <Card.Header>
-        {t(`taxincome.statuses.${props.taxIncome.state}`)}
+        <Text size="$xl" b>
+          {t(`taxincome.statuses.${props.taxIncome.state}`)}
+        </Text>
       </Card.Header>
-      <Card.Divider />
       <Card.Body>
         <div className="flex flex-wrap items-center">
           <div className="flex-1">

@@ -96,27 +96,31 @@ const ShowTaxIncome = () => {
     </Modal>
   );
 
-  return !isError && currentData && refetch && page ? (
+  return (
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <div className="flex flex-wrap items-center">
-        <div className="flex-1">
-          <Stepper />
-        </div>
-        <TaxIncomeDeleteComponent taxIncomeId={currentData.id} />
-      </div>
-      {currentUser?.account_type === "lawyer" ? (
+      {!isError && currentData && refetch && page ? (
         <>
-          <Spacer y={2} />
-          <LawyerView data={currentData} page={page} />
+          <div className="flex flex-wrap items-center">
+            <div className="flex-1">
+              <Stepper />
+            </div>
+            <TaxIncomeDeleteComponent taxIncomeId={currentData.id} />
+          </div>
+          {currentUser?.account_type === "lawyer" ? (
+            <>
+              <Spacer y={2} />
+              <LawyerView data={currentData} page={page} />
+            </>
+          ) : (
+            <UserView data={currentData} page={page} />
+          )}
         </>
+      ) : isLoading ? (
+        <ShowTaxIncomeSkeleton />
       ) : (
-        <UserView data={currentData} page={page} />
+        <ErrorModal />
       )}
     </div>
-  ) : isLoading ? (
-    <ShowTaxIncomeSkeleton />
-  ) : (
-    <ErrorModal />
   );
 };
 

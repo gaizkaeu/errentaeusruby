@@ -21,6 +21,10 @@
     <meta name="git-commit-version" content="<%= Rails.configuration.x.git.commit_version %>">
     <meta name="git-commit-time" content="<%= Rails.configuration.x.git.commit_time %>">
 
+    <script>
+      window.vapidPublicKey = new Uint8Array(<%= Base64.urlsafe_decode64(Rails.configuration.x.vapid_public).bytes %>);
+    </script>
+
     <% if Rails.configuration.x.honeybadger.api_key %>
     <meta name="honeybadger-api-key" content="<%= Rails.configuration.x.honeybadger.api_key %>">
     <% end %>

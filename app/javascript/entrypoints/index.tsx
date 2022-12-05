@@ -5,6 +5,7 @@ import "./index.css";
 import AppRoutes from "../client/routes"
 import { register } from "register-service-worker";
 import { BrowserRouter } from "react-router-dom";
+import { metaContent } from '../client/utils/utilFunctions';
 
 register("/sw.js", {
   registrationOptions: { scope: "./" },

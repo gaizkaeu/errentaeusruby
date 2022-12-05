@@ -42,6 +42,9 @@ module Errentaeusreact
 
     config.x.estimation_sign_key = ENV.fetch('ESTIMATIONS_SIGN_SECRET', "dummy_password")
 
+    config.x.vapid_public = ENV.fetch('VAPID_PUBLIC', "dummy_key")
+    config.x.vapid_private = ENV.fetch('VAPID_PRIVATE', "dummy_key")
+
     config.middleware.use Rack::Deflater
   end
 end

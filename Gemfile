@@ -86,6 +86,9 @@ gem "googleauth", "~> 1.3"
 # Job execution
 gem 'cloudtasker'
 
+# Webpush notifications
+gem 'webpush'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

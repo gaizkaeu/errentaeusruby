@@ -18,6 +18,8 @@ Rails.application.routes.draw do
         get :documents, on: :member
       end
 
+      post :push, to: "push#send_push"
+
       get :logged_in, to: 'accounts#logged_in'
       get 'accounts/:id', to: 'accounts#show'
       get 'accounts/:id/resend_confirmation', to: 'accounts#resend_confirmation'
