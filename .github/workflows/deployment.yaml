@@ -157,9 +157,10 @@ jobs:
             DB_PASSWORD=ERRENTA-DBPASSWORD:latest
             STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:latest
             STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:latest
+            VAPID_PUBLIC=ERRENTA-VAPID-PUBLIC:1
+            VAPID_PRIVATE=ERRENTA-VAPID-PRIVATE:1
           flags: |
             --set-cloudsql-instances=eliza-asesores:europe-west4:errenta
-
 
       - name: 'Notify deployment'
         uses: honeybadger-io/github-notify-deploy-action@v1
