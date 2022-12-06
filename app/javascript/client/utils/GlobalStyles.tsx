@@ -14,7 +14,9 @@ export const ErrentaUnderlined = () => (
       </svg>
       <span className="relative">ERRENTA.EUS</span>
     </span>
-    <Badge size={"xs"} color="success" variant="flat">BETA</Badge>
+    <Badge size={"xs"} color="success" variant="flat">
+      BETA
+    </Badge>
   </Fragment>
 );
 
