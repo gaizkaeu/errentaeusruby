@@ -6,11 +6,11 @@ import { Button, MainDiv } from "../../../utils/GlobalStyles";
 import { AppointmentList } from "../../Appointment/Appointment";
 import { TaxIncomeCardMinList } from "../components/TaxIncomeCard";
 
-const TaxIncomeResume = () => {
+const TaxIncomeResume = (props: { lawyer: boolean }) => {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 mx-auto max-w-7xl sm:px-6 lg:px-8 px-4">
       <div className="-translate-y-16">
-        <TaxIncomeCardMinList />
+        <TaxIncomeCardMinList searchBar={props.lawyer} />
       </div>
       <div className="-translate-y-9">
         <Text h3 b>
@@ -45,7 +45,7 @@ const MenuTaxIncome = () => {
         </div>
       </div>
       <MainDiv className="mt-20">
-        <TaxIncomeResume />
+        <TaxIncomeResume lawyer={currentUser?.account_type == "lawyer"} />
       </MainDiv>
     </>
   );

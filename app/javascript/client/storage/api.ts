@@ -54,14 +54,14 @@ export const api = createApi({
     "User",
   ],
   endpoints: (build) => ({
-    getTaxIncomes: build.query<TaxIncomesResponse, void>({
-      query: () => ({ url: "tax_incomes", method: "get" }),
+    getTaxIncomes: build.query<
+      TaxIncomesResponse,
+      { name: string } | undefined
+    >({
+      query: (data) => ({ url: "tax_incomes", method: "get", params: data }),
       providesTags: (result) =>
         result
-          ? [
-              ...result.map(({ id }) => ({ type: "TaxIncome" as const, id })),
-              { type: "TaxIncome", id: "LIST" },
-            ]
+          ? [...result.map(({ id }) => ({ type: "TaxIncome" as const, id }))]
           : [{ type: "TaxIncome", id: "LIST" }],
     }),
     getTaxIncomeById: build.query<TaxIncome, string>({

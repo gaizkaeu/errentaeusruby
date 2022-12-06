@@ -38,6 +38,10 @@ module Api
         create?
       end
 
+      def export_document?
+        create?
+      end
+
       class Scope
         def initialize(user, scope)
           @user = user

@@ -1,4 +1,4 @@
-import { Button as NextButton, styled } from "@nextui-org/react";
+import { Badge, Button as NextButton, styled } from "@nextui-org/react";
 import { Fragment } from "react";
 
 export const ErrentaUnderlined = () => (
@@ -14,6 +14,7 @@ export const ErrentaUnderlined = () => (
       </svg>
       <span className="relative">ERRENTA.EUS</span>
     </span>
+    <Badge size={"xs"} color="success" variant="flat">BETA</Badge>
   </Fragment>
 );
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_04_111412) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_151614) do
   create_table "account_histories", force: :cascade do |t|
     t.datetime "time"
     t.integer "action"
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_111412) do
     t.integer "state", default: 0
     t.integer "lawyer_id"
     t.string "payment"
+    t.integer "year"
     t.index ["client_id"], name: "index_tax_incomes_on_client_id"
     t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
   end

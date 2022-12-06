@@ -9,7 +9,10 @@ export const TaxIncomeStatuses = [
   "finished",
 ] as const;
 
+export const TaxIncomeSearchKeys = ["name", "creation_date"] as const;
+
 export type TaxIncomeStatus = typeof TaxIncomeStatuses[number];
+export type TaxIncomeSearch = typeof TaxIncomeSearchKeys[number];
 
 export interface TaxIncomeData {
   observations: string;
@@ -30,4 +33,5 @@ export interface TaxIncome {
   appointment: string;
   created_at: string;
   updated_at: string;
+  year?: string;
 }
