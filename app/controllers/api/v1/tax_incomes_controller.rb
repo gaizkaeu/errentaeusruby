@@ -13,20 +13,20 @@ module Api
 
       # GET /tax_incomes or /tax_incomes.json
       def index
-        @tax_incomes = policy_scope(TaxIncome).order(updated_at: :desc)
+        res = policy_scope(TaxIncome).order(updated_at: :desc)
+        @tax_incomes = TaxIncome.filter(filtering_params, res)
       end
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
         authorize @tax_income
-        (render json: {error: "Not found"}, status: :unprocessable_entity) unless @tax_income
       end
 
       # POST /tax_incomes or /tax_incomes.json
       def create
         @tax_income = current_api_v1_user.tax_incomes.build
         authorize @tax_income
-        @tax_income.update!(parse_params(tax_income_params, nested_estimation_params[:token]))
+        @tax_income.update(parse_params(tax_income_params, nested_estimation_params[:token]))
 
         respond_to do |format|
           if @tax_income.save
@@ -98,9 +98,16 @@ module Api
       def tax_income_params
         params.require(:tax_income).permit(policy(@tax_income).permitted_attributes)
       end
+
       def nested_estimation_params
         params.require(:estimation).permit(:token)
       end
+
+      def filtering_params
+        return unless current_api_v1_user.lawyer?
+          params.slice(:first_name)
+      end
+
     end
   end
 end

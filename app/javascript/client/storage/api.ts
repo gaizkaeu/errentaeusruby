@@ -54,10 +54,7 @@ export const api = createApi({
     "User",
   ],
   endpoints: (build) => ({
-    getTaxIncomes: build.query<
-      TaxIncomesResponse,
-      { name: string } | undefined
-    >({
+    getTaxIncomes: build.query<TaxIncomesResponse, { name: string } | void>({
       query: (data) => ({ url: "tax_incomes", method: "get", params: data }),
       providesTags: (result) =>
         result

@@ -6,6 +6,16 @@ import { useCreateTaxIncomeMutation } from "../../../storage/api";
 import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
 import { TaxIncomeData } from "../../../storage/models/TaxIncome";
 import { Button } from "../../../utils/GlobalStyles";
+import InputField from "../../FormFields/InputField";
+
+const LawyerCreationPanel = () => {
+  return (
+    <>
+      <Text h3>Admin creation panel</Text>
+      <InputField label="cliente" name="client_id"></InputField>
+    </>
+  );
+};
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();
@@ -46,6 +56,7 @@ const NewTaxIncome = () => {
       <div>
         <Formik
           initialValues={{
+            client_id: "",
             observations: "",
             estimation: { token: searchParams.get("j") ?? "" },
           }}
@@ -64,6 +75,7 @@ const NewTaxIncome = () => {
                 <Textarea
                   placeholder="¿Algo importante que debamos saber?"
                   minRows={4}
+                  name="observations"
                   label="Observaciones"
                   fullWidth
                 />
@@ -79,6 +91,7 @@ const NewTaxIncome = () => {
             >
               Continuar
             </Button>
+            <LawyerCreationPanel />
           </Form>
         </Formik>
       </div>

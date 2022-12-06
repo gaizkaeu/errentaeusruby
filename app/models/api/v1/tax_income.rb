@@ -2,6 +2,15 @@
 module Api
   module V1
     class TaxIncome < ApplicationRecord
+      include Filterable
+
+      scope :filter_by_state, -> (state) { where state: state }
+      scope :filter_by_first_name, -> (name) { joins(:client).where(client: {first_name: name})}
+
+      validate do |record|
+        record.errors.add :client_id, "lawyers can't be clients" if record.client&.lawyer?
+      end
+
       belongs_to :client, class_name: 'User'
       belongs_to :lawyer, class_name: 'User', optional: true
       has_one :estimation, dependent: :destroy, required: false

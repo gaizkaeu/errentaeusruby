@@ -15,6 +15,7 @@ export type TaxIncomeStatus = typeof TaxIncomeStatuses[number];
 export type TaxIncomeSearch = typeof TaxIncomeSearchKeys[number];
 
 export interface TaxIncomeData {
+  client_id: string;
   observations: string;
   estimation: {
     token: string;
@@ -33,5 +34,5 @@ export interface TaxIncome {
   appointment: string;
   created_at: string;
   updated_at: string;
-  year?: string;
+  year?: number;
 }

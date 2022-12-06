@@ -17,8 +17,7 @@ export const TaxIncomeAdminPanel = (props: { taxIncome: TaxIncome }) => {
     console.log(values);
     updateTaxIncome({
       id: props.taxIncome.id,
-      state: values.state,
-      price: values.price,
+      ...values,
     });
   };
 
@@ -40,6 +39,7 @@ export const TaxIncomeAdminPanel = (props: { taxIncome: TaxIncome }) => {
             })}
           </Field>
           <Field name="price"></Field>
+          <Field name="year"></Field>
           <button type="submit">guardar</button>
         </Form>
       </Formik>

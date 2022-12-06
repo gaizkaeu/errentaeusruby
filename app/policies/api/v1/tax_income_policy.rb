@@ -12,9 +12,9 @@ module Api
 
       def permitted_attributes
         if user.lawyer?
-          [:user_id, :observations, :price, :lawyer_id, :id, :state]
+          [:client_id, :observations, :price, :lawyer_id, :id, :state, :year]
         else
-          [:observations]
+          [:observations, :year]
         end
       end
 
