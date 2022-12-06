@@ -23,6 +23,7 @@ module Api
       end
 
       # POST /tax_incomes or /tax_incomes.json
+      # rubocop:disable Rails/SaveBang
       def create
         @tax_income = current_api_v1_user.tax_incomes.build
         authorize @tax_income
@@ -36,6 +37,7 @@ module Api
           end
         end
       end
+      # rubocop:enable Rails/SaveBang
 
       def documents
         authorize @tax_income
