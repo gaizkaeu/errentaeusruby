@@ -6,12 +6,15 @@ Stripe.api_key = 'sk_test_51LxvpDGrlIhNYf6eyMiOoOdSbL3nqJzwj53cNFmE8S6ZHZrzWEE5u
 module Api
   module V1
     class User < ApplicationRecord
+      include Filterable
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
       devise :database_authenticatable, 
             :recoverable, :rememberable, :validatable, :confirmable,
             :trackable, :omniauthable,
              omniauth_providers: [:google_one_tap]
+
+      scope :filter_by_first_name, -> (name) { where("first_name LIKE ?", name)}
 
       after_create_commit :create_stripe_customer, :send_welcome_email
 

@@ -1,5 +1,5 @@
-import { Badge, Button as NextButton, styled } from "@nextui-org/react";
-import { Fragment } from "react";
+import { Badge, Button as NextButton, styled, Text } from "@nextui-org/react";
+import { Fragment, ReactNode } from "react";
 
 export const ErrentaUnderlined = () => (
   <Fragment>
@@ -19,6 +19,32 @@ export const ErrentaUnderlined = () => (
     </Badge>
   </Fragment>
 );
+
+export const RandomColorText = (props: {
+  value: number;
+  children: ReactNode;
+  [x: string]: any;
+}) => {
+  const selectGradient = () => {
+    switch (props.value % 3) {
+      case 0:
+        return "45deg, $green600 -20%, $yellow600 50%";
+      case 1:
+        return "45deg, $cyan700 -20%, $pink600 50%";
+      case 2:
+        return "45deg, $pink800 -20%, $green800 50%";
+
+      default:
+        return "45deg, $blue600 -20%, $pink600 50%";
+    }
+  };
+
+  return (
+    <Text css={{ textGradient: selectGradient() }} {...props}>
+      {props.children}
+    </Text>
+  );
+};
 
 export const Button = styled(NextButton, {
   zIndex: 0,

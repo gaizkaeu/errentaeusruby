@@ -6,6 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/authHook";
 import { useGetTaxIncomesQuery } from "../../../storage/api";
 import { TaxIncome } from "../../../storage/models/TaxIncome";
+import { RandomColorText } from "../../../utils/GlobalStyles";
 import { RightArrowIcon } from "../../Icons/RightArrowIcon";
 import {
   AssignedUserSimple,
@@ -58,14 +59,14 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
             </Text>
           </div>
           <div>
-            <Text
+            <RandomColorText
               size="$2xl"
+              value={props.taxIncome.year ?? 0}
               className="font-extrabold"
               b
-              css={{ textGradient: "45deg, $blue600 -20%, $pink600 50%" }}
             >
               {props.taxIncome.year}
-            </Text>
+            </RandomColorText>
           </div>
         </div>
       </Card.Header>

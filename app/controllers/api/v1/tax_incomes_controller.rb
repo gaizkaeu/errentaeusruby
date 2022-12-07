@@ -109,7 +109,6 @@ module Api
         return unless current_api_v1_user.lawyer?
           params.slice(:first_name)
       end
-
     end
   end
 end

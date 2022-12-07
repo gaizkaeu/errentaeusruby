@@ -11,7 +11,7 @@ module Api
       end
 
       def index?
-        false
+        user.lawyer?
       end
 
       def show?
@@ -41,8 +41,10 @@ module Api
         end
 
         def resolve
-          return unless user.lawyer?
-            scope
+          raise Pundit::Unauthorized unless user.lawyer?
+            scope.all
+          
+            
           
         end
 

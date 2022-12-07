@@ -7,6 +7,7 @@ import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
 import { TaxIncomeData } from "../../../storage/models/TaxIncome";
 import { Button } from "../../../utils/GlobalStyles";
 import InputField from "../../FormFields/InputField";
+import { useAuth } from "../../../hooks/authHook";
 
 const LawyerCreationPanel = () => {
   return (
@@ -19,6 +20,7 @@ const LawyerCreationPanel = () => {
 
 const NewTaxIncome = () => {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [addTaxIncome] = useCreateTaxIncomeMutation();
 
@@ -91,7 +93,7 @@ const NewTaxIncome = () => {
             >
               Continuar
             </Button>
-            <LawyerCreationPanel />
+            {currentUser?.account_type == "lawyer" && <LawyerCreationPanel />}
           </Form>
         </Formik>
       </div>

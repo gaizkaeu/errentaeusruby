@@ -9,7 +9,7 @@ export const TaxIncomeStatuses = [
   "finished",
 ] as const;
 
-export const TaxIncomeSearchKeys = ["name", "creation_date"] as const;
+export const TaxIncomeSearchKeys = ["client", "creation_date"] as const;
 
 export type TaxIncomeStatus = typeof TaxIncomeStatuses[number];
 export type TaxIncomeSearch = typeof TaxIncomeSearchKeys[number];

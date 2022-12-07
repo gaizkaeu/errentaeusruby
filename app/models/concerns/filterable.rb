@@ -9,7 +9,7 @@ module Filterable
       # URL params. Make sure you don't pass stuff directly from the web without 
       # allowlist only the params you care about first!
       def filter(filtering_params, results)
-        return if filtering_params.nil?
+        return results if filtering_params.nil?
         filtering_params.each do |key, value|
           results = results.public_send("filter_by_#{key}", value) if value.present?
         end
