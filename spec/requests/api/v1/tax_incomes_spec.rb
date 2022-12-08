@@ -72,6 +72,7 @@ RSpec.describe "/api/v1/tax_incomes" do
     let(:valid_attributes) do
       {observations: "this is a test", client_id: user.id, lawyer_id: lawyer.id}
     end
+
     before do
       sign_in(lawyer)
     end
@@ -104,7 +105,7 @@ RSpec.describe "/api/v1/tax_incomes" do
       it "does not create new Api::V1::TaxIncome to lawyer" do
         expect do
           post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge(client_id: lawyer.id), estimation: {token: nil} }
-        end.to change(Api::V1::TaxIncome, :count).by(0)
+        end.not_to change(Api::V1::TaxIncome, :count)
       end
     end
   end
