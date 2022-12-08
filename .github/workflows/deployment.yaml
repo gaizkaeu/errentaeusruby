@@ -57,6 +57,9 @@ jobs:
 
       - name: Run ESLint
         run: bin/yarn lint
+
+      - name: Setup PostgreSQL
+        run: bin/rails db:create
   
       - uses: rwx-research/setup-captain@v1
       - name: Run RSpec \w Captain
@@ -76,9 +79,6 @@ jobs:
             --test-results tmp/jest.json \
             --  \
             bin/yarn test 
-
-      - name: Setup PostgreSQL
-        run: bin/rails db:create
 
       - name: Compile assets
         run: bin/rails assets:precompile
