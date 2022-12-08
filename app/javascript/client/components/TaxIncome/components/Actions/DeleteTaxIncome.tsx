@@ -4,9 +4,9 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useDeleteTaxIncomeMutation } from "../../../storage/api";
-import { Button } from "../../../utils/GlobalStyles";
-import { DeletedSuccessfully } from "../../Toasts/TaxIncome";
+import { useDeleteTaxIncomeMutation } from "../../../../storage/api";
+import { Button } from "../../../../utils/GlobalStyles";
+import { DeletedSuccessfully } from "../../../Toasts/TaxIncome";
 
 export const TaxIncomeDeleteComponent = (props: { taxIncomeId: string }) => {
   const [visible, setVisible] = useState(false);

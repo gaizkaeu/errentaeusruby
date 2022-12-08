@@ -100,9 +100,25 @@ export const useAuth = () => {
       );
   };
 
+  const lawyer = () => {
+    return (
+      currentUser &&
+      (currentUser.account_type == "lawyer" ||
+        currentUser.account_type == "root")
+    );
+  };
+
+  const root = () => {
+    return currentUser && currentUser.account_type == "root";
+  };
+
   return {
     status: authStatus,
     currentUser: currentUser,
+    access: {
+      lawyer: lawyer,
+      root: root,
+    },
     actions: {
       logOut: logoutHandle,
       formLogIn: formLogIn,

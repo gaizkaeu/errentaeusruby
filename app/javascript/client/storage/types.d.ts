@@ -79,7 +79,7 @@ export interface IUser {
   first_name: string;
   last_name: string;
   confirmed: boolean;
-  account_type: "user" | "lawyer";
+  account_type: "user" | "lawyer" | "root";
 }
 
 export interface ValidationErrors {

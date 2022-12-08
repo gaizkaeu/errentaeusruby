@@ -14,7 +14,7 @@ module Api
             :trackable, :omniauthable,
              omniauth_providers: [:google_one_tap]
 
-      scope :filter_by_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name}%")}
+      scope :filter_by_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%")}
 
       after_create_commit :create_stripe_customer, :send_welcome_email
 

@@ -4,7 +4,7 @@ import { useAuth } from "../../../hooks/authHook";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Button, MainDiv } from "../../../utils/GlobalStyles";
 import { AppointmentList } from "../../Appointment/Appointment";
-import { TaxIncomeCardMinList } from "../components/TaxIncomeCard";
+import { TaxIncomeCardMinList } from "../components";
 
 const TaxIncomeResume = (props: { lawyer: boolean }) => {
   return (

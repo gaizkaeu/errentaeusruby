@@ -8,18 +8,18 @@ import {
   Text,
 } from "@nextui-org/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import TaxIncomeCard from "../components/TaxIncomeCard";
 import AssignedLawyerCard from "../../Lawyer/AssignedLawyer";
 import { useGetTaxIncomeByIdQuery } from "../../../storage/api";
 import { EstimationWrapper } from "../../Estimation/EstimationCard";
 import { useAuth } from "../../../hooks/authHook";
 import { TaxIncomeAdminPanel } from "../LawyerComponents/TaxIncomeAdminPanel";
 import { CpuChipIcon } from "@heroicons/react/24/outline";
-import { TaxIncomeDeleteComponent } from "../components/DeleteTaxIncome";
-import { Stepper } from "../components/Stepper";
+import { TaxIncomeDeleteComponent } from "../components/Actions/DeleteTaxIncome";
+import { Stepper } from "../components/Shared/Stepper";
 import { TaxIncome } from "../../../storage/models/TaxIncome";
 import { Documents } from "../../Document/Document";
 import { t } from "i18next";
+import { TaxIncomeCard } from "../components/Cards";
 
 export const ShowTaxIncomeSkeleton = () => {
   return (
@@ -144,7 +144,7 @@ const UserView = (props: { data: TaxIncome; page: string }) => {
             taxIncome={props.data}
             renderCard={props.page}
             navCurrentState={navCurrentState()}
-          ></TaxIncomeCard>
+          />
         </div>
         <div className="w-full lg:w-auto">
           {props.data.lawyer && (

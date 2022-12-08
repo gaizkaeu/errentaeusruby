@@ -22,7 +22,7 @@ RSpec.describe "/api/v1/tax_incomes" do
   end
 
   let(:invalid_attributes) do
-    {observations: 3, id: 4, client_id: 3}
+    {observations: 3, id: 4}
   end
 
   context "with estimation integration" do
@@ -33,6 +33,7 @@ RSpec.describe "/api/v1/tax_incomes" do
     let(:valid_attributes) do
       {observations: "this is a test", client_id: user.id}
     end
+
     let(:estimation_params) do
       {first_name:"Gaizka",
       first_time:false,
@@ -149,7 +150,7 @@ RSpec.describe "/api/v1/tax_incomes" do
       sign_in(evil)
     end
 
-    it "can index his tax incomes" do
+    it "can index assigned tax incomes" do
       Api::V1::TaxIncome.create! valid_attributes
       get api_v1_tax_incomes_url
       expect(response).to be_successful
@@ -159,70 +160,59 @@ RSpec.describe "/api/v1/tax_incomes" do
       tax_income = Api::V1::TaxIncome.create! valid_attributes
       get api_v1_tax_income_url(tax_income)
       expect(response).not_to be_successful
+      expect(response.body).to match("not found")
     end
   end
 
 
-  describe "GET /index authenticated" do
+  context "with authenticated user" do
+    let(:evil) {create(:user)}
+
     before do
       sign_in(user)
     end
 
-    it "renders a successful response" do
-      Api::V1::TaxIncome.create! valid_attributes
-      get api_v1_tax_incomes_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /show authenticated" do
-    before do
-      sign_in(user)
-    end
-
-    it "renders a successful response" do
-      tax_income = Api::V1::TaxIncome.create! valid_attributes
-      get api_v1_tax_income_url(tax_income)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "POST /create authenticated" do
-    before do
-      sign_in(user)
-    end
-
-    context "with valid parameters" do
-      it "creates a new Api::V1::TaxIncome" do
-        expect do
-          post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: {token: nil} }
-        end.to change(Api::V1::TaxIncome, :count).by(1)
-      end
-
-      it "creates a new Api::V1::TaxIncome to same user" do
-        expect do
-          post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge({client_id: 3}), estimation: {token: nil} }
-        end.to change(Api::V1::TaxIncome, :count).by(1)
-        expect(Api::V1::TaxIncome.last!.client_id).to match(user.id)
+    describe "GET /index" do
+      it "renders a successful response" do
+        Api::V1::TaxIncome.create! valid_attributes
+        get api_v1_tax_incomes_url
+        expect(response).to be_successful
       end
     end
-  end
 
-  describe "PATCH /update authenticated" do
-    before do
-      sign_in(user)
-    end
-
-    context "with valid parameters" do
-      let(:new_attributes) do
-        {observations: "nothing to tell"}
-      end
-
-      it "updates the requested api_v1_tax_income" do
+    describe "GET /show" do
+      it "renders a successful response" do
         tax_income = Api::V1::TaxIncome.create! valid_attributes
-        patch api_v1_tax_income_url(tax_income), params: { tax_income: new_attributes }
-        tax_income.reload
-        expect(tax_income.observations).to match(new_attributes[:observations])
+        get api_v1_tax_income_url(tax_income)
+        expect(response).to be_successful
+      end
+    end
+
+    describe "POST /create" do
+      context "with valid parameters" do
+        it "creates a new Api::V1::TaxIncome" do
+          expect do
+            post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: {token: nil} }
+          end.to change(Api::V1::TaxIncome, :count).by(1)
+        end
+
+        it "creates a new Api::V1::TaxIncome to same user" do
+          expect do
+            post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge({client_id: evil.id}), estimation: {token: nil} }
+          end.to change(Api::V1::TaxIncome, :count).by(1)
+          expect(Api::V1::TaxIncome.last!.client_id).to match(user.id)
+        end
+      end
+    end
+
+    describe "PATCH /update authenticated" do
+      context "with valid parameters" do
+        it "updates the requested api_v1_tax_income" do
+          tax_income = Api::V1::TaxIncome.create! valid_attributes
+          patch api_v1_tax_income_url(tax_income), params: { tax_income: {observations: "nothing to tell"} }
+          tax_income.reload
+          expect(tax_income.observations).to match(new_attributes[:observations])
+        end
       end
     end
   end

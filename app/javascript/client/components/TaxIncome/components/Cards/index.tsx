@@ -1,43 +1,24 @@
-import { Button, Card, Loading, Text } from "@nextui-org/react";
+import { Card, Text } from "@nextui-org/react";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
 import { t } from "i18next";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../hooks/authHook";
-import { useGetTaxIncomesQuery } from "../../../storage/api";
-import { TaxIncome } from "../../../storage/models/TaxIncome";
-import { RandomColorText } from "../../../utils/GlobalStyles";
-import { RightArrowIcon } from "../../Icons/RightArrowIcon";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useAuth } from "../../../../hooks/authHook";
+import { TaxIncome } from "../../../../storage/models/TaxIncome";
+import { Button, RandomColorText } from "../../../../utils/GlobalStyles";
+import { RightArrowIcon } from "../../../Icons/RightArrowIcon";
 import {
   AssignedUserSimple,
   AssignedLawyerSimple,
   LawyerSkeleton,
-} from "../../Lawyer/AssignedLawyer";
-import { SearchBar } from "../../Search";
-import MeetingCreation from "./CardComponents/MeetingCreation";
-import WaitingPayment, { PaymentCompleted } from "./CardComponents/Payment";
-import DocumentationUpload from "./CardComponents/WaitingDocumentation";
-import WaitingLawyer from "./CardComponents/WaitingLawyer";
-import WaitingMeeting from "./CardComponents/WaitingMeeting";
+} from "../../../Lawyer/AssignedLawyer";
+import MeetingCreation from "../CardComponents/MeetingCreation";
+import WaitingPayment, { PaymentCompleted } from "../CardComponents/Payment";
+import DocumentationUpload from "../CardComponents/WaitingDocumentation";
+import WaitingLawyer from "../CardComponents/WaitingLawyer";
+import WaitingMeeting from "../CardComponents/WaitingMeeting";
 
-export const TaxIncomeCardMinList = (props: { searchBar: boolean }) => {
-  const { currentData, isError, isLoading } = useGetTaxIncomesQuery();
-
-  return (
-    <div className="grid grid-cols-1 gap-4">
-      {props.searchBar && <SearchBar />}
-      {isLoading || isError || !currentData ? (
-        <Loading type="points" />
-      ) : (
-        currentData.map((v, ind) => {
-          return <TaxIncomeCardMin taxIncome={v} key={ind} />;
-        })
-      )}
-    </div>
-  );
-};
-
-const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
+export const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   const nav = useNavigate();
   const { currentUser } = useAuth();
 
@@ -112,7 +93,7 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   );
 };
 
-const TaxIncomeCard = (props: {
+export const TaxIncomeCard = (props: {
   taxIncome: TaxIncome;
   renderCard?: string;
   navCurrentState: JSX.Element;
@@ -167,5 +148,3 @@ const TaxIncomeCard = (props: {
 
   return renderStatus();
 };
-
-export default TaxIncomeCard;
