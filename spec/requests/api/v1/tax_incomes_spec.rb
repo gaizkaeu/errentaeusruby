@@ -72,12 +72,11 @@ RSpec.describe "/api/v1/tax_incomes" do
     let(:valid_attributes) do
       {observations: "this is a test", client_id: user.id, lawyer_id: lawyer.id}
     end
+    before do
+      sign_in(lawyer)
+    end
 
     describe "GET /index authenticated" do
-      before do
-        sign_in(lawyer)
-      end
-
       it "renders a successful response" do
         Api::V1::TaxIncome.create! valid_attributes
         get api_v1_tax_incomes_url
@@ -86,14 +85,26 @@ RSpec.describe "/api/v1/tax_incomes" do
     end
 
     describe "GET /show authenticated" do
-      before do
-        sign_in(lawyer)
-      end
   
       it "renders a successful response" do
         tax_income = Api::V1::TaxIncome.create! valid_attributes
         get api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
+      end
+    end
+
+    describe "POST /create authenticated" do
+      it "creates a new Api::V1::TaxIncome to specified user" do
+          expect do
+            post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: {token: nil} }
+          end.to change(Api::V1::TaxIncome, :count).by(1)
+          expect(Api::V1::TaxIncome.last!.client_id).to match(user.id)
+      end
+
+      it "does not create new Api::V1::TaxIncome to lawyer" do
+        expect do
+          post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge(client_id: lawyer.id), estimation: {token: nil} }
+        end.to change(Api::V1::TaxIncome, :count).by(0)
       end
     end
   end
@@ -187,6 +198,12 @@ RSpec.describe "/api/v1/tax_incomes" do
         end.to change(Api::V1::TaxIncome, :count).by(1)
       end
 
+      it "creates a new Api::V1::TaxIncome to same user" do
+        expect do
+          post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge({client_id: 3}), estimation: {token: nil} }
+        end.to change(Api::V1::TaxIncome, :count).by(1)
+        expect(Api::V1::TaxIncome.last!.client_id).to match(user.id)
+      end
     end
   end
 
