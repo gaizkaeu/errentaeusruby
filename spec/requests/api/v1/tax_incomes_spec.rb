@@ -211,7 +211,7 @@ RSpec.describe "/api/v1/tax_incomes" do
           tax_income = Api::V1::TaxIncome.create! valid_attributes
           patch api_v1_tax_income_url(tax_income), params: { tax_income: {observations: "nothing to tell"} }
           tax_income.reload
-          expect(tax_income.observations).to match(new_attributes[:observations])
+          expect(tax_income.observations).to match("nothing to tell")
         end
       end
     end
