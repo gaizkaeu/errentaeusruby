@@ -253,7 +253,7 @@ export const api = createApi({
     requestResendConfirmation: build.mutation<{ status: string }, string>({
       query: (data) => ({
         url: `accounts/${data}/resend_confirmation`,
-        method: "get",
+        method: "post",
       }),
     }),
   }),

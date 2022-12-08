@@ -20,10 +20,12 @@ Rails.application.routes.draw do
 
       post :push, to: "push#send_push"
 
-      get :logged_in, to: 'accounts#logged_in'
-      get 'accounts/:id', to: 'accounts#show'
-      get 'accounts', to: 'accounts#index'
-      get 'accounts/:id/resend_confirmation', to: 'accounts#resend_confirmation'
+      scope :accounts, as: :account do
+        get :logged_in, to: 'accounts#logged_in'
+        get '', to: 'accounts#index'
+        get ':id', to: 'accounts#show'
+        post ':id/resend_confirmation', to: 'accounts#resend_confirmation', as: :resend_confirmation
+      end
 
       devise_for :users, module: 'api/v1/auth', class_name: "Api::V1::User", defaults: { format: :json }, controllers: { omniauth_callbacks: 'api/v1/auth/omniauth_callbacks'}
 

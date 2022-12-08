@@ -15,7 +15,7 @@ module Api
       end
 
       def show?
-        user.lawyer?
+        user.lawyer? || record == user
       end
 
       def resend_confirmation?
@@ -41,7 +41,7 @@ module Api
         end
 
         def resolve
-          raise Pundit::Unauthorized unless user.lawyer?
+          raise Pundit::NotAuthorizedError unless user.lawyer?
             scope.all
         end
 

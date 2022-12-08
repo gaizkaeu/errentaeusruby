@@ -13,6 +13,14 @@ FactoryBot.define do
       confirmed_at { "04-07-2002" }
     end
 
+    factory :unconfirmed_user, class: "Api::V1::User" do
+      first_name { "My Excellent" }
+      last_name  { "Lawyer" }
+      email { generate(:email) }
+      password { "test123" }
+      password_confirmation { "test123" }
+    end
+
     factory :lawyer, class: "Api::V1::User" do
       first_name { "Carolina" }
       last_name  { "Doe" }

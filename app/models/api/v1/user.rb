@@ -32,6 +32,7 @@ module Api
       end
 
       def create_stripe_customer
+        return unless Rails.env.production?
         # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create({
                                             name: first_name + (last_name || ''),
