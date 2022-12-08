@@ -43,9 +43,6 @@ module Api
         def resolve
           raise Pundit::Unauthorized unless user.lawyer?
             scope.all
-          
-            
-          
         end
 
         private

@@ -90,6 +90,8 @@ jobs:
 
     needs: test
 
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
+
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -129,6 +131,8 @@ jobs:
     needs: build_image
     environment: gcp
     runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
 
     permissions:
       contents: 'read'
