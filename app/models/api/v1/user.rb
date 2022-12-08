@@ -9,12 +9,12 @@ module Api
       include Filterable
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-      devise :database_authenticatable, 
+      devise :database_authenticatable, :registerable, 
             :recoverable, :rememberable, :validatable, :confirmable,
             :trackable, :omniauthable,
              omniauth_providers: [:google_one_tap]
 
-      scope :filter_by_first_name, -> (name) { where("first_name LIKE ?", name)}
+      scope :filter_by_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name}%")}
 
       after_create_commit :create_stripe_customer, :send_welcome_email
 

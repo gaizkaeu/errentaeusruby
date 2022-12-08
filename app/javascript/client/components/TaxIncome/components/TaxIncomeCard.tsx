@@ -46,7 +46,7 @@ const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   return (
     <Card
       variant="flat"
-      className="hover:transition-all shadow-lg hover:shadow-xl hover:rounded-xl"
+      className="hover:transition-all shadow-lg hover:shadow-xl hover:rounded-xl hover:translate-y-1"
       css={{ backgroundColor: "$background", borderRadius: 8 }}
       isPressable
       onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}

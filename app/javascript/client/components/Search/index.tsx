@@ -65,9 +65,8 @@ export const SearchBar = () => {
             onSearch={handleOnSearch}
             resultStringKeyName="first_name"
             onSelect={onSelect}
-            inputDebounce={600}
             showIcon={false}
-            fuseOptions={{ keys: ["first_name"] }}
+            fuseOptions={{ keys: ["first_name", "last_name"] }}
             formatResult={formatResult}
           />
         </div>

@@ -10,7 +10,10 @@ const Heading = () => {
       <link rel="preload" as="image" href="/iphone-landing.webp" />
       <link rel="preload" as="image" href="/iphone-landing-mobile.webp" />
 
-      <div className="invisible lg:visible absolute top-25 inset-x-0 -z-50">
+      <div
+        className="invisible lg:visible absolute top-25 inset-x-0"
+        style={{ zIndex: -200 }}
+      >
         <img
           className="invisible lg:visible relative left-[calc(50%-8rem)] -z-10 max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-34rem)]"
           alt="App image tax income appointment"
@@ -18,10 +21,14 @@ const Heading = () => {
           width="340px"
         ></img>
       </div>
-      <div className="absolute inset-x-0 top-[-10rem] transform-gpu overflow-hidden blur-3xl sm:top-[-20rem] -z-50">
+      {/* <div
+        className="absolute inset-x-0 top-[-10rem] transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+        style={{ zIndex: -200 }}
+      >
         <svg
           className="relative left-[calc(50%-11rem)] h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem] -z-50"
           viewBox="0 0 1155 678"
+          style={{ zIndex: -200 }}
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -44,14 +51,14 @@ const Heading = () => {
             </linearGradient>
           </defs>
         </svg>
-      </div>
+      </div> */}
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="relative mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
           <div>
             <div className="mb-8 flex sm:justify-center">
               <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-indigo-600 hover:ring-indigo-400">
                 <Text color="gray">
-                  ¿Cómo funciona?.{" "}
+                  ¿Cómo funciona? 📄.{" "}
                   <a href="#" className="font-semibold text-indigo-600">
                     <span className="absolute inset-0" aria-hidden="true" />
                     Más información <span aria-hidden="true">&rarr;</span>
@@ -127,7 +134,10 @@ const HeaderActions = () => {
   const navigate = useNavigate();
   return (
     <Fragment>
-      <div className="mt-8 flex gap-x-4 gap-y-3 sm:justify-center flex-wrap">
+      <div
+        className="mt-8 flex gap-x-4 gap-y-3 sm:justify-center flex-wrap"
+        style={{ zIndex: 300 }}
+      >
         <Button
           rounded
           color="gradient"
