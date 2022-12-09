@@ -6,14 +6,14 @@ import { useCreateTaxIncomeMutation } from "../../../storage/api";
 import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
 import { TaxIncomeData } from "../../../storage/models/TaxIncome";
 import { Button } from "../../../utils/GlobalStyles";
-import InputField from "../../FormFields/InputField";
 import { useAuth } from "../../../hooks/authHook";
+import ClientSelectField from "../../FormFields/ClientSelectField";
 
 const LawyerCreationPanel = () => {
   return (
     <>
       <Text h3>Admin creation panel</Text>
-      <InputField label="cliente" name="client_id"></InputField>
+      <ClientSelectField name="client_id" />
     </>
   );
 };
