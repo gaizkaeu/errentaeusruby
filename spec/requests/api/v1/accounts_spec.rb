@@ -10,26 +10,26 @@ RSpec.describe "Accounts" do
       sign_in(user)
     end
 
-    describe "SHOW /accounts" do
+    describe "INDEX /accounts" do
       it "renders a successful response" do
-        get api_v1_account_url, as: :json
+        get api_v1_accounts_url, as: :json
         expect(response).to be_successful
       end
       
       it "can query users by name" do
-        get api_v1_account_url, as: :json, params: {first_name: user.first_name}
+        get api_v1_accounts_url, as: :json, params: {first_name: user.first_name}
         expect(response).to be_successful
         expect(body).to match(user.first_name)
       end
     end
 
-    # describe "SHOW /accounts" do
-    #   it "renders a user successfully" do
-    #     get api_v1_account_url(user.id), as: :json
-    #     expect(response).to be_successful
-    #     expect(JSON.parse(body).symbolize_keys!).to match(a_hash_including({first_name: user.first_name, last_name: user.last_name}))
-    #   end
-    # end
+    describe "SHOW /accounts" do
+      it "renders a user successfully" do
+        get api_v1_account_url(user.id), as: :json
+        expect(response).to be_successful
+        expect(JSON.parse(body).symbolize_keys!).to match(a_hash_including({first_name: user.first_name, last_name: user.last_name}))
+      end
+    end
   end
 
   context "when logged in confirmed" do
@@ -57,7 +57,7 @@ RSpec.describe "Accounts" do
 
     describe "GET /accounts" do
       it "renders error" do
-        get api_v1_account_url, as: :json
+        get api_v1_accounts_url, as: :json
         expect(response).not_to be_successful
         expect(body).to match("not authorized")
       end

@@ -9,25 +9,21 @@ import {
   TaxIncome,
   TaxIncomeStatuses,
 } from "../../../storage/models/TaxIncome";
+import { Button } from "../../../utils/GlobalStyles";
+import InputField from "../../FormFields/InputField";
 export const TaxIncomeAdminPanel = (props: { taxIncome: TaxIncome }) => {
   const { data } = useGetUserByIdQuery(props.taxIncome.user);
   const [updateTaxIncome] = useUpdateTaxIncomeMutation();
 
-  const onSubmit = (values: any) => {
+  const onSubmit = (values: TaxIncome) => {
     console.log(values);
-    updateTaxIncome({
-      id: props.taxIncome.id,
-      ...values,
-    });
+    updateTaxIncome(values);
   };
 
   return (
     <div>
       <Text h3>Usuario {data?.first_name}</Text>
-      <Formik
-        initialValues={{ state: props.taxIncome.state, price: 0 }}
-        onSubmit={onSubmit}
-      >
+      <Formik initialValues={props.taxIncome} onSubmit={onSubmit}>
         <Form>
           <Field as="select" name="state">
             {TaxIncomeStatuses.map((val, id) => {
@@ -38,9 +34,12 @@ export const TaxIncomeAdminPanel = (props: { taxIncome: TaxIncome }) => {
               );
             })}
           </Field>
-          <Field name="price"></Field>
-          <Field name="year"></Field>
-          <button type="submit">guardar</button>
+          <br />
+          <InputField label="precio" name="price"></InputField>
+          <br />
+          <InputField label="año" name="year"></InputField>
+          <br />
+          <Button type="submit">guardar</Button>
         </Form>
       </Formik>
     </div>

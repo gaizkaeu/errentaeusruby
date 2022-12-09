@@ -9,7 +9,7 @@ export const TaxIncomeStatuses = [
   "finished",
 ] as const;
 
-export const TaxIncomeSearchKeys = ["client", "creation_date"] as const;
+export const TaxIncomeSearchKeys = ["name", "creation_date"] as const;
 
 export type TaxIncomeStatus = typeof TaxIncomeStatuses[number];
 export type TaxIncomeSearch = typeof TaxIncomeSearchKeys[number];
@@ -24,7 +24,7 @@ export interface TaxIncomeData {
 
 export type TaxIncomesResponse = TaxIncome[];
 
-export interface TaxIncome {
+export interface TaxIncomeBase {
   id: string;
   price: number;
   state: TaxIncomeStatus;
@@ -32,7 +32,10 @@ export interface TaxIncome {
   estimation: string;
   lawyer: string;
   appointment: string;
+  year?: number;
+}
+
+export interface TaxIncome extends TaxIncomeBase {
   created_at: string;
   updated_at: string;
-  year?: number;
 }

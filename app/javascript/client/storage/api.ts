@@ -205,7 +205,7 @@ export const api = createApi({
       query: (id) => ({ url: `documents/${id}/history`, method: "get" }),
     }),
     getCurrentAccount: build.query<IUser, void>({
-      query: () => ({ url: `logged_in`, method: "get" }),
+      query: () => ({ url: `accounts/logged_in`, method: "get" }),
       providesTags: (_result, _error, _id) => ["User"],
     }),
     createNewAccount: build.mutation<IUser, UserRegistrationData>({

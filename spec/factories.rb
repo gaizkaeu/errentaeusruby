@@ -3,7 +3,6 @@ FactoryBot.define do
       "person#{n}@example.com"
     end
 
-
     factory :user, class: "Api::V1::User", aliases: [:client] do
       first_name { "My Excellent" }
       last_name  { "Lawyer" }
