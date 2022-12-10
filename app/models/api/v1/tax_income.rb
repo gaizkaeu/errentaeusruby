@@ -8,6 +8,7 @@ module Api
 
       validate do |record|
         record.errors.add :client_id, "lawyers can't be clients" if record.client&.lawyer?
+        record.errors.add :lawyer_id, "clients can't be lawyers" if record.lawyer && !record.lawyer&.lawyer?
       end
 
       belongs_to :client, class_name: 'User'
@@ -72,9 +73,6 @@ module Api
         !lawyer_id.nil?
       end
 
-
-
-
       def retrieve_payment_intent
         return create_pi if payment.nil?
           payment_intent = BillingService::StripeService.retrieve_payment_intent(
@@ -102,7 +100,7 @@ module Api
 
       def assign_lawyer
         unless lawyer_id.nil?
-          assigned_lawyer!
+          waiting_for_meeting_creation! if state == "pending_assignation"
           return
         end
 

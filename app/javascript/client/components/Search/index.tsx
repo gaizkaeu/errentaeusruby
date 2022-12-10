@@ -1,6 +1,5 @@
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import { Modal, Dropdown, Text } from "@nextui-org/react";
-import { t } from "i18next";
 import { TaxIncomeSearchKeys } from "../../storage/models/TaxIncome";
 import { Button } from "../../utils/GlobalStyles";
 
@@ -37,6 +36,7 @@ export const SearchBar = () => {
       </div>
       <Button
         auto
+        aria-label="advanced search"
         onPress={handler}
         icon={<MagnifyingGlassCircleIcon height="20px" />}
       >
@@ -50,18 +50,15 @@ export const SearchBar = () => {
       >
         <Modal.Header>
           <Text id="modal-title" size={18}>
-            {t("taxincome.actions.delete.modalTitle")}
+            Búsqueda avanzada
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <Text>{t("taxincome.actions.delete.disclaimer")}</Text>
+          <Text></Text>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="error">
-            {t("taxincome.actions.delete.confirmButton")}
-          </Button>
           <Button auto onClick={closeHandler}>
-            {t("taxincome.actions.delete.cancel")}
+            Buscar
           </Button>
         </Modal.Footer>
       </Modal>

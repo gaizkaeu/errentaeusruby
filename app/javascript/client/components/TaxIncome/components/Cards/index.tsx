@@ -2,7 +2,7 @@ import { Card, Text } from "@nextui-org/react";
 import { formatRelative } from "date-fns";
 import es from "date-fns/locale/es";
 import { t } from "i18next";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, Link } from "react-router-dom";
 import { useAuth } from "../../../../hooks/authHook";
 import { TaxIncome } from "../../../../storage/models/TaxIncome";
 import { Button, RandomColorText } from "../../../../utils/GlobalStyles";
@@ -25,71 +25,72 @@ export const TaxIncomeCardMin = (props: { taxIncome: TaxIncome }) => {
   const { taxIncome } = props;
 
   return (
-    <Card
-      variant="flat"
-      className="hover:transition-all shadow-lg hover:shadow-xl hover:rounded-xl hover:translate-y-1"
-      css={{ backgroundColor: "$background", borderRadius: 8 }}
-      isPressable
-      onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}
-    >
-      <Card.Header>
-        <div className="flex w-full ">
-          <div className="grow">
-            <Text size="$xl" b>
-              {t(`taxincome.statuses.${props.taxIncome.state}`)}
-            </Text>
+    <Link to={`/mytaxincome/${taxIncome.id}`}>
+      <Card
+        variant="flat"
+        className="hover:transition-all shadow-lg hover:shadow-xl hover:rounded-xl hover:translate-y-1"
+        css={{ backgroundColor: "$background", borderRadius: 8 }}
+        isPressable
+      >
+        <Card.Header>
+          <div className="flex w-full ">
+            <div className="grow">
+              <Text size="$xl" b>
+                {t(`taxincome.statuses.${props.taxIncome.state}`)}
+              </Text>
+            </div>
+            <div>
+              <RandomColorText
+                size="$2xl"
+                value={props.taxIncome.year ?? 0}
+                className="font-extrabold"
+                b
+              >
+                {props.taxIncome.year}
+              </RandomColorText>
+            </div>
           </div>
-          <div>
-            <RandomColorText
-              size="$2xl"
-              value={props.taxIncome.year ?? 0}
-              className="font-extrabold"
-              b
-            >
-              {props.taxIncome.year}
-            </RandomColorText>
+        </Card.Header>
+        <Card.Body>
+          <div className="flex flex-wrap items-center">
+            <div className="flex-1">
+              {currentUser && currentUser.account_type == "lawyer" ? (
+                <AssignedUserSimple userId={taxIncome.client} size={"md"} />
+              ) : taxIncome.lawyer ? (
+                <AssignedLawyerSimple lawyerId={taxIncome.lawyer} size={"md"} />
+              ) : (
+                <LawyerSkeleton />
+              )}
+            </div>
+            <Button
+              auto
+              color="warning"
+              rounded
+              aria-label="show tax income"
+              onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}
+              iconRight={
+                <RightArrowIcon
+                  filled
+                  fill="currentColor"
+                  height={24}
+                  width={24}
+                  label="Ir a la estimación"
+                />
+              }
+            />
           </div>
-        </div>
-      </Card.Header>
-      <Card.Body>
-        <div className="flex flex-wrap items-center">
-          <div className="flex-1">
-            {currentUser && currentUser.account_type == "lawyer" ? (
-              <AssignedUserSimple userId={taxIncome.user} size={"md"} />
-            ) : taxIncome.lawyer ? (
-              <AssignedLawyerSimple lawyerId={taxIncome.lawyer} size={"md"} />
-            ) : (
-              <LawyerSkeleton />
-            )}
-          </div>
-          <Button
-            auto
-            color="warning"
-            rounded
-            aria-label="show tax income"
-            onPress={() => nav(`/mytaxincome/${taxIncome.id}`)}
-            iconRight={
-              <RightArrowIcon
-                filled
-                fill="currentColor"
-                height={24}
-                width={24}
-                label="Ir a la estimación"
-              />
-            }
-          />
-        </div>
-      </Card.Body>
-      <Card.Divider />
-      <Card.Footer>
-        <Text weight="light" size="sm">
-          Última actualizacion{" "}
-          {formatRelative(new Date(taxIncome.updated_at), new Date(), {
-            locale: es,
-          })}
-        </Text>
-      </Card.Footer>
-    </Card>
+        </Card.Body>
+        <Card.Divider />
+        <Card.Footer>
+          <Text weight="light" size="sm">
+            Última actualizacion{" "}
+            {formatRelative(new Date(taxIncome.updated_at), new Date(), {
+              locale: es,
+            })}
+          </Text>
+        </Card.Footer>
+      </Card>
+    </Link>
   );
 };
 

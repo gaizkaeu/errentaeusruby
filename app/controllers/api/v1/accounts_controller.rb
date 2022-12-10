@@ -33,7 +33,7 @@ module Api
 
       def filtering_params
         return unless current_api_v1_user.lawyer?
-          params.slice(:first_name)
+          params.slice(:client_first_name, :lawyer_first_name)
       end
     end
   end

@@ -10,6 +10,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export default function ClientSelectField(props: {
   name: string;
+  filter: "lawyer" | "client" | "all";
   [x: string]: any;
 }) {
   const { name } = props;
@@ -21,7 +22,7 @@ export default function ClientSelectField(props: {
   };
 
   const handleOnSearch = async (string: string) => {
-    trigger({ first_name: string })
+    trigger({ [props.filter + "_first_name"]: string })
       .unwrap()
       .then((data) => {
         setItems(data);

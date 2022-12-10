@@ -14,7 +14,10 @@ module Api
             :trackable, :omniauthable,
              omniauth_providers: [:google_one_tap]
 
-      scope :filter_by_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").limit(10) }
+      scope :filter_by_all_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").limit(10) }
+      scope :filter_by_client_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
+      scope :filter_by_lawyer_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :lawyer).limit(10) }
+
 
       after_create_commit :create_stripe_customer, :send_welcome_email
 
@@ -25,10 +28,14 @@ module Api
       has_many :asked_documents, foreign_key: :lawyer, dependent: :destroy, class_name: 'Document',  inverse_of: :laywer
       has_many :account_histories, dependent: :destroy
 
-      enum account_type: { user: 0, lawyer: 1 }
+      enum account_type: { client: 0, lawyer: 1 }
 
       def lawyer?
         account_type == "lawyer"
+      end
+
+      def client?
+        account_type == "client"
       end
 
       def create_stripe_customer

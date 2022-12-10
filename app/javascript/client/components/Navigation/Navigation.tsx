@@ -123,6 +123,7 @@ const Navigation = () => {
         </Navbar.Item>
         {status.loggedIn && currentUser && (
           <Navbar.Content
+            id="navbar-right"
             css={{
               "@xs": {
                 w: "12%",
@@ -130,11 +131,13 @@ const Navigation = () => {
               },
             }}
           >
-            <Dropdown placement="bottom-right">
-              <Navbar.Item>
+            <Dropdown aria-label="account info" placement="bottom-right">
+              <Navbar.Item id="account-trigger">
                 <Dropdown.Trigger>
                   <Avatar
                     bordered
+                    id="my-account"
+                    aria-label="account info"
                     as="button"
                     color="warning"
                     size="md"
@@ -159,7 +162,7 @@ const Navigation = () => {
         )}
       </Navbar.Content>
 
-      <Navbar.Collapse disableAnimation>
+      <Navbar.Collapse>
         {collapseItems.map((item, index) => (
           <NavBarCollapse key={index} to={item[1]}>
             {item[0]}

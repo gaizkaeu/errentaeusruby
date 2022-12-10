@@ -18,24 +18,30 @@ module Api
         end
       end
 
-      def index?
-        record.client == user || record.lawyer = user
-      end
-
       def show?
-        index?
+        if user.client?
+          record.client == user
+        elsif user.lawyer?
+          record.lawyer == user
+        else
+          false
+        end
       end
 
       def create?
-        record.client == user || user.lawyer?
+        if user.client?
+          record.client == user
+        elsif user.lawyer?
+          record.lawyer == user
+        end
       end
 
       def documents?
-        index?
+        create?
       end
 
       def payment_data?
-        index?
+        create?
       end
 
       def update?

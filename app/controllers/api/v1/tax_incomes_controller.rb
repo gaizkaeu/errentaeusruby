@@ -26,8 +26,8 @@ module Api
       # rubocop:disable Rails/SaveBang
       def create
         @tax_income = current_api_v1_user.tax_incomes.build
-        authorize @tax_income
         @tax_income.update(parse_params(tax_income_params, nested_estimation_params[:token]))
+        authorize @tax_income
 
         respond_to do |format|
           if @tax_income.save

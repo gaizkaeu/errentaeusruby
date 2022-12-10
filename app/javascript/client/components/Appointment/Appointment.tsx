@@ -89,7 +89,7 @@ export const AppointmentCard = (props: { appointment: Appointment }) => {
   const { t } = useTranslation();
 
   return (
-    <Card variant="flat">
+    <Card role="contentinfo" variant="flat">
       <Card.Header>
         <Text b>
           {formatRelative(new Date(props.appointment.time), new Date(), {

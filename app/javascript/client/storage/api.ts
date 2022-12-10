@@ -247,7 +247,14 @@ export const api = createApi({
     getUserById: build.query<IUser, string>({
       query: (data) => ({ url: `accounts/${data}`, method: "get" }),
     }),
-    searchUser: build.query<IUser[], { first_name: string }>({
+    searchUser: build.query<
+      IUser[],
+      {
+        user_first_name?: string;
+        lawyer_first_name?: string;
+        all_first_name?: string;
+      }
+    >({
       query: (data) => ({ url: `accounts`, method: "get", params: data }),
     }),
     requestResendConfirmation: build.mutation<{ status: string }, string>({

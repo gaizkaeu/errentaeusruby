@@ -1,19 +1,40 @@
 import { Grid, Text, Textarea } from "@nextui-org/react";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useCreateTaxIncomeMutation } from "../../../storage/api";
 import { EstimationFromJWTWrapper } from "../../Estimation/EstimationCard";
-import { TaxIncomeData } from "../../../storage/models/TaxIncome";
+import {
+  TaxIncomeData,
+  TaxIncomeStatuses,
+} from "../../../storage/models/TaxIncome";
 import { Button } from "../../../utils/GlobalStyles";
 import { useAuth } from "../../../hooks/authHook";
 import ClientSelectField from "../../FormFields/ClientSelectField";
+import InputField from "../../FormFields/InputField";
+import { t } from "i18next";
 
 const LawyerCreationPanel = () => {
   return (
     <>
       <Text h3>Admin creation panel</Text>
-      <ClientSelectField name="client_id" />
+      <ClientSelectField filter="client" name="client_id" />
+      <ClientSelectField filter="lawyer" name="lawyer_id" />
+      <Field as="select" name="state">
+        {TaxIncomeStatuses.map((val, id) => {
+          return (
+            <option key={id} value={val}>
+              {t(`taxincome.statuses.${val}`)}
+            </option>
+          );
+        })}
+      </Field>
+      <br />
+      <InputField label="precio" name="price"></InputField>
+      <br />
+      <InputField label="año" name="year"></InputField>
+      <br />
+      <Button type="submit">guardar</Button>
     </>
   );
 };
@@ -59,7 +80,10 @@ const NewTaxIncome = () => {
         <Formik
           initialValues={{
             client_id: "",
+            lawyer_id: "",
             observations: "",
+            price: 2000,
+            year: 2022,
             estimation: { token: searchParams.get("j") ?? "" },
           }}
           onSubmit={submitForm}
