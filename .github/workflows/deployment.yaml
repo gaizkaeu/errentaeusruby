@@ -44,19 +44,9 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3.5.1
-        with:
-          cache: yarn
-
-      - name: Install Yarn packages
-        run: bin/yarn install --frozen-lockfile
 
       - name: Lint with RuboCop
         run: bin/rubocop --parallel
-
-      - name: Run ESLint
-        run: bin/yarn lint
 
       - name: Setup PostgreSQL
         run: bin/rails db:create
@@ -71,7 +61,6 @@ jobs:
             bundle exec rspec \
               --format json --out tmp/rspec.json \
               --format progress
-
 
   build_image:
 
