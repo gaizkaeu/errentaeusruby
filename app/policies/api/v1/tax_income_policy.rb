@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   module V1
     class TaxIncomePolicy < ApplicationPolicy
@@ -12,9 +13,9 @@ module Api
 
       def permitted_attributes
         if user.lawyer?
-          [:client_id, :observations, :price, :lawyer_id, :id, :state, :year]
+          %i[client_id observations price lawyer_id id state year]
         else
-          [:observations, :year]
+          %i[observations year]
         end
       end
 

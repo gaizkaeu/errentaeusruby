@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   module V1
     class DocumentPolicy < ApplicationPolicy
@@ -9,7 +10,7 @@ module Api
         @record = record
         super
       end
-      
+
       def history?
         show?
       end

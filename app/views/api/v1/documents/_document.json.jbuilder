@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-json.extract! document, :id, :state, :name, :tax_income_id, :export_status, :document_number,
-              :created_at, :updated_at
+json.extract! document, :id, :state, :name, :tax_income_id, :export_status, :document_number, :created_at, :updated_at
 json.url api_v1_document_url(document, format: :json)
 json.attachments document.files do |attachment|
   json.filename attachment.filename

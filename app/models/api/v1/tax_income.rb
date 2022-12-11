@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 module Api
   module V1
     class TaxIncome < ApplicationRecord
       include Filterable
 
-      scope :filter_by_state, -> (state) { where state: state }
+      scope :filter_by_state, ->(state) { where state: state }
 
       validate do |record|
         record.errors.add :client_id, "lawyers can't be clients" if record.client&.lawyer?
@@ -75,21 +76,19 @@ module Api
 
       def retrieve_payment_intent
         return create_pi if payment.nil?
-          payment_intent = BillingService::StripeService.retrieve_payment_intent(
-            payment
-          )
-          if payment_intent['amount'] != price
-            return create_pi
-          end
+
+        payment_intent = BillingService::StripeService.retrieve_payment_intent(payment)
+        if payment_intent['amount'] != price
+          return create_pi
+        end
+
         [payment_intent['client_secret'], payment_intent['amount']]
       end
 
       private
 
       def create_pi
-        payment_intent = BillingService::StripeService.create_payment_intent(
-          price, {id: }, client.stripe_customer_id
-        )
+        payment_intent = BillingService::StripeService.create_payment_intent(price, { id: }, client.stripe_customer_id)
         update!(payment: payment_intent['id'])
         [payment_intent['client_secret'], payment_intent['amount']]
       end
@@ -100,7 +99,7 @@ module Api
 
       def assign_lawyer
         unless lawyer_id.nil?
-          waiting_for_meeting_creation! if state == "pending_assignation"
+          waiting_for_meeting_creation! if state == 'pending_assignation'
           return
         end
 

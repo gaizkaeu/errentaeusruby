@@ -2,26 +2,28 @@
 Stripe.api_key             = ENV.fetch('STRIPE_SECRET_KEY', nil)
 StripeEvent.signing_secret = ENV.fetch('STRIPE_SIGNING_SECRET', nil)
 
-billing_mode = ENV.fetch("BILLING_MODE", "test")
+billing_mode = ENV.fetch('BILLING_MODE', 'test')
 
-Stripe.api_key = if billing_mode == "live"
-  ENV.fetch("STRIPE_SECRET_LIVE_KEY", nil)
-else
-  ENV.fetch("STRIPE_SECRET_TEST_KEY", nil)
-end
+Stripe.api_key =
+  if billing_mode == 'live'
+    ENV.fetch('STRIPE_SECRET_LIVE_KEY', nil)
+  else
+    ENV.fetch('STRIPE_SECRET_TEST_KEY', nil)
+  end
 
 StripeEvent.signing_secrets = [
   ENV.fetch('STRIPE_SIGNING_TEST_SECRET', nil),
-  ENV.fetch("STRIPE_SIGNING_LIVE_SECRET", nil),
+  ENV.fetch('STRIPE_SIGNING_LIVE_SECRET', nil)
 ].compact
 
 class EventFilter
   def call(event)
-    event.api_key = if event.livemode
-      ENV.fetch("STRIPE_SECRET_LIVE_KEY", nil)
-    else
-      ENV.fetch("STRIPE_SECRET_TEST_KEY", nil)
-    end
+    event.api_key =
+      if event.livemode
+        ENV.fetch('STRIPE_SECRET_LIVE_KEY', nil)
+      else
+        ENV.fetch('STRIPE_SECRET_TEST_KEY', nil)
+      end
     event
   end
 end

@@ -72,19 +72,6 @@ jobs:
               --format json --out tmp/rspec.json \
               --format progress
 
-      - name: Run Jest \w Captain
-        run: |
-          captain run \
-            --suite-id errentaeus-jest \
-            --test-results tmp/jest.json \
-            --  \
-            bin/yarn test 
-
-      - name: Compile assets
-        run: bin/rails assets:precompile
-
-      - name: Check JS size limit
-        run: yarn size-limit
 
   build_image:
 

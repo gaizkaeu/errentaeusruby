@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CreatePdfFromDocumentAttachmentsJob < ApplicationJob
-
   def perform(document_id)
     # save PDF to disk
     document = Api::V1::Document.find(document_id)

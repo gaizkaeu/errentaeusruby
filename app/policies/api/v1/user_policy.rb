@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   module V1
     class UserPolicy < ApplicationPolicy
@@ -42,7 +43,8 @@ module Api
 
         def resolve
           raise Pundit::NotAuthorizedError unless user.lawyer?
-            scope.all
+
+          scope.all
         end
 
         private

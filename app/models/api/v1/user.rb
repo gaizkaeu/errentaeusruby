@@ -9,15 +9,21 @@ module Api
       include Filterable
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-      devise :database_authenticatable, :registerable, 
-            :recoverable, :rememberable, :validatable, :confirmable,
-            :trackable, :omniauthable,
+      devise :database_authenticatable,
+             :registerable,
+             :recoverable,
+             :rememberable,
+             :validatable,
+             :confirmable,
+             :trackable,
+             :omniauthable,
              omniauth_providers: [:google_one_tap]
 
-      scope :filter_by_all_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").limit(10) }
-      scope :filter_by_client_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
-      scope :filter_by_lawyer_first_name, -> (name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :lawyer).limit(10) }
+      include DeviseTokenAuth::Concerns::User
 
+      scope :filter_by_all_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").limit(10) }
+      scope :filter_by_client_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
+      scope :filter_by_lawyer_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :lawyer).limit(10) }
 
       after_create_commit :create_stripe_customer, :send_welcome_email
 
@@ -25,29 +31,32 @@ module Api
       has_many :estimations, dependent: :destroy, through: :tax_incomes
       has_many :appointments, dependent: :destroy, through: :tax_incomes
       has_many :requested_documents, foreign_key: :user, dependent: :destroy, class_name: 'Document', inverse_of: :user
-      has_many :asked_documents, foreign_key: :lawyer, dependent: :destroy, class_name: 'Document',  inverse_of: :laywer
+      has_many :asked_documents, foreign_key: :lawyer, dependent: :destroy, class_name: 'Document', inverse_of: :laywer
       has_many :account_histories, dependent: :destroy
 
       enum account_type: { client: 0, lawyer: 1 }
 
       def lawyer?
-        account_type == "lawyer"
+        account_type == 'lawyer'
       end
 
       def client?
-        account_type == "client"
+        account_type == 'client'
       end
 
       def create_stripe_customer
         return unless Rails.env.production?
+
         # rubocop:disable Rails/SaveBang
-        customer = Stripe::Customer.create({
-                                            name: first_name + (last_name || ''),
-                                            email:,
-                                            metadata: {
-                                              user_id: id
-                                            }
-                                          })
+        customer = Stripe::Customer.create(
+          {
+            name: first_name + (last_name || ''),
+            email:,
+            metadata: {
+              user_id: id
+            }
+          }
+        )
         # rubocop:enable Rails/SaveBang
         update!(stripe_customer_id: customer['id'])
       end
@@ -80,11 +89,11 @@ module Api
       # rubocop:enable Metrics/AbcSize
 
       def after_database_authentication
-        LogAccountLoginJob.perform_async({user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at,}.stringify_keys)
+        LogAccountLoginJob.perform_async({ user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at  }.stringify_keys)
       end
 
       def after_provider_authentication(provider_data)
-        LogAccountLoginJob.perform_async({user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at,}.merge(provider_data).stringify_keys)
+        LogAccountLoginJob.perform_async({ user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at  }.merge(provider_data).stringify_keys)
       end
     end
   end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   module V1
     class Document < ApplicationRecord
@@ -16,18 +17,11 @@ module Api
       delegate :client, to: :tax_income, allow_nil: false
 
       validates :files, content_type: ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']
-      validates :files, size: { between: (1.kilobyte)..(5.megabytes)}
+      validates :files, size: { between: (1.kilobyte)..(5.megabytes) }
 
-      enum state: {
-        pending: 1,
-        ready: 2
-      }
+      enum state: { pending: 1, ready: 2 }
 
-      enum export_status: {
-        not_exported: 0,
-        export_queue: 1,
-        export_successful: 2
-      }
+      enum export_status: { not_exported: 0, export_queue: 1, export_successful: 2 }
 
       aasm :state, column: :state, enum: true do
         state :pending, initial: true
@@ -85,7 +79,7 @@ module Api
       private
 
       def create_history_record(action, user, description = '')
-        LogDocumentHistoryJob.perform_async({user_id: user, document_id: id, description:, action:}.stringify_keys)
+        LogDocumentHistoryJob.perform_async({ user_id: user, document_id: id, description:, action: }.stringify_keys)
       end
     end
   end

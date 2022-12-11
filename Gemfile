@@ -9,7 +9,7 @@ ruby '3.1.2'
 gem 'vite_rails'
 
 # Auth
-gem 'devise'
+gem 'devise_token_auth'
 
 # Auth callbacks
 gem 'omniauth'
@@ -42,7 +42,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 # JWT ENCRYPTION
-gem "jwt"
+gem 'jwt'
 
 # DATETIME VALIDATION
 gem 'validates_timeliness', '~> 7.0.0.beta1'
@@ -81,7 +81,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootsnap', require: false
 
 # Google Token Validator
-gem "googleauth", "~> 1.3"
+gem 'googleauth', '~> 1.3'
 
 # Job execution
 gem 'cloudtasker'
@@ -99,7 +99,7 @@ group :production do
   # Restore client original IP
   gem 'cloudflare-rails'
   # Error tracking
-  gem "honeybadger", "~> 5.0"
+  gem 'honeybadger', '~> 5.0'
 end
 
 group :development, :test do
@@ -151,5 +151,3 @@ group :test do
   # Factorybot
   gem 'factory_bot'
 end
-
-

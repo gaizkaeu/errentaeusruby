@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
       post :push, to: "push#send_push"
 
+      mount_devise_token_auth_for 'Api::V1::User', at: 'auth'
+
       scope '/accounts' do
         get :logged_in, to: 'accounts#logged_in', as: :account_logged_in
         get '', to: 'accounts#index', as: :accounts
@@ -27,7 +29,6 @@ Rails.application.routes.draw do
         post ':id/resend_confirmation', to: 'accounts#resend_confirmation', as: :account_resend_confirmation
       end
 
-      devise_for :users, module: 'api/v1/auth', class_name: "Api::V1::User", defaults: { format: :json }, controllers: { omniauth_callbacks: 'api/v1/auth/omniauth_callbacks'}
 
       resources :documents do
         delete 'delete_document_attachment/:id_attachment', on: :member, to: 'documents#delete_document_attachment', as: "delete_document_attachment"
@@ -36,11 +37,5 @@ Rails.application.routes.draw do
         get :history, on: :member
       end
     end
-  end
-
-  get '/manifest.v1.webmanifest', to: 'statics#manifest', as: :webmanifest
-  root 'react#index'
-  get '/*path', to: "react#index", constraints: ->(request) do
-    !request.xhr? && request.format.html?
   end
 end
