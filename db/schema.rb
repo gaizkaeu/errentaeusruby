@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_151614) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_112620) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "account_histories", force: :cascade do |t|
     t.datetime "time"
     t.integer "action"
@@ -56,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_151614) do
     t.integer "tax_income_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "method"
+    t.string "meeting_method"
     t.string "phone"
     t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id", unique: true
   end

@@ -18,7 +18,7 @@ module Api
       after_destroy_commit :notify_deletion_to_tax_income
 
       validates :phone, presence: true, if: :phone?
-      validates :method, inclusion: { in: MEETING_OPTIONS} 
+      validates :meeting_method, inclusion: { in: MEETING_OPTIONS} 
 
       validate do |appointment|
         tax_income = Api::V1::TaxIncome.find(appointment.tax_income_id)

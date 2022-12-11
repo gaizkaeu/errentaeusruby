@@ -33,4 +33,11 @@ FactoryBot.define do
     factory :tax_income, class: "Api::V1::TaxIncome" do
       client
     end
+
+    factory :appointment, class: "Api::V1::Appointment" do
+      tax_income
+      time { " Wed, 21 Dec 2025 11:30:00.000000000 UTC +00:00" }
+      meeting_method { "phone" }
+    end
+
   end

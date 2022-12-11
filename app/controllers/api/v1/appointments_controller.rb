@@ -61,10 +61,10 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def appointment_params
-        params.require(:appointment).permit(:time, :method, :phone, :tax_income_id)
+        params.require(:appointment).permit(:time, :meeting_method, :phone, :tax_income_id)
       end
       def appointment_update_params
-        params.require(:appointment).permit(:time, :method, :phone)
+        params.require(:appointment).permit(:time, :meeting_method, :phone)
       end
     end
   end

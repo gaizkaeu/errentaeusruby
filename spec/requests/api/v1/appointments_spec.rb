@@ -5,11 +5,11 @@ RSpec.describe "Appointments" do
   let(:tax_income) {create(:tax_income)}
 
   let(:valid_attributes) do
-    {tax_income_id: tax_income.id, method: "phone", phone: "688867636", time: "Wed, 30 Nov 2025 11:30:00.000000000 UTC +00:00"}
+    {tax_income_id: tax_income.id, meeting_method: "phone", phone: "688867636", time: "Wed, 30 Nov 2025 11:30:00.000000000 UTC +00:00"}
   end
 
   let(:invalid_attributes) do
-    {tax_income_id: 9, method: "asd", phone: "688867636"}
+    {tax_income_id: 9, meeting_method: "asd", phone: "688867636"}
   end
 
   context "when logged in" do 
