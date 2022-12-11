@@ -89,6 +89,9 @@ gem 'cloudtasker'
 # Webpush notifications
 gem 'webpush'
 
+# Cors
+gem 'rack-cors'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
