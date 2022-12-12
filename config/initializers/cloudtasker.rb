@@ -2,7 +2,7 @@ Cloudtasker.configure do |config|
   #
   # Adapt the server port to be the one used by your Rails web process
   #
-  config.processor_host = Rails.env.production? ? ENV.fetch('APP_HOST', 'https://errenta.eus') : 'http://localhost:3000'
+  config.processor_host = ENV.fetch('APP_HOST', 'https://api.errenta.eus')
 
   #
   # If you do not have any Rails secret_key_base defined, uncomment the following
