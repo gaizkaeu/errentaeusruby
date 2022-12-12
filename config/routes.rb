@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
       post :push, to: "push#send_push"
 
-      mount_devise_token_auth_for 'Api::V1::User', at: 'auth'
+      mount_devise_token_auth_for 'Api::V1::User', at: 'auth', controllers: {
+        registrations: 'api/v1/auth/registrations',
+      }
 
       scope '/accounts' do
         get :logged_in, to: 'accounts#logged_in', as: :account_logged_in
