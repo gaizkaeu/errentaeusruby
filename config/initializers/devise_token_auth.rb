@@ -2,6 +2,10 @@
 
 DeviseTokenAuth.setup do |config|
   config.default_confirm_success_url = ENV.fetch('APP_HOST', 'https://errenta.eus')
+  config.cookie_enabled = true
+  config.cookie_name = 'errenta_auth'
+  
+  config.cookie_attributes = { secure: true, httponly: true, same_site: :strict, domain: ENV.fetch('APP_HOST', 'https://errenta.eus') }
   # By default the authorization headers will change after each request. The
   # client is responsible for keeping track of the changing tokens. Change
   # this to false to prevent the Authorization header from changing after
