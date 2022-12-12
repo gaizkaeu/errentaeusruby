@@ -5,6 +5,8 @@ module Api
     class ApiBaseController < ActionController::API
       include Pundit::Authorization
       include DeviseTokenAuth::Concerns::SetUserByToken
+      include ActionController::Cookies
+
       rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
