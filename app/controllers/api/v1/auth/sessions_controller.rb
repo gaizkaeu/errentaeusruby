@@ -27,7 +27,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
       secure: true,
       httponly: true,
       same_site: :strict,
-      domain: '*.errenta.eus'
+      domain: Rails.application.config.x.frontend_host
     )
   end
 end
