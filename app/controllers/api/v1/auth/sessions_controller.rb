@@ -16,18 +16,4 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   def sign_in_params
     params.require(:api_v1_user).permit(:email, :password)
   end
-
-  private
-
-  def cookie_auth(tokens)
-    response.set_cookie(
-      JWTSessions.access_cookie,
-      value: tokens[:access],
-      path: '/',
-      secure: true,
-      httponly: true,
-      same_site: :strict,
-      domain: Rails.application.config.x.frontend_host
-    )
-  end
 end

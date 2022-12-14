@@ -133,6 +133,10 @@ jobs:
           image: '${{ env.AR_LOCATION }}.gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.SERVICE_NAME }}:${{ github.sha }}'
           project_id: ${{ secrets.PROJECT_ID }}
           region: europe-west1
+          env_vars: |
+            APP_DOMAIN_COOKIES=.errenta.eus
+            FRONTEND_APP_HOST=.errenta.eus
+
           secrets: |
             DB_PASSWORD=ERRENTA-DBPASSWORD:latest
             STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:latest

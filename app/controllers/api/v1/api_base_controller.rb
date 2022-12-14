@@ -24,6 +24,18 @@ module Api
         current_user.present?
       end
 
+      def cookie_auth(tokens)
+        response.set_cookie(
+          JWTSessions.access_cookie,
+          value: tokens[:access],
+          path: '/',
+          secure: true,
+          httponly: true,
+          same_site: :strict,
+          domain: Rails.application.config.x.domain_cookies
+        )
+      end
+
       private
 
       def user_not_authorized

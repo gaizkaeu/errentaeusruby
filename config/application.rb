@@ -47,7 +47,8 @@ module Errentaeusreact
     config.x.vapid_public = ENV.fetch('VAPID_PUBLIC', 'dummy_key')
     config.x.vapid_private = ENV.fetch('VAPID_PRIVATE', 'dummy_key')
 
-    config.x.frontend_host = ENV.fetch('APP_HOST_FRONTEND_DOMAIN', 'errenta.eus')
+    config.x.domain_cookies = ENV.fetch('APP_DOMAIN_COOKIES', '.errenta.eus')
+    config.x.frontend_app = ENV.fetch('FRONTEND_APP_HOST', 'errenta.eus')
 
     config.middleware.use Rack::Deflater
   end
