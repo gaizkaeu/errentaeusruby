@@ -9,10 +9,10 @@ ruby '3.1.2'
 gem 'vite_rails'
 
 # Auth
-gem 'devise_token_auth'
+gem 'jwt_sessions'
 
-# Auth callbacks
-gem 'omniauth'
+# Auth
+gem 'bcrypt'
 
 # Posgres connector
 gem 'pg'

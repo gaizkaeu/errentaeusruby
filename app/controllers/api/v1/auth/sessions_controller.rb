@@ -1,7 +1,7 @@
-class Api::V1::Auth::RegistrationsController < Api::V1::ApiBaseController
+class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   def create
-    user = Api::V1::User.new(user_params)
-    if user.save
+    user = Api::V1::User.find_by!(email: sign_in_params[:email])
+    if user.authenticate(sign_in_params[:password])
       payload = { user_id: user.id }
       session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true)
       tokens = session.login
@@ -9,12 +9,12 @@ class Api::V1::Auth::RegistrationsController < Api::V1::ApiBaseController
 
       render json: { csrf: tokens[:csrf] }
     else
-      render json: { error: user.errors.full_messages.join(' ') }, status: :unprocessable_entity
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
   end
 
-  def user_params
-    params.require(:api_v1_user).permit(:email, :password, :password_confirmation)
+  def sign_in_params
+    params.require(:api_v1_user).permit(:email, :password)
   end
 
   private

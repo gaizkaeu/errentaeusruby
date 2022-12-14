@@ -3,11 +3,14 @@
 module Api
   module V1
     class AccountsController < ApiBaseController
-      before_action :authenticate_api_v1_api_v1_user!, except: :logged_in
+      before_action :authorize_access_request!
+
       after_action :verify_authorized, except: %i[logged_in index]
       after_action :verify_policy_scoped, only: :index
 
-      def logged_in; end
+      def logged_in
+        @current_user = current_user
+      end
 
       def index
         @users = User.filter(filtering_params, policy_scope(User))
@@ -31,7 +34,7 @@ module Api
       private
 
       def filtering_params
-        return unless current_api_v1_api_v1_user.lawyer?
+        return unless current_user.lawyer?
 
         params.slice(:client_first_name, :lawyer_first_name)
       end

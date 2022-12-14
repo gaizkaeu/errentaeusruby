@@ -12,13 +12,15 @@ RSpec.describe 'Appointments' do
   end
 
   context 'when logged in' do
-    let(:authorized_headers) { tax_income.client.create_new_auth_token }
+    before do
+      sign_in(tax_income.client)
+    end
 
     describe 'GET /index' do
       it 'renders a successful response' do
         tax_income.waiting_for_meeting_creation!
         Api::V1::Appointment.create! valid_attributes
-        get api_v1_appointments_url, as: :json, headers: authorized_headers
+        authorized_get api_v1_appointments_url, as: :json
         expect(response).to be_successful
       end
     end
@@ -27,7 +29,7 @@ RSpec.describe 'Appointments' do
       it 'renders a successful response' do
         tax_income.waiting_for_meeting_creation!
         appointment = Api::V1::Appointment.create! valid_attributes
-        get api_v1_appointments_url(appointment), headers: authorized_headers
+        authorized_get api_v1_appointments_url(appointment)
         expect(response).to be_successful
       end
     end
@@ -40,18 +42,12 @@ RSpec.describe 'Appointments' do
 
         it 'creates a new Api::V1::Appointment' do
           expect do
-            post api_v1_appointments_url,
-                 params: { appointment: valid_attributes },
-                 as: :json,
-                 headers: authorized_headers
+            authorized_post api_v1_appointments_url, params: { appointment: valid_attributes }, as: :json
           end.to change(Api::V1::Appointment, :count).by(1)
         end
 
         it 'renders a JSON response with the new api_v1_appointment' do
-          post api_v1_appointments_url,
-               params: { appointment: valid_attributes },
-               as: :json,
-               headers: authorized_headers
+          authorized_post api_v1_appointments_url, params: { appointment: valid_attributes }, as: :json
           expect(response).to have_http_status(:created)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
@@ -64,18 +60,12 @@ RSpec.describe 'Appointments' do
 
         it 'does not create a new Api::V1::Appointment' do
           expect do
-            post api_v1_appointments_url,
-                 params: { appointment: invalid_attributes },
-                 as: :json,
-                 headers: authorized_headers
+            authorized_post api_v1_appointments_url, params: { appointment: invalid_attributes }, as: :json
           end.not_to change(Api::V1::Appointment, :count)
         end
 
         it 'renders a JSON response with errors for the new api_v1_appointment' do
-          post api_v1_appointments_url,
-               params: { appointment: invalid_attributes },
-               as: :json,
-               headers: authorized_headers
+          authorized_post api_v1_appointments_url, params: { appointment: invalid_attributes }, as: :json
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
@@ -89,15 +79,12 @@ RSpec.describe 'Appointments' do
 
       it 'does not create a new Api::V1::Appointment' do
         expect do
-          post api_v1_appointments_url,
-               params: { appointment: valid_attributes },
-               as: :json,
-               headers: authorized_headers
+          authorized_post api_v1_appointments_url, params: { appointment: valid_attributes }, as: :json
         end.not_to change(Api::V1::Appointment, :count)
       end
 
       it 'renders a JSON response with errors for the new api_v1_appointment' do
-        post api_v1_appointments_url, params: { appointment: valid_attributes }, as: :json, headers: authorized_headers
+        authorized_post api_v1_appointments_url, params: { appointment: valid_attributes }, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including('application/json'))
         expect(response.body).to match(a_string_including("tax income doesn't accept appointment"))
@@ -116,20 +103,14 @@ RSpec.describe 'Appointments' do
       context 'with valid parameters' do
         it 'updates the requested api_v1_appointment' do
           appointment = Api::V1::Appointment.create! valid_attributes
-          patch api_v1_appointment_url(appointment),
-                params: { appointment: new_attributes },
-                as: :json,
-                headers: authorized_headers
+          authorized_put api_v1_appointment_url(appointment), params: { appointment: new_attributes }, as: :json
           appointment.reload
           expect(appointment.phone).to match(new_attributes[:phone])
         end
 
         it 'renders a JSON response with the api_v1_appointment' do
           appointment = Api::V1::Appointment.create! valid_attributes
-          patch api_v1_appointment_url(appointment),
-                params: { appointment: new_attributes },
-                as: :json,
-                headers: authorized_headers
+          authorized_put api_v1_appointment_url(appointment), params: { appointment: new_attributes }, as: :json
           expect(response).to have_http_status(:ok)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
@@ -138,10 +119,7 @@ RSpec.describe 'Appointments' do
       context 'with invalid parameters' do
         it 'renders a JSON response with errors for the api_v1_appointment' do
           appointment = Api::V1::Appointment.create! valid_attributes
-          patch api_v1_appointment_url(appointment),
-                params: { appointment: invalid_attributes },
-                as: :json,
-                headers: authorized_headers
+          authorized_put api_v1_appointment_url(appointment), params: { appointment: invalid_attributes }, as: :json
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
@@ -151,10 +129,7 @@ RSpec.describe 'Appointments' do
         it "doesn't update the requested api_v1_appointment" do
           appointment = Api::V1::Appointment.create! valid_attributes
           tax_income.pending_documentation!
-          patch api_v1_appointment_url(appointment),
-                params: { appointment: new_attributes },
-                as: :json,
-                headers: authorized_headers
+          authorized_put api_v1_appointment_url(appointment), params: { appointment: new_attributes }, as: :json
           appointment.reload
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.body).to match(a_string_including("tax income doesn't accept appointment"))
@@ -170,7 +145,7 @@ RSpec.describe 'Appointments' do
         tax_income.waiting_for_meeting_creation!
         Api::V1::Appointment.create! valid_attributes
         get api_v1_appointments_url, as: :json
-        expect(response.body).to match('sign in or sign up')
+        expect(response.body).to match('not authorized')
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -179,7 +154,7 @@ RSpec.describe 'Appointments' do
       tax_income.waiting_for_meeting_creation!
       appointment = Api::V1::Appointment.create! valid_attributes
       get api_v1_appointments_url(appointment)
-      expect(response.body).to match('sign in or sign up')
+      expect(response.body).to match('not authorized')
       expect(response).to have_http_status(:unauthorized)
     end
   end

@@ -3,8 +3,8 @@
 module Api
   module V1
     class DocumentsController < ApiBaseController
+      before_action :authorize_access_request!
       before_action :set_document, except: :create
-      before_action :authenticate_api_v1_api_v1_user!
 
       after_action :verify_authorized
 
@@ -12,7 +12,7 @@ module Api
         authorize @document
         doc = @document.files.find(params[:id_attachment])
         doc.purge_later
-        @document.delete_file!(current_api_v1_api_v1_user.id, doc.filename.to_s)
+        @document.delete_file!(current_user.id, doc.filename.to_s)
         render :show
       end
 
@@ -23,7 +23,7 @@ module Api
             break unless @document.upload_file?
 
             @document.files.attach(v)
-            @document.uploaded_file!(current_api_v1_api_v1_user.id, v.original_filename)
+            @document.uploaded_file!(current_user.id, v.original_filename)
           end
           render :show
         else
@@ -33,7 +33,7 @@ module Api
 
       def export_document
         authorize @document
-        @document.export!(current_api_v1_api_v1_user.id)
+        @document.export!(current_user.id)
         CreatePdfFromDocumentAttachmentsJob.perform_async(@document.id)
         render :show
       end

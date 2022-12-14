@@ -3,12 +3,12 @@
 module Api
   module V1
     class EstimationsController < ApiBaseController
+      before_action :authorize_access_request!, except: %i[estimate estimation_from_jwt]
       before_action :set_estimation, only: %i[show update destroy]
-      before_action :authenticate_api_v1_api_v1_user!, except: %i[estimate estimation_from_jwt]
 
       # GET /estimations
       def index
-        @estimations = current_api_v1_api_v1_user.estimations.all
+        @estimations = current_user.estimations.all
       end
 
       # GET /estimations/1
@@ -53,7 +53,7 @@ module Api
 
       # Use callbacks to share common setup or constraints between actions.
       def set_estimation
-        @estimation = current_api_v1_api_v1_user.estimations.find(params[:id])
+        @estimation = current_user.estimations.find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.

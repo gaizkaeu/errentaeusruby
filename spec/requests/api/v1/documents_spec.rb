@@ -31,27 +31,29 @@ RSpec.describe '/api/v1/documents' do
   end
 
   context 'with authorized user authenticated' do
-    let(:authorized_headers) { tax_income.client.create_new_auth_token }
+    before do
+      sign_in(tax_income.client)
+    end
 
     describe 'POST /add_document_attachment' do
       context 'with valid image' do
         it 'does upload single image' do
           document = Api::V1::Document.create! valid_attributes
-          post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test }, headers: authorized_headers
+          authorized_post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test }
           expect(response).to be_successful
           expect(document.files.size).to match(1)
         end
 
         it 'does upload multiple images' do
           document = Api::V1::Document.create! valid_attributes
-          post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test, 'files[1]': upload_image_test }, headers: authorized_headers
+          authorized_post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test, 'files[1]': upload_image_test }
           expect(response).to be_successful
           expect(document.files.size).to match(2)
         end
 
         it 'does not upload more than allowed' do
           document = Api::V1::Document.create! valid_attributes
-          post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test, 'files[1]': upload_image_test, 'files[2]': upload_image_test }, headers: authorized_headers
+          authorized_post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test, 'files[1]': upload_image_test, 'files[2]': upload_image_test }
           expect(response).to be_successful
           expect(document.files.size).to match(2)
         end
@@ -61,13 +63,13 @@ RSpec.describe '/api/v1/documents' do
     describe 'DELETE /delete_document_attachment' do
       it 'removes image' do
         document = Api::V1::Document.create! valid_attributes
-        post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test }, headers: authorized_headers
+        authorized_post add_document_attachment_api_v1_document_url(document), params: { 'files[0]': upload_image_test }
         expect(response).to be_successful
         expect(document.files.size).to match(1)
         res = JSON.parse(response.body)
         res = res['attachments'][0]['id']
         expect(res).not_to be_nil
-        delete delete_document_attachment_api_v1_document_url(document, res), headers: authorized_headers
+        authorized_delete delete_document_attachment_api_v1_document_url(document, res)
         expect(response).to be_successful
         expect(document.files.size).to match(0)
       end
@@ -77,7 +79,7 @@ RSpec.describe '/api/v1/documents' do
       context 'with valid parameters' do
         it 'does not create a new Api::V1::Document' do
           expect do
-            post api_v1_documents_url, params: { document: valid_attributes }, headers: authorized_headers
+            authorized_post api_v1_documents_url, params: { document: valid_attributes }
           end.not_to change(Api::V1::Document, :count)
           expect(response).not_to be_successful
           expect(response).to have_http_status(:unauthorized)
@@ -87,7 +89,7 @@ RSpec.describe '/api/v1/documents' do
       context 'with invalid parameters' do
         it 'does not create a new Api::V1::Document' do
           expect do
-            post api_v1_documents_url, params: { document: invalid_attributes }, headers: authorized_headers
+            authorized_post api_v1_documents_url, params: { document: invalid_attributes }
           end.not_to change(Api::V1::Document, :count)
           expect(response).not_to be_successful
           expect(response).to have_http_status(:unauthorized)
@@ -103,7 +105,7 @@ RSpec.describe '/api/v1/documents' do
 
         it 'updates the requested api_v1_document' do
           document = Api::V1::Document.create! valid_attributes
-          patch api_v1_document_url(document), params: { api_v1_document: new_attributes }, headers: authorized_headers
+          authorized_patch api_v1_document_url(document), params: { api_v1_document: new_attributes }
           document.reload
           expect(response).not_to be_successful
           expect(response).to have_http_status(:unauthorized)
@@ -115,7 +117,7 @@ RSpec.describe '/api/v1/documents' do
       it 'destroys the requested api_v1_document' do
         document = Api::V1::Document.create! valid_attributes
         expect do
-          delete api_v1_document_url(document), headers: authorized_headers
+          authorized_delete api_v1_document_url(document)
         end.not_to change(Api::V1::Document, :count)
         expect(response).not_to be_successful
         expect(response).to have_http_status(:unauthorized)

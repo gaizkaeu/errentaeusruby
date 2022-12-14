@@ -14,13 +14,8 @@ module Errentaeusreact
     config.load_defaults 7.0
 
     config.api_only = true
-    config.middleware.use ActionDispatch::Cookies
 
     config.autoload_paths << Rails.root.join('app', 'services')
-
-    config.session_store :cookie_store, key: 'errenta'
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use config.session_store, config.session_options
 
     # Configuration for the application, engines, and railties goes here.
     #

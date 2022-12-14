@@ -7,25 +7,15 @@ module Api
   module V1
     class User < ApplicationRecord
       include Filterable
-      # Include default devise modules. Others available are:
-      # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-      devise :database_authenticatable,
-             :registerable,
-             :recoverable,
-             :rememberable,
-             :validatable,
-             :confirmable,
-             :trackable,
-             :omniauthable,
-             omniauth_providers: [:google_one_tap]
 
-      include DeviseTokenAuth::Concerns::User
+      has_secure_password
 
       scope :filter_by_all_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").limit(10) }
       scope :filter_by_client_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
       scope :filter_by_lawyer_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :lawyer).limit(10) }
 
       after_create_commit :create_stripe_customer, :send_welcome_email
+      before_validation :set_defaults
 
       has_many :tax_incomes, dependent: :destroy, inverse_of: :client, foreign_key: :client
       has_many :estimations, dependent: :destroy, through: :tax_incomes
@@ -50,7 +40,7 @@ module Api
         # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create(
           {
-            name: (first_name || '') + (last_name || ''),
+            name: first_name + (last_name || ''),
             email:,
             metadata: {
               user_id: id
@@ -62,14 +52,14 @@ module Api
       end
 
       def send_welcome_email
-        UserMailer.welcome_email(id).deliver_later!
-        send_confirmation_instructions unless confirmed?
+        UserMailer.welcome_email(id).deliver_later! if Rails.env.production?
+        # send_confirmation_instructions unless confirmed?
       end
 
       def resend_confirmation_instructions?
         if !confirmed? && confirmation_sent_at < (10.minutes.ago)
           update!(confirmation_sent_at: Time.current)
-          send_confirmation_instructions
+          # send_confirmation_instructions TODO:
           true
         else
           false
@@ -94,6 +84,14 @@ module Api
 
       def after_provider_authentication(provider_data)
         LogAccountLoginJob.perform_async({ user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at  }.merge(provider_data).stringify_keys)
+      end
+
+      def set_defaults
+        self.uid = email if uid.blank?
+      end
+
+      def confirmed?
+        confirmed_at.present?
       end
     end
   end

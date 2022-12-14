@@ -3,7 +3,7 @@ module Api
     require 'stripe'
     class TaxIncomesController < ApiBaseController
       include TaxIncomesHelper
-      before_action :authenticate_api_v1_api_v1_user!
+      before_action :authorize_access_request!
 
       before_action :set_tax_income, except: %i[index create]
 
@@ -24,7 +24,7 @@ module Api
       # POST /tax_incomes or /tax_incomes.json
       # rubocop:disable Rails/SaveBang
       def create
-        @tax_income = current_api_v1_api_v1_user.tax_incomes.build
+        @tax_income = current_user.tax_incomes.build
         @tax_income.update(parse_params(tax_income_params, nested_estimation_params[:token]))
         authorize @tax_income
 
@@ -97,7 +97,7 @@ module Api
       end
 
       def filtering_params
-        return unless current_api_v1_api_v1_user.lawyer?
+        return unless current_user.lawyer?
 
         params.slice(:first_name)
       end

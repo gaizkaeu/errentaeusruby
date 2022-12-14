@@ -65,21 +65,25 @@ RSpec.describe '/api/v1/estimations' do
   end
 
   describe 'GET /index' do
-    let(:authorized_headers) { tax_income.client.create_new_auth_token }
+    before do
+      sign_in(tax_income.client)
+    end
 
     it 'renders a successful response' do
       Api::V1::Estimation.create! valid_attributes
-      get api_v1_estimations_url, headers: authorized_headers
+      authorized_get api_v1_estimations_url
       expect(response).to be_successful
     end
   end
 
   describe 'GET /show' do
-    let(:authorized_headers) { tax_income.client.create_new_auth_token }
+    before do
+      sign_in(tax_income.client)
+    end
 
     it 'renders a successful response' do
       estimation = Api::V1::Estimation.create! valid_attributes
-      get api_v1_estimations_path(estimation), headers: authorized_headers
+      authorized_get api_v1_estimations_path(estimation)
       expect(response).to be_successful
     end
   end
@@ -120,7 +124,9 @@ RSpec.describe '/api/v1/estimations' do
   end
 
   describe 'PATCH /update' do
-    let(:authorized_headers) { tax_income.client.create_new_auth_token }
+    before do
+      sign_in(tax_income.client)
+    end
 
     context 'with valid parameters' do
       let(:new_attributes) do
@@ -129,7 +135,7 @@ RSpec.describe '/api/v1/estimations' do
 
       it 'updates the requested api_v1_estimation' do
         estimation = Api::V1::Estimation.create! valid_attributes
-        patch api_v1_estimation_url(estimation), params: { estimation: new_attributes }, headers: authorized_headers
+        authorized_patch api_v1_estimation_url(estimation), params: { estimation: new_attributes }
         estimation.reload
         expect(response).to have_http_status(:ok)
         expect(estimation.home_changes).to match(new_attributes[:home_changes])
@@ -139,19 +145,21 @@ RSpec.describe '/api/v1/estimations' do
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         estimation = Api::V1::Estimation.create! valid_attributes
-        patch api_v1_estimation_url(estimation), params: { estimation: invalid_attributes }, headers: authorized_headers
+        authorized_put api_v1_estimation_url(estimation), params: { estimation: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    let(:authorized_headers) { tax_income.client.create_new_auth_token }
+    before do
+      sign_in(tax_income.client)
+    end
 
     it 'destroys the requested api_v1_estimation' do
       estimation = Api::V1::Estimation.create! valid_attributes
       expect do
-        delete api_v1_estimation_url(estimation), headers: authorized_headers
+        authorized_delete api_v1_estimation_url(estimation)
       end.to change(Api::V1::Estimation, :count).by(-1)
     end
   end

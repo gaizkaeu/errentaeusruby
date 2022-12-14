@@ -10,7 +10,7 @@ FactoryBot.define do
     password { 'test123' }
     password_confirmation { 'test123' }
     confirmed_at { '04-07-2002' }
-    uid { '' }
+    uid { email }
   end
 
   factory :unconfirmed_user, class: 'Api::V1::User' do
@@ -19,7 +19,7 @@ FactoryBot.define do
     email { generate(:email) }
     password { 'test123' }
     password_confirmation { 'test123' }
-    uid { '' }
+    uid { email }
   end
 
   factory :lawyer, class: 'Api::V1::User' do
@@ -29,7 +29,7 @@ FactoryBot.define do
     password { 'test123' }
     password_confirmation { 'test123' }
     confirmed_at { '04-07-2002' }
-    uid { '' }
+    uid { email }
     account_type { 'lawyer' }
   end
 

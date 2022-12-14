@@ -3,7 +3,7 @@
 module Api
   module V1
     class AppointmentsController < ApiBaseController
-      before_action :authenticate_api_v1_api_v1_user!
+      before_action :authorize_access_request!
       before_action :set_appointment, only: %i[show update destroy]
 
       after_action :verify_authorized, except: :index
