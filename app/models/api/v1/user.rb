@@ -40,7 +40,7 @@ module Api
         # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create(
           {
-            name: first_name + (last_name || ''),
+            name: (first_name || id) + (last_name || ''),
             email:,
             metadata: {
               user_id: id
