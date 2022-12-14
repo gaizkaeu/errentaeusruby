@@ -1,4 +1,4 @@
-class Api::V1::PushController < ApplicationController
+class Api::V1::PushController < ApiBaseController
   require 'json'
   # rubocop:disable Metrics/AbcSize
   def send_push
