@@ -7,7 +7,7 @@ RSpec.describe 'Sessions' do
 
     it 'returns http success' do
       post api_v1_auth_account_sign_in_url, params: { api_v1_user: user_params }
-      expect(JSON.parse(response.body).keys).to eq ['csrf']
+      expect(JSON.parse(response.body).keys).to include('csrf')
       expect(response.cookies[JWTSessions.access_cookie]).to be_present
     end
 

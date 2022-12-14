@@ -7,7 +7,7 @@ RSpec.describe 'Registrations' do
     it 'returns http success' do
       post api_v1_auth_account_sign_up_url, params: { api_v1_user: user_params }
       expect(response).to be_successful
-      expect(JSON.parse(response.body).keys).to eq ['csrf']
+      expect(JSON.parse(response.body).keys).to include('csrf')
       expect(response.cookies[JWTSessions.access_cookie]).to be_present
     end
 
