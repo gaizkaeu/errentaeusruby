@@ -23,7 +23,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
     response.set_cookie(
       JWTSessions.access_cookie,
       value: tokens[:access],
-      domain: '*.errenta.eus',
+      domain: 'errenta.eus',
       httponly: true,
       secure: Rails.env.production?
     )
