@@ -13,7 +13,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
     end
   end
 
-  def google_one_tap
+  def google
     payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: '321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com')
 
     authentication_from_provider(params_parser_one_tap(payload))
