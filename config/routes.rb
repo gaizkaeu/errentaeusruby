@@ -12,7 +12,6 @@ Rails.application.routes.draw do
         post 'refresh', to: 'refresh#create', as: :account_refresh
         delete 'logout', to: 'sessions#destroy', as: :account_sign_out
         post 'google', to: 'sessions#google', as: :google_callback
-        get :me, to: 'sessions#me', as: :account_logged_in
       end
 
       resources :appointments
@@ -35,6 +34,7 @@ Rails.application.routes.draw do
 
       scope '/accounts' do
         get '', to: 'accounts#index', as: :accounts
+        get :me, to: 'accounts#me', as: :account_logged_in
         get ':id', to: 'accounts#show', as: :account
         post ':id/resend_confirmation', to: 'accounts#resend_confirmation', as: :account_resend_confirmation
       end

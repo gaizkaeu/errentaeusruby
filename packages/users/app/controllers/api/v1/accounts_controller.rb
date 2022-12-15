@@ -5,7 +5,7 @@ module Api
     class AccountsController < ApiBaseController
       before_action :authorize_access_request!
 
-      after_action :verify_authorized, except: :index
+      after_action :verify_authorized, except: %i[index me]
       after_action :verify_policy_scoped, only: :index
 
       def index
@@ -25,6 +25,11 @@ module Api
         else
           render json: { status: 'error' }, status: :unprocessable_entity
         end
+      end
+
+      def me
+        @current_user = current_user
+        render 'accounts/me'
       end
 
       private

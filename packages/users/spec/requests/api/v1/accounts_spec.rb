@@ -8,6 +8,15 @@ RSpec.describe 'Accounts' do
       sign_in(user)
     end
 
+    describe 'GET /me' do
+      it 'renders a successful response' do
+        sign_in(user)
+        authorized_get api_v1_account_logged_in_url, as: :json
+        expect(response).to be_successful
+        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name, confirmed: user.confirmed?))
+      end
+    end
+
     describe 'INDEX /accounts' do
       it 'renders a successful response' do
         authorized_get api_v1_accounts_url, as: :json
@@ -44,7 +53,6 @@ RSpec.describe 'Accounts' do
     #     expect(body).to match("error")
     #   end
     # end
-
     describe 'GET /accounts' do
       it 'renders error' do
         authorized_get api_v1_accounts_url, as: :json

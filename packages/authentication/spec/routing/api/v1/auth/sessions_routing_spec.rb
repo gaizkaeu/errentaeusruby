@@ -14,10 +14,6 @@ RSpec.describe Api::V1::Auth::SessionsController do
     it 'routes to #logout' do
       expect(delete: '/api/v1/auth/logout').to route_to('api/v1/auth/sessions#destroy', format: 'json')
     end
-
-    it 'routes to #me' do
-      expect(get: '/api/v1/auth/me').to route_to('api/v1/auth/sessions#me', format: 'json')
-    end
   end
 end
 # rubocop:enable RSpec/ExpectActual

@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/ExpectActual
 RSpec.describe Api::V1::AccountsController do
   describe 'routing' do
     it 'routes to #index' do
@@ -13,5 +14,10 @@ RSpec.describe Api::V1::AccountsController do
     it 'routes to #resend_confirmation' do
       expect(post: '/api/v1/accounts/1/resend_confirmation').to route_to('api/v1/accounts#resend_confirmation', id: '1', format: 'json')
     end
+
+    it 'routes to #me' do
+      expect(get: '/api/v1/accounts/me').to route_to('api/v1/accounts#me', format: 'json')
+    end
   end
 end
+# rubocop:enable RSpec/ExpectActual

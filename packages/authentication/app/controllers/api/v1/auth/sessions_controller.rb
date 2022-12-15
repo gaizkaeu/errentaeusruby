@@ -1,12 +1,12 @@
 class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
-  before_action :authorize_access_request!, only: %i[destroy me]
+  before_action :authorize_access_request!, only: :destroy
 
   def create
-    @user = Api::V1::User.find_by!(email: sign_in_params[:email])
-    if @user.authenticate(sign_in_params[:password])
-      sign_in(@user)
+    user, auth = Api::V1::UserRepository.authenticate_user(sign_in_params[:email], sign_in_params[:password])
+    if auth
+      tokens = sign_in(user)
 
-      render 'shared/create'
+      render json: { csrf: tokens[:csrf] }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
@@ -17,7 +17,11 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
 
     authentication_from_provider(params_parser_one_tap(payload))
 
-    render 'shared/create'
+    user = Api::V1::UserRepository.from_omniauth(params)
+    raise JWTSessions::Errors::Unauthorized unless user.persisted?
+
+    tokens = sign_in(user)
+    render json: { csrf: tokens[:csrf] }
   rescue Google::Auth::IDTokens::SignatureError, Google::Auth::IDTokens::AudienceMismatchError
     render json: { error: 'autenticity error' }
   end
@@ -28,19 +32,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
     head :no_content
   end
 
-  def me
-    @current_user = current_user
-    render 'sessions/me'
-  end
-
   private
-
-  def authentication_from_provider(params)
-    @user = Api::V1::User.from_omniauth(params)
-    raise JWTSessions::Errors::Unauthorized unless @user.persisted?
-
-    sign_in(@user)
-  end
 
   def params_parser_one_tap(payload)
     auth = ActiveSupport::OrderedOptions.new

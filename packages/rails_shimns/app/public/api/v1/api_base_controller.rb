@@ -38,10 +38,11 @@ module Api
       end
 
       def sign_in(user)
-        payload = { user_id: @user.id }
+        payload = { user_id: user.id }
         session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true, namespace: "user_#{user.id}")
-        @tokens = session.login
-        cookie_auth(@tokens)
+        tokens = session.login
+        cookie_auth(tokens)
+        tokens
       end
 
       private
