@@ -3,7 +3,7 @@ class Api::V1::Auth::RegistrationsController < Api::V1::ApiBaseController
     @user = Api::V1::User.new(user_params)
     if @user.save
       sign_in(@user)
-      render 'api/v1/auth/shared/create'
+      render 'shared/create'
     else
       render json: { error: user.errors.full_messages.join(' ') }, status: :unprocessable_entity
     end

@@ -92,6 +92,9 @@ gem 'webpush'
 # Cors
 gem 'rack-cors'
 
+# Packages
+gem 'packwerk'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

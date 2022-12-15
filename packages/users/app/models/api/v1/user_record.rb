@@ -5,7 +5,11 @@ Stripe.api_key = 'sk_test_51LxvpDGrlIhNYf6eyMiOoOdSbL3nqJzwj53cNFmE8S6ZHZrzWEE5u
 
 module Api
   module V1
-    class User < ApplicationRecord
+    class UserRecord < ApplicationRecord
+      self.table_name = 'users'
+
+      extend T::Sig
+
       include Filterable
       include Authenticatable
 

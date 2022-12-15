@@ -3,7 +3,7 @@ FactoryBot.define do
     "person#{n}@example.com"
   end
 
-  factory :user, class: 'Api::V1::User', aliases: [:client] do
+  factory :user, class: 'Api::V1::UserRecord', aliases: [:client] do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
     email { generate(:email) }
@@ -13,7 +13,7 @@ FactoryBot.define do
     uid { email }
   end
 
-  factory :unconfirmed_user, class: 'Api::V1::User' do
+  factory :unconfirmed_user, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
     email { generate(:email) }
@@ -22,7 +22,7 @@ FactoryBot.define do
     uid { email }
   end
 
-  factory :lawyer, class: 'Api::V1::User' do
+  factory :lawyer, class: 'Api::V1::UserRecord' do
     first_name { 'Carolina' }
     last_name  { 'Doe' }
     email { generate(:email) }

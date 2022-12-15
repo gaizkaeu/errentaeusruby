@@ -95,4 +95,34 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  # PACKWERK
+  config.define_derived_metadata(file_path: Regexp.new('/spec/packages/.*/controllers')) { |metadata| metadata[:type] = :controller }
+  config.define_derived_metadata(file_path: Regexp.new('/spec/packages/.*/models')) { |metadata| metadata[:type] = :model }
+  config.define_derived_metadata(file_path: Regexp.new('/spec/packages/.*/requests')) { |metadata| metadata[:type] = :request }
+  config.define_derived_metadata(file_path: Regexp.new('/spec/packages/.*/routing')) { |metadata| metadata[:type] = :routing }
+  config.define_derived_metadata(file_path: Regexp.new('/spec/packages/.*/system')) { |metadata| metadata[:type] = :system }
+  config.define_derived_metadata(file_path: Regexp.new('/spec/packages/.*/views')) { |metadata| metadata[:type] = :view }
+
+  config.before(:each, type: ->(v) { v == :view }) do
+    Rails.root.glob('app/packages/*/views').each do |path|
+      view.lookup_context.view_paths.push path
+    end
+  end
+end
+
+# Adjust RSpec configuration for package folder structure
+RSpec.configure do |config|
+  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/controllers')) { |metadata| metadata[:type] = :controller }
+  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/models')) { |metadata| metadata[:type] = :model }
+  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/requests')) { |metadata| metadata[:type] = :request }
+  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/routing')) { |metadata| metadata[:type] = :routing }
+  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/system')) { |metadata| metadata[:type] = :system }
+  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/views')) { |metadata| metadata[:type] = :view }
+
+  config.before(:each, type: ->(v) { v == :view }) do
+    Rails.root.glob('app/packages/*/views').each do |path|
+      view.lookup_context.view_paths.push path
+    end
+  end
 end

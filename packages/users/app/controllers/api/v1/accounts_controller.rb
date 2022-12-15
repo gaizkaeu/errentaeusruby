@@ -9,11 +9,11 @@ module Api
       after_action :verify_policy_scoped, only: :index
 
       def index
-        @users = User.filter(filtering_params, policy_scope(User))
+        @users = Api::V1::UserRecord.filter(filtering_params, policy_scope(Api::V1::UserRecord))
       end
 
       def show
-        @user = User.find(params[:id])
+        @user = Api::V1::UserRecord.find(params[:id])
         authorize @user
       end
 

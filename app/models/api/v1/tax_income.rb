@@ -12,8 +12,8 @@ module Api
         record.errors.add :lawyer_id, "clients can't be lawyers" if record.lawyer && !record.lawyer&.lawyer?
       end
 
-      belongs_to :client, class_name: 'User'
-      belongs_to :lawyer, class_name: 'User', optional: true
+      belongs_to :client, class_name: 'UserRecord'
+      belongs_to :lawyer, class_name: 'UserRecord', optional: true
       has_one :estimation, dependent: :destroy, required: false
       has_one :appointment, dependent: :destroy
       has_many :documents, class_name: 'Document', dependent: :destroy, inverse_of: :tax_income
@@ -103,7 +103,7 @@ module Api
           return
         end
 
-        lawyer_id = User.where(account_type: 1).first&.id
+        lawyer_id = Api::V1::UserRecord.where(account_type: 1).first&.id
         waiting_for_meeting_creation! if update!(lawyer_id:)
       end
 

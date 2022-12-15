@@ -3,6 +3,7 @@
 module Api
   module V1
     class ApiBaseController < ActionController::API
+      append_view_path(Rails.root.glob('packages/*/app/views'))
       include Pundit::Authorization
       include ActionController::Cookies
       include JWTSessions::RailsAuthorization
@@ -17,7 +18,7 @@ module Api
       end
 
       def current_user
-        @current_user ||= User.find(payload['user_id'])
+        @current_user ||= Api::V1::UserRecord.find(payload['user_id'])
       end
 
       def current_user_signed_in?

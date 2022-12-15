@@ -6,7 +6,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
     if @user.authenticate(sign_in_params[:password])
       sign_in(@user)
 
-      render 'api/v1/auth/shared/create'
+      render 'shared/create'
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
@@ -17,7 +17,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
 
     authentication_from_provider(params_parser_one_tap(payload))
 
-    render :create
+    render 'shared/create'
   rescue Google::Auth::IDTokens::SignatureError, Google::Auth::IDTokens::AudienceMismatchError
     render json: { error: 'autenticity error' }
   end
@@ -30,6 +30,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
 
   def me
     @current_user = current_user
+    render 'sessions/me'
   end
 
   private
