@@ -39,8 +39,8 @@ RSpec.describe 'Sessions' do
       before do
         sign_in(user)
       end
-      it 'returns http success with valid tokens' do
 
+      it 'returns http success with valid tokens' do
         authorized_delete api_v1_auth_account_sign_out_url
         expect(response).to have_http_status(:no_content)
       end

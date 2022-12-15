@@ -49,7 +49,6 @@ module Api
         # rubocop:enable Rails/SaveBang
         update!(stripe_customer_id: customer['id'])
       end
-
     end
   end
 end

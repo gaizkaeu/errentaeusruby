@@ -37,8 +37,6 @@ RSpec.describe 'Accounts' do
       sign_in(user)
     end
 
-
-
     # describe "POST /resend_confirmation" do
     #   it "renders error" do
     #     post api_v1_account_resend_confirmation_path(user.id), as: :json
@@ -54,29 +52,5 @@ RSpec.describe 'Accounts' do
         expect(body).to match('not authorized')
       end
     end
-  end
-
-  context 'when logged in unconfirmed' do
-    let(:user) { create(:unconfirmed_user) }
-
-    before do
-      sign_in(user)
-    end
-
-
-    # describe "POST /resend_confirmation" do
-    #   it "with confirmation sent at > 5m" do
-    #     user.update!(confirmation_sent_at: "04-07-2020")
-    #     post api_v1_account_resend_confirmation_path(user.id), as: :json
-    #     expect(response).to be_successful
-    #   end
-
-    #   it "with confirmation sent at < 5m" do
-    #     user.update!(confirmation_sent_at: Time.zone.now)
-    #     post api_v1_account_resend_confirmation_path(user.id), as: :json
-    #     expect(response).not_to be_successful
-    #     expect(body).to match("error")
-    #   end
-    # end
   end
 end
