@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       namespace :auth do
         post 'sign_up', to: 'registrations#create', as: :account_sign_up
         post 'sign_in', to: 'sessions#create', as: :account_sign_in
+        delete 'logout', to: 'sessions#destroy', as: :account_sign_out
         post 'google', to: 'sessions#google', as: :google_callback
       end
 

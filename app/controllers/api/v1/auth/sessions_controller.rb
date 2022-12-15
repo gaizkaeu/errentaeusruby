@@ -1,11 +1,10 @@
 class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
+  before_action :authorize_access_request!, only: [:destroy]
+
   def create
     @user = Api::V1::User.find_by!(email: sign_in_params[:email])
     if @user.authenticate(sign_in_params[:password])
-      payload = { user_id: @user.id }
-      session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true)
-      @tokens = session.login
-      cookie_auth(@tokens)
+      sign_in(@user)
 
       render :create
     else
@@ -23,16 +22,19 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
     render json: { error: 'autenticity error' }
   end
 
+  def destroy
+    session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true, namespace: "user_#{payload['user_id']}")
+    session.flush_by_access_payload
+    head :no_content
+  end
+
   private
 
   def authentication_from_provider(params)
     @user = Api::V1::User.from_omniauth(params)
     raise JWTSessions::Errors::Unauthorized unless @user.persisted?
 
-    payload = { user_id: @user.id }
-    session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true)
-    @tokens = session.login
-    cookie_auth(@tokens)
+    sign_in(@user)
   end
 
   def params_parser_one_tap(payload)
