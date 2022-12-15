@@ -7,8 +7,7 @@ module Api
   module V1
     class User < ApplicationRecord
       include Filterable
-
-      has_secure_password
+      include Authenticatable
 
       scope :filter_by_all_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").limit(10) }
       scope :filter_by_client_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
@@ -51,48 +50,6 @@ module Api
         update!(stripe_customer_id: customer['id'])
       end
 
-      def send_welcome_email
-        UserMailer.welcome_email(id).deliver_later! if Rails.env.production?
-        # send_confirmation_instructions unless confirmed?
-      end
-
-      def resend_confirmation_instructions?
-        if !confirmed? && confirmation_sent_at < (10.minutes.ago)
-          update!(confirmation_sent_at: Time.current)
-          # send_confirmation_instructions TODO:
-          true
-        else
-          false
-        end
-      end
-
-      # rubocop:disable Metrics/AbcSize
-      def self.from_omniauth(auth)
-        where(provider: auth.provider, uid: auth.uid).first_or_create! do |user|
-          user.email = auth.info.email
-          user.password = SecureRandom.hex(32)
-          user.first_name = auth.info.first_name # assuming the user model has a name
-          user.last_name = auth.info.last_name # assuming the user model has a name
-          user.confirmed_at = Time.zone.today
-        end
-      end
-      # rubocop:enable Metrics/AbcSize
-
-      def after_database_authentication
-        LogAccountLoginJob.perform_async({ user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at  }.stringify_keys)
-      end
-
-      def after_provider_authentication(provider_data)
-        LogAccountLoginJob.perform_async({ user_id: id, action: 0, ip: current_sign_in_ip, time: current_sign_in_at  }.merge(provider_data).stringify_keys)
-      end
-
-      def set_defaults
-        self.uid = email if uid.blank?
-      end
-
-      def confirmed?
-        confirmed_at.present?
-      end
     end
   end
 end

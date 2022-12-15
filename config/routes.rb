@@ -9,8 +9,10 @@ Rails.application.routes.draw do
       namespace :auth do
         post 'sign_up', to: 'registrations#create', as: :account_sign_up
         post 'sign_in', to: 'sessions#create', as: :account_sign_in
+        post 'refresh', to: 'refresh#create', as: :account_refresh
         delete 'logout', to: 'sessions#destroy', as: :account_sign_out
         post 'google', to: 'sessions#google', as: :google_callback
+        get :me, to: 'sessions#me', as: :account_logged_in
       end
 
       resources :appointments
@@ -32,7 +34,6 @@ Rails.application.routes.draw do
       post :push, to: "push#send_push"
 
       scope '/accounts' do
-        get :logged_in, to: 'accounts#logged_in', as: :account_logged_in
         get '', to: 'accounts#index', as: :accounts
         get ':id', to: 'accounts#show', as: :account
         post ':id/resend_confirmation', to: 'accounts#resend_confirmation', as: :account_resend_confirmation

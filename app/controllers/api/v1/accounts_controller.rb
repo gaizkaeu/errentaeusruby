@@ -5,12 +5,8 @@ module Api
     class AccountsController < ApiBaseController
       before_action :authorize_access_request!
 
-      after_action :verify_authorized, except: %i[logged_in index]
+      after_action :verify_authorized, except: :index
       after_action :verify_policy_scoped, only: :index
-
-      def logged_in
-        @current_user = current_user
-      end
 
       def index
         @users = User.filter(filtering_params, policy_scope(User))

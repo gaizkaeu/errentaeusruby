@@ -37,13 +37,7 @@ RSpec.describe 'Accounts' do
       sign_in(user)
     end
 
-    describe 'GET /logged_in' do
-      it 'renders a successful response' do
-        authorized_get api_v1_account_logged_in_url, as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name, confirmed: true))
-      end
-    end
+
 
     # describe "POST /resend_confirmation" do
     #   it "renders error" do
@@ -69,13 +63,6 @@ RSpec.describe 'Accounts' do
       sign_in(user)
     end
 
-    describe 'GET /logged_in' do
-      it 'renders a successful response' do
-        authorized_get api_v1_account_logged_in_url, as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name, confirmed: false))
-      end
-    end
 
     # describe "POST /resend_confirmation" do
     #   it "with confirmation sent at > 5m" do

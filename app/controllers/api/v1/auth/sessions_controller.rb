@@ -1,12 +1,12 @@
 class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
-  before_action :authorize_access_request!, only: [:destroy]
+  before_action :authorize_access_request!, only: %i[destroy me]
 
   def create
     @user = Api::V1::User.find_by!(email: sign_in_params[:email])
     if @user.authenticate(sign_in_params[:password])
       sign_in(@user)
 
-      render :create
+      render 'api/v1/auth/shared/create'
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
@@ -26,6 +26,10 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
     session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true, namespace: "user_#{payload['user_id']}")
     session.flush_by_access_payload
     head :no_content
+  end
+
+  def me
+    @current_user = current_user
   end
 
   private
