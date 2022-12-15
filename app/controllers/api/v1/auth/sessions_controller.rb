@@ -26,7 +26,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   private
 
   def authentication_from_provider(params)
-    @user = User.from_omniauth(params)
+    @user = Api::V1::User.from_omniauth(params)
     raise JWTSessions::Errors::Unauthorized unless @user.persisted?
 
     payload = { user_id: @user.id }
