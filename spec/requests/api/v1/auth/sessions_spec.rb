@@ -19,13 +19,14 @@ RSpec.describe 'Sessions' do
   end
 
   describe 'logout DELETE #destroy' do
-    context 'failure' do
+    context 'with no logged in' do
       it 'returns unauthorized http status' do
         delete api_v1_auth_account_sign_out_url
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
-    context 'success' do
+
+    context 'with logged in' do
       it 'returns http success with valid tokens' do
         sign_in(user)
 

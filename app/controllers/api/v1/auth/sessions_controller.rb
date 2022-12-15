@@ -23,7 +23,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   end
 
   def destroy
-    session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true, namespace: "user_#{payload['user_id']}")
+    session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true, namespace: "user_#{payload['user_id']}")
     session.flush_by_access_payload
     head :no_content
   end
