@@ -8,6 +8,6 @@ class Api::V1::Auth::RefreshController < Api::V1::ApiBaseController
       end
     cookie_auth(tokens)
 
-    render json: {csrf: tokens[:csrf]}
+    render json: { csrf: tokens[:csrf] }
   end
 end

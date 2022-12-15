@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'RefreshController' do
-
   describe 'POST #create' do
     let(:user) { create(:user) }
 
+    # rubocop:disable RSpec/InstanceVariable
     context 'when logged in' do
       before do
         # set expiration time to 0 to create an already expired access token
@@ -39,5 +39,6 @@ RSpec.describe 'RefreshController' do
         expect(response).to have_http_status(:unauthorized)
       end
     end
+    # rubocop:enable RSpec/InstanceVariable
   end
 end
