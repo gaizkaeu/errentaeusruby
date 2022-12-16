@@ -385,6 +385,7 @@ GEM
     validates_timeliness (7.0.0.beta1)
       activemodel (>= 7.0.0, < 8)
       timeliness (>= 0.3.10, < 1)
+    value_semantics (3.6.1)
     vite_rails (3.0.12)
       railties (>= 5.1, < 8)
       vite_ruby (~> 3.0, >= 3.2.2)
@@ -457,6 +458,7 @@ DEPENDENCIES
   stripe_event
   tzinfo-data
   validates_timeliness (~> 7.0.0.beta1)
+  value_semantics
   vite_rails
   web-console
   webdrivers

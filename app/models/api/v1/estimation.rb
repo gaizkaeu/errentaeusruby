@@ -1,7 +1,7 @@
 module Api
   module V1
     class Estimation < ApplicationRecord
-      belongs_to :tax_income, optional: true, class_name: "Api::V1::TaxIncomeRecord"
+      belongs_to :tax_income, optional: true, class_name: 'Api::V1::TaxIncomeRecord'
 
       delegate :user, to: :tax_income, allow_nil: false
 

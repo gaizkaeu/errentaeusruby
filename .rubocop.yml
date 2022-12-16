@@ -142,3 +142,8 @@ RSpec/NestedGroups:
 
 RSpec/MultipleMemoizedHelpers:
   Max: 7
+
+RSpec/ExpectActual:
+  Exclude:
+    - packages/**/spec/**/routing/**/*
+    - spec/routing/**/*

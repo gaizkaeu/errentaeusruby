@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/ExpectActual
 RSpec.describe Api::V1::Auth::SessionsController do
   describe 'routing' do
     it 'routes to #create' do
@@ -16,4 +15,3 @@ RSpec.describe Api::V1::Auth::SessionsController do
     end
   end
 end
-# rubocop:enable RSpec/ExpectActual

@@ -15,9 +15,9 @@ module Api
 
       belongs_to :client, class_name: 'UserRecord'
       belongs_to :lawyer, class_name: 'UserRecord', optional: true
-      has_one :estimation, dependent: :destroy, required: false, foreign_key: "tax_income_id"
-      has_one :appointment, dependent: :destroy, foreign_key: "tax_income_id"
-      has_many :documents, class_name: 'Document', dependent: :destroy, inverse_of: :tax_income, foreign_key: "tax_income_id"
+      has_one :estimation, dependent: :destroy, required: false, foreign_key: 'tax_income_id'
+      has_one :appointment, dependent: :destroy, foreign_key: 'tax_income_id'
+      has_many :documents, class_name: 'Document', dependent: :destroy, inverse_of: :tax_income, foreign_key: 'tax_income_id'
 
       accepts_nested_attributes_for :estimation
 

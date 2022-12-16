@@ -4,14 +4,15 @@ class Api::V1::User
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_reader :id, :first_name, :last_name, :email, :account_type
+  attr_reader :id, :first_name, :last_name, :email, :account_type, :confirmed_at
 
-  def initialize(id, first_name, last_name, email, account_type, confirmed_at)
-    @id = id
-    @first_name = first_name
-    @last_name = last_name
-    @email = email
-    @account_type = account_type
+  def initialize(attributes)
+    @id = attributes.fetch(:id)
+    @first_name = attributes.fetch(:first_name)
+    @last_name = attributes.fetch(:last_name)
+    @email = attributes.fetch(:email)
+    @account_type = attributes.fetch(:account_type)
+    @confirmed_at = attributes.fetch(:confirmed_at)
   end
 
   def persisted?
@@ -27,7 +28,7 @@ class Api::V1::User
   end
 
   def confirmed?
-    @confirmed_at.nil?
+    !@confirmed_at.nil?
   end
 
   def ==(other)

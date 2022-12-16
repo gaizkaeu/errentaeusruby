@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/ExpectActual
 RSpec.describe Api::V1::AccountsController do
   describe 'routing' do
     it 'routes to #index' do
@@ -20,4 +19,3 @@ RSpec.describe Api::V1::AccountsController do
     end
   end
 end
-# rubocop:enable RSpec/ExpectActual

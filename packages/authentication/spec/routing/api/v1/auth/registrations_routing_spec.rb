@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/ExpectActual
 RSpec.describe Api::V1::Auth::RegistrationsController do
   describe 'routing' do
     it 'routes to #create' do
@@ -8,5 +7,3 @@ RSpec.describe Api::V1::Auth::RegistrationsController do
     end
   end
 end
-
-# rubocop:enable RSpec/ExpectActual

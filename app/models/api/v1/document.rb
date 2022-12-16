@@ -5,7 +5,7 @@ module Api
     class Document < ApplicationRecord
       include AASM
 
-      belongs_to :tax_income
+      belongs_to :tax_income, class_name: 'Api::V1::TaxIncomeRecord'
       has_many :document_histories, dependent: :destroy
 
       has_many_attached :files, dependent: :destroy

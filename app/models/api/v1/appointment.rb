@@ -3,7 +3,7 @@
 module Api
   module V1
     class Appointment < ApplicationRecord
-      belongs_to :tax_income, class_name: "Api::V1::TaxIncomeRecord"
+      belongs_to :tax_income, class_name: 'Api::V1::TaxIncomeRecord'
 
       MEETING_OPTIONS = %w[phone office].freeze
 

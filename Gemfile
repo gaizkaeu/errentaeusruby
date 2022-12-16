@@ -92,7 +92,8 @@ gem 'webpush'
 # Cors
 gem 'rack-cors'
 
-
+# Pubsub
+gem 'value_semantics'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
