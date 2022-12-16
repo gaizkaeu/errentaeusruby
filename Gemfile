@@ -92,8 +92,6 @@ gem 'webpush'
 # Cors
 gem 'rack-cors'
 
-# Packages
-gem 'packwerk'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -113,6 +111,10 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   # DOTFILES
   gem 'dotenv-rails'
+  # Packages
+  gem 'packwerk'
+  # Graph dependency visualizacion
+  gem 'graphwerk'
 end
 
 group :development do

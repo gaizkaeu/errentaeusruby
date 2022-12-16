@@ -1,4 +1,5 @@
 enforce_dependencies: true
 enforce_privacy: true
 dependencies:
-  - packages/users
+- packages/rails_shimns
+- packages/users

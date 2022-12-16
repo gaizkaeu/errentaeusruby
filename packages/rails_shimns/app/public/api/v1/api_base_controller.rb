@@ -18,7 +18,7 @@ module Api
       end
 
       def current_user
-        @current_user ||= Api::V1::UserRecord.find(payload['user_id'])
+        @current_user ||= Api::V1::UserRepository.find(payload['user_id'])
       end
 
       def current_user_signed_in?

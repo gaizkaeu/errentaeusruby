@@ -8,7 +8,7 @@ module Api
 
       # GET /estimations
       def index
-        @estimations = current_user.estimations.all
+        @estimations = Estimation.joins(:tax_income).where(id: current_user.id)
       end
 
       # GET /estimations/1
@@ -53,7 +53,7 @@ module Api
 
       # Use callbacks to share common setup or constraints between actions.
       def set_estimation
-        @estimation = current_user.estimations.find(params[:id])
+        @estimation = Estimation.find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.

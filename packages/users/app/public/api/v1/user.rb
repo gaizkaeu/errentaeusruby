@@ -6,7 +6,7 @@ class Api::V1::User
 
   attr_reader :id, :first_name, :last_name, :email, :account_type
 
-  def initialize(id, first_name, last_name, email, account_type)
+  def initialize(id, first_name, last_name, email, account_type, confirmed_at)
     @id = id
     @first_name = first_name
     @last_name = last_name
@@ -16,6 +16,18 @@ class Api::V1::User
 
   def persisted?
     !!id
+  end
+
+  def lawyer?
+    @account_type == 'lawyer'
+  end
+
+  def client?
+    @account_type == 'client'
+  end
+
+  def confirmed?
+    @confirmed_at.nil?
   end
 
   def ==(other)

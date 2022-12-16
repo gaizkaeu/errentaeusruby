@@ -10,11 +10,13 @@ module Api
 
       def index
         @users = Api::V1::UserRecord.filter(filtering_params, policy_scope(Api::V1::UserRecord))
+        render 'accounts/index'
       end
 
       def show
         @user = Api::V1::UserRecord.find(params[:id])
         authorize @user
+        render 'accounts/show'
       end
 
       def resend_confirmation

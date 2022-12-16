@@ -14,7 +14,7 @@ RSpec.describe 'Registrations' do
     it 'creates a new user' do
       expect do
         post api_v1_auth_account_sign_up_url, params: { api_v1_user: user_params }
-      end.to change(Api::V1::UserRecord, :count).by(1)
+      end.to change(Api::V1::UserRepository, :count).by(1)
     end
   end
 end

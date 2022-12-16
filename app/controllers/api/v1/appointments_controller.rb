@@ -18,7 +18,7 @@ module Api
       end
 
       def create
-        @tax_income = policy_scope(TaxIncome).find(appointment_params[:tax_income_id])
+        @tax_income = policy_scope(TaxIncomeRecord).find(appointment_params[:tax_income_id])
         @appointment = @tax_income.build_appointment(appointment_params.except(:tax_income_id))
         authorize @appointment
 

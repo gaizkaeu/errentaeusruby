@@ -33,7 +33,7 @@ FactoryBot.define do
     account_type { 'lawyer' }
   end
 
-  factory :tax_income, class: 'Api::V1::TaxIncome' do
+  factory :tax_income, class: 'Api::V1::TaxIncomeRecord' do
     client
   end
 

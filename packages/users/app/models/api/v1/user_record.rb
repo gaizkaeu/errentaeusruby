@@ -29,14 +29,6 @@ module Api
 
       enum account_type: { client: 0, lawyer: 1 }
 
-      def lawyer?
-        account_type == 'lawyer'
-      end
-
-      def client?
-        account_type == 'client'
-      end
-
       def create_stripe_customer
         return unless Rails.env.production?
 

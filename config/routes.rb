@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
       get 'lawyers/:id', to: 'lawyers#show'
 
-      resources :tax_incomes do
+      resources :tax_incomes, as: :tax_incomes do
         post 'create_payment_intent', to: 'tax_incomes#checkout', on: :member
         get :payment_data, on: :member
         get :documents, on: :member
