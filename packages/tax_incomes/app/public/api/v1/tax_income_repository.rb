@@ -1,4 +1,4 @@
-module Api::V1::UserRepository
+module Api::V1::TaxIncomeRepository
   module_function
 
   def find_by!(**kargs)
