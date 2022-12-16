@@ -1,4 +1,10 @@
 module Api::V1::UserRepository
+  def self.where(**kargs)
+    Api::V1::UserRecord.where(**kargs).map do |record|
+      Api::V1::User.new(permitted_attributes(record))
+    end
+  end
+
   def self.find_by!(**kargs)
     record = Api::V1::UserRecord.find_by!(**kargs)
     Api::V1::User.new(permitted_attributes(record))
