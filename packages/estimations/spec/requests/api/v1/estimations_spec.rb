@@ -16,7 +16,7 @@ RSpec.describe '/api/v1/estimations' do
   let(:tax_income) { create(:tax_income) }
 
   # This should return the minimal set of attributes required to create a valid
-  # Api::V1::Estimation. As you add validations to Api::V1::Estimation, be sure to
+  # Api::V1::EstimationRecord. As you add validations to Api::V1::EstimationRecord, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
@@ -70,7 +70,7 @@ RSpec.describe '/api/v1/estimations' do
     end
 
     it 'renders a successful response' do
-      Api::V1::Estimation.create! valid_attributes
+      Api::V1::EstimationRecord.create! valid_attributes
       authorized_get api_v1_estimations_url
       expect(response).to be_successful
     end
@@ -82,7 +82,7 @@ RSpec.describe '/api/v1/estimations' do
     end
 
     it 'renders a successful response' do
-      estimation = Api::V1::Estimation.create! valid_attributes
+      estimation = Api::V1::EstimationRecord.create! valid_attributes
       authorized_get api_v1_estimations_path(estimation)
       expect(response).to be_successful
     end
@@ -134,7 +134,7 @@ RSpec.describe '/api/v1/estimations' do
       end
 
       it 'updates the requested api_v1_estimation' do
-        estimation = Api::V1::Estimation.create! valid_attributes
+        estimation = Api::V1::EstimationRecord.create! valid_attributes
         authorized_patch api_v1_estimation_url(estimation), params: { estimation: new_attributes }
         estimation.reload
         expect(response).to have_http_status(:ok)
@@ -144,7 +144,7 @@ RSpec.describe '/api/v1/estimations' do
 
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        estimation = Api::V1::Estimation.create! valid_attributes
+        estimation = Api::V1::EstimationRecord.create! valid_attributes
         authorized_put api_v1_estimation_url(estimation), params: { estimation: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -157,10 +157,10 @@ RSpec.describe '/api/v1/estimations' do
     end
 
     it 'destroys the requested api_v1_estimation' do
-      estimation = Api::V1::Estimation.create! valid_attributes
+      estimation = Api::V1::EstimationRecord.create! valid_attributes
       expect do
         authorized_delete api_v1_estimation_url(estimation)
-      end.to change(Api::V1::Estimation, :count).by(-1)
+      end.to change(Api::V1::EstimationRecord, :count).by(-1)
     end
   end
 end

@@ -15,7 +15,7 @@ module Api
 
       belongs_to :client, class_name: 'UserRecord'
       belongs_to :lawyer, class_name: 'UserRecord', optional: true
-      has_one :estimation, dependent: :destroy, required: false, foreign_key: 'tax_income_id'
+      has_one :estimation, dependent: :destroy, required: false, foreign_key: 'tax_income_id', class_name: 'Api::V1::EstimationRecord'
       has_one :appointment, dependent: :destroy, foreign_key: 'tax_income_id'
       has_many :documents, class_name: 'Document', dependent: :destroy, inverse_of: :tax_income, foreign_key: 'tax_income_id'
 
@@ -104,7 +104,7 @@ module Api
           return
         end
 
-        lawyer_id = Api::V1::UserRecord.where(account_type: 1).first&.id
+        lawyer_id = Api::V1::UserRepository.where(account_type: 1).first&.id
         waiting_for_meeting_creation! if update!(lawyer_id:)
       end
 

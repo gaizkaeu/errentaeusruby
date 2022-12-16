@@ -8,37 +8,40 @@ module Api
 
       # GET /estimations
       def index
-        @estimations = Estimation.joins(:tax_income).where(id: current_user.id)
+        @estimations = EstimationRecord.joins(:tax_income).where(id: current_user.id)
+        render 'estimations/index'
       end
 
       # GET /estimations/1
-      def show; end
+      def show
+        render 'estimations/show'
+      end
 
       def estimate
-        @estimation = Estimation.new(estimation_params.merge(token: SecureRandom.base64(20)))
+        @estimation = EstimationRecord.new(estimation_params.merge(token: SecureRandom.base64(20)))
 
         if @estimation.valid?
-          render :estimate
+          render 'estimations/estimate'
         else
           render json: @estimation.errors, status: :unprocessable_entity
         end
       end
 
       def estimation_from_jwt
-        decoded = Estimation.decode_jwt_estimation(params[:estimation_jwt])
+        decoded = EstimationRecord.decode_jwt_estimation(params[:estimation_jwt])
         @estimation = decoded[0]
         @token = decoded[1]
         if @estimation.nil?
           render json: { error: 'invalid token' }, status: :unprocessable_entity
         else
-          render :estimation_from_jwt
+          render 'estimations/estimation_from_jwt'
         end
       end
 
       # PATCH/PUT /estimations/1
       def update
         if @estimation.update(estimation_params)
-          render :show
+          render 'estimations/show'
         else
           render json: @estimation.errors, status: :unprocessable_entity
         end
@@ -53,7 +56,7 @@ module Api
 
       # Use callbacks to share common setup or constraints between actions.
       def set_estimation
-        @estimation = Estimation.find(params[:id])
+        @estimation = EstimationRecord.find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.

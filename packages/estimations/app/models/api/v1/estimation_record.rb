@@ -1,6 +1,8 @@
 module Api
   module V1
-    class Estimation < ApplicationRecord
+    class EstimationRecord < ApplicationRecord
+      self.table_name = 'estimations'
+
       belongs_to :tax_income, optional: true, class_name: 'Api::V1::TaxIncomeRecord'
 
       delegate :user, to: :tax_income, allow_nil: false
@@ -44,7 +46,7 @@ module Api
         return if payload.nil?
 
         decoded = JWT.decode(payload, Rails.application.config.x.estimation_sign_key, true, { algorithm: 'HS512' })[0]
-        [Estimation.new(decoded['data']), { exp: decoded['exp'], token: payload }]
+        [new(decoded['data']), { exp: decoded['exp'], token: payload }]
       rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
         nil
       end
