@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class TaxIncomeRecordPolicy < ApplicationPolicy
+    class TaxIncomePolicy < ApplicationPolicy
       attr_reader :user, :record
 
       def initialize(user, record)
@@ -21,19 +21,17 @@ module Api
 
       def show?
         if user.client?
-          record.client.id == user.id
+          record.client_id == user.id
         elsif user.lawyer?
-          record.lawyer.id == user.id
-        else
-          false
+          record.lawyer_id == user.id
         end
       end
 
       def create?
         if user.client?
-          record.client.id == user.id
+          record.client_id == user.id
         elsif user.lawyer?
-          record.lawyer.id == user.id
+          record.lawyer_id == user.id
         end
       end
 
@@ -50,30 +48,11 @@ module Api
       end
 
       def destroy?
-        record.client.id == user.id || record.lawyer.id = user.id
+        record.client_id == user.id || record.lawyer_id = user.id
       end
 
       def checkout?
-        record.client.id == user.id
-      end
-
-      class Scope
-        def initialize(user, scope)
-          @user = user
-          @scope = scope
-        end
-
-        def resolve
-          if user.lawyer?
-            scope.where(lawyer_id: user.id).includes(:client, :lawyer)
-          else
-            scope.where(client_id: user.id).includes(:client, :lawyer)
-          end
-        end
-
-        private
-
-        attr_reader :user, :scope
+        record.client_id == user_id
       end
     end
   end

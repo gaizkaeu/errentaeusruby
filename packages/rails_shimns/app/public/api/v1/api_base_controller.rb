@@ -4,7 +4,7 @@ module Api
   module V1
     class ApiBaseController < ActionController::API
       append_view_path(Rails.root.glob('packages/*/app/views'))
-      include Pundit::Authorization
+      include Authorization
       include ActionController::Cookies
       include JWTSessions::RailsAuthorization
 
@@ -12,10 +12,6 @@ module Api
       rescue_from JWTSessions::Errors::Unauthorized, with: :user_not_authorized
 
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
-      def pundit_user
-        current_user
-      end
 
       def current_user
         @current_user ||= Api::V1::UserRepository.find(payload['user_id'])

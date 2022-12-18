@@ -4,14 +4,17 @@ class Api::V1::TaxIncome
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_reader :id, :lawyer_id, :client_id, :status, :price
+  attr_accessor :id, :lawyer_id, :client_id, :state, :price, :created_at, :updated_at, :year
 
-  def initialize(id, lawyer_id, client_id, status, price)
-    @id = id
-    @lawyer_id = lawyer_id
-    @client_id = client_id
-    @status = status
-    @price = price
+  def initialize(attributes)
+    @id = attributes.fetch(:id)
+    @lawyer_id = attributes.fetch(:lawyer_id)
+    @client_id = attributes.fetch(:client_id)
+    @state = attributes.fetch(:state)
+    @price = attributes.fetch(:price)
+    @created_at = attributes.fetch(:created_at)
+    @updated_at = attributes.fetch(:updated_at)
+    @year = attributes.fetch(:year)
   end
 
   def persisted?
@@ -20,5 +23,9 @@ class Api::V1::TaxIncome
 
   def ==(other)
     id == other.id && first_name == other.first_name
+  end
+
+  def year?
+    !year.nil?
   end
 end

@@ -2,41 +2,32 @@ module Api
   module V1
     require 'stripe'
     class TaxIncomesController < ApiBaseController
-      include TaxIncomesHelper
       before_action :authorize_access_request!
 
       before_action :set_tax_income, except: %i[index create]
 
-      after_action :verify_authorized, except: :index
-      after_action :verify_policy_scoped, only: :index
+      include TaxIncomesHelper
 
       # GET /tax_incomes or /tax_incomes.json
       def index
-        res = policy_scope(Api::V1::TaxIncomeRecord).order(updated_at: :desc)
-        @tax_incomes = Api::V1::TaxIncomeRecord.filter(filtering_params, res)
+        @tax_incomes = Api::V1::Services::IndexTaxService.new.call(current_user)
         render 'tax_incomes/index'
       end
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
-        authorize @tax_income
         render 'tax_incomes/show'
       end
 
       # POST /tax_incomes or /tax_incomes.json
-      # rubocop:disable Rails/SaveBang
       def create
-        @tax_income = TaxIncomeRecord.new(client_id: current_user.id)
-        @tax_income.update(parse_params(tax_income_params, nested_estimation_params[:token]))
-        authorize @tax_income
-
-        if @tax_income.save
+        @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params, nested_estimation_params[:token]))
+        if @tax_income.persisted?
           render 'tax_incomes/show'
         else
           render json: @tax_income.errors, status: :unprocessable_entity
         end
       end
-      # rubocop:enable Rails/SaveBang
 
       def documents
         authorize @tax_income
@@ -66,8 +57,8 @@ module Api
 
       # PATCH/PUT /tax_incomes/1 or /tax_incomes/1.json
       def update
-        authorize @tax_income
-        if @tax_income.update(tax_income_params)
+        @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params)
+        if @tax_income.errors.empty?
           render 'tax_incomes/show'
         else
           render json: @tax_income.errors, status: :unprocessable_entity
@@ -86,12 +77,12 @@ module Api
 
       # Use callbacks to share common setup or constraints between actions.
       def set_tax_income
-        @tax_income = policy_scope(Api::V1::TaxIncomeRecord).find(params[:id])
+        @tax_income = Api::V1::Services::FindTaxService.new.call(current_user, params[:id])
       end
 
       # Only allow a list of trusted parameters through.
       def tax_income_params
-        params.require(:tax_income).permit(policy(@tax_income).permitted_attributes)
+        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes).with_defaults(client_id: current_user.id)
       end
 
       def nested_estimation_params

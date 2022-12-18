@@ -54,7 +54,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
       expect do
         authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: } }
-      end.to change(Api::V1::TaxIncomeRecord, :count).by(1)
+      end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
       expect(response).to be_successful
       expect(Api::V1::TaxIncomeRecord.last.estimation).not_to be_nil
       expect(Api::V1::TaxIncomeRecord.last.estimation.attributes.symbolize_keys!).to match(a_hash_including(estimation_params))
@@ -66,8 +66,8 @@ RSpec.describe '/api/v1/tax_incomes' do
 
       expect do
         authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: } }
-      end.to change(Api::V1::TaxIncomeRecord, :count).by(1)
-      expect(Api::V1::TaxIncomeRecord.last.estimation).to be_nil
+      end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
+      expect(Api::V1::TaxIncomeRecord.last.estimation).to be_nil # TODO: change estimations association
     end
   end
 
@@ -100,14 +100,14 @@ RSpec.describe '/api/v1/tax_incomes' do
       it 'creates a new Api::V1::TaxIncomeRecord to specified user' do
         expect do
           authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: nil } }
-        end.to change(Api::V1::TaxIncomeRecord, :count).by(1)
+        end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
         expect(Api::V1::TaxIncomeRecord.last!.client_id).to match(user.id)
       end
 
       it 'does not create new Api::V1::TaxIncomeRecord to lawyer' do
         expect do
           authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge(client_id: lawyer.id), estimation: { token: nil } }
-        end.not_to change(Api::V1::TaxIncomeRecord, :count)
+        end.not_to change(Api::V1::TaxIncomeRepository, :count)
       end
     end
   end
@@ -199,7 +199,7 @@ RSpec.describe '/api/v1/tax_incomes' do
         it 'creates a new Api::V1::TaxIncomeRecord to same user' do
           expect do
             authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge({ client_id: evil.id }), estimation: { token: nil } }
-          end.to change(Api::V1::TaxIncomeRecord, :count).by(1)
+          end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
           expect(Api::V1::TaxIncomeRecord.last!.client_id).to match(user.id)
         end
       end
