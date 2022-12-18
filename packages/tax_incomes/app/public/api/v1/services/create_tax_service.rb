@@ -7,7 +7,7 @@ module Api::V1::Services
       tax = Api::V1::TaxIncome.new(tax_record.attributes.symbolize_keys!)
       authorize_with current_account, tax, :create?
 
-      tax_record.save!
+      tax_record.save
       tax = Api::V1::TaxIncome.new(tax_record.attributes.symbolize_keys!)
       tax.instance_variable_set(:@errors, tax_record.errors)
       tax
