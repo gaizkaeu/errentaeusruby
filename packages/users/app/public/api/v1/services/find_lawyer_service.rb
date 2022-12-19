@@ -1,5 +1,5 @@
 module Api::V1::Services
-  class FindUserService
+  class FindLawyerService
     include Authorization
 
     def call(_current_account, id)
