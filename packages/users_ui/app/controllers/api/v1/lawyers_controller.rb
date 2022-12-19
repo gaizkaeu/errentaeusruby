@@ -6,13 +6,13 @@ module Api
       before_action :set_lawyer
 
       def show
-        render partial: 'api/v1/lawyers/lawyer'
+        render partial: 'lawyers/lawyer'
       end
 
       private
 
       def set_lawyer
-        @lawyer = User.find_by(id: params[:id], account_type: :lawyer)
+        @lawyer = Api::V1::Services::FindLawyerService.new.call(current_user, params[:id])
       end
 
       # Only allow a list of trusted parameters through.

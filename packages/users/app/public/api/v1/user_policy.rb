@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UserRecordPolicy < ApplicationPolicy
+    class UserPolicy < ApplicationPolicy
       attr_reader :user, :record
 
       def initialize(user, record)

@@ -5,17 +5,13 @@ module Api
     class AccountsController < ApiBaseController
       before_action :authorize_access_request!
 
-      after_action :verify_authorized, except: %i[index me]
-      after_action :verify_policy_scoped, only: :index
-
       def index
-        @users = Api::V1::UserRecord.filter(filtering_params, policy_scope(Api::V1::UserRecord))
+        @users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
         render 'accounts/index'
       end
 
       def show
-        @user = Api::V1::UserRecord.find(params[:id])
-        authorize @user
+        @user = Api::V1::Services::FindUserService.new.call(current_user, filtering_params, params[:id])
         render 'accounts/show'
       end
 
