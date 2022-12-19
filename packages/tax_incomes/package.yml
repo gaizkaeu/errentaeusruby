@@ -3,3 +3,4 @@ enforce_privacy: true
 dependencies:
   - packages/rails_shimns
   - packages/users
+  - packages/estimations

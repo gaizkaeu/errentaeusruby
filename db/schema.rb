@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_102051) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_19_222625) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,11 +100,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_102051) do
     t.integer "shares_trade", default: 0
     t.boolean "outside_alava", default: false
     t.float "price", default: -1.0
-    t.integer "tax_income_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "token"
-    t.index ["tax_income_id"], name: "index_estimations_on_tax_income_id"
   end
 
   create_table "tax_incomes", force: :cascade do |t|
@@ -118,7 +116,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_102051) do
     t.integer "lawyer_id"
     t.string "payment"
     t.integer "year"
+    t.bigint "estimation_id"
     t.index ["client_id"], name: "index_tax_incomes_on_client_id"
+    t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
     t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
   end
 
@@ -161,7 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_102051) do
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
   add_foreign_key "documents", "users", column: "exported_by_id"
-  add_foreign_key "estimations", "tax_incomes"
+  add_foreign_key "tax_incomes", "estimations"
   add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "tax_incomes", "users", column: "lawyer_id"
 end

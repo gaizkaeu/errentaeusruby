@@ -116,6 +116,8 @@ group :development, :test do
   gem 'packwerk'
   # Graph dependency visualizacion
   gem 'graphwerk'
+  # N+1 queries
+  gem 'bullet'
 end
 
 group :development do

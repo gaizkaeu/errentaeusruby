@@ -13,7 +13,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/api/v1/estimations' do
-  let(:tax_income) { create(:tax_income) }
+  let(:user) { create(:user) }
 
   # This should return the minimal set of attributes required to create a valid
   # Api::V1::EstimationRecord. As you add validations to Api::V1::EstimationRecord, be sure to
@@ -29,8 +29,7 @@ RSpec.describe '/api/v1/estimations' do
       with_couple: false,
       income_rent: 0,
       shares_trade: 0,
-      outside_alava: false,
-      tax_income_id: tax_income.id
+      outside_alava: false
     }
   end
 
@@ -64,26 +63,14 @@ RSpec.describe '/api/v1/estimations' do
     }
   end
 
-  describe 'GET /index' do
-    before do
-      sign_in(tax_income.client)
-    end
-
-    it 'renders a successful response' do
-      Api::V1::EstimationRecord.create! valid_attributes
-      authorized_get api_v1_estimations_url
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET /show' do
     before do
-      sign_in(tax_income.client)
+      sign_in(user)
     end
 
     it 'renders a successful response' do
       estimation = Api::V1::EstimationRecord.create! valid_attributes
-      authorized_get api_v1_estimations_path(estimation)
+      authorized_get api_v1_estimation_path(estimation)
       expect(response).to be_successful
     end
   end
@@ -125,7 +112,7 @@ RSpec.describe '/api/v1/estimations' do
 
   describe 'PATCH /update' do
     before do
-      sign_in(tax_income.client)
+      sign_in(user)
     end
 
     context 'with valid parameters' do
@@ -153,7 +140,7 @@ RSpec.describe '/api/v1/estimations' do
 
   describe 'DELETE /destroy' do
     before do
-      sign_in(tax_income.client)
+      sign_in(user)
     end
 
     it 'destroys the requested api_v1_estimation' do

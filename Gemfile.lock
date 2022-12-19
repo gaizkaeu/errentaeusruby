@@ -89,6 +89,9 @@ GEM
       msgpack (~> 1.2)
     brotli (0.4.0)
     builder (3.2.4)
+    bullet (7.0.4)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     childprocess (4.1.0)
     cloudflare-rails (2.4.0)
       actionpack (>= 5.2, < 7.1.0)
@@ -382,6 +385,7 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
+    uniform_notifier (1.16.0)
     validates_timeliness (7.0.0.beta1)
       activemodel (>= 7.0.0, < 8)
       timeliness (>= 0.3.10, < 1)
@@ -424,6 +428,7 @@ DEPENDENCIES
   active_storage_validations
   bcrypt
   bootsnap
+  bullet
   cloudflare-rails
   cloudtasker
   debug

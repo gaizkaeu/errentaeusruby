@@ -53,10 +53,10 @@ packages/users:
     - dependency
     files:
     - db/migrate/20221211154947_prepareuid.rb
-    - db/seeds.rb
   "::Api::V1::UserRecord":
     violations:
     - dependency
     - privacy
     files:
     - app/models/api/v1/document_history.rb
+    - db/seeds.rb

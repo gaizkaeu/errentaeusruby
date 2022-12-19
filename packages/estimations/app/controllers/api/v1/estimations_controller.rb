@@ -6,12 +6,6 @@ module Api
       before_action :authorize_access_request!, except: %i[estimate estimation_from_jwt]
       before_action :set_estimation, only: %i[show update destroy]
 
-      # GET /estimations
-      def index
-        @estimations = EstimationRecord.joins(:tax_income).where(id: current_user.id)
-        render 'estimations/index'
-      end
-
       # GET /estimations/1
       def show
         render 'estimations/show'

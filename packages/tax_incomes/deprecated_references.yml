@@ -24,7 +24,6 @@
 packages/estimations:
   "::Api::V1::EstimationRecord":
     violations:
-    - dependency
     - privacy
     files:
     - packages/tax_incomes/app/models/api/v1/tax_income_record.rb

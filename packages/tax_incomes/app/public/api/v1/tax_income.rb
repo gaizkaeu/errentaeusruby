@@ -4,7 +4,7 @@ class Api::V1::TaxIncome
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_accessor :id, :lawyer_id, :client_id, :state, :price, :created_at, :updated_at, :year, :observations
+  attr_accessor :id, :lawyer_id, :client_id, :estimation_id, :state, :price, :created_at, :updated_at, :year, :observations
 
   def initialize(attributes)
     @id = attributes.fetch(:id)
@@ -16,6 +16,11 @@ class Api::V1::TaxIncome
     @updated_at = attributes.fetch(:updated_at)
     @year = attributes.fetch(:year)
     @observations = attributes.fetch(:observations)
+    @estimation_id = attributes.fetch(:estimation_id)
+  end
+
+  def estimation
+    Api::V1::EstimationRecord.find(estimation_id) # TODO: CHANGE FOR REPOSITORY WHEN DONE
   end
 
   def persisted?

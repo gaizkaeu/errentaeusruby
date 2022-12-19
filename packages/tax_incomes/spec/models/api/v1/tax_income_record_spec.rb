@@ -49,7 +49,6 @@ RSpec.describe Api::V1::TaxIncomeRecord do
 
   describe 'associations' do
     it { is_expected.to belong_to(:client) }
-    it { is_expected.to have_one(:estimation) }
     it { is_expected.to have_one(:appointment) }
     it { is_expected.to have_many(:documents) }
   end

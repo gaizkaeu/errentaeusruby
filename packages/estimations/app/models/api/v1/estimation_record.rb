@@ -3,11 +3,6 @@ module Api
     class EstimationRecord < ApplicationRecord
       self.table_name = 'estimations'
 
-      # TODO: el tax income belongs_to estimation y estimation has_many tax_incomes que me lo podria cargar
-      belongs_to :tax_income, optional: true, class_name: 'Api::V1::TaxIncomeRecord'
-
-      delegate :user, to: :tax_income, allow_nil: false
-
       validates :first_name, length: { minimum: 5, maximum: 20 }
 
       # PRICE_LIST = {first_time: 15, rentals_mortgages: 20, home_changes: 50, income_rent: 25, professional_company_activity: 75,
