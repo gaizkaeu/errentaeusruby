@@ -12,7 +12,6 @@ packages/rails_shimns:
     files:
     - app/controllers/api/v1/appointments_controller.rb
     - app/controllers/api/v1/documents_controller.rb
-    - app/controllers/api/v1/lawyers_controller.rb
     - app/controllers/api/v1/push_controller.rb
   "::ApplicationJob":
     violations:
@@ -26,7 +25,6 @@ packages/rails_shimns:
     files:
     - app/policies/api/v1/appointment_policy.rb
     - app/policies/api/v1/document_policy.rb
-    - app/policies/api/v1/user_record_policy.rb
   "::ApplicationRecord":
     violations:
     - dependency
@@ -54,7 +52,6 @@ packages/users:
     violations:
     - dependency
     files:
-    - app/controllers/api/v1/lawyers_controller.rb
     - db/migrate/20221211154947_prepareuid.rb
     - db/seeds.rb
   "::Api::V1::UserRecord":

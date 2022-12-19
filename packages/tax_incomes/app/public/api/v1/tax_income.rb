@@ -4,7 +4,7 @@ class Api::V1::TaxIncome
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_accessor :id, :lawyer_id, :client_id, :state, :price, :created_at, :updated_at, :year
+  attr_accessor :id, :lawyer_id, :client_id, :state, :price, :created_at, :updated_at, :year, :observations
 
   def initialize(attributes)
     @id = attributes.fetch(:id)
@@ -15,6 +15,7 @@ class Api::V1::TaxIncome
     @created_at = attributes.fetch(:created_at)
     @updated_at = attributes.fetch(:updated_at)
     @year = attributes.fetch(:year)
+    @observations = attributes.fetch(:observations)
   end
 
   def persisted?

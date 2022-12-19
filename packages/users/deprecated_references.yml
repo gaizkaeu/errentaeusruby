@@ -16,11 +16,6 @@
     - dependency
     files:
     - packages/users/app/models/api/v1/user_record.rb
-  "::Filterable":
-    violations:
-    - dependency
-    files:
-    - packages/users/app/models/api/v1/user_record.rb
 packages/estimations:
   "::Api::V1::EstimationRecord":
     violations:

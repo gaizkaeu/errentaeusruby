@@ -1,0 +1,36 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/tax_incomes.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/tax_incomes
+---
+".":
+  "::Api::V1::Appointment":
+    violations:
+    - dependency
+    files:
+    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
+  "::Api::V1::Document":
+    violations:
+    - dependency
+    files:
+    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
+  "::BillingService::StripeService":
+    violations:
+    - dependency
+    files:
+    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
+packages/estimations:
+  "::Api::V1::EstimationRecord":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
+packages/users:
+  "::Api::V1::UserRecord":
+    violations:
+    - privacy
+    files:
+    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb

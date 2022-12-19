@@ -82,7 +82,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
     describe 'GET /index authenticated' do
       it 'renders a successful response' do
-        Api::V1::TaxIncomeRecord.create! valid_attributes
+        Api::V1::TaxIncomeRepository.add valid_attributes
         authorized_get api_v1_tax_incomes_url
         expect(response).to be_successful
       end
@@ -90,7 +90,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
     describe 'GET /show authenticated' do
       it 'renders a successful response' do
-        tax_income = Api::V1::TaxIncomeRecord.create! valid_attributes
+        tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
         authorized_get api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
       end
@@ -101,7 +101,7 @@ RSpec.describe '/api/v1/tax_incomes' do
         expect do
           authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: nil } }
         end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
-        expect(Api::V1::TaxIncomeRecord.last!.client_id).to match(user.id)
+        expect(Api::V1::TaxIncomeRepository.find(JSON.parse(body)["id"]).client_id).to match(user.id)
       end
 
       it 'does not create new Api::V1::TaxIncomeRecord to lawyer' do
@@ -123,7 +123,7 @@ RSpec.describe '/api/v1/tax_incomes' do
       end
 
       it 'renders a successful response' do
-        Api::V1::TaxIncomeRecord.create! valid_attributes
+        Api::V1::TaxIncomeRepository.add valid_attributes
         authorized_get api_v1_tax_incomes_url
         expect(response).to be_successful
       end
@@ -137,7 +137,7 @@ RSpec.describe '/api/v1/tax_incomes' do
       end
 
       it 'renders a successful response' do
-        tax_income = Api::V1::TaxIncomeRecord.create! valid_attributes
+        tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
         authorized_get api_v1_tax_income_url(tax_income)
         expect(response).not_to be_successful
       end
@@ -152,13 +152,13 @@ RSpec.describe '/api/v1/tax_incomes' do
     end
 
     it 'can index assigned tax incomes' do
-      Api::V1::TaxIncomeRecord.create! valid_attributes
+      Api::V1::TaxIncomeRepository.add valid_attributes
       authorized_get api_v1_tax_incomes_url
       expect(response).to be_successful
     end
 
     it 'can not see other tax incomes' do
-      tax_income = Api::V1::TaxIncomeRecord.create! valid_attributes
+      tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
       authorized_get api_v1_tax_income_url(tax_income)
       expect(response).not_to be_successful
       expect(response.body).to match('not found')
@@ -174,7 +174,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
     describe 'GET /index' do
       it 'renders a successful response' do
-        Api::V1::TaxIncomeRecord.create! valid_attributes
+        Api::V1::TaxIncomeRepository.add valid_attributes
         authorized_get api_v1_tax_incomes_url
         expect(response).to be_successful
       end
@@ -182,7 +182,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
     describe 'GET /show' do
       it 'renders a successful response' do
-        tax_income = Api::V1::TaxIncomeRecord.create! valid_attributes
+        tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
         authorized_get api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
       end
@@ -193,14 +193,14 @@ RSpec.describe '/api/v1/tax_incomes' do
         it 'creates a new Api::V1::TaxIncomeRecord' do
           expect do
             authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: nil } }
-          end.to change(Api::V1::TaxIncomeRecord, :count).by(1)
+          end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
         end
 
         it 'creates a new Api::V1::TaxIncomeRecord to same user' do
           expect do
             authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge({ client_id: evil.id }), estimation: { token: nil } }
           end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
-          expect(Api::V1::TaxIncomeRecord.last!.client_id).to match(user.id)
+          expect(Api::V1::TaxIncomeRepository.find(JSON.parse(body)["id"]).client_id).to match(user.id)
         end
       end
     end
@@ -208,9 +208,9 @@ RSpec.describe '/api/v1/tax_incomes' do
     describe 'PUT /update authenticated' do
       context 'with valid parameters' do
         it 'updates the requested api_v1_tax_income' do
-          tax_income = Api::V1::TaxIncomeRecord.create! valid_attributes
+          tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
           authorized_put api_v1_tax_income_url(tax_income), params: { tax_income: { observations: 'nothing to tell' } }
-          tax_income.reload
+          tax_income = Api::V1::TaxIncomeRepository.find(tax_income.id)
           expect(tax_income.observations).to match('nothing to tell')
         end
       end
@@ -220,7 +220,7 @@ RSpec.describe '/api/v1/tax_incomes' do
   context 'when not logged in' do
     describe 'renders a error/unauthorized response' do
       it 'GET /index' do
-        Api::V1::TaxIncomeRecord.create! valid_attributes
+        Api::V1::TaxIncomeRepository.add valid_attributes
         get api_v1_tax_incomes_url
         expect(response.body).to match('not authorized')
         expect(response).to have_http_status(:unauthorized)
@@ -228,7 +228,7 @@ RSpec.describe '/api/v1/tax_incomes' do
     end
 
     it 'GET /show' do
-      tax_income = Api::V1::TaxIncomeRecord.create! valid_attributes
+      tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
       get api_v1_tax_income_url(tax_income)
       expect(response.body).to match('not authorized')
       expect(response).to have_http_status(:unauthorized)
