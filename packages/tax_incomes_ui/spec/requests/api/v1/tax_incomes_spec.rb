@@ -101,7 +101,7 @@ RSpec.describe '/api/v1/tax_incomes' do
         expect do
           authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: nil } }
         end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
-        expect(Api::V1::TaxIncomeRepository.find(JSON.parse(body)["id"]).client_id).to match(user.id)
+        expect(Api::V1::TaxIncomeRepository.find(JSON.parse(body)['id']).client_id).to match(user.id)
       end
 
       it 'does not create new Api::V1::TaxIncomeRecord to lawyer' do
@@ -200,7 +200,7 @@ RSpec.describe '/api/v1/tax_incomes' do
           expect do
             authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge({ client_id: evil.id }), estimation: { token: nil } }
           end.to change(Api::V1::TaxIncomeRepository, :count).by(1)
-          expect(Api::V1::TaxIncomeRepository.find(JSON.parse(body)["id"]).client_id).to match(user.id)
+          expect(Api::V1::TaxIncomeRepository.find(JSON.parse(body)['id']).client_id).to match(user.id)
         end
       end
     end
