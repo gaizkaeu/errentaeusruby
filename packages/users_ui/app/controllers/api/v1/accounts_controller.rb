@@ -26,7 +26,7 @@ module Api
       end
 
       def me
-        @current_user = current_user
+        @user = current_user
         render 'accounts/me'
       end
 

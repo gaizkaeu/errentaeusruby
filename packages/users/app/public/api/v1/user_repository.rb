@@ -11,10 +11,8 @@ module Api::V1::UserRepository
   end
 
   def self.find(id)
-    record = Api::V1::UserRecord.find_by(id:)
-    return if record.blank?
-
-    Api::V1::User.new(permitted_attributes(record))
+    record = Api::V1::UserRecord.find(id)
+    Api::V1::User.new(record.attributes.symbolize_keys!)
   end
 
   def self.add(user)

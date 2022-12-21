@@ -22,7 +22,9 @@ Rails.application.routes.draw do
         post :estimation_from_jwt, on: :collection
       end
 
-      get 'lawyers/:id', to: 'lawyers#show'
+      scope :lawyers do
+        get ':id', to: 'lawyers#show', as: :lawyer
+      end
 
       resources :tax_incomes, as: :tax_incomes do
         post 'create_payment_intent', to: 'tax_incomes#checkout', on: :member

@@ -12,6 +12,9 @@ module Api
 
       def current_user
         @current_user ||= Api::V1::UserRepository.find(payload['user_id'])
+        raise ActiveRecord::RecordNotFound if @current_user.nil?
+
+        @current_user
       end
 
       def current_user_signed_in?

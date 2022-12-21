@@ -27,6 +27,7 @@ FactoryBot.define do
     last_name  { 'Doe' }
     email { generate(:email) }
     password { 'test123' }
+    phone { '1234567890' }
     password_confirmation { 'test123' }
     confirmed_at { '04-07-2002' }
     uid { email }
