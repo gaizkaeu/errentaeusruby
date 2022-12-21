@@ -18,7 +18,7 @@ RSpec.describe 'Appointments' do
 
     describe 'GET /index' do
       it 'renders a successful response' do
-        tax_income.waiting_for_meeting_creation!
+        tax_income.waiting_for_meeting!
         Api::V1::Appointment.create! valid_attributes
         authorized_get api_v1_appointments_url, as: :json
         expect(response).to be_successful
@@ -27,7 +27,7 @@ RSpec.describe 'Appointments' do
 
     describe 'GET /show' do
       it 'renders a successful response' do
-        tax_income.waiting_for_meeting_creation!
+        tax_income.waiting_for_meeting!
         appointment = Api::V1::Appointment.create! valid_attributes
         authorized_get api_v1_appointments_url(appointment)
         expect(response).to be_successful
@@ -37,7 +37,7 @@ RSpec.describe 'Appointments' do
     describe 'POST /create' do
       context 'with valid parameters' do
         before do
-          tax_income.waiting_for_meeting_creation!
+          tax_income.waiting_for_meeting!
         end
 
         it 'creates a new Api::V1::Appointment' do
@@ -55,7 +55,7 @@ RSpec.describe 'Appointments' do
 
       context 'with invalid parameters' do
         before do
-          tax_income.waiting_for_meeting_creation!
+          tax_income.waiting_for_meeting!
         end
 
         it 'does not create a new Api::V1::Appointment' do
@@ -97,7 +97,7 @@ RSpec.describe 'Appointments' do
       end
 
       before do
-        tax_income.waiting_for_meeting_creation!
+        tax_income.waiting_for_meeting!
       end
 
       context 'with valid parameters' do
@@ -142,7 +142,7 @@ RSpec.describe 'Appointments' do
   context 'when not logged in' do
     describe 'renders a error/unauthorized response' do
       it 'GET /index' do
-        tax_income.waiting_for_meeting_creation!
+        tax_income.waiting_for_meeting!
         Api::V1::Appointment.create! valid_attributes
         get api_v1_appointments_url, as: :json
         expect(response.body).to match('not authorized')
@@ -151,7 +151,7 @@ RSpec.describe 'Appointments' do
     end
 
     it 'GET /show' do
-      tax_income.waiting_for_meeting_creation!
+      tax_income.waiting_for_meeting!
       appointment = Api::V1::Appointment.create! valid_attributes
       get api_v1_appointments_url(appointment)
       expect(response.body).to match('not authorized')

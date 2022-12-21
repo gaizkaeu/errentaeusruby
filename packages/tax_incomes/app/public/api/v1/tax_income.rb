@@ -31,7 +31,6 @@ module Api
 
       enum state: {
         pending_assignation: 0,
-        waiting_for_meeting_creation: 1,
         waiting_for_meeting: 2,
         waiting_payment: 5,
         pending_documentation: 3,
@@ -43,7 +42,6 @@ module Api
 
       aasm column: :state, enum: true do
         state :pending_assignation, initial: true
-        state :waiting_for_meeting_creation
         state :waiting_for_meeting
         state :in_progress
         state :finished
@@ -54,12 +52,6 @@ module Api
 
         event :assigned_lawyer do
           transitions from: :pending_assignation, to: :waiting_for_meeting_creation, guard: :lawyer_assigned?
-        end
-        event :appointment_created do
-          transitions from: :waiting_for_meeting_creation, to: :waiting_for_meeting, guard: :appointment_assigned?
-        end
-        event :appointment_deleted do
-          transitions from: :waiting_for_meeting, to: :waiting_for_meeting_creation
         end
         event :paid do
           transitions from: :waiting_payment, to: :pending_documentation, guard: :payment_present?
@@ -106,12 +98,12 @@ module Api
 
       def assign_lawyer
         unless lawyer_id.nil?
-          waiting_for_meeting_creation! if state == 'pending_assignation'
+          waiting_for_meeting! if state == 'pending_assignation'
           return
         end
 
         lawyer_id = Api::V1::UserRepository.where(account_type: 1).first&.id
-        waiting_for_meeting_creation! if update!(lawyer_id:)
+        waiting_for_meeting! if update!(lawyer_id:)
       end
     end
   end

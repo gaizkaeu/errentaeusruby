@@ -2,7 +2,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   before_action :authorize_access_request!, only: :destroy
 
   def create
-    user, auth = Api::V1::UserRepository.authenticate_user(sign_in_params[:email], sign_in_params[:password])
+    user, auth = Api::V1::Services::AuthenticateUserService.new.call(sign_in_params[:email], sign_in_params[:password], request.remote_ip)
     if auth
       tokens = sign_in(user)
 

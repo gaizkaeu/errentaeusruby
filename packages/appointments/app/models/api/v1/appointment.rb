@@ -15,25 +15,12 @@ module Api
       delegate :lawyer_id, to: :tax_income
       delegate :client_id, to: :tax_income
 
-      after_create_commit :notify_creation_to_tax_income
-      after_destroy_commit :notify_deletion_to_tax_income
-
       validates :phone, presence: true, if: :phone?
       validates :meeting_method, inclusion: { in: MEETING_OPTIONS }
 
       validate do |appointment|
         tax_income = Api::V1::TaxIncomeRepository.find(appointment.tax_income_id)
-        appointment.errors.add :base, "tax income doesn't accept appointment" unless tax_income.waiting_for_meeting_creation? || tax_income.waiting_for_meeting?
-      end
-
-      private
-
-      def notify_creation_to_tax_income
-        tax_income&.appointment_created!
-      end
-
-      def notify_deletion_to_tax_income
-        tax_income&.appointment_deleted!
+        appointment.errors.add :base, "tax income doesn't accept appointment" unless tax_income.waiting_for_meeting?
       end
     end
   end

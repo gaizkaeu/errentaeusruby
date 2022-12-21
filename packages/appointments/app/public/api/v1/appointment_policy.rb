@@ -39,9 +39,9 @@ module Api
 
         def resolve
           if user.lawyer?
-            scope.joins(:tax_income).where(tax_incomes: { lawyer: user })
+            scope.joins(:tax_income).where(tax_incomes: { lawyer_id: user.id })
           else
-            scope.joins(:tax_income).where(tax_incomes: { client: user })
+            scope.joins(:tax_income).where(tax_incomes: { client_id: user.id })
           end
         end
 

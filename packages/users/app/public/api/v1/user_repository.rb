@@ -22,11 +22,6 @@ module Api::V1::UserRepository
     user
   end
 
-  def self.authenticate_user(email, password)
-    record = Api::V1::UserRecord.find_by!(email:)
-    [record, record.authenticate(password)]
-  end
-
   def self.count
     Api::V1::UserRecord.count
   end
