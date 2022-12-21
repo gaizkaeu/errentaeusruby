@@ -24,10 +24,6 @@ module Api::V1::UserRepository
     user
   end
 
-  def self.from_omniauth(params)
-    Api::V1::UserRecord.from_omniauth(params)
-  end
-
   def self.authenticate_user(email, password)
     record = Api::V1::UserRecord.find_by!(email:)
     [record, record.authenticate(password)]
