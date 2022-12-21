@@ -94,6 +94,10 @@ gem 'rack-cors'
 
 # Pubsub
 gem 'value_semantics'
+
+# Sorbet runtime
+gem 'sorbet-runtime'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -118,6 +122,8 @@ group :development, :test do
   gem 'graphwerk'
   # N+1 queries
   gem 'bullet'
+  # Type checking
+  gem 'sorbet'
 end
 
 group :development do
