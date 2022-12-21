@@ -2,14 +2,14 @@ module Api::V1::Services
   class UpdateTaxService
     include Authorization
 
-    def call(current_account, tax_income, params)
-      authorize_with current_account, tax_income, :update?
-      tax_record = Api::V1::TaxIncomeRecord.find(tax_income.id)
-      tax_record.update!(params)
+    def call(current_account, tax_income, params, raise_error: false)
+      update_method = raise_error ? :update! : :update
 
-      tax = Api::V1::TaxIncome.new(tax_record.attributes.symbolize_keys!)
-      tax.instance_variable_set(:@errors, tax_record.errors)
-      tax
+      authorize_with current_account, tax_income, :update?
+      tax_record = Api::V1::TaxIncome.find(tax_income.id)
+      tax_record.public_send(update_method, params)
+
+      tax_record
     end
   end
 end

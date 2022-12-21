@@ -38,6 +38,6 @@ Rails.application.reloader.to_prepare do
     # events.subscribe "customer.subscription.deleted", StripeWebhooks::SubscriptionDeleted.new
     # events.subscribe 'invoice.created', StripeWebhooks::InvoiceCreated.new
     # events.subscribe 'invoice.payment_succeeded', StripeWebhooks::InvoicePaymentSucceeded.new
-    events.subscribe 'payment_intent.succeeded', StripeWebhooks::PaymentSucceeded.new
+    events.subscribe 'payment_intent.succeeded', Services::StripeWebhooks::PaymentSucceeded.new
   end
 end

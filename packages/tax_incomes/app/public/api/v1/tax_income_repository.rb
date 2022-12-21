@@ -1,25 +1,21 @@
 module Api::V1::TaxIncomeRepository
   def self.count
-    Api::V1::TaxIncomeRecord.count
+    Api::V1::TaxIncome.count
   end
 
   def self.find(id)
-    tax_record = Api::V1::TaxIncomeRecord.find(id)
-    Api::V1::TaxIncome.new(tax_record.attributes.symbolize_keys!)
+    Api::V1::TaxIncome.find(id)
   end
 
   def self.add(tax_income_params)
-    tax_record = Api::V1::TaxIncomeRecord.new(tax_income_params)
+    tax_record = Api::V1::TaxIncome.new(tax_income_params)
     # rubocop:disable Rails/SaveBang
     tax_record.save
     # rubocop:enable Rails/SaveBang
-    tax = Api::V1::TaxIncome.new(tax_record.attributes.symbolize_keys!)
-    tax.instance_variable_set(:@errors, tax_record.errors)
-    tax
+    tax_record
   end
 
   def self.last
-    record = Api::V1::TaxIncomeRecord.last
-    TaxIncome.new(record.attributes.symbolize_keys!) if record
+    Api::V1::TaxIncome.last
   end
 end

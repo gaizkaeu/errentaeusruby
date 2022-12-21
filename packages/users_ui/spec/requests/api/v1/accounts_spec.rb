@@ -57,7 +57,7 @@ RSpec.describe 'Accounts' do
       it 'renders error' do
         authorized_get api_v1_accounts_url, as: :json
         expect(response).not_to be_successful
-        expect(body).to match('not authorized')
+        expect(body).to match('permission denied')
       end
     end
   end

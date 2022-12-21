@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::TaxIncomeRecord do
+RSpec.describe Api::V1::TaxIncome do
   let(:user) { create(:user) }
   let(:lawyer) { create(:lawyer) }
 
@@ -50,7 +50,6 @@ RSpec.describe Api::V1::TaxIncomeRecord do
   describe 'associations' do
     it { is_expected.to belong_to(:client) }
     it { is_expected.to have_one(:appointment) }
-    it { is_expected.to have_many(:documents) }
   end
 
   describe 'params' do

@@ -3,15 +3,13 @@ module Api::V1::Services
     def call(current_account)
       tax_record =
         if current_account.lawyer?
-          Api::V1::TaxIncomeRecord.where(lawyer_id: current_account.id)
+          Api::V1::TaxIncome.where(lawyer_id: current_account.id)
         else
-          Api::V1::TaxIncomeRecord.where(client_id: current_account.id)
+          Api::V1::TaxIncome.where(client_id: current_account.id)
         end
       raise ActiveRecord::RecordNotFound unless tax_record
 
-      tax_record.map do |tax|
-        Api::V1::TaxIncome.new(tax.attributes.symbolize_keys!)
-      end
+      tax_record
     end
   end
 end

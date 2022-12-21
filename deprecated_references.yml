@@ -5,58 +5,9 @@
 #
 # bin/packwerk update-deprecations .
 ---
-packages/rails_shimns:
-  "::Api::V1::ApiBaseController":
-    violations:
-    - dependency
-    files:
-    - app/controllers/api/v1/appointments_controller.rb
-    - app/controllers/api/v1/documents_controller.rb
-    - app/controllers/api/v1/push_controller.rb
-  "::ApplicationJob":
-    violations:
-    - dependency
-    files:
-    - app/jobs/create_pdf_from_document_attachments_job.rb
-    - app/jobs/log_document_history_job.rb
-  "::ApplicationPolicy":
-    violations:
-    - dependency
-    files:
-    - app/policies/api/v1/appointment_policy.rb
-    - app/policies/api/v1/document_policy.rb
-  "::ApplicationRecord":
-    violations:
-    - dependency
-    files:
-    - app/models/api/v1/appointment.rb
-    - app/models/api/v1/document.rb
-    - app/models/api/v1/document_history.rb
-packages/tax_incomes:
-  "::Api::V1::TaxIncome":
-    violations:
-    - dependency
-    files:
-    - app/models/api/v1/appointment.rb
-    - app/services/stripe_webhooks/payment_succeeded.rb
-  "::Api::V1::TaxIncomeRecord":
-    violations:
-    - dependency
-    - privacy
-    files:
-    - app/controllers/api/v1/appointments_controller.rb
-    - app/models/api/v1/appointment.rb
-    - app/models/api/v1/document.rb
 packages/users:
-  "::Api::V1::User":
-    violations:
-    - dependency
-    files:
-    - db/migrate/20221211154947_prepareuid.rb
   "::Api::V1::UserRecord":
     violations:
-    - dependency
     - privacy
     files:
-    - app/models/api/v1/document_history.rb
     - db/seeds.rb

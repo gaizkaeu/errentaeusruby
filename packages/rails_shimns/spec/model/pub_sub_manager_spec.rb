@@ -52,8 +52,8 @@ RSpec.describe PubSubManager do
     end
 
     expect do
-      pub_sub.subscribe('test.event', Api::V1::User)
-    end.to raise_error(PubSubManager::NotAJobError, 'Api::V1::User must inherit from ApplicationJob')
+      pub_sub.subscribe('test.event', ApplicationController)
+    end.to raise_error(PubSubManager::NotAJobError, 'ApplicationController must inherit from ApplicationJob')
   end
 
   it 'raises UnregisteredEventError if the event is not registered when publishing' do

@@ -35,6 +35,10 @@ module Api
         end
       end
 
+      def create_appointment?
+        show?
+      end
+
       def documents?
         create?
       end

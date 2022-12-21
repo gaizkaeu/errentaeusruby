@@ -5,31 +5,16 @@
 #
 # bin/packwerk update-deprecations packages/tax_incomes
 ---
-".":
+packages/appointments:
   "::Api::V1::Appointment":
     violations:
     - dependency
-    files:
-    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
-  "::Api::V1::Document":
-    violations:
-    - dependency
-    files:
-    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
-  "::BillingService::StripeService":
-    violations:
-    - dependency
-    files:
-    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
-packages/estimations:
-  "::Api::V1::EstimationRecord":
-    violations:
     - privacy
     files:
-    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
+    - packages/tax_incomes/app/public/api/v1/tax_income.rb
 packages/users:
   "::Api::V1::UserRecord":
     violations:
     - privacy
     files:
-    - packages/tax_incomes/app/models/api/v1/tax_income_record.rb
+    - packages/tax_incomes/app/public/api/v1/tax_income.rb
