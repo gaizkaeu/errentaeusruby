@@ -26,10 +26,10 @@ module Api
           JWTSessions.access_cookie,
           value: tokens[:access],
           path: '/',
-          secure: true,
-          httponly: true,
-          same_site: :strict,
-          domain: Rails.application.config.x.domain_cookies
+          secure: Rails.env.production?,
+          httponly: Rails.env.production?,
+          same_site: Rails.env.production? ? :strict : :none,
+          domain: Rails.env.production? ? Rails.application.config.x.domain_cookies : nil
         )
       end
 

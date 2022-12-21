@@ -1,6 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe 'Accounts' do
+  context 'when logged in cookie' do
+    let(:user) { create(:user) }
+
+    describe 'GET /me' do
+      # rubocop:disable RSpec/InstanceVariable
+      before do
+        payload = { user_id: user.id }
+        session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true)
+        @tokens = session.login
+      end
+
+      it 'renders a successful response' do
+        headers = {}
+        headers[JWTSessions.csrf_header] = @tokens[:csrf]
+        cookies[JWTSessions.access_cookie] = @tokens[:access]
+        get api_v1_account_logged_in_url, headers: headers
+        expect(response).to be_successful
+        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name, confirmed: user.confirmed?))
+      end
+    end
+    # rubocop:enable RSpec/InstanceVariable
+  end
+
   context 'when logged in lawyer' do
     let(:user) { create(:lawyer) }
 
