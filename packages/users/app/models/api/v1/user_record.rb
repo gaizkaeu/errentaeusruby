@@ -20,7 +20,7 @@ module Api
       after_create_commit :create_stripe_customer, :send_welcome_email
       before_validation :set_defaults
 
-      has_many :account_histories, dependent: :destroy
+      has_many :account_histories, dependent: :destroy, foreign_key: :user_id
 
       enum account_type: { client: 0, lawyer: 1 }
 
@@ -39,6 +39,10 @@ module Api
         )
         # rubocop:enable Rails/SaveBang
         update!(stripe_customer_id: customer['id'])
+      end
+
+      def block!
+        update!(blocked: true)
       end
     end
   end

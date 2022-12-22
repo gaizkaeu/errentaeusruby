@@ -13,6 +13,17 @@ FactoryBot.define do
     uid { email }
   end
 
+  factory :blocked_user, class: 'Api::V1::UserRecord' do
+    first_name { 'My Excellent' }
+    last_name  { 'Lawyer' }
+    email { generate(:email) }
+    password { 'test123' }
+    password_confirmation { 'test123' }
+    confirmed_at { '04-07-2002' }
+    uid { email }
+    blocked { true }
+  end
+
   factory :unconfirmed_user, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }

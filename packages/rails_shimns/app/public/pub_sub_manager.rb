@@ -46,9 +46,9 @@ class PubSubManager
 
     registered_event[:subscribers].each do |job_class|
       if Rails.env.production?
-        job_class.perform_async(**event_payload) 
+        job_class.perform_async(**event_payload)
       else
-        job_class.perform_later(**event_payload) 
+        job_class.perform_later(**event_payload)
       end
     end
   end
