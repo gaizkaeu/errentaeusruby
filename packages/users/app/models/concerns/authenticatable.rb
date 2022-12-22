@@ -8,8 +8,8 @@ module Authenticatable
     validates :email, uniqueness: true
     validates :uid, uniqueness: { scope: :provider }
 
-    validates :password, presence: true
-    validates :password, length: { minimum: 5 }
+    validates :password, presence: true, on: :create
+    validates :password, length: { minimum: 5 }, on: :create
   end
 
   def send_welcome_email

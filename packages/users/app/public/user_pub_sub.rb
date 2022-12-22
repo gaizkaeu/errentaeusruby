@@ -18,6 +18,18 @@ UserPubSub.register_event('user.logout') do
   action 2
 end
 
+UserPubSub.register_event('user.blocked') do
+  user_id Integer
+  action 3
+end
+
+UserPubSub.register_event('user.updated') do
+  user_id Integer
+  action 4
+end
+
 UserPubSub.subscribe('user.logged_in', LogAccountLoginJob)
 UserPubSub.subscribe('user.refresh_token', LogAccountLoginJob)
 UserPubSub.subscribe('user.logout', LogAccountLoginJob)
+UserPubSub.subscribe('user.blocked', LogAccountLoginJob)
+UserPubSub.subscribe('user.updated', LogAccountLoginJob)

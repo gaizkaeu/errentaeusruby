@@ -1,0 +1,14 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/documents.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/documents
+---
+packages/users:
+  "::Api::V1::UserRecord":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/documents/app/models/api/v1/document_history.rb

@@ -15,6 +15,10 @@ module Api
         user.lawyer?
       end
 
+      def block?
+        user.lawyer?
+      end
+
       def show?
         user.lawyer? || record == user
       end
@@ -28,7 +32,7 @@ module Api
       end
 
       def update?
-        create?
+        show?
       end
 
       def destroy?

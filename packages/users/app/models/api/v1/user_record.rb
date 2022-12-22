@@ -41,6 +41,10 @@ module Api
         update!(stripe_customer_id: customer['id'])
       end
 
+      def block
+        update(blocked: true)
+      end
+
       def block!
         update!(blocked: true)
       end

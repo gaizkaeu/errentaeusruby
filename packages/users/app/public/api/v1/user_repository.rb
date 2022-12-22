@@ -17,7 +17,7 @@ module Api::V1::UserRepository
 
   def self.add(user)
     record = Api::V1::UserRecord.create!(user.to_hash)
-    user = Api::V1::User.new(permitted_attributes(record))
+    user = Api::V1::User.new(record.attributes.symbolize_keys!)
     user.instance_variable_set(:@errors, record.errors)
     user
   end
