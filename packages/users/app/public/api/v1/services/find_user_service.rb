@@ -7,6 +7,8 @@ module Api::V1::Services
 
       if id.present?
         user_record = users.find(id)
+        raise ActiveRecord::RecordNotFound unless user_record
+
         user = Api::V1::User.new(user_record.attributes.symbolize_keys!)
         authorize_with current_account, user, :show?
         user

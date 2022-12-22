@@ -1,8 +1,10 @@
 class Api::V1::Services::UserFromProviderService
-  def call(auth)
+  def call(auth, ip)
     user_record = find_user(auth)
 
     raise JWTSessions::Errors::Unauthorized unless user_record.persisted?
+
+    UserPubSub.publish('user.logged_in', user_id: record.id, ip:, provider: auth.provider, action: 0)
 
     Api::V1::User.new(user_record.attributes.symbolize_keys!)
   end

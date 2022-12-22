@@ -15,7 +15,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   def google
     payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: '321891045066-2it03nhng83jm5b40dha8iac15mpej4s.apps.googleusercontent.com')
 
-    user = Api::V1::Services::UserFromProviderService.new.call(params_parser_one_tap(payload))
+    user = Api::V1::Services::UserFromProviderService.new.call(params_parser_one_tap(payload), request.remote_ip)
 
     tokens = sign_in(user)
     render json: { csrf: tokens[:csrf] }
