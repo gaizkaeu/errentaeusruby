@@ -24,30 +24,11 @@ module Api
       end
 
       def update?
-        create?
+        index?
       end
 
       def destroy?
         false
-      end
-
-      class Scope
-        def initialize(user, scope)
-          @user = user
-          @scope = scope
-        end
-
-        def resolve
-          if user.lawyer?
-            scope.joins(:tax_income).where(tax_incomes: { lawyer_id: user.id })
-          else
-            scope.joins(:tax_income).where(tax_incomes: { client_id: user.id })
-          end
-        end
-
-        private
-
-        attr_reader :user, :scope
       end
     end
   end

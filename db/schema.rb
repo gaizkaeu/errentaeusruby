@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_22_145815) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_23_100343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_145815) do
     t.datetime "updated_at", null: false
     t.string "meeting_method"
     t.string "phone"
+    t.bigint "client_id"
+    t.bigint "lawyer_id"
+    t.index ["client_id"], name: "index_appointments_on_client_id"
+    t.index ["lawyer_id"], name: "index_appointments_on_lawyer_id"
     t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id", unique: true
   end
 
@@ -133,8 +137,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_145815) do
     t.string "phone"
     t.integer "account_type", default: 0
     t.string "stripe_customer_id"
-    t.string "provider", default: "email"
-    t.string "uid", default: ""
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
     t.datetime "confirmed_at"
     t.string "confirmation_token"
     t.datetime "confirmation_sent_at"
@@ -145,7 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_145815) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.text "tokens"
-    t.boolean "blocked", default: false
+    t.boolean "blocked", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -156,6 +160,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_145815) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "tax_incomes"
+  add_foreign_key "appointments", "users", column: "client_id"
+  add_foreign_key "appointments", "users", column: "lawyer_id"
   add_foreign_key "document_histories", "documents"
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"

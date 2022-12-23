@@ -3,3 +3,4 @@ enforce_privacy: true
 dependencies:
 - packages/rails_shimns
 - packages/tax_incomes
+- packages/users

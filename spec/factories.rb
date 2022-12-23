@@ -11,6 +11,7 @@ FactoryBot.define do
     password_confirmation { 'test123' }
     confirmed_at { '04-07-2002' }
     uid { email }
+    phone { '1234567890' }
   end
 
   factory :blocked_user, class: 'Api::V1::UserRecord' do
@@ -21,6 +22,7 @@ FactoryBot.define do
     password_confirmation { 'test123' }
     confirmed_at { '04-07-2002' }
     uid { email }
+    phone { '1234567890' }
     blocked { true }
   end
 
@@ -29,6 +31,7 @@ FactoryBot.define do
     last_name  { 'Lawyer' }
     email { generate(:email) }
     password { 'test123' }
+    phone { '1234567890' }
     password_confirmation { 'test123' }
     uid { email }
   end
@@ -49,8 +52,15 @@ FactoryBot.define do
     client
   end
 
-  factory :appointment, class: 'Api::V1::Appointment' do
+  factory :tax_income_with_lawyer, class: 'Api::V1::TaxIncome' do
+    client
+    lawyer
+  end
+
+  factory :appointment, class: 'Api::V1::AppointmentRecord' do
     tax_income
+    client
+    lawyer
     time { ' Wed, 21 Dec 2025 11:30:00.000000000 UTC +00:00' }
     meeting_method { 'phone' }
   end

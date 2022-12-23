@@ -7,12 +7,10 @@ module Api
       before_action :set_appointment, only: %i[show update destroy]
 
       def index
-        @appointments = policy_scope(Appointment)
+        @appointments = Api::V1::Services::AppointmentsForAccountService.new.call(current_user, filtering_params)
       end
 
-      def show
-        authorize @appointment
-      end
+      def show; end
 
       def create
         @appointment = Api::V1::Services::CreateAppointmentService.new.call(current_user, appointment_params)
@@ -25,8 +23,8 @@ module Api
       end
 
       def update
-        authorize @appointment
-        if @appointment.update(appointment_update_params)
+        @appointment = Api::V1::Services::UpdateAppointmentService.new.call(current_user, params[:id], appointment_update_params)
+        if @appointment.errors.empty?
           render 'appointments/show', status: :ok
         else
           render json: @appointment.errors, status: :unprocessable_entity
@@ -42,7 +40,7 @@ module Api
       private
 
       def set_appointment
-        @appointment = policy_scope(Appointment).find(params[:id])
+        @appointment = Api::V1::Services::FindAppointmentService.new.call(current_user, params[:id])
       end
 
       # Only allow a list of trusted parameters through.
@@ -52,6 +50,10 @@ module Api
 
       def appointment_update_params
         params.require(:appointment).permit(:time, :meeting_method, :phone)
+      end
+
+      def filtering_params
+        params.slice(:tax_income_id)
       end
     end
   end

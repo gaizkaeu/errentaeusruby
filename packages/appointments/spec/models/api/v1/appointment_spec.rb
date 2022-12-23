@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Appointment do
-  let(:tax_income) { create(:tax_income) }
-  let(:appointment) { build(:appointment, tax_income:) }
-
-  it { is_expected.to delegate_method(:lawyer_id).to(:tax_income).with_arguments(allow_nil: false) }
-  it { is_expected.to delegate_method(:client_id).to(:tax_income).with_arguments(allow_nil: false) }
-
   describe '#save' do
     let(:tax_income) { create(:tax_income) }
     let(:appointment) { build(:appointment, tax_income:) }
@@ -18,7 +12,7 @@ RSpec.describe Api::V1::Appointment do
 
       it 'creates the appointment' do
         expect { appointment.save }
-          .to change(described_class, :count).by(1)
+          .to change(Api::V1::AppointmentRepository, :count).by(1)
       end
     end
 
@@ -29,7 +23,7 @@ RSpec.describe Api::V1::Appointment do
 
       it 'does not create the appointment' do
         expect { appointment.save }
-          .not_to change(described_class, :count)
+          .not_to change(Api::V1::AppointmentRepository, :count)
       end
     end
   end

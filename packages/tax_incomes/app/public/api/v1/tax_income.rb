@@ -16,7 +16,7 @@ module Api
       belongs_to :lawyer, class_name: 'UserRecord', optional: true
       belongs_to :estimation, dependent: :destroy, optional: true
 
-      has_one :appointment, dependent: :destroy
+      has_one :appointment, dependent: :destroy, class_name: 'Api::V1::AppointmentRecord'
 
       accepts_nested_attributes_for :estimation
 

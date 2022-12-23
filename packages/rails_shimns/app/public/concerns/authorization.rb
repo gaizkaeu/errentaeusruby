@@ -7,7 +7,7 @@ module Authorization
     current_user
   end
 
-  def authorize_with(user, record, query)
-    Pundit.authorize(user, record, query)
+  def authorize_with(user, record, query, policy_class: nil)
+    Pundit.authorize(user, record, query, policy_class:)
   end
 end

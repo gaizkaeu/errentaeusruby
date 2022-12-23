@@ -2,8 +2,18 @@
 
 module Api
   module V1
-    class Appointment < ApplicationRecord
+    class AppointmentRecord < ApplicationRecord
+      self.table_name = 'appointments'
+
+      include Filterable
+
       belongs_to :tax_income, class_name: 'Api::V1::TaxIncome'
+      belongs_to :lawyer, class_name: 'Api::V1::UserRecord'
+      belongs_to :client, class_name: 'Api::V1::UserRecord'
+
+      scope :filter_by_tax_income, ->(tax_income_id) { where(tax_income_id:) }
+      scope :filter_by_client, ->(client_id) { where(client_id:) }
+      scope :filter_by_laywer, ->(lawyer_id) { where(lawyer_id:) }
 
       MEETING_OPTIONS = %w[phone office].freeze
 
