@@ -14,6 +14,12 @@ module Api::V1::Services
       appointment = Api::V1::Appointment.new(appointment_record.attributes.symbolize_keys!)
       appointment.instance_variable_set(:@errors, appointment_record.errors)
       appointment
+    rescue ActiveRecord::RecordInvalid
+      raise ActiveRecord::RecordInvalid if raise_error
+
+      appointment = Api::V1::Appointment.new(appointment_params.except!(:tax_income_id))
+      appointment.instance_variable_set(:@errors, [{ detail: 'Invalid appointment params' }])
+      appointment
     end
 
     def set_params_defaults(current_account, appointment_params)
@@ -24,6 +30,8 @@ module Api::V1::Services
         appointment_params[:client_id] = tax_income.client_id
       end
       appointment_params
+    rescue ActiveRecord::RecordNotFound
+      raise ActiveRecord::RecordInvalid
     end
   end
 end

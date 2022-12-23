@@ -48,7 +48,7 @@ module Api
       end
 
       def permission_denied
-        render json: { error: 'permission denied' }, status: :unauthorized
+        render json: { error: 'permission denied' }, status: :forbidden
       end
 
       def not_found

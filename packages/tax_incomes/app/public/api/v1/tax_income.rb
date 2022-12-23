@@ -27,7 +27,6 @@ module Api
       end
 
       after_create_commit :assign_lawyer
-      after_create_commit :send_confirmation_email
 
       enum state: {
         pending_assignation: 0,
@@ -92,10 +91,6 @@ module Api
         [payment_intent['client_secret'], payment_intent['amount']]
       end
 
-      def send_confirmation_email
-        # TaxIncomeMailer.creation(id).deliver_later!
-      end
-
       def assign_lawyer
         unless lawyer_id.nil?
           waiting_for_meeting! if state == 'pending_assignation'
@@ -103,7 +98,10 @@ module Api
         end
 
         lawyer_id = Api::V1::UserRepository.where(account_type: 1).first&.id
-        waiting_for_meeting! if update!(lawyer_id:)
+        return unless update!(lawyer_id:)
+
+        waiting_for_meeting!
+        TaxIncomePubSub.publish('tax_income.lawyer_assigned', tax_income_id: id, lawyer_id:)
       end
     end
   end

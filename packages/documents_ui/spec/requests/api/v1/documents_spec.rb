@@ -82,7 +82,7 @@ RSpec.describe '/api/v1/documents' do
             authorized_post api_v1_documents_url, params: { document: valid_attributes }
           end.not_to change(Api::V1::Document, :count)
           expect(response).not_to be_successful
-          expect(response).to have_http_status(:unauthorized)
+          expect(response).to have_http_status(:forbidden)
         end
       end
 
@@ -92,7 +92,7 @@ RSpec.describe '/api/v1/documents' do
             authorized_post api_v1_documents_url, params: { document: invalid_attributes }
           end.not_to change(Api::V1::Document, :count)
           expect(response).not_to be_successful
-          expect(response).to have_http_status(:unauthorized)
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe '/api/v1/documents' do
           authorized_patch api_v1_document_url(document), params: { api_v1_document: new_attributes }
           document.reload
           expect(response).not_to be_successful
-          expect(response).to have_http_status(:unauthorized)
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end
@@ -120,7 +120,7 @@ RSpec.describe '/api/v1/documents' do
           authorized_delete api_v1_document_url(document)
         end.not_to change(Api::V1::Document, :count)
         expect(response).not_to be_successful
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

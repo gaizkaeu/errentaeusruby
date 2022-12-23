@@ -55,10 +55,11 @@ FactoryBot.define do
   factory :tax_income_with_lawyer, class: 'Api::V1::TaxIncome' do
     client
     lawyer
+    state { 'waiting_for_meeting' }
   end
 
   factory :appointment, class: 'Api::V1::AppointmentRecord' do
-    tax_income
+    association :tax_income, factory: :tax_income_with_lawyer
     client
     lawyer
     time { '2025-11-30T11:30:00.000Z' }
