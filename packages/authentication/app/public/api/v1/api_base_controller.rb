@@ -28,7 +28,7 @@ module Api
           path: '/',
           secure: Rails.env.production?,
           httponly: Rails.env.production?,
-          same_site: Rails.env.production? ? :strict : :none,
+          same_site: Rails.env.production? ? :strict : :lax,
           domain: Rails.env.production? ? Rails.application.config.x.domain_cookies : nil
         )
       end
@@ -43,8 +43,8 @@ module Api
 
       private
 
-      def user_not_authorized
-        render json: { error: 'not authorized' }, status: :unauthorized
+      def user_not_authorized(error)
+        render json: { error: "not authorized: #{error}" }, status: :unauthorized
       end
 
       def permission_denied
