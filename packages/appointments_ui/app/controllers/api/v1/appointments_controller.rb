@@ -8,9 +8,12 @@ module Api
 
       def index
         @appointments = Api::V1::Services::AppointmentsForAccountService.new.call(current_user, filtering_params)
+        render 'appointments/index'
       end
 
-      def show; end
+      def show
+        render 'appointments/show'
+      end
 
       def create
         @appointment = Api::V1::Services::CreateAppointmentService.new.call(current_user, appointment_params)

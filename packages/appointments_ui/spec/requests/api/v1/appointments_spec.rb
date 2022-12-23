@@ -4,11 +4,11 @@ RSpec.describe 'Appointments' do
   let(:tax_income) { create(:tax_income_with_lawyer) }
 
   let(:valid_server_attributes) do
-    { lawyer_id: tax_income.lawyer_id, client_id: tax_income.client_id, tax_income_id: tax_income.id, meeting_method: 'phone', phone: '688867636', time: 'Wed, 30 Nov 2025 11:30:00.000000000 UTC +00:00' }
+    { lawyer_id: tax_income.lawyer_id, client_id: tax_income.client_id, tax_income_id: tax_income.id, meeting_method: 'phone', phone: '688867636', time: '2025-11-30T11:30:00.000Z' }
   end
 
   let(:valid_attributes) do
-    { tax_income_id: tax_income.id, meeting_method: 'phone', phone: '688867636', time: 'Wed, 30 Nov 2025 11:30:00.000000000 UTC +00:00' }
+    { tax_income_id: tax_income.id, meeting_method: 'phone', phone: '688867636', time: '2025-11-30T11:30:00.000Z' }
   end
 
   let(:invalid_attributes) do
@@ -33,8 +33,9 @@ RSpec.describe 'Appointments' do
       it 'renders a successful response' do
         tax_income.waiting_for_meeting!
         appointment = Api::V1::AppointmentRepository.add valid_server_attributes
-        authorized_get api_v1_appointments_url(appointment)
+        authorized_get api_v1_appointment_url(appointment)
         expect(response).to be_successful
+        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(valid_attributes))
       end
     end
 

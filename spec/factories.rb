@@ -61,7 +61,7 @@ FactoryBot.define do
     tax_income
     client
     lawyer
-    time { ' Wed, 21 Dec 2025 11:30:00.000000000 UTC +00:00' }
+    time { '2025-11-30T11:30:00.000Z' }
     meeting_method { 'phone' }
   end
 end

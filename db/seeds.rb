@@ -8,7 +8,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Api::V1::UserRecord.create!(
+Api::V1::UserRepository.add(
   first_name: 'Carolina',
   last_name: 'Elizagarate',
   password: 'jhasduYhasdhahgh',
