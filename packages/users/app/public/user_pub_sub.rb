@@ -3,12 +3,14 @@ UserPubSub.register_event('user.logged_in') do
   user_id Integer
   ip String
   provider String
+  time String
   action 0
 end
 
 UserPubSub.register_event('user.refresh_token') do
   user_id Integer
   ip String
+  time String
   action 1
 end
 

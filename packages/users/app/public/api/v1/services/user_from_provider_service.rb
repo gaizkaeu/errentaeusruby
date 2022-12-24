@@ -4,7 +4,7 @@ class Api::V1::Services::UserFromProviderService
 
     raise JWTSessions::Errors::Unauthorized unless user_record.persisted?
 
-    UserPubSub.publish('user.logged_in', user_id: user_record.id, ip:, provider: auth.provider, action: 0)
+    UserPubSub.publish('user.logged_in', user_id: user_record.id, ip:, provider: auth.provider, time: Time.now.to_s, action: 0)
 
     Api::V1::User.new(user_record.attributes.symbolize_keys!)
   end

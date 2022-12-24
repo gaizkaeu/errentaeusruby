@@ -36,10 +36,9 @@ module Api
       end
 
       def checkout
-        authorize @tax_income
-        if @tax_income.waiting_payment?
-          intent = @tax_income.retrieve_payment_intent
-          render json: { clientSecret: intent[0], amount: intent[1] }
+        pi = Api::V1::Services::TaxPaymentIntentService.new.call(current_user, @tax_income.id)
+        if pi.present?
+          render json: { clientSecret: pi[0], amount: pi[1] }
         else
           render json: { error: 'Not able to pay' }, status: :unprocessable_entity
         end
