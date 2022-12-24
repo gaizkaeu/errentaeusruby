@@ -5,7 +5,7 @@ module Api::V1::Services
       raise ActiveRecord::RecordNotFound unless record
       return false if record.blocked?
 
-      UserPubSub.publish('user.refresh_token', user_id: record.id, ip:, time: Time.now.to_s, action: 1)
+      UserPubSub.publish('user.refresh_token', user_id: record.id, ip:, time: Time.now.iso8601.to_s, action: 1)
       true
     end
   end
