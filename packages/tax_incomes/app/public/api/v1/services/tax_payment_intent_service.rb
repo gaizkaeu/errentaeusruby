@@ -1,3 +1,4 @@
+# rubocop:disable Rails/SaveBang
 module Api::V1::Services
   class TaxPaymentIntentService
     include Authorization
@@ -25,10 +26,11 @@ module Api::V1::Services
     end
 
     def create_pi(current_account, tax_income)
-      payment_intent = Stripe::PaymentIntent.create!({ amount: tax_income.price, currency: 'eur', payment_method_types: [:card], metadata: { id: "tax_#{tax_income.id}" }, customer: current_account.stripe_customer_id })
+      payment_intent = Stripe::PaymentIntent.create({ amount: tax_income.price, currency: 'eur', payment_method_types: [:card], metadata: { id: "tax_#{tax_income.id}" }, customer: current_account.stripe_customer_id })
       return unless tax_income.update!(payment: payment_intent['id'])
 
       [payment_intent['client_secret'], payment_intent['amount']]
     end
   end
 end
+# rubocop:enable Rails/SaveBang
