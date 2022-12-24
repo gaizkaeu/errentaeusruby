@@ -143,6 +143,8 @@ jobs:
             STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:latest
             VAPID_PUBLIC=ERRENTA-VAPID-PUBLIC:1
             VAPID_PRIVATE=ERRENTA-VAPID-PRIVATE:1
+            FRONTEND_APP_HOST=https://errenta.eus
+            APP_DOMAIN_COOKIES=.errenta.eus
           flags: |
             --set-cloudsql-instances=eliza-asesores:europe-west4:errenta
 

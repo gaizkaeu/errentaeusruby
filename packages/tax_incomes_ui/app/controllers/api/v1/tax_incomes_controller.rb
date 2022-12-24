@@ -21,7 +21,7 @@ module Api
 
       # POST /tax_incomes or /tax_incomes.json
       def create
-        @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params, nested_estimation_params[:token]))
+        @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params_create, nested_estimation_params[:token]))
         if @tax_income.persisted?
           render 'tax_incomes/show'
         else
@@ -32,7 +32,7 @@ module Api
       def documents
         authorize @tax_income
         @documents = @tax_income.documents.with_attached_files
-        render 'api/v1/documents/index'
+        render 'documents/index'
       end
 
       def checkout
@@ -57,7 +57,7 @@ module Api
 
       # PATCH/PUT /tax_incomes/1 or /tax_incomes/1.json
       def update
-        @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params)
+        @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params_update)
         if @tax_income.errors.empty?
           render 'tax_incomes/show'
         else
@@ -81,8 +81,12 @@ module Api
       end
 
       # Only allow a list of trusted parameters through.
-      def tax_income_params
-        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes).with_defaults(client_id: current_user.id)
+      def tax_income_params_create
+        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes_create).with_defaults(client_id: current_user.id)
+      end
+
+      def tax_income_params_update
+        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes_update)
       end
 
       def nested_estimation_params

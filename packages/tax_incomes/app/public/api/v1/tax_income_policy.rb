@@ -11,11 +11,19 @@ module Api
         super
       end
 
-      def permitted_attributes
+      def permitted_attributes_create
         if user.lawyer?
           %i[client_id observations price lawyer_id id state year]
         else
           %i[observations year]
+        end
+      end
+
+      def permitted_attributes_update
+        if user.lawyer?
+          %i[client_id observations price lawyer_id id state year]
+        else
+          %i[observations]
         end
       end
 

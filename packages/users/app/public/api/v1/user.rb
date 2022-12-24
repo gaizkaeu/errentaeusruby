@@ -7,7 +7,7 @@ class Api::V1::User
   attr_reader :id, :first_name, :last_name, :email, :account_type, :confirmed_at, :blocked
 
   def initialize(attributes = {})
-    @id = attributes.fetch(:id)
+    @id = attributes.fetch(:id, nil)
     @first_name = attributes.fetch(:first_name)
     @last_name = attributes.fetch(:last_name)
     @email = attributes.fetch(:email)
