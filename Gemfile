@@ -124,6 +124,8 @@ group :development, :test do
   gem 'bullet'
   # Type checking
   gem 'sorbet'
+  # Stripe mok
+  gem 'stripe-ruby-mock'
 end
 
 group :development do
