@@ -64,7 +64,7 @@ module Api
       end
 
       def checkout?
-        record.client_id == user_id
+        record.client_id == user.id
       end
     end
   end

@@ -8,7 +8,7 @@ class Api::V1::Services::UpdateAppointmentService
 
     authorize_with current_account, appointment_record, :update?, policy_class: Api::V1::AppointmentPolicy
 
-    appointment_record.public_send(save_method, appointment_params)
+    AppointmentPubSub.publish('appointment.updated', appointment_id: appointment_record.id) if appointment_record.public_send(save_method, appointment_params)
     appointment = Api::V1::Appointment.new(appointment_record.attributes.symbolize_keys!)
     appointment.instance_variable_set(:@errors, appointment_record.errors)
     appointment

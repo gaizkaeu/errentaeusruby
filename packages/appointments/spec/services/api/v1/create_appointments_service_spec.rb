@@ -23,6 +23,12 @@ describe Api::V1::Services::CreateAppointmentService, type: :service do
         expect(appointment.tax_income_id).to be(tax_income.id)
       end
 
+      it 'does enqueue creation job' do
+        expect do
+          service.call(user_record, appointment_params_tax_income)
+        end.to have_enqueued_job(AppointmentCreationJob)
+      end
+
       it 'does create appointment with correct user and lawyer but without tax_income' do
         appointment = service.call(user_record, appointment_params)
 
@@ -49,6 +55,12 @@ describe Api::V1::Services::CreateAppointmentService, type: :service do
         expect do
           service.call(user_record, appointment_params.except!(:time))
         end.not_to raise_error
+      end
+
+      it 'does not enqueue creation job with invalid params' do
+        expect do
+          service.call(user_record, appointment_params.except!(:time))
+        end.not_to have_enqueued_job(AppointmentCreationJob)
       end
 
       it 'does raise error with invalid params' do

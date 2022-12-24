@@ -55,6 +55,8 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   FactoryBot.find_definitions
 
+  ActiveJob::Base.queue_adapter = :test
+
   config.use_transactional_fixtures = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

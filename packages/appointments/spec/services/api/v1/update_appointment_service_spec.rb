@@ -17,6 +17,12 @@ describe Api::V1::Services::UpdateAppointmentService, type: :service do
         expect(res.client_id).to be(appointment.client_id)
         expect(res.phone).to match(valid_attributes[:phone])
       end
+
+      it 'does enqueue update job' do
+        expect do
+          service.call(appointment.client, appointment.id, valid_attributes)
+        end.to have_enqueued_job(AppointmentUpdateJob)
+      end
     end
 
     context 'with not authorized account and valid attributes' do
@@ -28,6 +34,13 @@ describe Api::V1::Services::UpdateAppointmentService, type: :service do
         appointment.reload
         expect(appointment.attributes).to eq(prev_attributes)
       end
+
+      it 'does not enqueue update job' do
+        expect do
+          expect { service.call(client_evil, appointment.id, valid_attributes) }
+            .to raise_error(Pundit::NotAuthorizedError)
+        end.not_to have_enqueued_job(AppointmentUpdateJob)
+      end
     end
 
     context 'with authorized account and invalid attributes' do
@@ -38,6 +51,12 @@ describe Api::V1::Services::UpdateAppointmentService, type: :service do
         end.to raise_error(ActiveRecord::RecordInvalid)
         appointment.reload
         expect(appointment.attributes).to eq(prev_attributes)
+      end
+
+      it 'does not enqueue update job' do
+        expect do
+          service.call(appointment.client, appointment.id, { meeting_method: 'invalid' }, raise_error: false)
+        end.not_to have_enqueued_job(AppointmentUpdateJob)
       end
 
       it 'does not update appointment and does not raise error' do

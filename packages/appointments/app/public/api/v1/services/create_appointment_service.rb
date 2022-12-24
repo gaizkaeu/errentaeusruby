@@ -9,7 +9,7 @@ module Api::V1::Services
       appointment_record = Api::V1::AppointmentRecord.new(params)
       authorize_with current_account, appointment_record, :create?, policy_class: Api::V1::AppointmentPolicy
 
-      appointment_record.public_send(save_method)
+      AppointmentPubSub.publish('appointment.created', appointment_id: appointment_record.id) if appointment_record.public_send(save_method)
 
       appointment = Api::V1::Appointment.new(appointment_record.attributes.symbolize_keys!)
       appointment.instance_variable_set(:@errors, appointment_record.errors)
