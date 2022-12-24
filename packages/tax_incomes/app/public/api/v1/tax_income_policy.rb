@@ -32,6 +32,8 @@ module Api
           record.client_id == user.id
         elsif user.lawyer?
           record.lawyer_id == user.id
+        else
+          false
         end
       end
 

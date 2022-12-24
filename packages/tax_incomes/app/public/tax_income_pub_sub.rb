@@ -5,5 +5,5 @@ TaxIncomePubSub.register_event('tax_income.lawyer_assigned') do
   lawyer_id Integer
 end
 
-TaxIncomePubSub.subscribe('tax_income.created', CreationNotificationJob)
+TaxIncomePubSub.subscribe('tax_income.created', TaxIncomeCreatedJob)
 TaxIncomePubSub.subscribe('tax_income.lawyer_assigned', LawyerNotificationJob)

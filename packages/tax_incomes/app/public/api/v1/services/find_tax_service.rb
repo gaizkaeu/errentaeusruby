@@ -3,14 +3,7 @@ module Api::V1::Services
     include Authorization
 
     def call(current_account, id)
-      tax_record =
-        if current_account.lawyer?
-          Api::V1::TaxIncome.where(lawyer_id: current_account.id).find(id)
-        else
-          Api::V1::TaxIncome.where(client_id: current_account.id).find(id)
-        end
-      raise ActiveRecord::RecordNotFound unless tax_record
-
+      tax_record = Api::V1::TaxIncome.find(id)
       authorize_with current_account, tax_record, :show?
       tax_record
     end

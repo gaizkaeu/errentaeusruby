@@ -161,7 +161,7 @@ RSpec.describe '/api/v1/tax_incomes' do
       tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
       authorized_get api_v1_tax_income_url(tax_income)
       expect(response).not_to be_successful
-      expect(response.body).to match('not found')
+      expect(response.body).to match('permission denied')
     end
   end
 

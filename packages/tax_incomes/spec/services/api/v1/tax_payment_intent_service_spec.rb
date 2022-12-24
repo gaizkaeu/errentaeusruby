@@ -4,9 +4,11 @@ require 'stripe'
 describe Api::V1::Services::TaxPaymentIntentService, type: :service do
   subject(:service) { described_class.new }
 
-  let(:user) { create(:user) }
-  let(:evil) { create(:user) }
-  let(:tax_income) { build(:tax_income_with_lawyer, client: user) }
+  let(:user_r) { create(:user) }
+  let(:user) { Api::V1::User.new(user_r.attributes.symbolize_keys!) }
+  let(:evil_r) { create(:user) }
+  let(:evil) { Api::V1::User.new(evil_r.attributes.symbolize_keys!) }
+  let(:tax_income) { build(:tax_income_with_lawyer, client_id: user.id) }
 
   describe '#call' do
     context 'when tax income is not found' do
