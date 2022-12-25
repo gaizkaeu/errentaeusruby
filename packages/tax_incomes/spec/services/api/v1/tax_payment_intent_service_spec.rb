@@ -18,7 +18,7 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
       end
     end
 
-    context 'when tax income waiting payment' do
+    context 'when tax income price present' do
       before { tax_income.update!(state: :waiting_payment, price: 2000) }
 
       it 'creates a payment intent correctly' do
@@ -53,16 +53,6 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
       end
     end
 
-    context 'when tax income is not waiting payment' do
-      before { tax_income.update!(state: :waiting_for_meeting, price: 2000) }
-
-      it 'does not create a payment intent' do
-        expect(service.call(user, tax_income.id)).to be_nil
-        tax_income.reload
-        expect(tax_income.payment).to be_nil
-      end
-    end
-
     context 'when tax income has no price' do
       before { tax_income.update!(state: :waiting_payment, price: nil) }
 
@@ -70,6 +60,15 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
         expect(service.call(user, tax_income.id)).to be_nil
         tax_income.reload
         expect(tax_income.payment).to be_nil
+      end
+
+      it 'does raise an error if raise_error is true' do
+        expect { service.call(user, tax_income.id, raise_error: true) }
+          .to raise_error(StandardError)
+      end
+
+      it 'does return nil if raise_error is false' do
+        expect(service.call(user, tax_income.id, raise_error: false)).to be_nil
       end
     end
 

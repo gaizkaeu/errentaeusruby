@@ -49,7 +49,7 @@ module Api
         event :assigned_lawyer do
           transitions from: :pending_assignation, to: :waiting_for_meeting_creation, guard: :lawyer_assigned?
         end
-        event :paid do
+        event :payment_succeeded do
           transitions from: :waiting_payment, to: :pending_documentation, guard: :payment_present?
         end
         event :refund do
@@ -62,7 +62,7 @@ module Api
       end
 
       def payment_present?
-        !payment.nil?
+        paid?
       end
 
       def lawyer_assigned?

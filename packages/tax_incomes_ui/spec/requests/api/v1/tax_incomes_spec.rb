@@ -215,6 +215,40 @@ RSpec.describe '/api/v1/tax_incomes' do
         end
       end
     end
+
+    describe 'GET /payment_data authenticated' do
+      it 'renders a successful response when data is present' do
+        tax_income = Api::V1::TaxIncomeRepository.add valid_attributes.merge(price: 10_000)
+        Api::V1::Services::TaxPaymentIntentService.call(user, tax_income.id)
+        tax_income.reload
+        authorized_get payment_data_api_v1_tax_income_url(tax_income)
+        expect(response).to be_successful
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response['amount']).to match(tax_income.price)
+        expect(parsed_response['status']).to match('requires_payment_method')
+      end
+
+      it 'renders a successful response when data is not present' do
+        tax_income = Api::V1::TaxIncomeRepository.add valid_attributes.merge(price: 10_000)
+        tax_income.waiting_payment!
+        authorized_get payment_data_api_v1_tax_income_url(tax_income)
+        expect(response).to be_successful
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response['status']).to match('no_payment_data')
+      end
+    end
+
+    describe 'POST /create_payment_intent authenticated' do
+      it 'renders a successful response' do
+        tax_income = Api::V1::TaxIncomeRepository.add valid_attributes.merge(price: 10_000)
+        tax_income.waiting_payment!
+        authorized_post create_payment_intent_api_v1_tax_income_url(tax_income)
+        expect(response).to be_successful
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response['amount']).to match(tax_income.price)
+        expect(parsed_response['clientSecret']).not_to be_nil
+      end
+    end
   end
 
   context 'when not logged in' do

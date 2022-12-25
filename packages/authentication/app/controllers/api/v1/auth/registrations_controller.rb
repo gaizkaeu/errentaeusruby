@@ -1,6 +1,6 @@
 class Api::V1::Auth::RegistrationsController < Api::V1::ApiBaseController
   def create
-    user = Api::V1::UserRepository.add(user_params)
+    user = Api::V1::Services::CreateUserService.call(user_params, request.remote_ip)
     if user.persisted?
       tokens = sign_in(user)
       render json: { csrf: tokens[:csrf] }

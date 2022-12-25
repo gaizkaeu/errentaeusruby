@@ -48,9 +48,9 @@ module Api
         authorize @tax_income
         if @tax_income.payment
           payment_data = Stripe::PaymentIntent.retrieve(@tax_income.payment)
-          render partial: 'api/v1/payment/payment_data', locals: { payment: payment_data }
+          render partial: 'payment/payment_data', locals: { payment: payment_data }
         else
-          render json: { error: 'No payment data' }, status: :unprocessable_entity
+          render json: { status: 'no_payment_data' }
         end
       end
 

@@ -2,10 +2,18 @@
 class Api::V1::Services::TaxPaymentIntentService < ApplicationService
   include Authorization
 
-  def call(current_account, tax_income_id)
+  class InvalidPrice < StandardError; end
+
+  def call(current_account, tax_income_id, raise_error: false)
     tax_income = Api::V1::TaxIncomeRepository.find(tax_income_id)
     authorize_with current_account, tax_income, :checkout?
-    return unless tax_income.price.present? && tax_income.waiting_payment?
+
+    if raise_error
+      raise InvalidPrice if tax_income.price.nil? || tax_income.price <= 50
+    elsif tax_income.price.nil? || tax_income.price <= 50
+      return
+    end
+
     return retrieve_payment_intent(current_account, tax_income) if tax_income.payment.present?
 
     create_pi(current_account, tax_income)
