@@ -4,4 +4,3 @@ dependencies:
   - packages/rails_shimns
   - packages/users
   - packages/estimations
-  - packages/services

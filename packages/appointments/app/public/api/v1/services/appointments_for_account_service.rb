@@ -1,4 +1,4 @@
-class Api::V1::Services::AppointmentsForAccountService
+class Api::V1::Services::AppointmentsForAccountService < ApplicationService
   def call(current_account, filters = {})
     filter_method = current_account.lawyer? ? :filter_by_lawyer : :filter_by_client
     appointments = Api::V1::AppointmentRecord.public_send(filter_method, current_account.id)

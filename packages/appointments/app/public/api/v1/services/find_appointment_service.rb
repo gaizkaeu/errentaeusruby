@@ -1,4 +1,4 @@
-class Api::V1::Services::FindAppointmentService
+class Api::V1::Services::FindAppointmentService < ApplicationService
   include Authorization
 
   def call(current_account, id)

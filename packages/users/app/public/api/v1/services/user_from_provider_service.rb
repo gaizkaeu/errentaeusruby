@@ -1,4 +1,4 @@
-class Api::V1::Services::UserFromProviderService
+class Api::V1::Services::UserFromProviderService < ApplicationService
   def call(auth, ip)
     user_record = find_user(auth)
 

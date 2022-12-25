@@ -27,7 +27,7 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
         expect(tax_income.payment).not_to be_nil
         retrieved_payment_intent = Stripe::PaymentIntent.retrieve(tax_income.payment)
         expect(retrieved_payment_intent['amount']).to eq(tax_income.price)
-        expect(retrieved_payment_intent['metadata']['id']).to eq("tax_#{tax_income.id}")
+        expect(retrieved_payment_intent['metadata']['id']).to eq(tax_income.id.to_s)
         expect(retrieved_payment_intent['customer']).to eq(user.stripe_customer_id)
       end
 
