@@ -13,7 +13,7 @@ describe Api::V1::Services::TaxPaymentSucceededService, type: :service do
         tax_income.waiting_payment!
         Api::V1::Services::TaxPaymentIntentService.new.call(user, tax_income.id)
         tax_income.reload
-        event = { data: { object: { payment_intent: { id: tax_income.payment }, metadata: { type: 'tax_invoice' } } } }
+        event = { data: { object: { id: tax_income.payment }, metadata: { type: 'tax_invoice' } } }
         expect { service.call(event) }
           .to change { tax_income.reload.paid? }
           .from(false).to(true)
