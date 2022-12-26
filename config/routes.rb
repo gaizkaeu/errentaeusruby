@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       post :push, to: "push#send_push"
 
       scope '/accounts' do
+        get ':id/history', to: 'account_history#index', as: :account_history
         get '', to: 'accounts#index', as: :accounts
         put ':id', to: 'accounts#update', as: :account_update
         get :me, to: 'accounts#me', as: :account_logged_in
