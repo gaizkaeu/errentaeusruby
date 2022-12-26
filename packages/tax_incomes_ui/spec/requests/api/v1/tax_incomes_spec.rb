@@ -234,7 +234,7 @@ RSpec.describe '/api/v1/tax_incomes' do
         authorized_get payment_data_api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response['status']).to match('no_payment_data')
+        expect(parsed_response['status']).to match('requires_payment_method')
       end
     end
 

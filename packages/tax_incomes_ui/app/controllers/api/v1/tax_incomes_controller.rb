@@ -50,7 +50,7 @@ module Api
           payment_data = Stripe::PaymentIntent.retrieve(@tax_income.payment)
           render partial: 'payment/payment_data', locals: { payment: payment_data }
         else
-          render json: { status: 'no_payment_data' }
+          render json: { status: 'requires_payment_method' }
         end
       end
 
