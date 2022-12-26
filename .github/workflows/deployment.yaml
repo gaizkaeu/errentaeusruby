@@ -135,7 +135,7 @@ jobs:
           region: europe-west1
           env_vars: |
             APP_DOMAIN_COOKIES=.errenta.eus
-            FRONTEND_APP_HOST=https://errenta.eus
+            FRONTEND_APP_HOST=errenta.eus
 
           secrets: |
             DB_PASSWORD=ERRENTA-DBPASSWORD:latest
