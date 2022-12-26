@@ -17,5 +17,9 @@ RSpec.describe Api::V1::AccountsController do
     it 'routes to #me' do
       expect(get: '/api/v1/accounts/me').to route_to('api/v1/accounts#me', format: 'json')
     end
+
+    it 'routes to #update' do
+      expect(put: '/api/v1/accounts/1').to route_to('api/v1/accounts#update', format: 'json', id: '1')
+    end
   end
 end

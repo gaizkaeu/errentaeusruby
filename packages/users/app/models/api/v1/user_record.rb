@@ -20,7 +20,7 @@ module Api
       after_create_commit :create_stripe_customer, :send_welcome_email
       before_validation :set_defaults
 
-      has_many :account_histories, dependent: :destroy, foreign_key: :user_id
+      has_many :account_histories, dependent: :destroy, foreign_key: :user_id, class_name: 'Api::V1::AccountHistoryRecord'
 
       enum account_type: { client: 0, lawyer: 1 }
 

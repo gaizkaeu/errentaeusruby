@@ -30,7 +30,20 @@ module Api
         render 'accounts/me'
       end
 
+      def update
+        @user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_params)
+        if @user.errors.any?
+          render 'accounts/show', status: :unprocessable_entity
+        else
+          render 'accounts/show'
+        end
+      end
+
       private
+
+      def user_update_params
+        params.require(:user).permit(UserPolicy.new(current_user, nil).permitted_attributes_update).with_defaults(id: current_user.id)
+      end
 
       def filtering_params
         return unless current_user.lawyer?

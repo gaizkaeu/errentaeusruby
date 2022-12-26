@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
       scope '/accounts' do
         get '', to: 'accounts#index', as: :accounts
+        put ':id', to: 'accounts#update', as: :account_update
         get :me, to: 'accounts#me', as: :account_logged_in
         get ':id', to: 'accounts#show', as: :account
         post ':id/resend_confirmation', to: 'accounts#resend_confirmation', as: :account_resend_confirmation

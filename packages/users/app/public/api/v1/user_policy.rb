@@ -11,6 +11,10 @@ module Api
         super
       end
 
+      def permitted_attributes_update
+        %i[password password_confirmation current_password first_name last_name]
+      end
+
       def index?
         user.lawyer?
       end
@@ -20,7 +24,11 @@ module Api
       end
 
       def show?
-        user.lawyer? || record == user
+        user.lawyer? || record.id == user.id
+      end
+
+      def access_history?
+        show?
       end
 
       def resend_confirmation?
