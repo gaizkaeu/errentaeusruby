@@ -17,5 +17,20 @@ class TaxIncomeMailer < ApplicationMailer
 
     mail(to: user.email, subject: 'Nueva asignación de declaración de la renta.')
   end
+
+  def payment_succeeded_client(tax_income_id)
+    @tax_income = Api::V1::TaxIncomeRepository.find(tax_income_id)
+    @dest = Api::V1::UserRepository.find(@tax_income.client_id)
+
+    mail(to: @dest.email, subject: 'Confirmación de pago.')
+  end
+
+  def payment_succeeded_lawyer(tax_income_id)
+    @tax_income = Api::V1::TaxIncomeRepository.find(tax_income_id)
+    dest = Api::V1::UserRepository.find(@tax_income.lawyer_id)
+    @user = Api::V1::UserRepository.find(@tax_income.client_id)
+
+    mail(to: dest.email, subject: "Confirmación de pago (id: #{tax_income_id} - #{@user.first_name}).")
+  end
 end
 # rubocop:enable Metrics/AbcSize

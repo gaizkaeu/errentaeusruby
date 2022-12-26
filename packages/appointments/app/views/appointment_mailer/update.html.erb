@@ -1,11 +1,13 @@
 Hola, <%= @notify_to.first_name %>.
 
 <br/>
-Le informamos que se ha creado una nueva cita para el día <%= @appointment.time.strftime("%d/%m/%Y %I:%M %p") %>.
+Le informamos que se ha modificado su cita.
 
 <br/>
+La nueva cita será el día:
+<%= @appointment.time.strftime("%d/%m/%Y %I:%M %p") %>.
+<br/>
 Su cita será con <%= @appointment_with.first_name %> <%= @appointment_with.last_name %>.
-
 
 <br/>
 Muchas gracias por su atención.

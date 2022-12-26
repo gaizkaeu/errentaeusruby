@@ -2,6 +2,7 @@
 
 class AppointmentCreationJob < ApplicationJob
   def perform(params)
-    AppointmentMailer.creation(params['appointment_id']).deliver_now!
+    AppointmentMailer.creation(params['appointment_id'], :client).deliver_now!
+    AppointmentMailer.creation(params['appointment_id'], :lawyer).deliver_now!
   end
 end

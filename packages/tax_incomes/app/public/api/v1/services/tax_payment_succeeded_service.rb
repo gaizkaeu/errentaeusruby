@@ -6,6 +6,8 @@ class Api::V1::Services::TaxPaymentSucceededService < ApplicationService
 
     tax_income.update!(paid: true)
 
+    TaxIncomePubSub.publish('tax_income.payment_intent_succeeded', tax_income_id: tax_income.id)
+
     return unless tax_income.waiting_payment?
 
     tax_income.payment_succeeded!
