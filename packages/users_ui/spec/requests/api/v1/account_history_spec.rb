@@ -27,7 +27,7 @@ RSpec.describe 'AccountHistory' do
         authorized_get api_v1_account_history_url(user.id), as: :json
         expect(response).to be_successful
       end
-      
+
       it 'renders error when user is not the same' do
         authorized_get api_v1_account_history_url(lawyer.id), as: :json
         expect(response).to be_forbidden
