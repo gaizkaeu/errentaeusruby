@@ -230,7 +230,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
       it 'renders a successful response when data is not present' do
         tax_income = Api::V1::TaxIncomeRepository.add valid_attributes.merge(price: 10_000)
-        tax_income.waiting_payment!
+        tax_income.payment!
         authorized_get payment_data_api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
         parsed_response = JSON.parse(response.body)
@@ -241,7 +241,7 @@ RSpec.describe '/api/v1/tax_incomes' do
     describe 'POST /create_payment_intent authenticated' do
       it 'renders a successful response' do
         tax_income = Api::V1::TaxIncomeRepository.add valid_attributes.merge(price: 10_000)
-        tax_income.waiting_payment!
+        tax_income.payment!
         authorized_post create_payment_intent_api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
         parsed_response = JSON.parse(response.body)

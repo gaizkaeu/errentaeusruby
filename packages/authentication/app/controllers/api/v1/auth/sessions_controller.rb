@@ -26,6 +26,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApiBaseController
   def destroy
     session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true, namespace: "user_#{payload['user_id']}")
     session.flush_by_access_payload
+    UserPubSub.publish('user.logout', user_id: payload['user_id'], ip: request.remote_ip, time: Time.now.iso8601.to_s, action: 2)
     head :no_content
   end
 

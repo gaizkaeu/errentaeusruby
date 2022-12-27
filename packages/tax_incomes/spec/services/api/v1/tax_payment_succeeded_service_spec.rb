@@ -10,7 +10,7 @@ describe Api::V1::Services::TaxPaymentSucceededService, type: :service do
   describe '#call' do
     context 'when tax income is waiting payment' do
       it 'changes status to paid' do
-        tax_income.waiting_payment!
+        tax_income.payment!
         Api::V1::Services::TaxPaymentIntentService.new.call(user, tax_income.id)
         tax_income.reload
         event = { data: { object: { id: tax_income.payment }, metadata: { type: 'tax_invoice' } } }

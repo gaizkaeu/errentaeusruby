@@ -7,6 +7,6 @@ class LawyerAssignationJob < ApplicationJob
 
     tax = Api::V1::TaxIncomeRecord.find(tax_income)
 
-    tax.waiting_for_meeting_creation! if tax.update!(lawyer_id:)
+    tax.meeting! if tax.update!(lawyer_id:)
   end
 end

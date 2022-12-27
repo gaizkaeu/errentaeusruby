@@ -19,7 +19,7 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
     end
 
     context 'when tax income price present' do
-      before { tax_income.update!(state: :waiting_payment, price: 2000) }
+      before { tax_income.update!(state: :meeting, price: 2000) }
 
       it 'creates a payment intent correctly' do
         expect(service.call(user, tax_income.id)).not_to be_nil
@@ -54,7 +54,7 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
     end
 
     context 'when tax income has no price' do
-      before { tax_income.update!(state: :waiting_payment, price: nil) }
+      before { tax_income.update!(state: :payment, price: nil) }
 
       it 'does not create a payment intent' do
         expect(service.call(user, tax_income.id)).to be_nil
@@ -73,7 +73,7 @@ describe Api::V1::Services::TaxPaymentIntentService, type: :service do
     end
 
     context 'when user not authorized' do
-      before { tax_income.update!(state: :waiting_payment, price: nil) }
+      before { tax_income.update!(state: :payment, price: nil) }
 
       it 'raises an error' do
         expect { service.call(evil, tax_income.id) }

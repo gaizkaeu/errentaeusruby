@@ -7,7 +7,7 @@ RSpec.describe Api::V1::Appointment do
 
     context 'when tax income is waiting for meeting creation' do
       before do
-        tax_income.update(state: 'waiting_for_meeting')
+        tax_income.update(state: 'meeting')
       end
 
       it 'creates the appointment' do

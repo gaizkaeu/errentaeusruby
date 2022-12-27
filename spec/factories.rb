@@ -55,7 +55,7 @@ FactoryBot.define do
   factory :tax_income_with_lawyer, class: 'Api::V1::TaxIncome' do
     client
     lawyer
-    state { 'waiting_for_meeting' }
+    state { 'meeting' }
   end
 
   factory :appointment, class: 'Api::V1::AppointmentRecord' do

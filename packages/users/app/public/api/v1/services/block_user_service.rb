@@ -14,7 +14,7 @@ class Api::V1::Services::BlockUserService < ApplicationService
     user_record.public_send(update_method).tap do |res|
       return false unless res
 
-      UserPubSub.publish('user.blocked', user_id: user.id, action: 3)
+      UserPubSub.publish('user.blocked', user_id: user.id, action: 3, time: Time.now.iso8601.to_s)
       return true
     end
 

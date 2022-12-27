@@ -26,16 +26,19 @@ end
 UserPubSub.register_event('user.logout') do
   user_id Integer
   ip String
+  time String
   action 2
 end
 
 UserPubSub.register_event('user.blocked') do
   user_id Integer
+  time String
   action 3
 end
 
 UserPubSub.register_event('user.updated') do
   user_id Integer
+  time String
   action 4
 end
 
