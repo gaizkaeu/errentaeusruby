@@ -50,7 +50,7 @@ module Api
           transitions from: :pending_assignation, to: :meeting, guard: :lawyer_assigned?
         end
         event :payment_succeeded do
-          transitions from: :payment, to: :documentation, guard: :payment_present?
+          transitions from: :payment, to: :documentation, guard: :captured?
         end
         event :refund do
           transitions to: :refunded
@@ -59,10 +59,6 @@ module Api
 
       def appointment_assigned?
         !appointment.nil?
-      end
-
-      def payment_present?
-        paid?
       end
 
       def lawyer_assigned?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_27_162601) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,6 +119,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_27_162601) do
     t.string "payment"
     t.integer "year"
     t.bigint "estimation_id"
+    t.boolean "captured", default: false
+    t.integer "amount_captured", default: 0
     t.index ["client_id"], name: "index_tax_incomes_on_client_id"
     t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
     t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"

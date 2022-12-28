@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.extract! tax_income, :id, :state, :price, :created_at, :updated_at, :paid
+json.extract! tax_income, :id, :state, :price, :created_at, :updated_at, :paid, :captured, :amount_captured
 
 json.client tax_income.client_id
 json.year tax_income.year if tax_income.year?

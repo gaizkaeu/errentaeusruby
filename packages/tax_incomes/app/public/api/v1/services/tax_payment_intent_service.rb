@@ -33,7 +33,16 @@ class Api::V1::Services::TaxPaymentIntentService < ApplicationService
   end
 
   def create_pi(current_account, tax_income)
-    payment_intent = Stripe::PaymentIntent.create({ amount: tax_income.price, currency: 'eur', payment_method_types: [:card], metadata: { type: 'tax_payment_intent', id: tax_income.id }, customer: current_account.stripe_customer_id })
+    payment_intent = Stripe::PaymentIntent.create(
+      {
+        amount: tax_income.price,
+        currency: 'eur',
+        payment_method_types: [:card],
+        metadata: { type: 'tax_payment_intent', id: tax_income.id },
+        customer: current_account.stripe_customer_id,
+        capture_method: 'manual'
+      }
+    )
     return unless tax_income.update!(payment: payment_intent['id'])
 
     [payment_intent['client_secret'], payment_intent['amount']]
