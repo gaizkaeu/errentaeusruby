@@ -16,8 +16,10 @@ describe LogAccountLoginJob do
 
     it 'does not create log with valid attributes' do
       expect do
-        service.perform(attributes_log_invalid)
-      end.not_to change(Api::V1::AccountHistoryRecord, :count).by(1).and raise_error(ActiveRecord::RecordInvalid)
+        expect do
+          service.perform(attributes_log_invalid)
+        end.to raise_error(ActiveRecord::RecordInvalid)
+      end.not_to change(Api::V1::AccountHistoryRecord, :count)
     end
   end
 end
