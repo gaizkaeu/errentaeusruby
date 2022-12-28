@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Registrations' do
   describe 'POST #create' do
-    let(:user_params) { { email: 'test@email.com', password: 'password', password_confirmation: 'password' } }
+    let(:user_params) { attributes_for(:user) }
 
     it 'returns http success' do
       post api_v1_auth_account_sign_up_url, params: { api_v1_user: user_params }

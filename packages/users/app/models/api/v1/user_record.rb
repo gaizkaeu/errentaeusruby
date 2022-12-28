@@ -17,10 +17,9 @@ module Api
       scope :filter_by_client_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
       scope :filter_by_lawyer_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :lawyer).limit(10) }
 
-      after_create_commit :create_stripe_customer, :send_welcome_email
-      before_validation :set_defaults
-
       has_many :account_histories, dependent: :destroy, foreign_key: :user_id, class_name: 'Api::V1::AccountHistoryRecord'
+
+      validates_presence_of :first_name, :last_name, :email
 
       enum account_type: { client: 0, lawyer: 1 }
 

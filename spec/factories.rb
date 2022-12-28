@@ -65,4 +65,11 @@ FactoryBot.define do
     time { '2025-11-30T11:30:00.000Z' }
     meeting_method { 'phone' }
   end
+
+  factory :account_history, class: 'Api::V1::AccountHistoryRecord' do
+    user
+    action { 'log_in' }
+    ip { '0.0.0.0' }
+    time { '2025-11-30T11:30:00.000Z' }
+  end
 end
