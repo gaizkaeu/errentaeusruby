@@ -3,7 +3,6 @@ UserPubSub = PubSubManager.new
 UserPubSub.register_event('user.created') do
   user_id String
   ip String
-  provider String
   time String
   action 5
 end
@@ -11,7 +10,6 @@ end
 UserPubSub.register_event('user.logged_in') do
   user_id String
   ip String
-  provider String
   time String
   action 0
 end

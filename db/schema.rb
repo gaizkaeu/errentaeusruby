@@ -10,17 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_29_132622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "account_histories", force: :cascade, id: false do |t|
+  create_table "account_histories", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "ip"
     t.datetime "time", null: false
     t.integer "action", null: false
-    t.string "uid", null: false
-    t.string "provider", null: false
     t.string "user_id", null: false
     t.index ["id"], name: "index_account_histories_on_id", unique: true
     t.index ["user_id"], name: "index_account_histories_on_user_id"
@@ -54,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "appointments", force: :cascade, id: false do |t|
+  create_table "appointments", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.datetime "time"
     t.datetime "created_at", null: false
@@ -64,41 +62,41 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
     t.string "client_id"
     t.string "lawyer_id"
     t.string "tax_income_id"
-    t.index ["id"], name: "index_appointments_on_id", unique: true
     t.index ["client_id"], name: "index_appointments_on_client_id"
+    t.index ["id"], name: "index_appointments_on_id", unique: true
     t.index ["lawyer_id"], name: "index_appointments_on_lawyer_id"
     t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id", unique: true
   end
 
-  create_table "document_histories", force: :cascade, id: false do |t|
+  create_table "document_histories", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "description"
     t.integer "action", null: false
     t.string "document_id", null: false
     t.string "user_id", null: false
-    t.index ["id"], name: "index_document_histories_on_id", unique: true
-    t.index ["document_id"], name: "index_document_histories_on_document_id"
-    t.index ["user_id"], name: "index_document_histories_on_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_document_histories_on_document_id"
+    t.index ["id"], name: "index_document_histories_on_id", unique: true
+    t.index ["user_id"], name: "index_document_histories_on_user_id"
   end
 
-  create_table "documents", force: :cascade, id: false do |t|
+  create_table "documents", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "name"
     t.string "exported_by_id"
-    t.integer "state", null: false, default: 0
-    t.integer "export_status", null: false, default: 0
-    t.integer "document_number", null: false, default: 1
+    t.integer "state", default: 0, null: false
+    t.integer "export_status", default: 0, null: false
+    t.integer "document_number", default: 1, null: false
     t.string "tax_income_id", null: false
-    t.index ["id"], name: "index_documents_on_id", unique: true
-    t.index ["exported_by_id"], name: "index_documents_on_exported_by_id"
-    t.index ["tax_income_id"], name: "index_documents_on_tax_income_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["exported_by_id"], name: "index_documents_on_exported_by_id"
+    t.index ["id"], name: "index_documents_on_id", unique: true
+    t.index ["tax_income_id"], name: "index_documents_on_tax_income_id"
   end
 
-  create_table "estimations", force: :cascade, id: false do |t|
+  create_table "estimations", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "first_name"
     t.boolean "first_time", default: false, null: false
@@ -118,7 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
     t.index ["token"], name: "index_estimations_on_token", unique: true
   end
 
-  create_table "tax_incomes", force: :cascade, id: false do |t|
+  create_table "tax_incomes", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "observations"
     t.integer "year"
@@ -131,16 +129,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
     t.string "client_id", null: false
     t.string "estimation_id"
     t.string "payment_intent_id"
-    t.index ["id"], name: "index_tax_incomes_on_id", unique: true
-    t.index ["payment_intent_id"], name: "index_tax_incomes_on_payment_intent_id", unique: true
-    t.index ["client_id"], name: "index_tax_incomes_on_client_id"
-    t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
-    t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_tax_incomes_on_client_id"
+    t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
+    t.index ["id"], name: "index_tax_incomes_on_id", unique: true
+    t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
+    t.index ["payment_intent_id"], name: "index_tax_incomes_on_payment_intent_id", unique: true
   end
 
-  create_table "users", force: :cascade, id: false do |t|
+  create_table "users", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "email", default: "", null: false
     t.string "password_digest", default: "", null: false
@@ -157,13 +155,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_195416) do
     t.boolean "blocked", default: false, null: false
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
-    t.index ["id"], name: "index_users_on_id", unique: true
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["id"], name: "index_users_on_id", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   add_foreign_key "account_histories", "users"

@@ -4,7 +4,7 @@ class Api::V1::AccountHistory
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_reader :id, :user_id, :action, :time, :uid, :provider, :ip
+  attr_reader :id, :user_id, :action, :time, :ip
 
   def initialize(attributes = {})
     @id = attributes[:id]
@@ -12,8 +12,6 @@ class Api::V1::AccountHistory
     @action = attributes[:action]
     @time = attributes[:time]
     @uid = attributes[:uid]
-    @provider = attributes[:provider]
-    @ip = attributes[:ip]
   end
 
   def persisted?

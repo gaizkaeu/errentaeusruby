@@ -5,7 +5,7 @@ class Api::V1::Services::CreateUserService < ApplicationService
     user = Api::V1::User.new(record.attributes.symbolize_keys!)
     user.instance_variable_set(:@errors, record.errors)
     if user.persisted?
-      UserPubSub.publish('user.created', user_id: user.id, ip:, provider: user.provider, time: Time.now.iso8601.to_s, action: 5)
+      UserPubSub.publish('user.created', user_id: user.id, ip:, time: Time.now.iso8601.to_s, action: 5)
     end
     user
   end
