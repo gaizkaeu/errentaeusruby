@@ -63,7 +63,7 @@ FactoryBot.define do
     client
     lawyer
     time { '2025-11-30T11:30:00.000Z' }
-    meeting_method { 'phone' }
+    meeting_method { 'office' }
   end
 
   factory :account_history, class: 'Api::V1::AccountHistoryRecord' do

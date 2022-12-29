@@ -37,6 +37,96 @@ RSpec.describe 'Appointments' do
         expect(response).to be_successful
         expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(valid_attributes))
       end
+
+      context 'when filters by tax_income_id' do
+        it 'find record when params are correct' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { tax_income_id: appointment.tax_income_id })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body).first.symbolize_keys!).to match(a_hash_including(valid_attributes))
+        end
+
+        it 'does not find record when params are incorrect' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { tax_income_id: "#{appointment.tax_income_id}asd" })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body)).to be_empty
+        end
+      end
+
+      context 'when filters by lawyer_id' do
+        it 'find record when params are correct' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { lawyer_id: appointment.lawyer_id })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body).first.symbolize_keys!).to match(a_hash_including(valid_attributes))
+        end
+
+        it 'does not find record when params are incorrect' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { lawyer_id: "#{appointment.lawyer_id}asd" })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body)).to be_empty
+        end
+      end
+
+      context 'when filters by client_id' do
+        it 'find record when params are correct' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { client_id: appointment.client_id })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body).first.symbolize_keys!).to match(a_hash_including(valid_attributes))
+        end
+
+        it 'does not find record when params are incorrect' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { client_id: "#{appointment.client_id}asd" })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body)).to be_empty
+        end
+      end
+
+      context 'when filters by day' do
+        it 'find record when params are correct' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { day: appointment.time.strftime('%Y-%m-%d') })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body).first.symbolize_keys!).to match(a_hash_including(valid_attributes))
+        end
+
+        it 'does not find record when params are incorrect' do
+          tax_income.meeting!
+          Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { day: '2020-11-30' })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body)).to be_empty
+        end
+      end
+
+      context 'when filters by date-range' do
+        it 'find record when params are correct' do
+          tax_income.meeting!
+          appointment = Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { date_range: { start_date: appointment.time.strftime('%Y-%m-%d'), end_date: appointment.time.strftime('%Y-%m-%d') } })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body).first.symbolize_keys!).to match(a_hash_including(valid_attributes))
+        end
+
+        it 'does not find record when params are incorrect' do
+          tax_income.meeting!
+          Api::V1::AppointmentRepository.add valid_server_attributes
+          authorized_get api_v1_appointments_url(filters: { date_range: { start_date: '2020-11-30', end_date: '2020-11-30' } })
+          expect(response).to be_successful
+          expect(JSON.parse(response.body)).to be_empty
+        end
+      end
     end
 
     describe 'POST /create' do

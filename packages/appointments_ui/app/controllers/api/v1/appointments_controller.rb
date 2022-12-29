@@ -26,7 +26,7 @@ module Api
       end
 
       def update
-        @appointment = Api::V1::Services::UpdateAppointmentService.new.call(current_user, params[:id], appointment_update_params)
+        @appointment = Api::V1::Services::UpdateAppointmentService.new.call(current_user, params[:id], appointment_update_params, raise_error: false)
         if @appointment.errors.empty?
           render 'appointments/show', status: :ok
         else
@@ -56,7 +56,7 @@ module Api
       end
 
       def filtering_params
-        params.slice(:tax_income_id)
+        params.require(:filters).permit(:tax_income_id, :lawyer_id, :client_id, :day, date_range: %i[start_date end_date]) if params[:filters]
       end
     end
   end
