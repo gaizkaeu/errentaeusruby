@@ -12,8 +12,8 @@ describe Api::V1::Services::AppointmentsForAccountService, type: :service do
 
         expect(res).to be_a(Array)
         expect(res.first).to be_a(Api::V1::Appointment)
-        expect(res.first.id).to be(appointment.id)
-        expect(res.first.client_id).to be(appointment.client_id)
+        expect(res.first.id).to eq(appointment.id)
+        expect(res.first.client_id).to eq(appointment.client_id)
       end
 
       it 'does return appointments for lawyer' do
@@ -21,9 +21,9 @@ describe Api::V1::Services::AppointmentsForAccountService, type: :service do
 
         expect(res).to be_a(Array)
         expect(res.first).to be_a(Api::V1::Appointment)
-        expect(res.first.id).to be(appointment.id)
-        expect(res.first.client_id).not_to be(appointment.lawyer_id)
-        expect(res.first.lawyer_id).to be(appointment.lawyer_id)
+        expect(res.first.id).to eq(appointment.id)
+        expect(res.first.client_id).not_to eq(appointment.lawyer_id)
+        expect(res.first.lawyer_id).to eq(appointment.lawyer_id)
       end
     end
   end

@@ -14,7 +14,7 @@ class Api::V1::Services::TaxPaymentIntentService < ApplicationService
       return
     end
 
-    return retrieve_payment_intent(current_account, tax_income) if tax_income.payment.present?
+    return retrieve_payment_intent(current_account, tax_income) if tax_income.payment_intent_id.present?
 
     create_pi(current_account, tax_income)
   end
@@ -22,9 +22,9 @@ class Api::V1::Services::TaxPaymentIntentService < ApplicationService
   private
 
   def retrieve_payment_intent(current_account, tax_income)
-    return create_pi if tax_income.payment.nil?
+    return create_pi if tax_income.payment_intent_id.nil?
 
-    payment_intent = Stripe::PaymentIntent.retrieve(tax_income.payment)
+    payment_intent = Stripe::PaymentIntent.retrieve(tax_income.payment_intent_id)
     if payment_intent['amount'] != tax_income.price
       return create_pi(current_account, tax_income)
     end
@@ -43,7 +43,7 @@ class Api::V1::Services::TaxPaymentIntentService < ApplicationService
         capture_method: 'manual'
       }
     )
-    return unless tax_income.update!(payment: payment_intent['id'])
+    return unless tax_income.update!(payment_intent_id: payment_intent['id'])
 
     [payment_intent['client_secret'], payment_intent['amount']]
   end

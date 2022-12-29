@@ -29,7 +29,8 @@ RSpec.describe '/api/v1/estimations' do
       with_couple: false,
       income_rent: 0,
       shares_trade: 0,
-      outside_alava: false
+      outside_alava: false,
+      token: SecureRandom.hex(10)
     }
   end
 

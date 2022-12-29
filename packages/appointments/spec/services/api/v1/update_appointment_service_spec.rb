@@ -13,8 +13,8 @@ describe Api::V1::Services::UpdateAppointmentService, type: :service do
         res = service.call(appointment.client, appointment.id, valid_attributes)
 
         expect(res).to be_a(Api::V1::Appointment)
-        expect(res.id).to be(appointment.id)
-        expect(res.client_id).to be(appointment.client_id)
+        expect(res.id).to eq(appointment.id)
+        expect(res.client_id).to eq(appointment.client_id)
         expect(res.phone).to match(valid_attributes[:phone])
       end
 
@@ -63,8 +63,8 @@ describe Api::V1::Services::UpdateAppointmentService, type: :service do
         prev_attributes = appointment.attributes
         res = service.call(appointment.client, appointment.id, { meeting_method: 'invalid' }, raise_error: false)
         expect(res).to be_a(Api::V1::Appointment)
-        expect(res.id).to be(appointment.id)
-        expect(res.client_id).to be(appointment.client_id)
+        expect(res.id).to eq(appointment.id)
+        expect(res.client_id).to eq(appointment.client_id)
         expect(res.errors.messages).to eq({ meeting_method: ['is not included in the list'] })
         appointment.reload
         expect(appointment.attributes).to eq(prev_attributes)

@@ -98,6 +98,9 @@ gem 'value_semantics'
 # Sorbet runtime
 gem 'sorbet-runtime'
 
+# Id
+gem 'prettyid', require: 'pretty_id'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

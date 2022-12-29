@@ -136,15 +136,25 @@ jobs:
           env_vars: |
             APP_DOMAIN_COOKIES=.errenta.eus
             FRONTEND_APP_HOST=errenta.eus
+            DB_USER=errentadb
+            DB_HOST=eliza-asesores:europe-west1:errenta-db
+            DB_SOCKET_DIR=/cloudsql/
+            SMTP_DOMAIN=elizaasesores.com
+            SMTP_USERNAME=gestion@elizaasesores.com
+            SMTP_HOST=ssl0.ovh.net
+            PROJECT_ID=eliza-asesores
+            APP_HOST=https://api.errenta.eus
 
           secrets: |
             DB_PASSWORD=ERRENTA-DBPASSWORD:latest
+            SECRET_KEY_BASE=ERRENTA-SECRET-KEY:latest
             STRIPE_SECRET_TEST_KEY=STRIPE_SECRET_TEST_KEY:latest
             STRIPE_SIGNING_TEST_SECRET=STRIPE_SIGNING_TEST_SECRET:latest
             VAPID_PUBLIC=ERRENTA-VAPID-PUBLIC:1
             VAPID_PRIVATE=ERRENTA-VAPID-PRIVATE:1
+            SMTP_PASSWORD=ERRENTA-SMTP_PASSWORD:latest
           flags: |
-            --set-cloudsql-instances=eliza-asesores:europe-west4:errenta
+            --set-cloudsql-instances=eliza-asesores:europe-west1:errenta-db
 
       - name: 'Notify deployment'
         uses: honeybadger-io/github-notify-deploy-action@v1

@@ -1,6 +1,8 @@
 module Api
   module V1
     class Estimation < ApplicationRecord
+      include PrettyId
+      self.id_prefix = 'est'
       validates :first_name, length: { minimum: 5, maximum: 20 }
 
       # PRICE_LIST = {first_time: 15, rentals_mortgages: 20, home_changes: 50, income_rent: 25, professional_company_activity: 75,

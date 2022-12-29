@@ -3,6 +3,9 @@
 module Api
   module V1
     class Document < ApplicationRecord
+      include PrettyId
+      self.id_prefix = 'doc'
+
       include AASM
 
       belongs_to :tax_income, class_name: 'Api::V1::TaxIncome'

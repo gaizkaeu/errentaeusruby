@@ -46,8 +46,8 @@ module Api
 
       def payment_data
         authorize @tax_income
-        if @tax_income.payment
-          payment_data = Stripe::PaymentIntent.retrieve(@tax_income.payment)
+        if @tax_income.payment_intent_id
+          payment_data = Stripe::PaymentIntent.retrieve(@tax_income.payment_intent_id)
           render partial: 'payment/payment_data', locals: { payment: payment_data }
         else
           render json: { status: 'no_payment_intent' }

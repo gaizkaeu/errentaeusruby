@@ -13,8 +13,8 @@ describe Api::V1::Services::FindAppointmentService, type: :service do
         res = service.call(appointment.client, appointment.id)
 
         expect(res).to be_a(Api::V1::Appointment)
-        expect(res.id).to be(appointment.id)
-        expect(res.client_id).to be(appointment.client_id)
+        expect(res.id).to eq(appointment.id)
+        expect(res.client_id).to eq(appointment.client_id)
       end
 
       it 'does raise error when not found' do

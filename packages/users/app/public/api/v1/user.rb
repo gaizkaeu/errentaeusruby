@@ -4,7 +4,7 @@ class Api::V1::User
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_reader :id, :first_name, :last_name, :email, :account_type, :confirmed_at, :blocked, :stripe_customer_id, :provider
+  attr_reader :id, :first_name, :last_name, :email, :account_type, :confirmed_at, :blocked, :uid, :stripe_customer_id, :provider
 
   def initialize(attributes = {})
     @id = attributes.fetch(:id, nil)
@@ -16,6 +16,7 @@ class Api::V1::User
     @blocked = attributes.fetch(:blocked)
     @provider = attributes.fetch(:provider)
     @stripe_customer_id = attributes.fetch(:stripe_customer_id)
+    @uid = attributes.fetch(:uid)
   end
 
   def persisted?

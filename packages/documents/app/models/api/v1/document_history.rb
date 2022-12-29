@@ -3,6 +3,8 @@
 module Api
   module V1
     class DocumentHistory < ApplicationRecord
+      include PrettyId
+      self.id_prefix = 'doc_hist'
       belongs_to :document, class_name: 'Document'
       belongs_to :user, class_name: 'UserRecord'
 

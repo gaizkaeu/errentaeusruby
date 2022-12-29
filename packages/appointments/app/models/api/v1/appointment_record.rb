@@ -3,7 +3,9 @@
 module Api
   module V1
     class AppointmentRecord < ApplicationRecord
+      include PrettyId
       self.table_name = 'appointments'
+      self.id_prefix = 'appo'
 
       include Filterable
 

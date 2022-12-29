@@ -4,6 +4,8 @@ module Api
   module V1
     class TaxIncome < ApplicationRecord
       include Filterable
+      include PrettyId
+      self.id_prefix = 'tax'
 
       scope :filter_by_state, ->(state) { where state: state }
 

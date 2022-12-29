@@ -18,9 +18,9 @@ describe Api::V1::Services::CreateAppointmentService, type: :service do
 
         expect(appointment).to be_a(Api::V1::Appointment)
         expect(appointment).to be_persisted
-        expect(appointment.client_id).to be(user_record.id)
-        expect(appointment.lawyer_id).to be(tax_income.lawyer.id)
-        expect(appointment.tax_income_id).to be(tax_income.id)
+        expect(appointment.client_id).to eq(user_record.id)
+        expect(appointment.lawyer_id).to eq(tax_income.lawyer.id)
+        expect(appointment.tax_income_id).to eq(tax_income.id)
       end
 
       it 'does enqueue creation job' do
@@ -34,8 +34,8 @@ describe Api::V1::Services::CreateAppointmentService, type: :service do
 
         expect(appointment).to be_a(Api::V1::Appointment)
         expect(appointment).to be_persisted
-        expect(appointment.client_id).to be(user_record.id)
-        expect(appointment.lawyer_id).to be(tax_income.lawyer.id)
+        expect(appointment.client_id).to eq(user_record.id)
+        expect(appointment.lawyer_id).to eq(tax_income.lawyer.id)
         expect(appointment.tax_income_id).to be_nil
       end
 
@@ -44,8 +44,8 @@ describe Api::V1::Services::CreateAppointmentService, type: :service do
 
         expect(appointment).to be_a(Api::V1::Appointment)
         expect(appointment).not_to be_persisted
-        expect(appointment.client_id).to be(user_record.id)
-        expect(appointment.lawyer_id).to be(tax_income.lawyer.id)
+        expect(appointment.client_id).to eq(user_record.id)
+        expect(appointment.lawyer_id).to eq(tax_income.lawyer.id)
         expect(appointment.tax_income_id).to be_nil
       end
     end

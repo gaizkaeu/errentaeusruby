@@ -12,7 +12,7 @@ module Authenticatable
     validates :password, length: { minimum: 5 }, on: :create
     validates :password, password_update: true, on: :update
 
-    attr_readonly :uid, :provider
+    attr_readonly :uid, :provider, :email
     attr_readonly :password_digest, unless: :can_update_password?
 
     before_validation :set_defaults

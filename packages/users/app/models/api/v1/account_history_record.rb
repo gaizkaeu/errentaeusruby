@@ -1,5 +1,7 @@
 class Api::V1::AccountHistoryRecord < ApplicationRecord
+  include PrettyId
   self.table_name = 'account_histories'
+  self.id_prefix = 'acc_hist'
   belongs_to :user, class_name: 'Api::V1::UserRecord'
 
   validates :action, :ip, :time, presence: true
