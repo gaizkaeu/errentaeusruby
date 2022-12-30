@@ -2,8 +2,8 @@
 
 module Api
   module V1
-    class AccountsController < ApiBaseController
-      before_action :authorize_access_request!
+    class AccountsController < ::ApplicationController
+      before_action :authenticate
 
       def index
         @users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)

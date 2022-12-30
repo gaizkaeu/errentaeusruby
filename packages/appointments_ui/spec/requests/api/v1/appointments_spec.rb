@@ -228,7 +228,7 @@ RSpec.describe 'Appointments' do
         tax_income.meeting!
         Api::V1::AppointmentRepository.add valid_server_attributes
         get api_v1_appointments_url, as: :json
-        expect(response.body).to match('not authorized')
+        expect(response.body).to match('Please login to continue')
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -237,7 +237,6 @@ RSpec.describe 'Appointments' do
       tax_income.meeting!
       appointment = Api::V1::AppointmentRepository.add valid_server_attributes
       get api_v1_appointments_url(appointment)
-      expect(response.body).to match('not authorized')
       expect(response).to have_http_status(:unauthorized)
     end
   end

@@ -2,8 +2,8 @@
 
 module Api
   module V1
-    class DocumentsController < ApiBaseController
-      before_action :authorize_access_request!
+    class DocumentsController < ::ApplicationController
+      before_action :authenticate
       before_action :set_document, except: :create
 
       after_action :verify_authorized

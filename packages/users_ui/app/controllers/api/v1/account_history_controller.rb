@@ -2,8 +2,8 @@
 
 module Api
   module V1
-    class AccountHistoryController < ApiBaseController
-      before_action :authorize_access_request!
+    class AccountHistoryController < ::ApplicationController
+      before_action :authenticate
 
       def index
         @actions = Api::V1::Services::IndexUserHistoryService.new.call(current_user, params[:id])

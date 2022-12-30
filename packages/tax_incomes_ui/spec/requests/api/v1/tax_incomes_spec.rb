@@ -256,7 +256,7 @@ RSpec.describe '/api/v1/tax_incomes' do
       it 'GET /index' do
         Api::V1::TaxIncomeRepository.add valid_attributes
         get api_v1_tax_incomes_url
-        expect(response.body).to match('not authorized')
+        expect(response.body).to match('Please login to continue')
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -264,7 +264,7 @@ RSpec.describe '/api/v1/tax_incomes' do
     it 'GET /show' do
       tax_income = Api::V1::TaxIncomeRepository.add valid_attributes
       get api_v1_tax_income_url(tax_income)
-      expect(response.body).to match('not authorized')
+      expect(response.body).to match('Please login to continue')
       expect(response).to have_http_status(:unauthorized)
     end
   end

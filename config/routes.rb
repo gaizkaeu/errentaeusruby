@@ -3,6 +3,12 @@
 Rails.application.routes.draw do
   mount StripeEvent::Engine, at: '/api/v1/payments/webhook' 
 
+  if Rails.env.test?
+    namespace :test do
+      resource :session, only: %i[create]
+    end
+  end
+
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
 

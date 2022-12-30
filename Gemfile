@@ -9,9 +9,6 @@ ruby '3.1.2'
 gem 'vite_rails'
 
 # Auth
-gem 'jwt_sessions'
-
-# Auth
 gem 'bcrypt'
 
 # Posgres connector
@@ -171,3 +168,6 @@ group :test do
   # Factorybot
   gem 'factory_bot'
 end
+
+# Authentification
+gem 'rodauth-rails', '~> 1.7'

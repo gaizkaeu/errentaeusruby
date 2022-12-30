@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_29_132622) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_30_213813) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "account_histories", id: false, force: :cascade do |t|
@@ -22,6 +23,36 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_132622) do
     t.string "user_id", null: false
     t.index ["id"], name: "index_account_histories_on_id", unique: true
     t.index ["user_id"], name: "index_account_histories_on_user_id"
+  end
+
+  create_table "account_login_change_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "login", null: false
+    t.datetime "deadline", null: false
+  end
+
+  create_table "account_password_reset_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "account_remember_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+  end
+
+  create_table "account_verification_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer "status", default: 1, null: false
+    t.citext "email", null: false
+    t.string "password_hash"
+    t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -140,31 +171,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_132622) do
 
   create_table "users", id: false, force: :cascade do |t|
     t.string "id", null: false
-    t.string "email", default: "", null: false
-    t.string "password_digest", default: "", null: false
     t.string "first_name"
     t.string "last_name"
     t.string "phone"
     t.string "stripe_customer_id"
-    t.datetime "confirmed_at"
-    t.string "confirmation_token"
-    t.datetime "confirmation_sent_at"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
     t.integer "account_type", default: 0
-    t.boolean "blocked", default: false, null: false
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["id"], name: "index_users_on_id", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   add_foreign_key "account_histories", "users"
+  add_foreign_key "account_login_change_keys", "accounts", column: "id"
+  add_foreign_key "account_password_reset_keys", "accounts", column: "id"
+  add_foreign_key "account_remember_keys", "accounts", column: "id"
+  add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "tax_incomes"
@@ -177,4 +202,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_132622) do
   add_foreign_key "tax_incomes", "estimations"
   add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "tax_incomes", "users", column: "lawyer_id"
+  add_foreign_key "users", "accounts"
 end

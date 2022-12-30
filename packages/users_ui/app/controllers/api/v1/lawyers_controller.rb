@@ -2,8 +2,8 @@
 
 module Api
   module V1
-    class LawyersController < ApiBaseController
-      before_action :authorize_access_request!
+    class LawyersController < ::ApplicationController
+      before_action :authenticate
       before_action :set_lawyer
 
       def show

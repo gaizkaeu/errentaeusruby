@@ -3,49 +3,42 @@ FactoryBot.define do
     "person#{n}@example.com"
   end
 
+  sequence :password do |n|
+    "password#{n}"
+  end
+
+  factory :account do
+    email { generate(:email) }
+    password { generate(:password) }
+    status { 'verified' }
+  end
+
   factory :user, class: 'Api::V1::UserRecord', aliases: [:client] do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
-    email { generate(:email) }
-    password { 'test123' }
-    password_confirmation { 'test123' }
-    confirmed_at { '04-07-2002' }
-    uid { email }
     phone { '1234567890' }
+    account
   end
 
   factory :blocked_user, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
-    email { generate(:email) }
-    password { 'test123' }
-    password_confirmation { 'test123' }
-    confirmed_at { '04-07-2002' }
-    uid { email }
-    phone { '1234567890' }
-    blocked { true }
+    account
   end
 
   factory :unconfirmed_user, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
-    email { generate(:email) }
-    password { 'test123' }
     phone { '1234567890' }
-    password_confirmation { 'test123' }
-    uid { email }
+    account
   end
 
   factory :lawyer, class: 'Api::V1::UserRecord' do
     first_name { 'Carolina' }
     last_name  { 'Doe' }
-    email { generate(:email) }
-    password { 'test123' }
     phone { '1234567890' }
-    password_confirmation { 'test123' }
-    confirmed_at { '04-07-2002' }
-    uid { email }
     account_type { 'lawyer' }
+    account
   end
 
   factory :tax_income, class: 'Api::V1::TaxIncome' do

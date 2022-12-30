@@ -8,15 +8,9 @@ RSpec.describe Api::V1::UserRecord do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to validate_presence_of(:password) }
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to define_enum_for(:account_type) }
-    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
-    it { is_expected.to validate_uniqueness_of(:uid).scoped_to(:provider).case_insensitive }
-    it { is_expected.to allow_value('gaizka@gmail.com').for(:email) }
-    it { is_expected.not_to allow_value('gaizkagmail.com').for(:email) }
   end
 
   describe 'scopes' do

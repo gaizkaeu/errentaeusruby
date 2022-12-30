@@ -1,9 +1,15 @@
 module AuthHelpers
+  def set_session(vars = {})
+    post test_session_path, params: { session_vars: vars }
+    expect(response).to have_http_status(:created)
+
+    vars.each_key do |var|
+      expect(session[var]).to be_present
+    end
+  end
+
   def sign_in(user)
-    payload = { user_id: user.id }
-    session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true, namespace: "user_#{user.id}")
-    @tokens = session.login
-    @authorized_headers = { Authorization: "Bearer #{@tokens[:access]}" }
+    set_session(account_id: user.account.id)
   end
 
   def authorized_get(*args, **kwargs)

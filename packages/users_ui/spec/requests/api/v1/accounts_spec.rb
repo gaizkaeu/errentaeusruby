@@ -5,23 +5,16 @@ RSpec.describe 'Accounts' do
     let(:user) { create(:user) }
 
     describe 'GET /me' do
-      # rubocop:disable RSpec/InstanceVariable
       before do
-        payload = { user_id: user.id }
-        session = JWTSessions::Session.new(payload:, refresh_by_access_allowed: true)
-        @tokens = session.login
+        sign_in(user)
       end
 
       it 'renders a successful response' do
-        headers = {}
-        headers[JWTSessions.csrf_header] = @tokens[:csrf]
-        cookies[JWTSessions.access_cookie] = @tokens[:access]
-        get api_v1_account_logged_in_url, headers: headers
+        get api_v1_account_logged_in_url
         expect(response).to be_successful
-        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name, confirmed: user.confirmed?))
+        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name))
       end
     end
-    # rubocop:enable RSpec/InstanceVariable
   end
 
   context 'when logged in lawyer' do
@@ -36,7 +29,7 @@ RSpec.describe 'Accounts' do
         sign_in(user)
         authorized_get api_v1_account_logged_in_url, as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name, confirmed: user.confirmed?))
+        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name))
       end
     end
 

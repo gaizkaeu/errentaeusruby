@@ -1,8 +1,8 @@
 module Api
   module V1
     require 'stripe'
-    class TaxIncomesController < ApiBaseController
-      before_action :authorize_access_request!
+    class TaxIncomesController < ::ApplicationController
+      before_action :authenticate
 
       before_action :set_tax_income, except: %i[index create]
 

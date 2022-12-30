@@ -15,6 +15,10 @@ module Errentaeusreact
 
     config.api_only = true
 
+    config.session_store :cookie_store, key: '_your_app_api_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
+
     config.autoload_paths << Rails.root.join('app', 'services')
     config.paths.add 'packages', glob: '*/app/{*,*/concerns}', eager_load: true
 

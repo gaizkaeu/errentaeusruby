@@ -6,7 +6,7 @@ describe Api::V1::Services::UpdateUserService, type: :service do
   let(:lawyer_record) { create(:lawyer) }
   let(:lawyer) { Api::V1::User.new(lawyer_record.attributes.symbolize_keys!) }
   let(:user) { create(:user) }
-  let(:valid_attributes) { { first_name: 'Gaizka', last_name: 'Mendieta', email: user.email } }
+  let(:valid_attributes) { { first_name: 'Gaizka', last_name: 'Mendieta' } }
 
   describe '#call' do
     context 'with invalid user and lawyer' do

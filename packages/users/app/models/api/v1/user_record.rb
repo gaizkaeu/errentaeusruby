@@ -15,7 +15,6 @@ module Api
       extend T::Sig
 
       include Filterable
-      include Authenticatable
 
       attr_readonly :account_type
 
@@ -25,9 +24,11 @@ module Api
 
       has_many :account_histories, dependent: :destroy, foreign_key: :user_id, class_name: 'Api::V1::AccountHistoryRecord'
 
-      validates_presence_of :first_name, :last_name, :email
-
       enum account_type: { client: 0, lawyer: 1 }
+
+      validates_presence_of :first_name, :last_name, :account_type
+
+      belongs_to :account, class_name: 'Account', inverse_of: :user, optional: true
 
       def create_stripe_customer
         return unless Rails.env.production?

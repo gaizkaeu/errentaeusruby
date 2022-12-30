@@ -11,10 +11,7 @@
 Api::V1::UserRepository.add(
   first_name: 'Carolina',
   last_name: 'Elizagarate',
-  password: 'jhasduYhasdhahgh',
-  email: 'gestion@elizaasesores.com',
   account_type: :lawyer,
-  confirmed_at: '02-04-2002',
   uid: '106288476163892547359',
   provider: 'google_oauth2'
 )
