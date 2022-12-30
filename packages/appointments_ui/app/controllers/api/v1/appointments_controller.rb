@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class AppointmentsController < ::ApplicationController
+    class AppointmentsController < ::ApiBaseController
       before_action :authenticate
       before_action :set_appointment, only: %i[show update destroy]
 

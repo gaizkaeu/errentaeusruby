@@ -19,7 +19,7 @@ class RodauthMain < Rodauth::Rails::Auth
     # http://rodauth.jeremyevans.net/documentation.html
 
     after_create_account do
-      Api::V1::UserRecord.create(account_id:, first_name: 'Pending', last_name: 'User')
+      Api::V1::Services::CreateUserService.call(account_id:, first_name: 'Pending', last_name: 'User')
     end
 
     # ==> General

@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class DocumentsController < ::ApplicationController
+    class DocumentsController < ::ApiBaseController
       before_action :authenticate
       before_action :set_document, except: :create
 

@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class AccountHistoryController < ::ApplicationController
+    class AccountHistoryController < ::ApiBaseController
       before_action :authenticate
 
       def index

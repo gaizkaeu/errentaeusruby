@@ -1,7 +1,7 @@
 module Api
   module V1
     require 'stripe'
-    class TaxIncomesController < ::ApplicationController
+    class TaxIncomesController < ::ApiBaseController
       before_action :authenticate
 
       before_action :set_tax_income, except: %i[index create]

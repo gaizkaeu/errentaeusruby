@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class LawyersController < ::ApplicationController
+    class LawyersController < ::ApiBaseController
       before_action :authenticate
       before_action :set_lawyer
 

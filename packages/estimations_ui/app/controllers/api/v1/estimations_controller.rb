@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class EstimationsController < ::ApplicationController
+    class EstimationsController < ::ApiBaseController
       before_action :authenticate, except: %i[estimate estimation_from_jwt]
       before_action :set_estimation, only: %i[show update destroy]
 
