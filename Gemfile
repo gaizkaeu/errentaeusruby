@@ -171,3 +171,12 @@ end
 
 # Authentification
 gem 'rodauth-rails', '~> 1.7'
+
+# Two factor authentication (TOTP)
+gem 'rotp', '~> 6.2'
+
+# QR Code
+gem 'rqrcode', '~> 2.1'
+
+# Webauthn
+gem 'webauthn', '~> 2.5'

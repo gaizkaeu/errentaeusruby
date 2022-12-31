@@ -15,7 +15,7 @@ module Errentaeusreact
 
     config.api_only = true
 
-    config.session_store :cookie_store, key: '_your_app_api_session'
+    config.session_store :cookie_store, key: '_errenta'
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
 
