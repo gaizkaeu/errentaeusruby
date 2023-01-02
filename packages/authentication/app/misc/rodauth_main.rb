@@ -10,6 +10,7 @@ class RodauthMain < Rodauth::Rails::Auth
            :json,
            :otp,
            :webauthn,
+           :email_auth,
            :reset_password,
            :change_password,
            :change_password_notify,
