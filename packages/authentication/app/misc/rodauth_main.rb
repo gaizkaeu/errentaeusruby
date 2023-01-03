@@ -10,21 +10,24 @@ class RodauthMain < Rodauth::Rails::Auth
            :json,
            :otp,
            :webauthn,
+           :webauthn_login,
+           :audit_logging,
            :email_auth,
+           :lockout,
            :reset_password,
            :change_password,
            :change_password_notify,
-           :change_login,
            :verify_login_change,
            :close_account
 
     prefix '/api/v1/auth'
+
+    audit_log_metadata_default do
+      { 'ip' => request.ip, 'user_agent' => request.user_agent, 'host' => request.host }
+    end
+
     # See the Rodauth documentation for the list of available config options:
     # http://rodauth.jeremyevans.net/documentation.html
-
-    after_create_account do
-      Api::V1::Services::CreateUserService.call(account_id:, first_name: 'Pending', last_name: 'User')
-    end
 
     # ==> General
     # The secret key used for hashing public-facing tokens for various features.
@@ -79,18 +82,19 @@ class RodauthMain < Rodauth::Rails::Auth
     create_verify_login_change_email do |_login|
       RodauthMailer.verify_login_change(self.class.configuration_name, account_id, verify_login_change_key_value)
     end
-    create_password_changed_email do
-      RodauthMailer.password_changed(self.class.configuration_name, account_id)
-    end
+    # create_password_changed_email do
+    #   RodauthMailer.password_changed(self.class.configuration_name, account_id)
+    # end
     # create_reset_password_notify_email do
     #   RodauthMailer.reset_password_notify(self.class.configuration_name, account_id)
     # end
-    # create_email_auth_email do
-    #   RodauthMailer.email_auth(self.class.configuration_name, account_id, email_auth_key_value)
-    # end
-    # create_unlock_account_email do
-    #   RodauthMailer.unlock_account(self.class.configuration_name, account_id, unlock_account_key_value)
-    # end
+    create_email_auth_email do
+      RodauthMailer.email_auth(self.class.configuration_name, account_id, email_auth_key_value)
+    end
+    create_unlock_account_email do
+      RodauthMailer.unlock_account(self.class.configuration_name, account_id, unlock_account_key_value)
+    end
+
     send_email do |email|
       # queue email delivery on the mailer after the transaction commits
       db.after_commit { email.deliver_later }
@@ -124,14 +128,14 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # ==> Hooks
     # Validate custom fields in the create account form.
-    # before_create_account do
-    #   throw_error_status(422, "name", "must be present") if param("name").empty?
-    # end
+    before_create_account do
+      throw_error_status(422, 'first_name', 'must be present') if param('first_name').empty?
+      throw_error_status(422, 'last_name', 'must be present') if param('last_name').empty?
+    end
 
-    # Perform additional actions after the account is created.
-    # after_create_account do
-    #   Profile.create!(account_id: account_id, name: param("name"))
-    # end
+    after_create_account do
+      Api::V1::Services::CreateUserService.call({ account_id:, first_name: param('first_name'), last_name: param('last_name') })
+    end
 
     # Do additional cleanup after the account is closed.
     # after_close_account do
@@ -144,5 +148,8 @@ class RodauthMain < Rodauth::Rails::Auth
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
     # remember_deadline_interval Hash[days: 30]
+    verify_account_email_link do
+      "https://#{Rails.application.config.x.frontend_app}/auth/verify/#{token_param_value(verify_account_key_value)}"
+    end
   end
 end

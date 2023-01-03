@@ -15,16 +15,6 @@ module Api
         render 'accounts/show'
       end
 
-      def resend_confirmation
-        user = User.find(params[:id])
-        authorize user
-        if user.resend_confirmation_instructions?
-          render json: { status: 'sent' }
-        else
-          render json: { status: 'error' }, status: :unprocessable_entity
-        end
-      end
-
       def me
         @user = current_user
         render 'accounts/me'

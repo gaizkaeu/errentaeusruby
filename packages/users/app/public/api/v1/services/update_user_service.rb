@@ -13,8 +13,6 @@ class Api::V1::Services::UpdateUserService
 
     user_record.public_send(update_method, params).tap do |res|
       return false unless res
-
-      UserPubSub.publish('user.updated', user_id: user.id, action: 4, time: Time.now.iso8601.to_s)
     end
 
     true

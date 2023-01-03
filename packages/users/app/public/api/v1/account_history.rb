@@ -4,14 +4,14 @@ class Api::V1::AccountHistory
   include ActiveModel::Validations
   extend T::Sig
 
-  attr_reader :id, :user_id, :action, :time, :ip
+  attr_reader :id, :account_id, :message, :at, :metadata
 
   def initialize(attributes = {})
     @id = attributes[:id]
-    @user_id = attributes[:user_id]
-    @action = attributes[:action]
-    @time = attributes[:time]
-    @uid = attributes[:uid]
+    @account_id = attributes[:account_id]
+    @message = attributes[:message]
+    @at = attributes[:at]
+    @metadata = attributes[:metadata]
   end
 
   def persisted?

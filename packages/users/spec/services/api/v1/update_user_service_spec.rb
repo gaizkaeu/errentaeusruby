@@ -25,12 +25,6 @@ describe Api::V1::Services::UpdateUserService, type: :service do
         user.reload
         expect(user.attributes.symbolize_keys!).to match(a_hash_including(valid_attributes))
       end
-
-      it 'does enqueue log job' do
-        expect do
-          service.call(lawyer, user.id, valid_attributes)
-        end.to have_enqueued_job(LogAccountLoginJob)
-      end
     end
 
     context 'with invalid permissions' do

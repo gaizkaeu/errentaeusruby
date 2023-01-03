@@ -5,7 +5,7 @@ class Api::V1::Services::IndexUserHistoryService < ApplicationService
     target_user = Api::V1::UserRepository.find(user_id)
     authorize_with current_account, target_user, :access_history?
 
-    Api::V1::AccountHistoryRecord.where(user_id:).order(time: :desc).limit(19).map do |history|
+    Account::AuthenticationAuditLog.where(account_id: target_user.account_id).order(at: :desc).limit(10).map do |history|
       Api::V1::AccountHistory.new(history)
     end
   end

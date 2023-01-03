@@ -80,6 +80,7 @@ module Api
         end
 
         lawyer_id = Api::V1::UserRepository.where(account_type: 1).first&.id
+        return if lawyer_id.nil?
         return unless update!(lawyer_id:)
 
         meeting!
