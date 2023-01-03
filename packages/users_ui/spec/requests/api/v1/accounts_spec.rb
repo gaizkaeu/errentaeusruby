@@ -38,12 +38,6 @@ RSpec.describe 'Accounts' do
         authorized_get api_v1_accounts_url, as: :json
         expect(response).to be_successful
       end
-
-      # it "can query users by name" do
-      #   authorized_get api_v1_accounts_url, as: :json, params: {first_name: user.first_name}
-      #   expect(response).to be_successful
-      #   expect(body).to match(user.first_name)
-      # end
     end
 
     describe 'SHOW /accounts' do

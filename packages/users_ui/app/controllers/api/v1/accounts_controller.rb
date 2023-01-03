@@ -7,7 +7,7 @@ module Api
 
       def index
         @users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
-        render 'accounts/index'
+        render json: @users
       end
 
       def show

@@ -7,6 +7,8 @@ class ApiBaseController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def current_user
+    return if rodauth.rails_account.nil?
+
     Api::V1::User.new(rodauth.rails_account.user.attributes.symbolize_keys!)
   end
   helper_method :current_user # skip if inheriting from ActionController::API
