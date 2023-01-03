@@ -15,6 +15,10 @@ class ApiBaseController < ApplicationController
     rodauth.require_account # redirect to login page if not authenticated
   end
 
+  def alive
+    render json: { success: 'i am alive!' }
+  end
+
   private
 
   def user_not_authorized(error)
