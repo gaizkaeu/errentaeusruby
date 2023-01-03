@@ -33,7 +33,7 @@ RSpec.describe Api::V1::TaxIncome do
       tax = described_class.new valid_attributes
       expect(tax).to have_state(:pending_assignation)
       tax.save!
-      expect(tax).to have_state(:pending_assignation)
+      expect(tax).to have_state(:meeting)
     end
 
     it 'does not transition without lawyer' do
