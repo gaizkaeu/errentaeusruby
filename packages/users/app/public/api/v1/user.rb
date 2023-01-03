@@ -17,6 +17,10 @@ class Api::V1::User
     @account_id = attributes.fetch(:account_id)
   end
 
+  def email
+    ::Account.find(account_id).email
+  end
+
   def persisted?
     !!id
   end

@@ -12,6 +12,7 @@ class RodauthMain < Rodauth::Rails::Auth
            :webauthn,
            :webauthn_login,
            :audit_logging,
+           :recovery_codes,
            :email_auth,
            :lockout,
            :reset_password,
@@ -150,6 +151,10 @@ class RodauthMain < Rodauth::Rails::Auth
     # remember_deadline_interval Hash[days: 30]
     verify_account_email_link do
       "https://#{Rails.application.config.x.frontend_app}/auth/verify/#{token_param_value(verify_account_key_value)}"
+    end
+
+    email_auth_email_link do
+      "https://#{Rails.application.config.x.frontend_app}/auth/email-auth/#{token_param_value(email_auth_key_value)}"
     end
   end
 end
