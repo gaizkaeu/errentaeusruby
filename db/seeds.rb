@@ -8,10 +8,6 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Api::V1::UserRepository.add(
-  first_name: 'Carolina',
-  last_name: 'Elizagarate',
-  account_type: :lawyer,
-  uid: '106288476163892547359',
-  provider: 'google_oauth2'
-)
+Account.create!(email: 'gestion@elizaasesores.com', status: 2)
+
+Api::V1::UserRepository.add(first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: 1)

@@ -34,7 +34,7 @@ class Api::V1::User
   end
 
   def confirmed?
-    !@confirmed_at.nil?
+    ::Account.find(account_id).status == 'verified'
   end
 
   def ==(other)

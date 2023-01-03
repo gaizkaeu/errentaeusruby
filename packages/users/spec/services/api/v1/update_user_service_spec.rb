@@ -21,7 +21,7 @@ describe Api::V1::Services::UpdateUserService, type: :service do
     context 'with valid user and lawyer' do
       it 'does block the user' do
         result = service.call(lawyer, user.id, valid_attributes)
-        expect(result).to be true
+        expect(result).to be_a(Api::V1::User)
         user.reload
         expect(user.attributes.symbolize_keys!).to match(a_hash_including(valid_attributes))
       end

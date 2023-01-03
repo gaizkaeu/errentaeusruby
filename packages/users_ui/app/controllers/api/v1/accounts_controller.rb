@@ -21,9 +21,9 @@ module Api
       end
 
       def update
-        @user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_params)
+        @user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_update_params)
         if @user.errors.any?
-          render 'accounts/show', status: :unprocessable_entity
+          render json: @user.errors, status: :unprocessable_entity
         else
           render 'accounts/show'
         end

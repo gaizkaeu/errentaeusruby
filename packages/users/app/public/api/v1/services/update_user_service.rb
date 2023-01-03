@@ -11,10 +11,10 @@ class Api::V1::Services::UpdateUserService
 
     authorize_with current_account, user, :update?
 
-    user_record.public_send(update_method, params).tap do |res|
-      return false unless res
-    end
+    user_record.public_send(update_method, params)
 
-    true
+    user = Api::V1::User.new(user_record.attributes.symbolize_keys!)
+    user.instance_variable_set(:@errors, user_record.errors)
+    user
   end
 end

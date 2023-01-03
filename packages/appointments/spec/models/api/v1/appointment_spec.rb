@@ -36,8 +36,8 @@ RSpec.describe Api::V1::AppointmentRecord do
       end
 
       describe 'filter_by_tax_income' do
-        let(:tax_income1) { create(:tax_income) }
-        let(:tax_income2) { create(:tax_income) }
+        let(:tax_income1) { create(:tax_income_with_lawyer) }
+        let(:tax_income2) { create(:tax_income_with_lawyer) }
         let(:appointment1) { create(:appointment, tax_income_id: tax_income1.id) }
         let(:appointment3) { create(:appointment, tax_income_id: tax_income2.id) }
 

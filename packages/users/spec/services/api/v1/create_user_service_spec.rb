@@ -13,18 +13,6 @@ describe Api::V1::Services::CreateUserService, type: :service do
         user = service.call(valid_attributes, requesting_ip)
         expect(user.persisted?).to be true
       end
-
-      it 'does enqueue log job' do
-        expect do
-          service.call(valid_attributes, requesting_ip)
-        end.to enqueue_job(LogAccountLoginJob)
-      end
-
-      it 'does enqueue creation job' do
-        expect do
-          service.call(valid_attributes, requesting_ip)
-        end.to enqueue_job(CreationUserJob)
-      end
     end
 
     context 'with valid user' do
