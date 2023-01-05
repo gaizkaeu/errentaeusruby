@@ -12,7 +12,7 @@ module Api
       end
 
       def permitted_attributes_update
-        %i[password password_confirmation current_password first_name last_name]
+        %i[first_name last_name]
       end
 
       def index?

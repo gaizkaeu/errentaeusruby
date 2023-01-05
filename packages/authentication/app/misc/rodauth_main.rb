@@ -138,6 +138,10 @@ class RodauthMain < Rodauth::Rails::Auth
       Api::V1::Services::CreateUserService.call({ account_id:, first_name: param('first_name'), last_name: param('last_name') })
     end
 
+    webauthn_origin Rails.application.config.x.frontend_app
+    webauthn_rp_id Rails.application.config.x.webauthn_id
+    webauthn_rp_name Rails.application.config.x.webauthn_name
+
     # Do additional cleanup after the account is closed.
     # after_close_account do
     #   Profile.find_by!(account_id: account_id).destroy

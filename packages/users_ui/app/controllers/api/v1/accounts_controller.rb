@@ -32,7 +32,7 @@ module Api
       private
 
       def user_update_params
-        params.require(:user).permit(UserPolicy.new(current_user, nil).permitted_attributes_update).with_defaults(id: current_user.id)
+        params.require(:user).permit(UserPolicy.new(current_user, nil).permitted_attributes_update)
       end
 
       def filtering_params

@@ -135,7 +135,7 @@ jobs:
           region: europe-west1
           env_vars: |
             APP_DOMAIN_COOKIES=.errenta.eus
-            FRONTEND_APP_HOST=errenta.eus
+            FRONTEND_APP_HOST=https://errenta.eus
             DB_USER=errentadb
             DB_HOST=eliza-asesores:europe-west1:errenta-db
             DB_SOCKET_DIR=/cloudsql/
@@ -143,6 +143,8 @@ jobs:
             SMTP_USERNAME=gestion@elizaasesores.com
             SMTP_HOST=ssl0.ovh.net
             PROJECT_ID=eliza-asesores
+            WEBAUTHN_NAME=errenta
+            WEBAUTHN_ID=errenta
             APP_HOST=https://api.errenta.eus
 
           secrets: |

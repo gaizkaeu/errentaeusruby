@@ -55,6 +55,9 @@ module Errentaeusreact
     config.x.domain_cookies = ENV.fetch('APP_DOMAIN_COOKIES', '.errenta.eus')
     config.x.frontend_app = ENV.fetch('FRONTEND_APP_HOST', 'errenta.eus')
 
+    config.x.webauthn_id = ENV.fetch('WEBAUTHN_ID', 'localhost')
+    config.x.webauthn_name = ENV.fetch('WEBAUTHN_NAME', 'localhost')
+
     config.middleware.use Rack::Deflater
   end
 end
