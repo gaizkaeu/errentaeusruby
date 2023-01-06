@@ -11,7 +11,7 @@ RSpec.describe 'AccountHistory' do
 
     describe 'index /:id/history' do
       it 'renders a successful response' do
-        authorized_get api_v1_account_history_url(user.id), as: :json
+        authorized_get history_api_v1_account_url(user.id), as: :json
         expect(response).to be_successful
       end
     end
@@ -24,12 +24,12 @@ RSpec.describe 'AccountHistory' do
 
     describe 'index /:id/history' do
       it 'renders a successful response' do
-        authorized_get api_v1_account_history_url(user.id), as: :json
+        authorized_get history_api_v1_account_url(user.id), as: :json
         expect(response).to be_successful
       end
 
       it 'renders error when user is not the same' do
-        authorized_get api_v1_account_history_url(lawyer.id), as: :json
+        authorized_get history_api_v1_account_url(lawyer.id), as: :json
         expect(response).to be_forbidden
       end
     end
@@ -38,7 +38,7 @@ RSpec.describe 'AccountHistory' do
   context 'when not logged in' do
     describe 'index /:id/history' do
       it 'renders error' do
-        authorized_get api_v1_account_history_url(user.id), as: :json
+        authorized_get history_api_v1_account_url(user.id), as: :json
         expect(response).to be_unauthorized
       end
     end

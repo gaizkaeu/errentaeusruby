@@ -22,9 +22,7 @@ Rails.application.routes.draw do
         post :estimation_from_jwt, on: :collection
       end
 
-      scope :lawyers do
-        get ':id', to: 'lawyers#show', as: :lawyer
-      end
+      resources :lawyers, only: %i[show]
 
       resources :tax_incomes, as: :tax_incomes do
         post 'create_payment_intent', to: 'tax_incomes#checkout', on: :member
@@ -32,15 +30,11 @@ Rails.application.routes.draw do
         get :documents, on: :member
       end
 
-      post :push, to: "push#send_push"
-
-      scope '/accounts' do
-        get ':id/history', to: 'account_history#index', as: :account_history
-        get '', to: 'accounts#index', as: :accounts
-        put ':id', to: 'accounts#update', as: :account_update
-        get :me, to: 'accounts#me', as: :account_logged_in
-        get ':id', to: 'accounts#show', as: :account
-        post ':id/resend_confirmation', to: 'accounts#resend_confirmation', as: :account_resend_confirmation
+      resources :accounts, except: %i[delete] do
+        get :history, to: 'account_history#index', as: :history, on: :member
+        get :webauthn_keys, to: 'webauthn#index', as: :account_webauthn_keys, on: :member
+        get :me, as: :logged_in, on: :collection
+        post :resend_confirmation, as: :resend_confirmation, on: :member
       end
 
       resources :documents do

@@ -10,7 +10,7 @@ RSpec.describe 'Accounts' do
       end
 
       it 'renders a successful response' do
-        get api_v1_account_logged_in_url
+        get logged_in_api_v1_accounts_url
         expect(response).to be_successful
         expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name))
       end
@@ -27,7 +27,7 @@ RSpec.describe 'Accounts' do
     describe 'GET /me' do
       it 'renders a successful response' do
         sign_in(user)
-        authorized_get api_v1_account_logged_in_url, as: :json
+        authorized_get logged_in_api_v1_accounts_url, as: :json
         expect(response).to be_successful
         expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name))
       end
