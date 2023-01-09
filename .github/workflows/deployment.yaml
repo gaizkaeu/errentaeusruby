@@ -144,7 +144,7 @@ jobs:
             SMTP_HOST=ssl0.ovh.net
             PROJECT_ID=eliza-asesores
             WEBAUTHN_NAME=errenta
-            WEBAUTHN_ID=errenta
+            WEBAUTHN_ID=errenta.eus
             APP_HOST=https://api.errenta.eus
 
           secrets: |

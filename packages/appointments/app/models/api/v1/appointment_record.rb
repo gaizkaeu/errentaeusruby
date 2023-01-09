@@ -18,6 +18,8 @@ module Api
       scope :filter_by_lawyer_id, ->(lawyer_id) { where(lawyer_id:) }
       scope :filter_by_past_appointments, -> { where('time < ?', Time.now.iso8601) }
       scope :filter_by_future_appointments, -> { where('time >= ?', Time.now.iso8601) }
+      scope :filter_by_after_date, ->(day) { where('time >= ?', Date.parse(day).beginning_of_day.iso8601) }
+      scope :filter_by_before_date, ->(day) { where('time < ?', Date.parse(day).beginning_of_day.iso8601) }
       scope :filter_by_day, ->(day) { where('time >= ? AND time < ?', Date.parse(day).beginning_of_day.iso8601, Date.parse(day).end_of_day.iso8601) }
       scope :filter_by_date_range, ->(range) { where('time >= ? AND time < ?', Date.parse(range[:start_date]).beginning_of_day.iso8601, Date.parse(range[:end_date]).end_of_day.iso8601) }
 

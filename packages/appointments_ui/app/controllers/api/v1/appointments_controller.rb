@@ -56,7 +56,7 @@ module Api
       end
 
       def filtering_params
-        params.require(:filters).permit(:tax_income_id, :lawyer_id, :client_id, :day, date_range: %i[start_date end_date]) if params[:filters]
+        params.slice(:tax_income_id, :lawyer_id, :client_id, :day, :before_date, :after_date)
       end
     end
   end

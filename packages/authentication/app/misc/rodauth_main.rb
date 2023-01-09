@@ -19,7 +19,8 @@ class RodauthMain < Rodauth::Rails::Auth
            :change_password,
            :change_password_notify,
            :verify_login_change,
-           :close_account
+           :close_account,
+           :internal_request
 
     prefix '/api/v1/auth'
 
