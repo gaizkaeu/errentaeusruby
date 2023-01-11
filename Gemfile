@@ -180,3 +180,6 @@ gem 'rqrcode', '~> 2.1'
 
 # Webauthn
 gem 'webauthn', '~> 2.5'
+
+# Serialization
+gem 'jsonapi-serializer'

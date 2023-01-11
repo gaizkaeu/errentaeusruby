@@ -6,8 +6,8 @@ module Api
       before_action :authenticate
 
       def index
-        @users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
-        render json: @users
+        users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
+        render json: Api::V1::Serializers::UserSerializer.new(users).serializable_hash
       end
 
       def show

@@ -7,11 +7,11 @@ module Api
       include PrettyId
       self.id_prefix = 'tax'
 
-      scope :filter_by_state, ->(state) { where state: state }
-      scope :filter_by_client_id, ->(client_id) { where client_id: client_id }
-      scope :filter_by_lawyer_id, ->(lawyer_id) { where lawyer_id: lawyer_id }
-      scope :filter_by_paid, ->(paid) { where paid: paid }
-      scope :filter_by_captured, ->(captured) { where captured: captured }
+      scope :filter_by_state, ->(state) { where(state:) }
+      scope :filter_by_client_id, ->(client_id) { where(client_id:) }
+      scope :filter_by_lawyer_id, ->(lawyer_id) { where(lawyer_id:) }
+      scope :filter_by_paid, ->(paid) { where(paid:) }
+      scope :filter_by_captured, ->(captured) { where(captured:) }
 
       validate do |record|
         record.errors.add :client_id, "lawyers can't be clients" if record.client&.lawyer?
