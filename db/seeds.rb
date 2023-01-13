@@ -10,4 +10,4 @@
 
 acc_gestion = Account.create!(email: 'gestion@elizaasesores.com', status: 2)
 
-Api::V1::Repositories::UserRepository.add({first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: acc_gestion.id})
+Api::V1::Repositories::UserRepository.add({ first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: acc_gestion.id })
