@@ -11,19 +11,19 @@ module Api
       # GET /tax_incomes or /tax_incomes.json
       def index
         @tax_incomes = Api::V1::Services::IndexTaxService.new.call(current_user)
-        render 'tax_incomes/index'
+        render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_incomes).serializable_hash
       end
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
-        render 'tax_incomes/show'
+        render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
       end
 
       # POST /tax_incomes or /tax_incomes.json
       def create
         @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params_create, nested_estimation_params[:token]))
         if @tax_income.persisted?
-          render 'tax_incomes/show'
+          render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
         else
           render json: @tax_income.errors, status: :unprocessable_entity
         end
@@ -48,7 +48,7 @@ module Api
         authorize @tax_income
         if @tax_income.payment_intent_id
           payment_data = Stripe::PaymentIntent.retrieve(@tax_income.payment_intent_id)
-          render partial: 'payment/payment_data', locals: { payment: payment_data }
+          render json: payment_data
         else
           render json: { status: 'no_payment_intent' }
         end
@@ -58,7 +58,7 @@ module Api
       def update
         @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params_update)
         if @tax_income.errors.empty?
-          render 'tax_incomes/show'
+          render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
         else
           render json: @tax_income.errors, status: :unprocessable_entity
         end

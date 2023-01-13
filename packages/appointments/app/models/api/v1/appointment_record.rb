@@ -36,7 +36,7 @@ module Api
       validate do |appointment|
         next if appointment.tax_income_id.blank?
 
-        tax_income = Api::V1::TaxIncomeRepository.find(appointment.tax_income_id)
+        tax_income = Api::V1::Repositories::TaxIncomeRepository.find(appointment.tax_income_id)
         appointment.errors.add :base, "tax income doesn't accept appointment" unless tax_income.meeting?
       end
     end

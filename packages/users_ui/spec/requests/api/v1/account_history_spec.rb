@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'AccountHistory' do
   let(:user) { create(:user) }
   let(:lawyer) { create(:lawyer) }
+  let(:account_history) { create(:account_history, account_id: user.account_id) }
 
   context 'when logged in lawyer' do
     before do

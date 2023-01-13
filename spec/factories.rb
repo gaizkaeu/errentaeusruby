@@ -59,10 +59,10 @@ FactoryBot.define do
     meeting_method { 'office' }
   end
 
-  factory :account_history, class: 'Api::V1::AccountHistoryRecord' do
-    user
-    action { 'log_in' }
-    ip { '0.0.0.0' }
-    time { '2025-11-30T11:30:00.000Z' }
+  factory :account_history, class: 'Account::AuthenticationAuditLog' do
+    account
+    message { 'log_in' }
+    at { '2025-11-3time0T11:30:00.000Z' }
+    metadata { { ip: '0.0.0.0' } }
   end
 end

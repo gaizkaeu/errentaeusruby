@@ -7,7 +7,7 @@ module Api
       before_action :set_lawyer
 
       def show
-        render partial: 'lawyers/lawyer'
+        render json: Api::V1::Serializers::LawyerSerializer.new(@lawyer).serializable_hash
       end
 
       private

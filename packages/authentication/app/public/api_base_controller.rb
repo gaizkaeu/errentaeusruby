@@ -9,7 +9,7 @@ class ApiBaseController < ApplicationController
   def current_user
     return if rodauth.rails_account.nil?
 
-    Api::V1::UserRepository.find(rodauth.rails_account.user.id)
+    Api::V1::Repositories::UserRepository.find(rodauth.rails_account.user.id)
   end
   helper_method :current_user # skip if inheriting from ActionController::API
 

@@ -4,9 +4,9 @@ class Api::V1::Services::FindUserService < ApplicationService
   def call(current_account, filters = {}, id = nil)
     if id.nil?
       authorize_with current_account, current_account, :index?
-      Api::V1::UserRepository.filter(filters)
+      Api::V1::Repositories::UserRepository.filter(filters)
     else
-      user = Api::V1::UserRepository.find(id)
+      user = Api::V1::Repositories::UserRepository.find(id)
       authorize_with current_account, user, :show?
       user
     end

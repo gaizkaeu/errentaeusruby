@@ -12,7 +12,7 @@ RSpec.describe 'Accounts' do
       it 'renders a successful response' do
         get logged_in_api_v1_accounts_url
         expect(response).to be_successful
-        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name))
+        expect(JSON.parse(response.body)['data']['attributes'].symbolize_keys!).to match(a_hash_including(first_name: user.first_name))
       end
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe 'Accounts' do
         sign_in(user)
         authorized_get logged_in_api_v1_accounts_url, as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body).symbolize_keys!).to match(a_hash_including(id: user.id, first_name: user.first_name))
+        expect(JSON.parse(response.body)['data']['attributes'].symbolize_keys!).to match(a_hash_including(first_name: user.first_name))
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe 'Accounts' do
       it 'renders a user successfully' do
         authorized_get api_v1_account_url(user.id), as: :json
         expect(response).to be_successful
-        expect(JSON.parse(body).symbolize_keys!).to match(a_hash_including({ first_name: user.first_name, last_name: user.last_name }))
+        expect(JSON.parse(response.body)['data']['attributes'].symbolize_keys!).to match(a_hash_including({ first_name: user.first_name, last_name: user.last_name }))
       end
     end
   end

@@ -16,7 +16,7 @@ describe Api::V1::Services::CreateTaxService, type: :service do
     context 'with valid params' do
       it 'creates a tax income' do
         expect { service.call(user, params) }
-          .to change(Api::V1::TaxIncomeRepository, :count)
+          .to change(Api::V1::Repositories::TaxIncomeRepository, :count)
           .by(1)
       end
 
@@ -36,7 +36,7 @@ describe Api::V1::Services::CreateTaxService, type: :service do
     context 'with invalid params' do
       it 'does not create a tax income' do
         expect { service.call(lawyer, invalid) }
-          .not_to change(Api::V1::TaxIncomeRepository, :count)
+          .not_to change(Api::V1::Repositories::TaxIncomeRepository, :count)
       end
 
       it 'does raise an error' do
