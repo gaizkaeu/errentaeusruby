@@ -2,7 +2,7 @@
 
 class AppointmentMailer < ApplicationMailer
   def creation(appointment_id, notify_to)
-    @appointment = Api::V1::AppointmentRepository.find(appointment_id)
+    @appointment = Api::V1::Repositories::AppointmentRepository.find(appointment_id)
 
     case notify_to
     when :client
@@ -17,7 +17,7 @@ class AppointmentMailer < ApplicationMailer
   end
 
   def update(appointment_id, notify_to)
-    @appointment = Api::V1::AppointmentRepository.find(appointment_id)
+    @appointment = Api::V1::Repositories::AppointmentRepository.find(appointment_id)
 
     case notify_to
     when :client

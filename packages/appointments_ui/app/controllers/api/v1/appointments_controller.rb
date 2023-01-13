@@ -7,28 +7,28 @@ module Api
       before_action :set_appointment, only: %i[show update destroy]
 
       def index
-        @appointments = Api::V1::Services::AppointmentsForAccountService.new.call(current_user, filtering_params)
-        render 'appointments/index'
+        appointments = Api::V1::Services::AppointmentsForAccountService.new.call(current_user, filtering_params)
+        render json: Api::V1::Serializers::AppointmentSerializer.new(appointments)
       end
 
       def show
-        render 'appointments/show'
+        render json: Api::V1::Serializers::AppointmentSerializer.new(@appointment)
       end
 
       def create
-        @appointment = Api::V1::Services::CreateAppointmentService.new.call(current_user, appointment_params)
+        appointment = Api::V1::Services::CreateAppointmentService.new.call(current_user, appointment_params)
 
-        if @appointment.persisted?
-          render 'appointments/show', status: :created, location: @appointment
+        if appointment.persisted?
+          render json: Api::V1::Serializers::AppointmentSerializer.new(appointment), status: :created, location: appointment
         else
-          render json: @appointment.errors, status: :unprocessable_entity
+          render json: appointment.errors, status: :unprocessable_entity
         end
       end
 
       def update
-        @appointment = Api::V1::Services::UpdateAppointmentService.new.call(current_user, params[:id], appointment_update_params, raise_error: false)
-        if @appointment.errors.empty?
-          render 'appointments/show', status: :ok
+        appointment = Api::V1::Services::UpdateAppointmentService.new.call(current_user, params[:id], appointment_update_params, raise_error: false)
+        if appointment.errors.empty?
+          render json: Api::V1::Serializers::AppointmentSerializer.new(appointment), status: :ok
         else
           render json: @appointment.errors, status: :unprocessable_entity
         end

@@ -118,7 +118,7 @@ RSpec.describe Api::V1::AppointmentRecord do
 
       it 'creates the appointment' do
         expect { appointment.save }
-          .to change(Api::V1::AppointmentRepository, :count).by(1)
+          .to change(Api::V1::Repositories::AppointmentRepository, :count).by(1)
       end
     end
 
@@ -129,7 +129,7 @@ RSpec.describe Api::V1::AppointmentRecord do
 
       it 'does not create the appointment' do
         expect { appointment.save }
-          .not_to change(Api::V1::AppointmentRepository, :count)
+          .not_to change(Api::V1::Repositories::AppointmentRepository, :count)
       end
     end
   end
