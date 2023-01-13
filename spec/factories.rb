@@ -51,6 +51,16 @@ FactoryBot.define do
     state { 'meeting' }
   end
 
+  factory :organization, class: 'Api::V1::OrganizationRecord' do
+    name { 'My Excellent Organization' }
+    location { '123 Main St' }
+    phone { '1234567890' }
+    email { 'gasdasd@gmail.com' }
+    website { 'https://www.google.com' }
+    description { 'My Excellent Organization' }
+    association :owner, factory: :lawyer
+  end
+
   factory :appointment, class: 'Api::V1::AppointmentRecord' do
     association :tax_income, factory: :tax_income_with_lawyer
     client

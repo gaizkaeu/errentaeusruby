@@ -30,7 +30,7 @@ module Api
         if appointment.errors.empty?
           render json: Api::V1::Serializers::AppointmentSerializer.new(appointment), status: :ok
         else
-          render json: @appointment.errors, status: :unprocessable_entity
+          render json: appointment.errors, status: :unprocessable_entity
         end
       end
 

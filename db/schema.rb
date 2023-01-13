@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_04_102655) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_13_133827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -197,6 +197,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_04_102655) do
     t.index ["token"], name: "index_estimations_on_token", unique: true
   end
 
+  create_table "organizations", id: :string, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "location", null: false
+    t.string "phone", null: false
+    t.string "email", null: false
+    t.string "website", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_id", null: false
+    t.index ["owner_id"], name: "index_organizations_on_owner_id"
+  end
+
   create_table "tax_incomes", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "observations"
@@ -254,6 +267,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_04_102655) do
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
   add_foreign_key "documents", "users", column: "exported_by_id"
+  add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "tax_incomes", "estimations"
   add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "tax_incomes", "users", column: "lawyer_id"
