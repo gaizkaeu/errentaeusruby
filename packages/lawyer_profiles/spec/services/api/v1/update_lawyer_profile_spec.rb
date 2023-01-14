@@ -5,7 +5,7 @@ describe Api::V1::Services::UpdateLawyerProfileService, type: :service do
 
   let(:user) { create(:user) }
   let(:lawyer) { create(:lawyer) }
-  let(:lawyer_profile) { create(:lawyer_profile, user: lawyer)}
+  let(:lawyer_profile) { create(:lawyer_profile, user: lawyer) }
   let(:organization) { create(:organization) }
 
   describe '#call' do
@@ -19,6 +19,7 @@ describe Api::V1::Services::UpdateLawyerProfileService, type: :service do
       end
     end
 
+    # rubocop:disable Lint/AmbiguousBlockAssociation
     context 'with valid params and user account' do
       let(:params) { { organization_id: organization.id, user_id: user.id } }
 
@@ -40,7 +41,9 @@ describe Api::V1::Services::UpdateLawyerProfileService, type: :service do
       let(:params) { { organization_id: -1, user_id: lawyer.id } }
 
       it 'does not update a lawyer profile' do
-        expect { service.call(lawyer, lawyer_profile.id, params.merge({ organization_id: nil })) }
+        expect do
+          service.call(lawyer, lawyer_profile.id, params.merge({ organization_id: nil }))
+        end
           .not_to change { lawyer_profile.reload.organization_id }
       end
 
@@ -49,5 +52,6 @@ describe Api::V1::Services::UpdateLawyerProfileService, type: :service do
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end
+    # rubocop:enable Lint/AmbiguousBlockAssociation
   end
 end
