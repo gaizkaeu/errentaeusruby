@@ -34,6 +34,11 @@ module Api
         end
       end
 
+      def lawyers
+        lawyers = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params.merge!(organization_id: params[:id], org_status: 'accepted'))
+        render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyers)
+      end
+
       def destroy; end
 
       def handler
@@ -48,7 +53,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def organization_params
-        params.require(:organization).permit(:name, :description, :website, :email, :phone, :location).merge!(owner_id: current_user.id)
+        params.require(:organization).permit(:name, :description, :website, :email, :phone, :location, :prices).merge!(owner_id: current_user.id)
       end
 
       def filtering_params

@@ -58,7 +58,16 @@ FactoryBot.define do
     email { 'gasdasd@gmail.com' }
     website { 'https://www.google.com' }
     description { 'My Excellent Organization' }
+    prices do
+      { prueba: 'asd' }
+    end
     association :owner, factory: :lawyer
+  end
+
+  factory :lawyer_profile, class: 'Api::V1::LawyerProfileRecord' do
+    association :user, factory: :lawyer
+    organization
+    org_status { 'pending' }
   end
 
   factory :appointment, class: 'Api::V1::AppointmentRecord' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::OrganizationPolicy < ApplicationPolicy
+class Api::V1::LawyerProfilePolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -22,15 +22,7 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    record.owner_id == user.id
-  end
-
-  def accept?
-    update?
-  end
-
-  def reject?
-    update?
+    record.user_id == user.id
   end
 
   def destroy?

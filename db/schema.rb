@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_13_133827) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -197,6 +197,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_133827) do
     t.index ["token"], name: "index_estimations_on_token", unique: true
   end
 
+  create_table "lawyer_profiles", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.string "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "org_status", default: 0, null: false
+    t.integer "lawyer_status", default: 0, null: false
+    t.index ["organization_id"], name: "index_lawyer_profiles_on_organization_id"
+    t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
+  end
+
   create_table "organizations", id: :string, force: :cascade do |t|
     t.string "name", null: false
     t.string "location", null: false
@@ -207,6 +218,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_133827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "owner_id", null: false
+    t.jsonb "prices", default: {}
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
 

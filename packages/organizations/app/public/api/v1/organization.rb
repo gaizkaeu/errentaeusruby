@@ -5,7 +5,7 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :location, :phone, :email, :website, :description, :owner_id
+  attr_reader :id, :name, :location, :phone, :email, :website, :description, :owner_id, :prices
 
   def initialize(attributes = {})
     @id = attributes.fetch(:id, nil)
@@ -16,6 +16,7 @@ class Api::V1::Organization
     @website = attributes.fetch(:website)
     @description = attributes.fetch(:description, nil)
     @owner_id = attributes.fetch(:owner_id, false)
+    @prices = attributes.fetch(:prices, {})
   end
 
   def persisted?

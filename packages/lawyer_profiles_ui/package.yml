@@ -2,4 +2,4 @@ enforce_dependencies: true
 enforce_privacy: true
 dependencies:
   - packages/lawyer_profiles
-  - packages/rails_shimns
+  - packages/authentication
