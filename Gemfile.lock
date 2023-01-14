@@ -182,6 +182,7 @@ GEM
       google-cloud-errors (~> 1.0)
       grpc-google-iam-v1 (~> 1.1)
     google-protobuf (3.21.12)
+    google-protobuf (3.21.12-x86_64-linux)
     googleapis-common-protos (1.4.0)
       google-protobuf (~> 3.14)
       googleapis-common-protos-types (~> 1.2)
@@ -201,6 +202,9 @@ GEM
       ruby-graphviz
       sorbet-runtime
     grpc (1.50.0)
+      google-protobuf (~> 3.21)
+      googleapis-common-protos-types (~> 1.0)
+    grpc (1.50.0-x86_64-linux)
       google-protobuf (~> 3.21)
       googleapis-common-protos-types (~> 1.0)
     grpc-google-iam-v1 (1.2.0)
@@ -252,6 +256,8 @@ GEM
       net-protocol
     nio4r (2.5.8)
     nokogiri (1.14.0-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.14.0-x86_64-linux)
       racc (~> 1.4)
     openssl (3.0.2)
     openssl-signature_algorithm (1.2.1)
@@ -415,6 +421,7 @@ GEM
       sorbet-static (= 0.5.10626)
     sorbet-runtime (0.5.10626)
     sorbet-static (0.5.10626-universal-darwin-21)
+    sorbet-static (0.5.10626-x86_64-linux)
     stripe (8.1.0)
     stripe_event (2.7.0)
       activesupport (>= 3.1)
@@ -465,6 +472,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   aasm
