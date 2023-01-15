@@ -1,5 +1,5 @@
 module ApplicationCable
-  class Connection < Channels::ApplicationCable::Connection
+  class SecureConnection < Channels::ApplicationCable::Connection
     identified_by :current_user
 
     def connect
