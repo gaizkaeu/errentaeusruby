@@ -1,4 +1,4 @@
-class Api::V1::Services::UpdateOrganizationService < ApplicationService
+class Api::V1::Services::OrgUpdateService < ApplicationService
   include Authorization
 
   def call(current_account, organization, organization_params, raise_error: false)

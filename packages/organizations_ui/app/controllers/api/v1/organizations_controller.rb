@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        organization = Api::V1::Services::CreateOrganizationService.new.call(current_user, organization_params)
+        organization = Api::V1::Services::OrgCreateService.new.call(current_user, organization_params)
 
         if organization.persisted?
           render json: Api::V1::Serializers::OrganizationSerializer.new(organization), status: :created, location: organization
@@ -26,7 +26,7 @@ module Api
       end
 
       def update
-        organization = Api::V1::Services::UpdateOrganizationService.new.call(current_user, params[:id], organization_params, raise_error: false)
+        organization = Api::V1::Services::OrgUpdateService.new.call(current_user, params[:id], organization_params, raise_error: false)
         if organization.errors.empty?
           render json: Api::V1::Serializers::OrganizationSerializer.new(organization), status: :ok
         else

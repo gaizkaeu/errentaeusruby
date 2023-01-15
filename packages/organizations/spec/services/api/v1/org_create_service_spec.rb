@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::CreateOrganizationService, type: :service do
+describe Api::V1::Services::OrgCreateService, type: :service do
   subject(:service) { described_class.new }
 
   let(:lawyer) { create(:lawyer) }

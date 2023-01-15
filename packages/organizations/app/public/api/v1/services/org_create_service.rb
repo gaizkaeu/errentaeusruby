@@ -1,4 +1,4 @@
-class Api::V1::Services::CreateOrganizationService < ApplicationService
+class Api::V1::Services::OrgCreateService < ApplicationService
   include Authorization
 
   def call(current_account, organization_params, raise_error: false)

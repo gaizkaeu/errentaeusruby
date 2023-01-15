@@ -1,4 +1,4 @@
-class Api::V1::Services::AcceptLawyerInOrganizationService < ApplicationService
+class Api::V1::Services::OrgAcceptLawyerService < ApplicationService
   include Authorization
 
   def call(current_account, organization_id, lawyer_profile_id)
@@ -6,7 +6,7 @@ class Api::V1::Services::AcceptLawyerInOrganizationService < ApplicationService
 
     authorize_with current_account, organization, :accept?
 
-    lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find(lawyer_profile_id)
+    lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(id: lawyer_profile_id, org_status: :pending)
 
     raise Pundit::NotAuthorizedError if lawyer_profile.organization_id != organization_id
 

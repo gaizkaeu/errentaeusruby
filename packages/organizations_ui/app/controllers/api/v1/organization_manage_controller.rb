@@ -1,9 +1,10 @@
 class Api::V1::OrganizationManageController < ApiBaseController
   before_action :authenticate
-  before_action :set_organization, only: %i[show update destroy]
+  before_action :set_organization
+  before_action -> { authorize @organization, :manage? }
 
   def accept
-    lawyer = Api::V1::Services::AcceptLawyerInOrganizationService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
+    lawyer = Api::V1::Services::OrgAcceptLawyerService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
     if lawyer.errors.empty?
       render json: { success: 'Lawyer accepted' }, status: :ok
     else
@@ -12,7 +13,7 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def reject
-    lawyer = Api::V1::Services::RejectLawyerInOrganizationService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
+    lawyer = Api::V1::Services::OrgRejectLawyerService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
     if lawyer.errors.empty?
       render json: { success: 'Lawyer rejected' }, status: :ok
     else
@@ -26,6 +27,10 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   private
+
+  def set_organization
+    @organization = Api::V1::Repositories::OrganizationRepository.find(params[:organization_id])
+  end
 
   def serializer_config
     { params: { manage: true } }

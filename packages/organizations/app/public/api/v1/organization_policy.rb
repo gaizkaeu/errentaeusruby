@@ -25,6 +25,10 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
     record.owner_id == user.id
   end
 
+  def manage?
+    update?
+  end
+
   def accept?
     update?
   end

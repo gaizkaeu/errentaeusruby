@@ -1,16 +1,22 @@
 class Api::V1::OrganizationRecord < ApplicationRecord
-  PRICES_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_prices.json')
-
-  private_constant :PRICES_JSON_SCHEMA
-
   include PrettyId
   include Filterable
   extend T::Sig
 
-  self.table_name = 'organizations'
+  PRICES_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_prices.json')
+  private_constant :PRICES_JSON_SCHEMA
 
-  # self.id_prefix = -> (model) { model.account_type.to_s[0,4] } TODO: THINK ABOUT THIS
+  self.table_name = 'organizations'
   self.id_prefix = 'org'
+
+  scope :filter_by_name, ->(name) { where('name ILIKE ?', "%#{name}%") }
+  scope :filter_by_location, ->(location) { where('location ILIKE ?', "%#{location}%") }
+  scope :filter_by_phone, ->(phone) { where('phone ILIKE ?', "%#{phone}%") }
+  scope :filter_by_website, ->(website) { where('website ILIKE ?', "%#{website}%") }
+  scope :filter_by_description, ->(description) { where('description ILIKE ?', "%#{description}%") }
+  scope :filter_by_email, ->(email) { where('email ILIKE ?', "%#{email}%") }
+  scope :filter_by_owner_id, ->(owner_id) { where(owner_id:) }
+  scope :filter_by_prices, ->(prices) { where('prices @> ?', prices.to_json) }
 
   validates :name, presence: true, length: { maximum: 30, minimum: 4 }
   validates :location, presence: true, length: { maximum: 50, minimum: 4 }

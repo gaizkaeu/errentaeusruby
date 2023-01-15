@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         resources :manage do
           post 'accept/:lawyer_profile_id', to: 'organization_manage#accept', on: :collection
           post 'reject/:lawyer_profile_id', to: 'organization_manage#reject', on: :collection
+          get :lawyers, to: 'organization_manage#lawyers', on: :collection, as: :lawyers
         end
       end
 

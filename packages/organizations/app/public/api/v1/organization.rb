@@ -24,6 +24,6 @@ class Api::V1::Organization
   end
 
   def ==(other)
-    id == other.id && first_name == other.first_name
+    id == other.id && name == other.name
   end
 end

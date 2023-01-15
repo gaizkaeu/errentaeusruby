@@ -3,10 +3,12 @@ class Api::V1::LawyerProfileRecord < ApplicationRecord
   include PrettyId
   include Filterable
 
-  scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }
-  scope :filter_by_org_status, ->(org_status) { where(org_status:) }
-
   self.id_prefix = 'lawprof'
+
+  scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }
+  scope :filter_by_user_id, ->(user_id) { where(user_id:) }
+  scope :filter_by_org_status, ->(org_status) { where(org_status:) }
+  scope :filter_by_lawyer_status, ->(lawyer_status) { where(lawyer_status:) }
 
   enum org_status: { pending: 0, accepted: 1, rejected: 2 }
   enum lawyer_status: { on_duty: 0, off_duty: 1 }
