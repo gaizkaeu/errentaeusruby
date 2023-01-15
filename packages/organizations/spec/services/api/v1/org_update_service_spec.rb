@@ -4,7 +4,6 @@ describe Api::V1::Services::OrgUpdateService, type: :service do
   subject(:service) { described_class.new }
 
   let(:lawyer) { create(:lawyer) }
-  let(:lawyer_user) { Api::V1::Repositories::UserRepository.find(lawyer.id) }
   let(:organization) { create(:organization, owner_id: lawyer.id) }
   let(:valid_attributes) { attributes_for(:organization) }
 
@@ -12,17 +11,17 @@ describe Api::V1::Services::OrgUpdateService, type: :service do
   describe '#call' do
     context 'with valid attributes and authorized account' do
       it 'does update organization' do
-        expect { service.call(lawyer_user, organization.id, { name: 'asda' }, raise_error: true) }
+        expect { service.call(lawyer, organization.id, { name: 'asda' }, raise_error: true) }
           .to change { organization.reload.name }
           .from(organization.name).to('asda')
       end
 
       it 'does return organization' do
-        expect(service.call(lawyer_user, organization.id, valid_attributes)).to eq(organization)
+        expect(service.call(lawyer, organization.id, valid_attributes)).to eq(organization)
       end
 
       it 'does not raise error' do
-        expect { service.call(lawyer_user, organization.id, valid_attributes) }
+        expect { service.call(lawyer, organization.id, valid_attributes) }
           .not_to raise_error
       end
     end
@@ -63,13 +62,13 @@ describe Api::V1::Services::OrgUpdateService, type: :service do
       it 'does not update organization' do
         expect do
           expect do
-            service.call(lawyer_user, organization.id, { name: nil }, raise_error: true)
+            service.call(lawyer, organization.id, { name: nil }, raise_error: true)
           end.to raise_error(ActiveRecord::RecordInvalid)
         end.not_to change { organization.reload.name }
       end
 
       it 'does raise error' do
-        expect { service.call(lawyer_user, organization.id, { name: nil }, raise_error: true) }
+        expect { service.call(lawyer, organization.id, { name: nil }, raise_error: true) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end
