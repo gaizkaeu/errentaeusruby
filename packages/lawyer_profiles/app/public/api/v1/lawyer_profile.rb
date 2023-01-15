@@ -19,6 +19,14 @@ class Api::V1::LawyerProfile
     !!id
   end
 
+  def lawyer_id
+    @user_id
+  end
+
+  def lawyer
+    @lawyer ||= Api::V1::Repositories::UserRepository.find(user_id)
+  end
+
   def ==(other)
     id == other.id
   end

@@ -27,4 +27,6 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   validates :prices, json: { schema: PRICES_JSON_SCHEMA }
 
   belongs_to :owner, class_name: 'Api::V1::UserRecord'
+
+  has_one_attached :logo
 end

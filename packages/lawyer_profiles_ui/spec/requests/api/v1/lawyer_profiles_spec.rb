@@ -36,7 +36,16 @@ RSpec.describe '/api/v1/lawyer_profiles' do
       it 'renders a successful response' do
         authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
+        expect(JSON.parse(response.body)['data']['relationships']['lawyer']['data']['id']).to eq(lawyer.id)
+      end
+    end
+
+    describe 'GET /me' do
+      it 'renders a successful response' do
+        Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
+        authorized_get me_api_v1_lawyer_profiles_url, as: :json
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)['data']['relationships']['lawyer']['data']['id']).to eq(lawyer.id)
       end
     end
 
@@ -135,6 +144,24 @@ RSpec.describe '/api/v1/lawyer_profiles' do
           expect(response).to have_http_status(:forbidden)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
+      end
+    end
+
+    describe 'SHOW /:id' do
+      let(:lawyer_profile) { create(:lawyer_profile, user_id: lawyer.id) }
+
+      it 'renders a successful response' do
+        authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    describe 'ME /me' do
+      let(:lawyer_profile) { create(:lawyer_profile, user_id: lawyer.id) }
+
+      it 'renders a forbidden response' do
+        authorized_get me_api_v1_lawyer_profiles_url, as: :json
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

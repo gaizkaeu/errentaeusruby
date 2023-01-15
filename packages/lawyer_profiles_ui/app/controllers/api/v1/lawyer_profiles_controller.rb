@@ -7,7 +7,13 @@ module Api
       before_action :set_lawyer_profile, only: %i[show update destroy]
 
       def show
-        render json: Api::V1::Serializers::LawyerProfileSerializer.new(@lawyer_profile)
+        render json: Api::V1::Serializers::LawyerProfileSerializer.new(@lawyer_profile, { include: [:lawyer] })
+      end
+
+      def me
+        authorize Api::V1::LawyerProfile, :me?
+        lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
+        render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile, { include: [:lawyer], params: { manage: true } })
       end
 
       def create

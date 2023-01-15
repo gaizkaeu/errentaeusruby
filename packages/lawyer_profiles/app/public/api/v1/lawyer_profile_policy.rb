@@ -21,6 +21,10 @@ class Api::V1::LawyerProfilePolicy < ApplicationPolicy
     user.lawyer?
   end
 
+  def me?
+    create?
+  end
+
   def update?
     record.user_id == user.id
   end

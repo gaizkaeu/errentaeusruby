@@ -3,6 +3,11 @@ class Api::V1::OrganizationManageController < ApiBaseController
   before_action :set_organization
   before_action -> { authorize @organization, :manage? }
 
+  def pending_lawyers
+    pending_lawyers = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params.merge!(organization_id: params[:organization_id], org_status: 'pending'))
+    render json: Api::V1::Serializers::LawyerProfileSerializer.new(pending_lawyers, serializer_config.merge!(include: [:lawyer]))
+  end
+
   def accept
     lawyer = Api::V1::Services::OrgAcceptLawyerService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
     if lawyer.errors.empty?
@@ -37,6 +42,6 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def filtering_params
-    params.permit(Api::V1::Repositories::LawyerProfileRepository::FILTER_KEYS)
+    params.slice(Api::V1::Repositories::LawyerProfileRepository::FILTER_KEYS)
   end
 end
