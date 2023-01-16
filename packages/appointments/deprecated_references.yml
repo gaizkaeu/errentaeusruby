@@ -5,6 +5,18 @@
 #
 # bin/packwerk update-deprecations packages/appointments
 ---
+packages/lawyer_profiles:
+  "::Api::V1::LawyerProfileRecord":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/appointments/app/models/api/v1/appointment_record.rb
+  "::Api::V1::Repositories::LawyerProfileRepository":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/app/public/api/v1/appointment_policy.rb
 packages/users:
   "::Api::V1::UserRecord":
     violations:

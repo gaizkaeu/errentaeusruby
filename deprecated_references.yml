@@ -5,6 +5,18 @@
 #
 # bin/packwerk update-deprecations .
 ---
+packages/lawyer_profiles:
+  "::Api::V1::Repositories::LawyerProfileRepository":
+    violations:
+    - dependency
+    files:
+    - db/seeds.rb
+packages/organizations:
+  "::Api::V1::Repositories::OrganizationRepository":
+    violations:
+    - dependency
+    files:
+    - db/seeds.rb
 packages/users:
   "::Account":
     violations:
