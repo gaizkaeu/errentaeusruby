@@ -36,8 +36,6 @@ Rails.application.routes.draw do
         post :estimation_from_jwt, on: :collection
       end
 
-      resources :lawyers, only: %i[show]
-
       resources :tax_incomes, as: :tax_incomes do
         post 'create_payment_intent', to: 'tax_incomes#checkout', on: :member
         get :payment_data, on: :member

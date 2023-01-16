@@ -14,7 +14,7 @@ require 'rails_helper'
 
 RSpec.describe '/api/v1/tax_incomes' do
   let(:user) { create(:user) }
-  let(:lawyer) { create(:lawyer) }
+  let(:lawyer) { create(:lawyer_profile) }
 
   let(:valid_attributes) do
     { observations: 'this is a test', client_id: user.id }
@@ -77,7 +77,7 @@ RSpec.describe '/api/v1/tax_incomes' do
     end
 
     before do
-      sign_in(lawyer)
+      sign_in(lawyer.user)
     end
 
     describe 'GET /index authenticated' do
@@ -120,7 +120,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
     describe 'GET /index authenticated' do
       before do
-        sign_in(lawyer)
+        sign_in(lawyer.user)
       end
 
       it 'renders a successful response' do
@@ -131,10 +131,10 @@ RSpec.describe '/api/v1/tax_incomes' do
     end
 
     describe 'GET /show authenticated' do
-      let(:evil_lawyer) { create(:lawyer) }
+      let(:evil_lawyer) { create(:lawyer_profile) }
 
       before do
-        sign_in(evil_lawyer)
+        sign_in(evil_lawyer.user)
       end
 
       it 'renders a successful response' do

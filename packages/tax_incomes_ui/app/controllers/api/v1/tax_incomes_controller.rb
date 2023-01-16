@@ -8,11 +8,17 @@ module Api
 
       include TaxIncomesHelper
 
-      # GET /tax_incomes or /tax_incomes.json
+      # rubocop:disable Metrics/AbcSize
       def index
-        @tax_incomes = Api::V1::Services::IndexTaxService.new.call(current_user)
-        render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_incomes).serializable_hash
+        if current_user.lawyer?
+          lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
+          tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(lawyer_id: lawyer_profile.id))
+        else
+          tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(client_id: current_user.id))
+        end
+        render json: Api::V1::Serializers::TaxIncomeSerializer.new(tax_incomes).serializable_hash
       end
+      # rubocop:enable Metrics/AbcSize
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
@@ -93,9 +99,7 @@ module Api
       end
 
       def filtering_params
-        return unless current_user.lawyer?
-
-        params.slice(:first_name)
+        params.slice(Api::V1::Repositories::TaxIncomeRepository::FILTER_KEYS)
       end
     end
   end

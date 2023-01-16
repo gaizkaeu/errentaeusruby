@@ -39,6 +39,11 @@ class Repositories::RepositoryBase
       map_record(res)
     end
 
+    def first
+      res = query_base.first
+      map_record(res)
+    end
+
     delegate :count, to: :query_base
 
     def where(**kargs)

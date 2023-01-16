@@ -6,7 +6,7 @@ class Api::V1::User
 
   extend T::Sig
 
-  attr_reader :id, :first_name, :last_name, :account_type, :stripe_customer_id, :account_id, :email
+  attr_reader :id, :first_name, :last_name, :account_type, :stripe_customer_id, :account_id, :email, :password, :confirmed
 
   def initialize(attributes = {})
     @id = attributes.fetch(:id, nil)
@@ -17,15 +17,7 @@ class Api::V1::User
     @account_id = attributes.fetch(:account_id)
     @email = attributes.fetch(:email, nil)
     @password = attributes.fetch(:password?, false)
-    @confirmed = attributes.fetch(:confirmed?, false)
-  end
-
-  def password?
-    @password
-  end
-
-  def confirmed?
-    @confirmed
+    @confirmed = attributes.fetch(:status, 'unverified') == 'verified'
   end
 
   def persisted?

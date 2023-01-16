@@ -58,6 +58,10 @@ module Errentaeusreact
     config.x.webauthn_id = ENV.fetch('WEBAUTHN_ID', 'localhost')
     config.x.webauthn_name = ENV.fetch('WEBAUTHN_NAME', 'localhost')
 
+    config.x.app_host = ENV.fetch('APP_HOST', 'errenta.eus')
+
+    routes.default_url_options = { host: config.x.app_host }
+
     config.middleware.use Rack::Deflater
   end
 end

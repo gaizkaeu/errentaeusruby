@@ -12,11 +12,17 @@ module Api
       end
 
       def index?
-        record.client_id == user.id || user.lawyer?
+        true
       end
 
       def show?
-        index?
+        if record.client_id == user.id
+          true
+        else
+          Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: user.id).id == record.lawyer_id
+        end
+      rescue ActiveRecord::RecordNotFound
+        false
       end
 
       def create?
@@ -24,7 +30,7 @@ module Api
       end
 
       def update?
-        index?
+        show?
       end
 
       def destroy?

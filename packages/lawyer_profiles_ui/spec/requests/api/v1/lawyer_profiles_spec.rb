@@ -36,7 +36,7 @@ RSpec.describe '/api/v1/lawyer_profiles' do
       it 'renders a successful response' do
         authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body)['data']['relationships']['lawyer']['data']['id']).to eq(lawyer.id)
+        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe '/api/v1/lawyer_profiles' do
         Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
         authorized_get me_api_v1_lawyer_profiles_url, as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body)['data']['relationships']['lawyer']['data']['id']).to eq(lawyer.id)
+        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
       end
     end
 
@@ -87,7 +87,9 @@ RSpec.describe '/api/v1/lawyer_profiles' do
 
         it 'creates a new LawyerProfile with the correct attributes' do
           authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-          expect(Api::V1::Repositories::LawyerProfileRepository.last.organization_id).to eq(organization.id)
+          expect(response).to have_http_status(:created)
+          expect { Api::V1::Repositories::LawyerProfileRepository.find_by!(organization_id: organization.id) }
+            .not_to raise_error
         end
       end
 

@@ -9,6 +9,8 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   self.table_name = 'organizations'
   self.id_prefix = 'org'
 
+  reverse_geocoded_by :latitude, :longitude
+
   scope :filter_by_name, ->(name) { where('name ILIKE ?', "%#{name}%") }
   scope :filter_by_location, ->(location) { where('location ILIKE ?', "%#{location}%") }
   scope :filter_by_phone, ->(phone) { where('phone ILIKE ?', "%#{phone}%") }
@@ -22,7 +24,7 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   validates :location, presence: true, length: { maximum: 50, minimum: 4 }
   validates :phone, presence: true, length: { maximum: 10, minimum: 9 }
   validates :website, presence: true, length: { maximum: 50, minimum: 4 }
-  validates :description, presence: true, length: { maximum: 100, minimum: 4 }
+  validates :description, presence: true, length: { maximum: 1000, minimum: 4 }
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
   validates :prices, json: { schema: PRICES_JSON_SCHEMA }
 

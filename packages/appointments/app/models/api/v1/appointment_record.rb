@@ -10,7 +10,7 @@ module Api
       include Filterable
 
       belongs_to :tax_income, class_name: 'Api::V1::TaxIncome', optional: true
-      belongs_to :lawyer, class_name: 'Api::V1::UserRecord'
+      belongs_to :lawyer, class_name: 'Api::V1::LawyerProfileRecord'
       belongs_to :client, class_name: 'Api::V1::UserRecord'
 
       scope :filter_by_tax_income_id, ->(tax_income_id) { where(tax_income_id:) }

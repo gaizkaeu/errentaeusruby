@@ -15,11 +15,10 @@ module Api
 
       validate do |record|
         record.errors.add :client_id, "lawyers can't be clients" if record.client&.lawyer?
-        record.errors.add :lawyer_id, "clients can't be lawyers" if record.lawyer && !record.lawyer&.lawyer?
       end
 
       belongs_to :client, class_name: 'UserRecord'
-      belongs_to :lawyer, class_name: 'UserRecord', optional: true
+      belongs_to :lawyer, class_name: 'LawyerProfileRecord', optional: true
       belongs_to :estimation, dependent: :destroy, optional: true
 
       has_one :appointment, dependent: :destroy, class_name: 'Api::V1::AppointmentRecord'
@@ -79,7 +78,7 @@ module Api
           return
         end
 
-        lawyer_id = Api::V1::Repositories::UserRepository.where(account_type: 1).first&.id
+        lawyer_id = Api::V1::Repositories::LawyerProfileRepository.first&.id
         return if lawyer_id.nil?
         return unless update!(lawyer_id:)
 

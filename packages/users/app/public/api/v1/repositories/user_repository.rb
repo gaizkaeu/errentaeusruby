@@ -4,7 +4,7 @@ class Api::V1::Repositories::UserRepository < Repositories::RepositoryBase
 
   def self.map_record(record)
     super(record) do
-      Api::V1::User.new(record.attributes.symbolize_keys!.merge({ email: record.account&.email, password?: record.account&.password_hash.present? }))
+      Api::V1::User.new(record.attributes.symbolize_keys!.merge({ email: record.account&.email, password?: record.account&.password_hash.present?, status: record.account&.status }))
     end
   end
 

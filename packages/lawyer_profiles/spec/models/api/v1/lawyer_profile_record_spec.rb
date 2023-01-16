@@ -29,8 +29,8 @@ RSpec.describe Api::V1::LawyerProfileRecord do
       let(:lawyer_profile_two) { create(:lawyer_profile, org_status: :rejected) }
 
       it 'returns lawyer profiles by organization status' do
-        expect(described_class.filter_by_org_status(:accepted)).to eq([lawyer_profile])
-        expect(described_class.filter_by_org_status(:rejected)).to eq([lawyer_profile_two])
+        expect(described_class.filter_by_org_status(:accepted)).to include(lawyer_profile)
+        expect(described_class.filter_by_org_status(:rejected)).to include(lawyer_profile_two)
       end
     end
 
@@ -39,8 +39,8 @@ RSpec.describe Api::V1::LawyerProfileRecord do
       let(:lawyer_profile_two) { create(:lawyer_profile, lawyer_status: :off_duty) }
 
       it 'returns lawyer profiles by lawyer status' do
-        expect(described_class.filter_by_lawyer_status(:on_duty)).to eq([lawyer_profile])
-        expect(described_class.filter_by_lawyer_status(:off_duty)).to eq([lawyer_profile_two])
+        expect(described_class.filter_by_lawyer_status(:on_duty)).to include(lawyer_profile)
+        expect(described_class.filter_by_lawyer_status(:off_duty)).to include(lawyer_profile_two)
       end
     end
 

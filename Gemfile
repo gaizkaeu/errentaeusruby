@@ -168,3 +168,6 @@ gem 'jsonapi-serializer'
 
 # Validation for JSONB fields
 gem 'activerecord_json_validator', '~> 2.1'
+
+# Locations
+gem 'geocoder', '~> 1.8'

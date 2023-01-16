@@ -22,7 +22,7 @@ module Api
 
       def update
         user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_update_params)
-        if @user.errors.any?
+        if user.errors.any?
           render json: user.errors, status: :unprocessable_entity
         else
           render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash

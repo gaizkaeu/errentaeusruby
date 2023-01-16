@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_16_160236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -141,11 +141,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
     t.string "meeting_method", null: false
     t.string "phone"
     t.string "client_id"
-    t.string "lawyer_id"
     t.string "tax_income_id"
+    t.string "lawyer_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["id"], name: "index_appointments_on_id", unique: true
-    t.index ["lawyer_id"], name: "index_appointments_on_lawyer_id"
     t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id", unique: true
   end
 
@@ -219,6 +218,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
     t.datetime "updated_at", null: false
     t.string "owner_id", null: false
     t.jsonb "prices", default: {}
+    t.float "latitude", default: 0.0, null: false
+    t.float "longitude", default: 0.0, null: false
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
 
@@ -231,16 +232,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
     t.boolean "captured", default: false, null: false
     t.boolean "paid", default: false, null: false
     t.integer "state", default: 0
-    t.string "lawyer_id"
     t.string "client_id", null: false
     t.string "estimation_id"
     t.string "payment_intent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "lawyer_id"
     t.index ["client_id"], name: "index_tax_incomes_on_client_id"
     t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
     t.index ["id"], name: "index_tax_incomes_on_id", unique: true
-    t.index ["lawyer_id"], name: "index_tax_incomes_on_lawyer_id"
     t.index ["payment_intent_id"], name: "index_tax_incomes_on_payment_intent_id", unique: true
   end
 
@@ -274,7 +274,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "tax_incomes"
   add_foreign_key "appointments", "users", column: "client_id"
-  add_foreign_key "appointments", "users", column: "lawyer_id"
   add_foreign_key "document_histories", "documents"
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
@@ -282,6 +281,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_150653) do
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "tax_incomes", "estimations"
   add_foreign_key "tax_incomes", "users", column: "client_id"
-  add_foreign_key "tax_incomes", "users", column: "lawyer_id"
   add_foreign_key "users", "accounts"
 end

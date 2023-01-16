@@ -7,7 +7,12 @@ module Api
       before_action :set_appointment, only: %i[show update destroy]
 
       def index
-        appointments = Api::V1::Services::AppointmentsForAccountService.new.call(current_user, filtering_params)
+        if current_user.lawyer?
+          lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
+          appointments = Api::V1::Repositories::AppointmentRepository.filter(filtering_params.merge!(lawyer_id: lawyer_profile.id))
+        else
+          appointments = Api::V1::Repositories::AppointmentRepository.filter(filtering_params.merge!(client_id: current_user.id))
+        end
         render json: Api::V1::Serializers::AppointmentSerializer.new(appointments)
       end
 
