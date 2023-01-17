@@ -1,5 +1,5 @@
 class Api::V1::Repositories::OrganizationRepository < Repositories::RepositoryBase
-  FILTER_KEYS = %i[].freeze
+  FILTER_KEYS = %i[coordinates location_name name price_range].freeze
   public_constant :FILTER_KEYS
 
   def self.map_record(record)

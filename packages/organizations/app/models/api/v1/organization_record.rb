@@ -19,6 +19,9 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   scope :filter_by_email, ->(email) { where('email ILIKE ?', "%#{email}%") }
   scope :filter_by_owner_id, ->(owner_id) { where(owner_id:) }
   scope :filter_by_prices, ->(prices) { where('prices @> ?', prices.to_json) }
+  scope :filter_by_coordinates, ->(coordinates) { near([coordinates[:latitude], coordinates[:longitude]]) }
+  scope :filter_by_location_name, ->(location_name) { near(location_name) }
+  scope :filter_by_price_range, ->(price_range) { where('price_range <= ?', price_range) }
 
   validates :name, presence: true, length: { maximum: 30, minimum: 4 }
   validates :location, presence: true, length: { maximum: 50, minimum: 4 }
@@ -31,4 +34,14 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   belongs_to :owner, class_name: 'Api::V1::UserRecord'
 
   has_one_attached :logo
+
+  after_validation :calculate_price_range
+
+  def calculate_price_range
+    price_r = 0
+    prices.values.map(&:to_i).each do |price|
+      price_r += price
+    end
+    self.price_range = price_r
+  end
 end

@@ -9,7 +9,7 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def accept
-    lawyer = Api::V1::Services::OrgAcceptLawyerService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
+    lawyer = Api::V1::Services::LawProfAcceptService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
     if lawyer.errors.empty?
       render json: { success: 'Lawyer accepted' }, status: :ok
     else
@@ -18,7 +18,7 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def reject
-    lawyer = Api::V1::Services::OrgRejectLawyerService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
+    lawyer = Api::V1::Services::LawProfRejectService.new.call(current_user, params[:organization_id], params[:lawyer_profile_id])
     if lawyer.errors.empty?
       render json: { success: 'Lawyer rejected' }, status: :ok
     else

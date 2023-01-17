@@ -57,7 +57,7 @@ module Api
       end
 
       def filtering_params
-        params.slice(Api::V1::Repositories::OrganizationRepository::FILTER_KEYS)
+        params.slice(*Api::V1::Repositories::OrganizationRepository::FILTER_KEYS)
       end
     end
   end

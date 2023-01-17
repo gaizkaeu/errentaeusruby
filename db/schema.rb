@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_16_160236) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_17_150942) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -220,7 +220,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_16_160236) do
     t.jsonb "prices", default: {}
     t.float "latitude", default: 0.0, null: false
     t.float "longitude", default: 0.0, null: false
+    t.integer "price_range"
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
+  end
+
+  create_table "reviews", id: :string, force: :cascade do |t|
+    t.string "tax_income_id", null: false
+    t.string "lawyer_profile_id", null: false
+    t.integer "rating", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lawyer_profile_id"], name: "index_reviews_on_lawyer_profile_id"
+    t.index ["tax_income_id"], name: "index_reviews_on_tax_income_id"
   end
 
   create_table "tax_incomes", id: false, force: :cascade do |t|

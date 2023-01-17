@@ -99,7 +99,7 @@ module Api
       end
 
       def filtering_params
-        params.slice(Api::V1::Repositories::TaxIncomeRepository::FILTER_KEYS)
+        params.slice(*Api::V1::Repositories::TaxIncomeRepository::FILTER_KEYS)
       end
     end
   end

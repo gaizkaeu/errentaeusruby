@@ -1,4 +1,4 @@
-class Api::V1::Services::OrgAcceptLawyerService < ApplicationService
+class Api::V1::Services::LawProfAcceptService < ApplicationService
   include Authorization
 
   def call(current_account, organization_id, lawyer_profile_id)

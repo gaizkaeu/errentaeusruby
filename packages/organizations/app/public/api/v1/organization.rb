@@ -5,9 +5,10 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location
+  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def initialize(attributes = {})
     @id = attributes.fetch(:id, nil)
     @name = attributes.fetch(:name)
@@ -24,7 +25,9 @@ class Api::V1::Organization
       longitude: attributes.fetch(:longitude, nil),
       city: attributes.fetch(:location, nil)
     }
+    @price_range = attributes.fetch(:price_range, nil)
   end
+  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
   def persisted?
