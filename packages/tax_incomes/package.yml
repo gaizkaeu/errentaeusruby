@@ -3,5 +3,6 @@ enforce_privacy: true
 dependencies:
   - packages/rails_shimns
   - packages/users
-  - packages/lawyer_profiles
+  - packages/organizations
   - packages/estimations
+  - packages/lawyer_profiles

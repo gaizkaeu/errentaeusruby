@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_150942) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_17_213422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -221,6 +221,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_150942) do
     t.float "latitude", default: 0.0, null: false
     t.float "longitude", default: 0.0, null: false
     t.integer "price_range"
+    t.integer "tax_income_count", default: 0
+    t.integer "five_star_count", default: 0
+    t.integer "four_star_count", default: 0
+    t.integer "three_star_count", default: 0
+    t.integer "two_star_count", default: 0
+    t.integer "one_star_count", default: 0
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
 
@@ -229,9 +235,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_150942) do
     t.string "lawyer_profile_id", null: false
     t.integer "rating", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "organization_id", null: false
+    t.string "comment", default: ""
+    t.string "user_id", null: false
     t.index ["lawyer_profile_id"], name: "index_reviews_on_lawyer_profile_id"
+    t.index ["organization_id"], name: "index_reviews_on_organization_id"
     t.index ["tax_income_id"], name: "index_reviews_on_tax_income_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "tax_incomes", id: false, force: :cascade do |t|

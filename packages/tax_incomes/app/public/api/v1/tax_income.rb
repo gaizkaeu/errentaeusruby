@@ -78,12 +78,13 @@ module Api
           return
         end
 
-        lawyer_id = Api::V1::Repositories::LawyerProfileRepository.first&.id
-        return if lawyer_id.nil?
-        return unless update!(lawyer_id:)
+        lawyer = Api::V1::Repositories::LawyerProfileRepository.first
+        return if lawyer.nil?
+        return unless update!(lawyer_id: lawyer.id)
 
         meeting!
-        TaxIncomePubSub.publish('tax_income.lawyer_assigned', tax_income_id: id, lawyer_id:)
+        TaxIncomePubSub.publish('tax_income.lawyer_assigned', tax_income_id: id, lawyer_id: lawyer.id)
+        OrganizationPubSub.publish('organization.tax_income_assigned', organization_id: lawyer.organization_id)
       end
     end
   end

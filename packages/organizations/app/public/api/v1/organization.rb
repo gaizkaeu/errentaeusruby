@@ -5,7 +5,7 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range
+  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -20,10 +20,18 @@ class Api::V1::Organization
     @logo = attributes.fetch(:logo, nil)
     @created_at = attributes.fetch(:created_at, nil)
     @prices = attributes.fetch(:prices, {})
+    @tax_income_count = attributes.fetch(:tax_income_count, 0)
     @location = {
       latitude: attributes.fetch(:latitude, nil),
       longitude: attributes.fetch(:longitude, nil),
       city: attributes.fetch(:location, nil)
+    }
+    @ratings = {
+      one_star_count: attributes.fetch(:one_star_count, 0),
+      two_star_count: attributes.fetch(:two_star_count, 0),
+      three_star_count: attributes.fetch(:three_star_count, 0),
+      four_star_count: attributes.fetch(:four_star_count, 0),
+      five_star_count: attributes.fetch(:five_star_count, 0)
     }
     @price_range = attributes.fetch(:price_range, nil)
   end
