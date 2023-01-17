@@ -1,8 +1,8 @@
 class Api::V1::Services::FindLawyerService < ApplicationService
-  def call(id)
-    user_record = Api::V1::UserRecord.where(account_type: :lawyer).find(id)
-    raise ActiveRecord::RecordNotFound unless user_record
+  def call(id, raise_error: false)
+    target = Api::V1::Repositories::UserRepository.where(account_type: :lawyer, id:).first
+    raise ActiveRecord::RecordNotFound if target.blank? && raise_error
 
-    Api::V1::User.new(user_record.attributes.symbolize_keys!)
+    target
   end
 end

@@ -8,22 +8,28 @@ module Api
 
       include TaxIncomesHelper
 
-      # GET /tax_incomes or /tax_incomes.json
+      # rubocop:disable Metrics/AbcSize
       def index
-        @tax_incomes = Api::V1::Services::IndexTaxService.new.call(current_user)
-        render 'tax_incomes/index'
+        if current_user.lawyer?
+          lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
+          tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(lawyer_id: lawyer_profile.id))
+        else
+          tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(client_id: current_user.id))
+        end
+        render json: Api::V1::Serializers::TaxIncomeSerializer.new(tax_incomes).serializable_hash
       end
+      # rubocop:enable Metrics/AbcSize
 
       # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
-        render 'tax_incomes/show'
+        render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
       end
 
       # POST /tax_incomes or /tax_incomes.json
       def create
         @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params_create, nested_estimation_params[:token]))
         if @tax_income.persisted?
-          render 'tax_incomes/show'
+          render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
         else
           render json: @tax_income.errors, status: :unprocessable_entity
         end
@@ -48,7 +54,7 @@ module Api
         authorize @tax_income
         if @tax_income.payment_intent_id
           payment_data = Stripe::PaymentIntent.retrieve(@tax_income.payment_intent_id)
-          render partial: 'payment/payment_data', locals: { payment: payment_data }
+          render json: payment_data
         else
           render json: { status: 'no_payment_intent' }
         end
@@ -58,7 +64,7 @@ module Api
       def update
         @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params_update)
         if @tax_income.errors.empty?
-          render 'tax_incomes/show'
+          render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
         else
           render json: @tax_income.errors, status: :unprocessable_entity
         end
@@ -93,9 +99,7 @@ module Api
       end
 
       def filtering_params
-        return unless current_user.lawyer?
-
-        params.slice(:first_name)
+        params.slice(*Api::V1::Repositories::TaxIncomeRepository::FILTER_KEYS)
       end
     end
   end

@@ -7,19 +7,18 @@ module Api
       include PrettyId
       self.id_prefix = 'tax'
 
-      scope :filter_by_state, ->(state) { where state: state }
-      scope :filter_by_client_id, ->(client_id) { where client_id: client_id }
-      scope :filter_by_lawyer_id, ->(lawyer_id) { where lawyer_id: lawyer_id }
-      scope :filter_by_paid, ->(paid) { where paid: paid }
-      scope :filter_by_captured, ->(captured) { where captured: captured }
+      scope :filter_by_state, ->(state) { where(state:) }
+      scope :filter_by_client_id, ->(client_id) { where(client_id:) }
+      scope :filter_by_lawyer_id, ->(lawyer_id) { where(lawyer_id:) }
+      scope :filter_by_paid, ->(paid) { where(paid:) }
+      scope :filter_by_captured, ->(captured) { where(captured:) }
 
       validate do |record|
         record.errors.add :client_id, "lawyers can't be clients" if record.client&.lawyer?
-        record.errors.add :lawyer_id, "clients can't be lawyers" if record.lawyer && !record.lawyer&.lawyer?
       end
 
       belongs_to :client, class_name: 'UserRecord'
-      belongs_to :lawyer, class_name: 'UserRecord', optional: true
+      belongs_to :lawyer, class_name: 'LawyerProfileRecord', optional: true
       belongs_to :estimation, dependent: :destroy, optional: true
 
       has_one :appointment, dependent: :destroy, class_name: 'Api::V1::AppointmentRecord'
@@ -79,7 +78,7 @@ module Api
           return
         end
 
-        lawyer_id = Api::V1::UserRepository.where(account_type: 1).first&.id
+        lawyer_id = Api::V1::Repositories::LawyerProfileRepository.first&.id
         return if lawyer_id.nil?
         return unless update!(lawyer_id:)
 

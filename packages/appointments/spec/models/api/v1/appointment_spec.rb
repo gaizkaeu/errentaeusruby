@@ -13,13 +13,13 @@ RSpec.describe Api::V1::AppointmentRecord do
     describe 'scopes' do
       describe 'filter_by_lawyer' do
         let(:lawyer) { create(:user, account_type: :lawyer) }
+        let(:lawyer_profile) { create(:lawyer_profile, user: lawyer) }
         let(:client) { create(:user, account_type: :client) }
-        let(:appointment1) { create(:appointment, lawyer:) }
-        let(:appointment2) { create(:appointment, lawyer:) }
-        let(:appointment3) { create(:appointment, lawyer: client) }
+        let(:appointment1) { create(:appointment, lawyer_id: lawyer_profile.id) }
+        let(:appointment2) { create(:appointment, lawyer_id: lawyer_profile.id) }
 
         it 'returns appointments matching the lawyer' do
-          expect(described_class.filter_by_lawyer_id(lawyer)).to match_array([appointment1, appointment2])
+          expect(described_class.filter_by_lawyer_id(lawyer_profile)).to match_array([appointment1, appointment2])
         end
       end
 
@@ -118,7 +118,7 @@ RSpec.describe Api::V1::AppointmentRecord do
 
       it 'creates the appointment' do
         expect { appointment.save }
-          .to change(Api::V1::AppointmentRepository, :count).by(1)
+          .to change(Api::V1::Repositories::AppointmentRepository, :count).by(1)
       end
     end
 
@@ -129,7 +129,7 @@ RSpec.describe Api::V1::AppointmentRecord do
 
       it 'does not create the appointment' do
         expect { appointment.save }
-          .not_to change(Api::V1::AppointmentRepository, :count)
+          .not_to change(Api::V1::Repositories::AppointmentRepository, :count)
       end
     end
   end

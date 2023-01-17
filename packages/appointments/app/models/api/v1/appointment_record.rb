@@ -10,7 +10,7 @@ module Api
       include Filterable
 
       belongs_to :tax_income, class_name: 'Api::V1::TaxIncome', optional: true
-      belongs_to :lawyer, class_name: 'Api::V1::UserRecord'
+      belongs_to :lawyer, class_name: 'Api::V1::LawyerProfileRecord'
       belongs_to :client, class_name: 'Api::V1::UserRecord'
 
       scope :filter_by_tax_income_id, ->(tax_income_id) { where(tax_income_id:) }
@@ -36,7 +36,7 @@ module Api
       validate do |appointment|
         next if appointment.tax_income_id.blank?
 
-        tax_income = Api::V1::TaxIncomeRepository.find(appointment.tax_income_id)
+        tax_income = Api::V1::Repositories::TaxIncomeRepository.find(appointment.tax_income_id)
         appointment.errors.add :base, "tax income doesn't accept appointment" unless tax_income.meeting?
       end
     end

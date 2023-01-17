@@ -5,7 +5,7 @@ class Api::V1::Services::TaxPaymentIntentService < ApplicationService
   class InvalidPrice < StandardError; end
 
   def call(current_account, tax_income_id, raise_error: false)
-    tax_income = Api::V1::TaxIncomeRepository.find(tax_income_id)
+    tax_income = Api::V1::Repositories::TaxIncomeRepository.find(tax_income_id)
     authorize_with current_account, tax_income, :checkout?
 
     if raise_error

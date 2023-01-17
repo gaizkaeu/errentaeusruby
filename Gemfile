@@ -5,9 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-# Vite
-gem 'vite_rails'
-
 # Auth
 gem 'bcrypt'
 
@@ -47,17 +44,8 @@ gem 'validates_timeliness', '~> 7.0.0.beta1'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.3', '>= 7.0.3.1'
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
-
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.5'
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
@@ -77,14 +65,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-# Google Token Validator
-gem 'googleauth', '~> 1.3'
-
 # Job execution
 gem 'cloudtasker'
-
-# Webpush notifications
-gem 'webpush'
 
 # Cors
 gem 'rack-cors'
@@ -180,3 +162,12 @@ gem 'rqrcode', '~> 2.1'
 
 # Webauthn
 gem 'webauthn', '~> 2.5'
+
+# Serialization
+gem 'jsonapi-serializer'
+
+# Validation for JSONB fields
+gem 'activerecord_json_validator', '~> 2.1'
+
+# Locations
+gem 'geocoder', '~> 1.8'

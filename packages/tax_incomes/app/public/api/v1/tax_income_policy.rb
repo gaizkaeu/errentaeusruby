@@ -31,18 +31,16 @@ module Api
         if user.client?
           record.client_id == user.id
         elsif user.lawyer?
-          record.lawyer_id == user.id
+          Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: user.id).id == record.lawyer_id
         else
           false
         end
+      rescue ActiveRecord::RecordNotFound
+        false
       end
 
       def create?
-        if user.client?
-          record.client_id == user.id
-        elsif user.lawyer?
-          record.lawyer_id == user.id
-        end
+        show?
       end
 
       def create_appointment?

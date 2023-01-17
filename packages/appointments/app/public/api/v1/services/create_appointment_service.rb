@@ -23,7 +23,7 @@ class Api::V1::Services::CreateAppointmentService < ApplicationService
 
   def set_params_defaults(current_account, appointment_params)
     if appointment_params[:tax_income_id].present?
-      tax_income = Api::V1::TaxIncomeRepository.find(appointment_params[:tax_income_id])
+      tax_income = Api::V1::Repositories::TaxIncomeRepository.find(appointment_params[:tax_income_id])
       authorize_with current_account, tax_income, :create_appointment?
       appointment_params[:lawyer_id] = tax_income.lawyer_id
       appointment_params[:client_id] = tax_income.client_id

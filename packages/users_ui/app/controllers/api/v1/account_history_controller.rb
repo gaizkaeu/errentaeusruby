@@ -7,7 +7,7 @@ module Api
 
       def index
         actions = Api::V1::Services::IndexUserHistoryService.new.call(current_user, params[:id])
-        render json: actions
+        render json: Api::V1::Serializers::AccountHistorySerializer.new(actions).serializable_hash
       end
     end
   end

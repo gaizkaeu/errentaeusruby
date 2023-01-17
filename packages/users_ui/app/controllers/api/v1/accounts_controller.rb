@@ -6,26 +6,26 @@ module Api
       before_action :authenticate
 
       def index
-        @users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
-        render json: @users
+        users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
+        render json: Api::V1::Serializers::UserSerializer.new(users).serializable_hash
       end
 
       def show
-        @user = Api::V1::Services::FindUserService.new.call(current_user, filtering_params, params[:id])
-        render 'accounts/show'
+        user = Api::V1::Services::FindUserService.new.call(current_user, filtering_params, params[:id])
+        render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash
       end
 
       def me
-        @user = current_user
-        render 'accounts/me'
+        user = current_user
+        render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash
       end
 
       def update
-        @user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_update_params)
-        if @user.errors.any?
-          render json: @user.errors, status: :unprocessable_entity
+        user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_update_params)
+        if user.errors.any?
+          render json: user.errors, status: :unprocessable_entity
         else
-          render 'accounts/show'
+          render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash
         end
       end
 
@@ -38,7 +38,7 @@ module Api
       def filtering_params
         return unless current_user.lawyer?
 
-        params.slice(:client_first_name, :lawyer_first_name)
+        params.slice(Api::V1::Repositories::UserRepository::FILTER_KEYS)
       end
     end
   end

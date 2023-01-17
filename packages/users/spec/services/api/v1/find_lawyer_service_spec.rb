@@ -16,7 +16,7 @@ describe Api::V1::Services::FindLawyerService, type: :service do
 
       it 'does raise error when not found' do
         expect do
-          service.call(-1)
+          service.call(-1, raise_error: true)
         end.to raise_error ActiveRecord::RecordNotFound
       end
     end

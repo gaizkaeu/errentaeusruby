@@ -14,15 +14,27 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
 
+      resources :organizations do
+        get :lawyers, on: :member
+        resources :manage do
+          post 'accept/:lawyer_profile_id', to: 'organization_manage#accept', on: :collection, as: :accept
+          post 'reject/:lawyer_profile_id', to: 'organization_manage#reject', on: :collection, as: :reject
+          get :lawyers, to: 'organization_manage#lawyers', on: :collection, as: :lawyers
+          get :pending_lawyers, to: 'organization_manage#pending_lawyers', on: :collection, as: :pending_lawyers
+        end
+      end
+
       resources :appointments
+
+      resources :lawyer_profiles do
+        get :me, on: :collection
+      end
 
       resources :estimations do
         post :estimate, on: :collection
         get :my_estimation, on: :collection
         post :estimation_from_jwt, on: :collection
       end
-
-      resources :lawyers, only: %i[show]
 
       resources :tax_incomes, as: :tax_incomes do
         post 'create_payment_intent', to: 'tax_incomes#checkout', on: :member
