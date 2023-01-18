@@ -5,7 +5,7 @@ class Api::V1::Repositories::OrganizationRepository < Repositories::RepositoryBa
   def self.map_record(record)
     super(record) do
       if record.logo.attached?
-        Api::V1::Organization.new(record.attributes.symbolize_keys!.merge({ logo: Rails.application.routes.url_helpers.rails_blob_url(record.logo) }))
+        Api::V1::Organization.new(record.attributes.symbolize_keys!.merge({ logo: Rails.application.routes.url_helpers.rails_blob_url(record.logo, only_path: true) }))
       else
         Api::V1::Organization.new(record.attributes.symbolize_keys!)
       end
