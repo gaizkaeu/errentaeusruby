@@ -171,3 +171,6 @@ gem 'activerecord_json_validator', '~> 2.1'
 
 # Locations
 gem 'geocoder', '~> 1.8'
+
+# Storage
+gem 'google-cloud-storage', '~> 1.44'

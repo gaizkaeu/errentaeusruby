@@ -148,6 +148,8 @@ jobs:
             WEBAUTHN_NAME=errenta
             WEBAUTHN_ID=errenta.eus
             APP_HOST=https://api.errenta.eus
+            GCS_BUCKET=errenta
+            GCP_PROJECT=eliza-asesores
 
           secrets: |
             DB_PASSWORD=ERRENTA-DBPASSWORD:latest
