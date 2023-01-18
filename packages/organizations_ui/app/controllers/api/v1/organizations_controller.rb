@@ -3,7 +3,7 @@
 module Api
   module V1
     class OrganizationsController < ::ApiBaseController
-      before_action :authenticate, except: %i[index show]
+      before_action :authenticate, except: %i[index show reviews]
       before_action :set_organization, only: %i[show update destroy]
 
       def index

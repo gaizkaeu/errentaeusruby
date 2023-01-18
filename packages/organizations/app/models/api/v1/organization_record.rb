@@ -9,6 +9,7 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   self.table_name = 'organizations'
   self.id_prefix = 'org'
 
+  geocoded_by :location
   reverse_geocoded_by :latitude, :longitude
 
   scope :filter_by_name, ->(name) { where('name ILIKE ?', "%#{name}%") }
