@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
   mount StripeEvent::Engine, at: '/api/v1/payments/webhook' 
 
   if Rails.env.test?
