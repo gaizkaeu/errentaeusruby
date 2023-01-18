@@ -2,7 +2,6 @@ class ApiBaseController < ApplicationController
   include Authorization
   include ActionController::Cookies
 
-
   rescue_from Pundit::NotAuthorizedError, with: :permission_denied
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
