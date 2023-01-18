@@ -5,6 +5,18 @@
 #
 # bin/packwerk update-deprecations packages/organizations
 ---
+packages/lawyer_profiles:
+  "::Api::V1::Serializers::LawyerProfileSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/organizations/app/public/api/v1/serializers/review_serializer.rb
+packages/tax_incomes:
+  "::Api::V1::Serializers::TaxIncomeSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/organizations/app/public/api/v1/serializers/review_serializer.rb
 packages/users:
   "::Api::V1::Repositories::UserRepository":
     violations:
