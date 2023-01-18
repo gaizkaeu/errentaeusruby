@@ -15,6 +15,20 @@ module Api
         render json: Api::V1::Serializers::OrganizationSerializer.new(@organization)
       end
 
+      def create_review
+        review = Api::V1::Services::OrgCreateReviewService.new.call(current_user, review_params)
+        if review.errors.empty?
+          render json: Api::V1::Serializers::ReviewSerializer.new(review), status: :created
+        else
+          render json: review.errors, status: :unprocessable_entity
+        end
+      end
+
+      def reviews
+        reviews = Api::V1::Repositories::ReviewRepository.filter(filtering_params.merge!(organization_id: params[:id]))
+        render json: Api::V1::Serializers::ReviewSerializer.new(reviews)
+      end
+
       def create
         organization = Api::V1::Services::OrgCreateService.new.call(current_user, organization_params)
 
@@ -49,6 +63,10 @@ module Api
 
       def set_organization
         @organization = Api::V1::Repositories::OrganizationRepository.find(params[:id])
+      end
+
+      def review_params
+        params.require(:review).permit(:rating, :comment).merge!(organization_id: params[:id], user_id: current_user.id)
       end
 
       # Only allow a list of trusted parameters through.

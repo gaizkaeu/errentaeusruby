@@ -17,10 +17,13 @@ Rails.application.routes.draw do
 
       resources :organizations do
         get :lawyers, on: :member
+        get :reviews, on: :member
+        post :reviews, on: :member, to: 'organizations#create_review'
         resources :manage do
           post 'accept/:lawyer_profile_id', to: 'organization_manage#accept', on: :collection, as: :accept
           post 'reject/:lawyer_profile_id', to: 'organization_manage#reject', on: :collection, as: :reject
           get :lawyers, to: 'organization_manage#lawyers', on: :collection, as: :lawyers
+          get :reviews, to: 'organization_manage#reviews', on: :collection, as: :reviews
           get :pending_lawyers, to: 'organization_manage#pending_lawyers', on: :collection, as: :pending_lawyers
         end
       end

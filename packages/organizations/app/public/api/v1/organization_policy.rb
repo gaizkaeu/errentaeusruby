@@ -21,6 +21,10 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
     user.lawyer?
   end
 
+  def review?
+    true
+  end
+
   def update?
     record.owner_id == user.id
   end

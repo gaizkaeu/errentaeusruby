@@ -13,6 +13,7 @@ class Api::V1::ReviewRecord < ApplicationRecord
 
   validates :rating, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :comment, presence: true, length: { maximum: 1000, minimum: 4 }
+  validates :organization_id, uniqueness: { scope: :user_id }
 
   belongs_to :organization, class_name: 'Api::V1::OrganizationRecord'
   belongs_to :user, class_name: 'Api::V1::UserRecord'

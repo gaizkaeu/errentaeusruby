@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_213422) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_18_174443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -231,16 +231,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_213422) do
   end
 
   create_table "reviews", id: :string, force: :cascade do |t|
-    t.string "tax_income_id", null: false
-    t.string "lawyer_profile_id", null: false
     t.integer "rating", null: false
     t.datetime "created_at", null: false
     t.string "organization_id", null: false
     t.string "comment", default: ""
     t.string "user_id", null: false
-    t.index ["lawyer_profile_id"], name: "index_reviews_on_lawyer_profile_id"
+    t.string "tax_income_id"
+    t.index ["organization_id", "user_id"], name: "index_reviews_on_organization_id_and_user_id", unique: true
     t.index ["organization_id"], name: "index_reviews_on_organization_id"
-    t.index ["tax_income_id"], name: "index_reviews_on_tax_income_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
