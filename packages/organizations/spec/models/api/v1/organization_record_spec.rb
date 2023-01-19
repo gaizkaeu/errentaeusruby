@@ -4,7 +4,6 @@ RSpec.describe Api::V1::OrganizationRecord do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:description) }
-    it { is_expected.to validate_presence_of(:location) }
     it { is_expected.to validate_presence_of(:phone) }
     it { is_expected.to validate_presence_of(:website) }
   end
@@ -20,15 +19,6 @@ RSpec.describe Api::V1::OrganizationRecord do
 
       it 'returns organizations by name' do
         expect(described_class.filter_by_name('Organization')).to eq([organization])
-      end
-    end
-
-    describe 'filter_by_location' do
-      let(:organization) { create(:organization, location: 'Location') }
-      let(:organization_two) { create(:organization, location: 'Location Two') }
-
-      it 'returns organizations by location' do
-        expect(described_class.filter_by_location('Location')).to eq([organization])
       end
     end
 

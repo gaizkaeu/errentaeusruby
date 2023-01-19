@@ -7,7 +7,11 @@ module Api
       before_action :set_organization, only: %i[show update destroy]
 
       def index
-        organizations = Api::V1::Repositories::OrganizationRepository.filter(filtering_params)
+        organizations =
+          Api::V1::Repositories::OrganizationRepository.filter(filtering_params) do |query|
+            query.all.limit(25).order(featured: :desc, created_at: :desc)
+          end
+
         render json: Api::V1::Serializers::OrganizationSerializer.new(organizations)
       end
 

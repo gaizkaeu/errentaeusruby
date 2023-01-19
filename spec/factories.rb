@@ -53,7 +53,6 @@ FactoryBot.define do
 
   factory :organization, class: 'Api::V1::OrganizationRecord' do
     name { 'My Excellent Organization' }
-    location { '123 Main St' }
     phone { '1234567890' }
     email { 'gasdasd@gmail.com' }
     website { 'https://www.google.com' }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_174443) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_19_111901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -209,7 +209,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_174443) do
 
   create_table "organizations", id: :string, force: :cascade do |t|
     t.string "name", null: false
-    t.string "location", null: false
     t.string "phone", null: false
     t.string "email", null: false
     t.string "website", null: false
@@ -227,6 +226,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_174443) do
     t.integer "three_star_count", default: 0
     t.integer "two_star_count", default: 0
     t.integer "one_star_count", default: 0
+    t.integer "featured", default: 0
+    t.string "province", default: ""
+    t.string "city", default: ""
+    t.string "street", default: ""
+    t.string "postal_code", default: ""
+    t.string "country", default: ""
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
 

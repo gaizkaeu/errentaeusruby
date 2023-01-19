@@ -5,7 +5,7 @@ class Repositories::RepositoryBase
     end
 
     def filter(filter_params)
-      res = model_name.filter(filter_params, query_base.all.limit(100))
+      res = model_name.filter(filter_params, query_base { |query| yield query if block_given? })
       res.map do |record|
         map_record(record)
       end

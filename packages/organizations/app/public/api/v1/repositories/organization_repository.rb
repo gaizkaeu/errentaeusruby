@@ -1,5 +1,5 @@
 class Api::V1::Repositories::OrganizationRepository < Repositories::RepositoryBase
-  FILTER_KEYS = %i[coordinates location_name name price_range].freeze
+  FILTER_KEYS = %i[coordinates location_name name price_range featured].freeze
   public_constant :FILTER_KEYS
 
   def self.map_record(record)
@@ -13,6 +13,10 @@ class Api::V1::Repositories::OrganizationRepository < Repositories::RepositoryBa
   end
 
   def self.query_base
-    Api::V1::OrganizationRecord.with_attached_logo
+    if block_given?
+      yield model_name
+    else
+      model_name.with_attached_logo
+    end
   end
 end
