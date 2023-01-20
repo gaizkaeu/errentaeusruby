@@ -6,9 +6,10 @@ describe Api::V1::Services::CreateTaxService, type: :service do
   let(:user_record) { create(:user) }
   let(:user) { Api::V1::User.new(user_record.attributes.symbolize_keys!) }
   let(:lawyer_profile) { create(:lawyer_profile) }
+  let(:organization) { create(:organization) }
 
-  let(:params) { { client_id: user.id } }
-  let(:invalid) { { client_id: lawyer_profile.id, year: 'asd', lawyer_id: lawyer_profile.id } }
+  let(:params) { { client_id: user.id, organization_id: organization.id } }
+  let(:invalid) { { client_id: lawyer_profile.id, year: 'asd', lawyer_id: lawyer_profile.id, organization_id: organization.id } }
   let(:unauthorized) { { client_id: user.id, year: 'asd', lawyer_id: user.id } }
 
   describe '#call' do

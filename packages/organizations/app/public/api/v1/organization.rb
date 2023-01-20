@@ -5,7 +5,7 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :featured
+  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :featured, :latitude, :longitude, :city, :province, :country, :street, :postal_code
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -22,15 +22,6 @@ class Api::V1::Organization
     @prices = attributes.fetch(:prices, {})
     @tax_income_count = attributes.fetch(:tax_income_count, 0)
     @featured = attributes.fetch(:featured, nil)
-    @location = {
-      latitude: attributes.fetch(:latitude, nil),
-      longitude: attributes.fetch(:longitude, nil),
-      city: attributes.fetch(:city, nil),
-      province: attributes.fetch(:province, nil),
-      country: attributes.fetch(:country, nil),
-      street: attributes.fetch(:street, nil),
-      postal_code: attributes.fetch(:postal_code, nil)
-    }
     @ratings = {
       one_star_count: attributes.fetch(:one_star_count, 0),
       two_star_count: attributes.fetch(:two_star_count, 0),
@@ -39,6 +30,13 @@ class Api::V1::Organization
       five_star_count: attributes.fetch(:five_star_count, 0)
     }
     @price_range = attributes.fetch(:price_range, nil)
+    @latitude = attributes.fetch(:latitude, nil)
+    @longitude = attributes.fetch(:longitude, nil)
+    @city = attributes.fetch(:city, nil)
+    @province = attributes.fetch(:province, nil)
+    @country = attributes.fetch(:country, nil)
+    @street = attributes.fetch(:street, nil)
+    @postal_code = attributes.fetch(:postal_code, nil)
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize

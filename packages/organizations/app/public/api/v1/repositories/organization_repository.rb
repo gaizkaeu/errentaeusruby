@@ -4,11 +4,7 @@ class Api::V1::Repositories::OrganizationRepository < Repositories::RepositoryBa
 
   def self.map_record(record)
     super(record) do
-      if record.logo.attached?
-        Api::V1::Organization.new(record.attributes.symbolize_keys!.merge({ logo: record.logo&.url }))
-      else
-        Api::V1::Organization.new(record.attributes.symbolize_keys!)
-      end
+      Api::V1::Organization.new(record.attributes.symbolize_keys!)
     end
   end
 
@@ -16,7 +12,7 @@ class Api::V1::Repositories::OrganizationRepository < Repositories::RepositoryBa
     if block_given?
       yield model_name
     else
-      model_name.with_attached_logo
+      model_name
     end
   end
 end

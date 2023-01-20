@@ -37,7 +37,7 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   has_one_attached :logo
 
   after_validation :calculate_price_range
-  after_validation :geocode
+  after_validation :geocode unless Rails.env.test?
 
   def calculate_price_range
     price_r = 0

@@ -13,9 +13,9 @@ module Api
 
       def permitted_attributes_create
         if user.lawyer?
-          %i[client_id observations price lawyer_id id state year]
+          %i[client_id observations price lawyer_id id state year organization_id]
         else
-          %i[observations year]
+          %i[observations year organization_id]
         end
       end
 

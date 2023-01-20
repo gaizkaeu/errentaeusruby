@@ -14,10 +14,11 @@ require 'rails_helper'
 
 RSpec.describe '/api/v1/tax_incomes' do
   let(:user) { create(:user) }
-  let(:lawyer) { create(:lawyer_profile) }
+  let(:organization) { create(:organization) }
+  let(:lawyer) { create(:lawyer_profile, organization:) }
 
   let(:valid_attributes) do
-    { observations: 'this is a test', client_id: user.id }
+    { observations: 'this is a test', client_id: user.id, organization_id: organization.id }
   end
 
   let(:invalid_attributes) do
@@ -27,10 +28,6 @@ RSpec.describe '/api/v1/tax_incomes' do
   context 'with estimation integration' do
     before do
       sign_in(user)
-    end
-
-    let(:valid_attributes) do
-      { observations: 'this is a test', client_id: user.id }
     end
 
     let(:estimation_params) do
@@ -73,7 +70,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
   context 'with lawyer access assigned' do
     let(:valid_attributes) do
-      { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id }
+      { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id, organization_id: organization.id }
     end
 
     before do
@@ -90,7 +87,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
     describe 'GET /show authenticated' do
       it 'renders a successful response' do
-        tax_income = Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
+        tax_income = Api::V1::Repositories::TaxIncomeRepository.add valid_attributes, raise_error: true
         authorized_get api_v1_tax_income_url(tax_income)
         expect(response).to be_successful
       end
@@ -115,7 +112,7 @@ RSpec.describe '/api/v1/tax_incomes' do
 
   context 'with lawyer access not assigned' do
     let(:valid_attributes) do
-      { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id }
+      { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id, organization_id: organization.id }
     end
 
     describe 'GET /index authenticated' do
@@ -138,7 +135,7 @@ RSpec.describe '/api/v1/tax_incomes' do
       end
 
       it 'renders a successful response' do
-        tax_income = Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
+        tax_income = Api::V1::Repositories::TaxIncomeRepository.add valid_attributes, raise_error: true
         authorized_get api_v1_tax_income_url(tax_income)
         expect(response).not_to be_successful
       end

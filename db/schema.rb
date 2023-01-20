@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_19_111901) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_20_160833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -203,6 +203,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_111901) do
     t.datetime "updated_at", null: false
     t.integer "org_status", default: 0, null: false
     t.integer "lawyer_status", default: 0, null: false
+    t.integer "tax_income_count", default: 0
     t.index ["organization_id"], name: "index_lawyer_profiles_on_organization_id"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
   end
@@ -226,12 +227,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_111901) do
     t.integer "three_star_count", default: 0
     t.integer "two_star_count", default: 0
     t.integer "one_star_count", default: 0
+    t.string "location"
     t.integer "featured", default: 0
     t.string "province", default: ""
     t.string "city", default: ""
     t.string "street", default: ""
     t.string "postal_code", default: ""
     t.string "country", default: ""
+    t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
 
@@ -262,9 +265,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_111901) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "lawyer_id"
+    t.string "organization_id", null: false
     t.index ["client_id"], name: "index_tax_incomes_on_client_id"
     t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
     t.index ["id"], name: "index_tax_incomes_on_id", unique: true
+    t.index ["organization_id"], name: "index_tax_incomes_on_organization_id"
     t.index ["payment_intent_id"], name: "index_tax_incomes_on_payment_intent_id", unique: true
   end
 

@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe Api::V1::TaxIncome do
   let(:user) { create(:user) }
   let(:lawyer) { create(:lawyer) }
+  let(:organization) { create(:organization) }
 
   let(:valid_attributes) do
-    { observations: 'this is a test', client_id: user.id }
+    { observations: 'this is a test', client_id: user.id, organization_id: organization.id }
   end
 
   let(:valid_attributes_with_lawyer) do
-    { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id }
+    { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id, organization_id: organization.id }
   end
 
   let(:invalid_attributes) do

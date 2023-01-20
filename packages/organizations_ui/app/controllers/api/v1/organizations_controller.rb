@@ -75,7 +75,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def organization_params
-        params.require(:organization).permit(:name, :description, :website, :email, :phone, :location, :prices, :logo).merge!(owner_id: current_user.id)
+        params.require(:organization).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo).merge!(owner_id: current_user.id)
       end
 
       def filtering_params

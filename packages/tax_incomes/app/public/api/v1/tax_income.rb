@@ -19,6 +19,7 @@ module Api
 
       belongs_to :client, class_name: 'UserRecord'
       belongs_to :lawyer, class_name: 'LawyerProfileRecord', optional: true
+      belongs_to :organization, class_name: 'OrganizationRecord'
       belongs_to :estimation, dependent: :destroy, optional: true
 
       has_one :appointment, dependent: :destroy, class_name: 'Api::V1::AppointmentRecord'

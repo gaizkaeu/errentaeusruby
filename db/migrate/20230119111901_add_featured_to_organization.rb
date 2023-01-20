@@ -1,7 +1,6 @@
 class AddFeaturedToOrganization < ActiveRecord::Migration[7.0]
   def change
     add_column :organizations, :featured, :integer, default: 0
-    remove_column :organizations, :location, :string
     add_column :organizations, :province, :string, default: ''
     add_column :organizations, :city, :string, default: ''
     add_column :organizations, :street, :string, default: ''

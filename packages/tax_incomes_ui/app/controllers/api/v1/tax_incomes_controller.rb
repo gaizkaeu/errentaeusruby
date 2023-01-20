@@ -20,12 +20,10 @@ module Api
       end
       # rubocop:enable Metrics/AbcSize
 
-      # GET /tax_incomes/1 or /tax_incomes/1.json
       def show
         render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
       end
 
-      # POST /tax_incomes or /tax_incomes.json
       def create
         @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params_create, nested_estimation_params[:token]))
         if @tax_income.persisted?
@@ -60,7 +58,6 @@ module Api
         end
       end
 
-      # PATCH/PUT /tax_incomes/1 or /tax_incomes/1.json
       def update
         @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params_update)
         if @tax_income.errors.empty?
@@ -70,7 +67,6 @@ module Api
         end
       end
 
-      # DELETE /tax_incomes/1 or /tax_incomes/1.json
       def destroy
         authorize @tax_income
         @tax_income.destroy!
@@ -80,12 +76,10 @@ module Api
 
       private
 
-      # Use callbacks to share common setup or constraints between actions.
       def set_tax_income
         @tax_income = Api::V1::Services::FindTaxService.new.call(current_user, params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def tax_income_params_create
         params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes_create).with_defaults(client_id: current_user.id)
       end
