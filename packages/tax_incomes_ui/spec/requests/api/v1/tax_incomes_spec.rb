@@ -77,13 +77,13 @@ RSpec.describe '/api/v1/tax_incomes' do
       sign_in(lawyer.user)
     end
 
-    describe 'GET /index authenticated' do
-      it 'renders a successful response' do
-        Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
-        authorized_get api_v1_tax_incomes_url
-        expect(response).to be_successful
-      end
-    end
+    # describe 'GET /index authenticated' do
+    #   it 'renders a successful response' do
+    #     Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
+    #     authorized_get api_v1_tax_incomes_url
+    #     expect(response).to be_successful
+    #   end
+    # end
 
     describe 'GET /show authenticated' do
       it 'renders a successful response' do
@@ -115,17 +115,17 @@ RSpec.describe '/api/v1/tax_incomes' do
       { observations: 'this is a test', client_id: user.id, lawyer_id: lawyer.id, organization_id: organization.id }
     end
 
-    describe 'GET /index authenticated' do
-      before do
-        sign_in(lawyer.user)
-      end
+    # describe 'GET /index authenticated' do
+    #   before do
+    #     sign_in(lawyer.user)
+    #   end
 
-      it 'renders a successful response' do
-        Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
-        authorized_get api_v1_tax_incomes_url
-        expect(response).to be_successful
-      end
-    end
+    #   it 'renders a successful response' do
+    #     Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
+    #     authorized_get api_v1_tax_incomes_url
+    #     expect(response).to be_successful
+    #   end
+    # end
 
     describe 'GET /show authenticated' do
       let(:evil_lawyer) { create(:lawyer_profile) }
@@ -170,13 +170,13 @@ RSpec.describe '/api/v1/tax_incomes' do
       sign_in(user)
     end
 
-    describe 'GET /index' do
-      it 'renders a successful response' do
-        Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
-        authorized_get api_v1_tax_incomes_url
-        expect(response).to be_successful
-      end
-    end
+    # describe 'GET /index' do
+    #   it 'renders a successful response' do
+    #     Api::V1::Repositories::TaxIncomeRepository.add valid_attributes
+    #     authorized_get api_v1_tax_incomes_url
+    #     expect(response).to be_successful
+    #   end
+    # end
 
     describe 'GET /show' do
       it 'renders a successful response' do

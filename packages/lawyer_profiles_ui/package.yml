@@ -2,4 +2,5 @@ enforce_dependencies: true
 enforce_privacy: true
 dependencies:
   - packages/lawyer_profiles
+  - packages/tax_incomes
   - packages/authentication

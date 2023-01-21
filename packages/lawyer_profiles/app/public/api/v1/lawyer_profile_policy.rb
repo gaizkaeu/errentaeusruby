@@ -33,6 +33,10 @@ class Api::V1::LawyerProfilePolicy < ApplicationPolicy
     end
   end
 
+  def index_tax_incomes?
+    update?
+  end
+
   def destroy?
     update?
   end

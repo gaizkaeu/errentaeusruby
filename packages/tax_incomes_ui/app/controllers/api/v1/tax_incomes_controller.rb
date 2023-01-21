@@ -8,17 +8,10 @@ module Api
 
       include TaxIncomesHelper
 
-      # rubocop:disable Metrics/AbcSize
       def index
-        if current_user.lawyer?
-          lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
-          tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(lawyer_id: lawyer_profile.id))
-        else
-          tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(client_id: current_user.id))
-        end
+        tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(client_id: current_user.id))
         render json: Api::V1::Serializers::TaxIncomeSerializer.new(tax_incomes).serializable_hash
       end
-      # rubocop:enable Metrics/AbcSize
 
       def show
         render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
