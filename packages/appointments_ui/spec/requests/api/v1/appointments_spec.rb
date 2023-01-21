@@ -162,7 +162,7 @@ RSpec.describe 'Appointments' do
 
         it 'renders a JSON response with errors for the new api_v1_appointment' do
           authorized_post api_v1_appointments_url, params: { appointment: invalid_attributes }, as: :json
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:not_found)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
       end

@@ -21,10 +21,10 @@ Rails.application.routes.draw do
         post :reviews, on: :member, to: 'organizations#create_review'
         resources :manage do
           post 'accept/:lawyer_profile_id', to: 'organization_manage#accept', on: :collection, as: :accept
-          post 'reject/:lawyer_profile_id', to: 'organization_manage#reject', on: :collection, as: :reject
+          post 'remove/:lawyer_profile_id', to: 'organization_manage#remove', on: :collection, as: :reject
+          get 'lawyer/:lawyer_profile_id', to: 'organization_manage#lawyer', on: :collection, as: :lawyer
           get :lawyers, to: 'organization_manage#lawyers', on: :collection, as: :lawyers
           get :reviews, to: 'organization_manage#reviews', on: :collection, as: :reviews
-          get :pending_lawyers, to: 'organization_manage#pending_lawyers', on: :collection, as: :pending_lawyers
         end
       end
 

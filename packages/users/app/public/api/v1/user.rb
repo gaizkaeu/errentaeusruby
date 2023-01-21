@@ -32,6 +32,10 @@ class Api::V1::User
     @account_type == 'client'
   end
 
+  def admin?
+    @account_type == 'admin'
+  end
+
   def ==(other)
     id == other.id && first_name == other.first_name
   end

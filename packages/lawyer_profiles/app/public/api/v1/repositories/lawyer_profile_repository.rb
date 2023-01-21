@@ -9,6 +9,6 @@ class Api::V1::Repositories::LawyerProfileRepository < Repositories::RepositoryB
   end
 
   def self.query_base
-    Api::V1::LawyerProfileRecord.includes(:user)
+    Api::V1::LawyerProfileRecord.includes(:user, :avatar_attachment)
   end
 end

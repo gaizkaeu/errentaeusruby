@@ -32,6 +32,6 @@ class ApiBaseController < ApplicationController
   end
 
   def not_found
-    render json: { error: 'not found' }, status: :unprocessable_entity
+    render json: { error: 'not found' }, status: :not_found
   end
 end

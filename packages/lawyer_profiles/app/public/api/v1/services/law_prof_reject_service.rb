@@ -10,6 +10,6 @@ class Api::V1::Services::LawProfRejectService < ApplicationService
 
     raise Pundit::NotAuthorizedError if lawyer_profile.organization_id != organization_id
 
-    Api::V1::Repositories::LawyerProfileRepository.update(lawyer_profile.id, { org_status: 'rejected' }, raise_error: false)
+    Api::V1::Repositories::LawyerProfileRepository.update(lawyer_profile.id, { org_status: 'rejected', organization_id: nil }, raise_error: true)
   end
 end

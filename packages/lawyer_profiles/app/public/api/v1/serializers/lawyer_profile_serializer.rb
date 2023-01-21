@@ -4,7 +4,7 @@ class Api::V1::Serializers::LawyerProfileSerializer
   set_type :lawyer_profile
   set_id :id
 
-  attributes :first_name, :last_name
+  attributes :first_name, :last_name, :tax_income_count
 
   attributes :org_status,
              :lawyer_status,

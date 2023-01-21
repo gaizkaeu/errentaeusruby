@@ -42,13 +42,13 @@ describe Api::V1::Services::UpdateLawyerProfileService, type: :service do
 
       it 'does not update a lawyer profile' do
         expect do
-          service.call(lawyer, lawyer_profile.id, params.merge({ organization_id: nil }))
+          service.call(lawyer, lawyer_profile.id, params.merge({ user_id: nil }))
         end
           .not_to change { lawyer_profile.reload.organization_id }
       end
 
       it 'does raise an error' do
-        expect { service.call(lawyer, lawyer_profile.id, params.merge({ organization_id: nil }), raise_error: true) }
+        expect { service.call(lawyer, lawyer_profile.id, params.merge({ user_id: nil }), raise_error: true) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end

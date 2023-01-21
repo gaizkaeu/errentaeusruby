@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_20_160833) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_095812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -197,14 +197,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_160833) do
   end
 
   create_table "lawyer_profiles", id: :string, force: :cascade do |t|
-    t.string "organization_id", null: false
     t.string "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "org_status", default: 0, null: false
     t.integer "lawyer_status", default: 0, null: false
     t.integer "tax_income_count", default: 0
-    t.index ["organization_id"], name: "index_lawyer_profiles_on_organization_id"
+    t.string "organization_id"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
   end
 
@@ -307,6 +306,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_160833) do
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
   add_foreign_key "documents", "users", column: "exported_by_id"
+  add_foreign_key "lawyer_profiles", "organizations"
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "tax_incomes", "estimations"
   add_foreign_key "tax_incomes", "users", column: "client_id"

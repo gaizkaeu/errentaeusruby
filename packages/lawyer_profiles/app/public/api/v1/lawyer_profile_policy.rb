@@ -26,7 +26,11 @@ class Api::V1::LawyerProfilePolicy < ApplicationPolicy
   end
 
   def update?
-    record.user_id == user.id
+    if record.user_id == user.id
+      true
+    else
+      (record.organization_id.present? && Api::V1::Repositories::OrganizationRepository.find(record.organization_id).owner_id == user.id) || user.admin?
+    end
   end
 
   def destroy?

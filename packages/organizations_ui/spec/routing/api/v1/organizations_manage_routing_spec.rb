@@ -7,7 +7,7 @@ RSpec.describe Api::V1::OrganizationManageController do
     end
 
     it 'routes to #reject' do
-      expect(post: '/api/v1/organizations/1/manage/reject/2').to route_to('api/v1/organization_manage#reject', organization_id: '1', lawyer_profile_id: '2', format: 'json')
+      expect(post: '/api/v1/organizations/1/manage/remove/2').to route_to('api/v1/organization_manage#remove', organization_id: '1', lawyer_profile_id: '2', format: 'json')
     end
 
     it 'routes to #lawyers' do

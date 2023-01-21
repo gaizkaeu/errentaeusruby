@@ -10,6 +10,6 @@ OrganizationPubSub.register_event('organization.review_deleted') do
   rating Integer
 end
 
-OrganizationPubSub.subscribe('organization.tax_income_assigned', TrackNewTaxIncomeAssignationJob)
-OrganizationPubSub.subscribe('organization.review_created', TrackNewReviewJob)
-OrganizationPubSub.subscribe('organization.review_deleted', TrackDeletedReviewJob)
+OrganizationPubSub.subscribe('organization.tax_income_assigned', OrgTrackNewTaxIncomeAssignationJob)
+OrganizationPubSub.subscribe('organization.review_created', OrgTrackNewReviewJob)
+OrganizationPubSub.subscribe('organization.review_deleted', OrgTrackDeletedReviewJob)

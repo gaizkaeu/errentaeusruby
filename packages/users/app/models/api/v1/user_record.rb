@@ -20,7 +20,7 @@ module Api
       scope :filter_by_client_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :client).limit(10) }
       scope :filter_by_lawyer_first_name, ->(name) { where("lower(first_name || ' ' || last_name) like ?", "%#{name.downcase}%").where(account_type: :lawyer).limit(10) }
 
-      enum account_type: { client: 0, lawyer: 1, admin: 2 }
+      enum account_type: { client: 0, lawyer: 1, org_manage: 2, admin: 3 }
 
       validates_presence_of :first_name, :last_name, :account_type
 

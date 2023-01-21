@@ -86,6 +86,7 @@ module Api
         meeting!
         TaxIncomePubSub.publish('tax_income.lawyer_assigned', tax_income_id: id, lawyer_id: lawyer.id)
         OrganizationPubSub.publish('organization.tax_income_assigned', organization_id: lawyer.organization_id)
+        LawyerPubSub.publish('lawyer.tax_income_assigned', lawyer_id: lawyer.id)
       end
     end
   end

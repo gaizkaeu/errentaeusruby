@@ -5,7 +5,7 @@ class Api::V1::LawyerProfile
 
   extend T::Sig
 
-  attr_reader :id, :organization_id, :first_name, :last_name, :email, :org_status, :lawyer_status, :user_id
+  attr_reader :id, :organization_id, :first_name, :last_name, :email, :org_status, :lawyer_status, :user_id, :tax_income_count
 
   def initialize(attributes = {})
     @id = attributes.fetch(:id, nil)
@@ -15,6 +15,7 @@ class Api::V1::LawyerProfile
     @lawyer_status = attributes.fetch(:lawyer_status, 'on_duty')
     @first_name = attributes.fetch(:first_name, nil)
     @last_name = attributes.fetch(:last_name, nil)
+    @tax_income_count = attributes.fetch(:tax_income_count, 0)
   end
 
   def persisted?
