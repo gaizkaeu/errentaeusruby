@@ -1,4 +1,5 @@
 unless Rails.env.test?
+  require 'cloudtasker/batch'
   Cloudtasker.configure do |config|
     #
     # Adapt the server port to be the one used by your Rails web process

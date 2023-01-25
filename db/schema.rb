@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_095812) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_214903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -205,6 +205,32 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_095812) do
     t.integer "tax_income_count", default: 0
     t.string "organization_id"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
+  end
+
+  create_table "organization_stats", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.integer "lawyers_active_count", default: 0, null: false
+    t.integer "lawyers_active_count_acc", default: 0, null: false
+    t.integer "lawyers_inactive_count", default: 0, null: false
+    t.integer "lawyers_inactive_count_acc", default: 0, null: false
+    t.integer "tax_income_count", default: 0, null: false
+    t.integer "tax_income_count_acc", default: 0, null: false
+    t.integer "tax_income_finished_count", default: 0, null: false
+    t.integer "tax_income_finished_count_acc", default: 0, null: false
+    t.integer "tax_income_pending_count", default: 0, null: false
+    t.integer "tax_income_pending_count_acc", default: 0, null: false
+    t.integer "one_star_count", default: 0, null: false
+    t.integer "one_star_count_acc", default: 0, null: false
+    t.integer "two_star_count", default: 0, null: false
+    t.integer "two_star_count_acc", default: 0, null: false
+    t.integer "three_star_count", default: 0, null: false
+    t.integer "three_star_count_acc", default: 0, null: false
+    t.integer "four_star_count", default: 0, null: false
+    t.integer "four_star_count_acc", default: 0, null: false
+    t.integer "five_star_count", default: 0, null: false
+    t.integer "five_star_count_acc", default: 0, null: false
+    t.integer "avg_rating_today", default: 0, null: false
+    t.index ["organization_id"], name: "index_organization_stats_on_organization_id"
   end
 
   create_table "organizations", id: :string, force: :cascade do |t|

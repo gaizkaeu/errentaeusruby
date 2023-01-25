@@ -9,7 +9,9 @@ module Api
 
       scope :filter_by_state, ->(state) { where(state:) }
       scope :filter_by_client_id, ->(client_id) { where(client_id:) }
+      scope :filter_by_client_name, ->(client_name) { joins(:client).where("lower(users.first_name || ' ' || users.last_name) like ?", "%#{client_name.downcase}%").limit(10) }
       scope :filter_by_lawyer_id, ->(lawyer_id) { where(lawyer_id:) }
+      scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }
       scope :filter_by_paid, ->(paid) { where(paid:) }
       scope :filter_by_captured, ->(captured) { where(captured:) }
 

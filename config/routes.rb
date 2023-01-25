@@ -32,7 +32,6 @@ Rails.application.routes.draw do
 
       resources :lawyer_profiles do
         get :me, on: :collection
-        resources :lawyer_profiles_tax_incomes, only: %i[index], path: 'tax_incomes'
       end
 
       resources :estimations do

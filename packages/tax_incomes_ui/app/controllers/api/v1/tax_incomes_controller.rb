@@ -9,7 +9,7 @@ module Api
       include TaxIncomesHelper
 
       def index
-        tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params.merge!(client_id: current_user.id))
+        tax_incomes = Api::V1::Repositories::TaxIncomeRepository.filter(filtering_params)
         render json: Api::V1::Serializers::TaxIncomeSerializer.new(tax_incomes).serializable_hash
       end
 
@@ -86,7 +86,8 @@ module Api
       end
 
       def filtering_params
-        params.slice(*Api::V1::Repositories::TaxIncomeRepository::FILTER_KEYS)
+        policy = TaxIncomePolicy.new(current_user, Api::V1::TaxIncome)
+        params.slice(policy.permitted_filter_params).merge!(policy.filter_forced_params)
       end
     end
   end

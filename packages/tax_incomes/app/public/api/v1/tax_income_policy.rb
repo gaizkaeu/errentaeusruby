@@ -27,6 +27,34 @@ module Api
         end
       end
 
+      def permitted_filter_params
+        case user.account_type
+        when 'client'
+          [:year]
+        when 'lawyer'
+          %i[client_id client_name state paid captured]
+        when 'org_manage'
+          %i[client_id client_name state paid captured lawyer_id lawyer_name]
+        when 'admin'
+          %i[client_id client_name state paid captured lawyer_id lawyer_name organization_id organization_name]
+        else
+          []
+        end
+      end
+
+      def filter_forced_params
+        case user.account_type
+        when 'client'
+          { client_id: user.id }
+        when 'lawyer'
+          { lawyer_id: Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: user.id).id }
+        when 'org_manage'
+          { organization_id: Api::V1::Repositories::OrganizationRepository.find_by!(owner_id: user.id).id }
+        else
+          {}
+        end
+      end
+
       def show?
         if user.client?
           record.client_id == user.id
