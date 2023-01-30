@@ -12,7 +12,7 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude
 
-  enum featured: { not_featured: 0, featured_local: 1, featured_global: 2 }
+  enum status: { not_subscribed: 0, featured_city: 1, featured_province: 2, featured_country: 3 }
 
   scope :filter_by_name, ->(name) { where('name ILIKE ?', "%#{name}%") }
   scope :filter_by_phone, ->(phone) { where('phone ILIKE ?', "%#{phone}%") }
@@ -49,5 +49,13 @@ class Api::V1::OrganizationRecord < ApplicationRecord
 
   def address
     [street, postal_code, city, province, country].compact.join(', ')
+  end
+
+  def lawyers_active
+    Api::V1::LawyerProfileRecord.where(organization_id: id, lawyer_status: 'on_duty').count
+  end
+
+  def lawyers_inactive
+    Api::V1::LawyerProfileRecord.where(organization_id: id, lawyer_status: 'off_duty').count
   end
 end

@@ -75,6 +75,7 @@ module Api
 
       private
 
+      # rubocop:disable Metrics/AbcSize
       def assign_lawyer
         unless lawyer_id.nil?
           meeting! if state == 'pending_assignation'
@@ -87,9 +88,10 @@ module Api
 
         meeting!
         TaxIncomePubSub.publish('tax_income.lawyer_assigned', tax_income_id: id, lawyer_id: lawyer.id)
-        OrganizationPubSub.publish('organization.tax_income_assigned', organization_id: lawyer.organization_id)
+        OrganizationPubSub.publish('organization.tax_income_assigned', organization_id: lawyer.organization_id, date: Time.zone.today.to_s)
         LawyerPubSub.publish('lawyer.tax_income_assigned', lawyer_id: lawyer.id)
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

@@ -19,13 +19,16 @@ Rails.application.routes.draw do
         get :lawyers, on: :member
         get :reviews, on: :member
         post :reviews, on: :member, to: 'organizations#create_review'
-        resources :manage do
+        resources :manage, controller: 'organization_manage' do
           post 'accept/:lawyer_profile_id', to: 'organization_manage#accept', on: :collection, as: :accept
           post 'remove/:lawyer_profile_id', to: 'organization_manage#remove', on: :collection, as: :reject
           get 'lawyer/:lawyer_profile_id', to: 'organization_manage#lawyer', on: :collection, as: :lawyer
           get :lawyers, to: 'organization_manage#lawyers', on: :collection, as: :lawyers
           get :reviews, to: 'organization_manage#reviews', on: :collection, as: :reviews
+          post 'create-subscription', to: 'organization_manage#create_subscription', on: :collection, as: :create_subscription
         end
+
+        resources :stats, only: %i[index], controller: 'organization_stats'
       end
 
       resources :appointments
@@ -52,6 +55,7 @@ Rails.application.routes.draw do
         get :webauthn_keys, to: 'webauthn#index', as: :account_webauthn_keys, on: :member
         get :me, as: :logged_in, on: :collection
         post :resend_confirmation, as: :resend_confirmation, on: :member
+        post 'stripe-customer-portal', as: :stripe_customer_portal, on: :collection
       end
 
       resources :documents do

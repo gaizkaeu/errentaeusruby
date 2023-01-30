@@ -21,6 +21,32 @@ class Api::V1::OrganizationManageController < ApiBaseController
     end
   end
 
+  # rubocop:disable Rails/SaveBang
+  # rubocop:disable Metrics/MethodLength
+  def create_subscription
+    session = Stripe::Checkout::Session.create(
+      {
+        success_url: "#{Rails.application.config.x.frontend_app}#{params[:return_url]}?session_id={CHECKOUT_SESSION_ID}",
+        mode: 'subscription',
+        customer: current_user.stripe_customer_id,
+        metadata: { type: 'org_payment_intent', id: @organization.id, subscription_type: 'featured_city' },
+        subscription_data: {
+          metadata: { type: 'org_payment_intent', id: @organization.id, subscription_type: 'featured_city' }
+        },
+        line_items: [
+          {
+            quantity: 1,
+            price: 'price_1MVsoAGrlIhNYf6eOtx9sNvE'
+          }
+        ]
+      }
+    )
+
+    render json: { url: session.url }
+  end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Rails/SaveBang
+
   def lawyers
     lawyers = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params.merge!(organization_id: params[:organization_id]))
     render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyers, serializer_config)

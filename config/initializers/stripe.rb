@@ -40,5 +40,7 @@ Rails.application.reloader.to_prepare do
     # events.subscribe 'invoice.payment_succeeded', StripeWebhooks::InvoicePaymentSucceeded.new
     events.subscribe 'payment_intent.succeeded', PaymentSucceededPubSub
     events.subscribe 'payment_intent.amount_capturable_updated', PaymentIntentAmountCapturableUpdatedPubSub
+    events.subscribe 'customer.subscription.updated', CustomerSubscriptionUpdatedPubSub
+    events.subscribe 'customer.subscription.deleted', CustomerSubscriptionDeletedPubSub
   end
 end

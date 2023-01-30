@@ -20,6 +20,18 @@ module Api
         render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash
       end
 
+      # rubocop:disable Rails/SaveBang
+      def stripe_customer_portal
+        portal = Stripe::BillingPortal::Session.create(
+          {
+            customer: current_user.stripe_customer_id,
+            return_url: params[:return_url]
+          }
+        )
+        render json: { url: portal.url }
+      end
+      # rubocop:enable Rails/SaveBang
+
       def update
         user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_update_params)
         if user.errors.any?

@@ -1,12 +1,21 @@
 OrganizationPubSub = PubSubManager.new
-OrganizationPubSub.register_event('organization.tax_income_assigned') { organization_id String }
+OrganizationPubSub.register_event('organization.tax_income_assigned') do
+  organization_id String
+  date String
+end
+OrganizationPubSub.register_event('organization.lawyer_change') do
+  organization_id String
+  lawyer_id String
+end
 OrganizationPubSub.register_event('organization.review_created') do
   organization_id String
+  date String
   rating Integer
 end
 
 OrganizationPubSub.register_event('organization.review_deleted') do
   organization_id String
+  date String
   rating Integer
 end
 

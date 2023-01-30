@@ -6,6 +6,12 @@
 # bin/packwerk update-deprecations packages/organizations
 ---
 packages/lawyer_profiles:
+  "::Api::V1::LawyerProfileRecord":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/organizations/app/models/api/v1/organization_record.rb
   "::Api::V1::Serializers::LawyerProfileSerializer":
     violations:
     - dependency

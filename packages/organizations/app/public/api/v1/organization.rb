@@ -5,7 +5,7 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :featured, :latitude, :longitude, :city, :province, :country, :street, :postal_code
+  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :status, :latitude, :longitude, :city, :province, :country, :street, :postal_code, :subscription_id
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -21,7 +21,7 @@ class Api::V1::Organization
     @created_at = attributes.fetch(:created_at, nil)
     @prices = attributes.fetch(:prices, {})
     @tax_income_count = attributes.fetch(:tax_income_count, 0)
-    @featured = attributes.fetch(:featured, nil)
+    @status = attributes.fetch(:status, nil)
     @ratings = {
       one_star_count: attributes.fetch(:one_star_count, 0),
       two_star_count: attributes.fetch(:two_star_count, 0),
@@ -37,6 +37,7 @@ class Api::V1::Organization
     @country = attributes.fetch(:country, nil)
     @street = attributes.fetch(:street, nil)
     @postal_code = attributes.fetch(:postal_code, nil)
+    @subscription_id = attributes.fetch(:subscription_id, nil)
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize

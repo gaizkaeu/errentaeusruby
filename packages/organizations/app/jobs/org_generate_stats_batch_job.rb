@@ -2,6 +2,8 @@ class OrgGenerateStatsBatchJob
   include Cloudtasker::Worker
 
   def perform
-    3.times { |_n| batch.add(OrgGenerateStatsJob) }
+    Api::V1::OrganizationRecord.find_each do |org|
+      batch.add(OrgGenerateStatsJob, { organization_id: org.id })
+    end
   end
 end

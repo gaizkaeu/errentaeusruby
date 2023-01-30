@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_214903) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_30_153116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -230,6 +230,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_214903) do
     t.integer "five_star_count", default: 0, null: false
     t.integer "five_star_count_acc", default: 0, null: false
     t.integer "avg_rating_today", default: 0, null: false
+    t.integer "balance_today", default: 0
+    t.date "date"
+    t.index ["organization_id", "date"], name: "index_organization_stats_on_organization_id_and_date", unique: true
     t.index ["organization_id"], name: "index_organization_stats_on_organization_id"
   end
 
@@ -253,12 +256,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_214903) do
     t.integer "two_star_count", default: 0
     t.integer "one_star_count", default: 0
     t.string "location"
-    t.integer "featured", default: 0
     t.string "province", default: ""
     t.string "city", default: ""
     t.string "street", default: ""
     t.string "postal_code", default: ""
     t.string "country", default: ""
+    t.string "subscription_id"
+    t.integer "status", default: 0
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
