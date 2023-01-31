@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::FindAppointmentService, type: :service do
+describe Api::V1::Services::AppoFindService, type: :service do
   subject(:service) { described_class.new }
 
   let(:appointment) { create(:appointment) }

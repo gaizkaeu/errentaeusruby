@@ -9,12 +9,30 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
     super
   end
 
-  def index?
-    true
+  def permitted_filter_params_manage
+    case user.account_type
+    when 'admin' || 'org_manage'
+      %i[coordinates location_name name price_range featured owner_id]
+    else
+      %i[]
+    end
+  end
+
+  def filter_forced_params_manage
+    case user.account_type
+    when 'org_manage'
+      { owner_id: user.id }
+    else
+      {}
+    end
   end
 
   def show?
-    index?
+    if record.status == 'not_subscribed'
+      (user.account_type == 'org_manage' && record.owner_id == user.id) || user.admin?
+    else
+      true
+    end
   end
 
   def create?
@@ -27,10 +45,6 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
 
   def update?
     record.owner_id == user.id
-  end
-
-  def manage_index?
-    user.account_type == 'org_manage' || user.admin?
   end
 
   def manage_subscription?
@@ -51,5 +65,9 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
 
   def destroy?
     update?
+  end
+
+  def manage_index?
+    user.account_type == 'org_manage' || user.admin?
   end
 end

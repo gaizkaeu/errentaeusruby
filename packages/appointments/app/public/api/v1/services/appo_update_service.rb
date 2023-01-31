@@ -1,4 +1,4 @@
-class Api::V1::Services::UpdateAppointmentService < ApplicationService
+class Api::V1::Services::AppoUpdateService < ApplicationService
   include Authorization
 
   def call(current_account, id, appointment_params, raise_error: false)

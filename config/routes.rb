@@ -22,8 +22,6 @@ Rails.application.routes.draw do
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
         get :reviews, to: 'organization_manage#reviews', on: :member, as: :reviews
-        post 'create-subscription', to: 'organization_manage#create_subscription', on: :member, as: :create_subscription
-
         resources :stats, only: %i[index], controller: 'organization_stats'
 
         resources 'lawyer-profiles', only: %i[index show], controller: 'organization_lawyers', as: :lawyer_profiles do

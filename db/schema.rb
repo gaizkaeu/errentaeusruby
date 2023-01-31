@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_153116) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_143649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -263,6 +263,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_153116) do
     t.string "country", default: ""
     t.string "subscription_id"
     t.integer "status", default: 0
+    t.integer "app_fee", default: 10
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end

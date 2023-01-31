@@ -26,6 +26,6 @@ class Api::V1::OrganizationSubscriptionController < ApiBaseController
   end
 
   def create_subscription_params
-    params.slice(:plan_id, :return_url)
+    params.slice(:plan_id, :return_url, :price_id)
   end
 end

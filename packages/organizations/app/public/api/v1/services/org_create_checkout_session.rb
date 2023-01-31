@@ -7,7 +7,7 @@ class Api::V1::Services::OrgCreateCheckoutSession < ApplicationService
 
     raise Pundit::NotAuthorizedError if can_create_checkout_session?(organization) && raise_error
 
-    session(params[:return_url], current_account.stripe_customer_id, organization.id)
+    session(params[:return_url], current_account.stripe_customer_id, params[:price_id], organization.id)
   end
 
   private
@@ -17,20 +17,20 @@ class Api::V1::Services::OrgCreateCheckoutSession < ApplicationService
   end
 
   # rubocop:disable Metrics/MethodLength
-  def session(return_url, customer_id, org_id)
+  def session(return_url, customer_id, price_id, org_id)
     Stripe::Checkout::Session.create(
       {
         success_url: "#{Rails.application.config.x.frontend_app}#{return_url}?session_id={CHECKOUT_SESSION_ID}",
         mode: 'subscription',
         customer: customer_id,
-        metadata: { type: 'org_payment_intent', id: org_id, subscription_type: 'featured_city' },
+        metadata: { type: 'org_payment_intent', id: org_id },
         subscription_data: {
-          metadata: { type: 'org_payment_intent', id: org_id, subscription_type: 'featured_city' }
+          metadata: { type: 'org_payment_intent', id: org_id }
         },
         line_items: [
           {
             quantity: 1,
-            price: 'price_1MVsoAGrlIhNYf6eOtx9sNvE'
+            price: price_id
           }
         ]
       }

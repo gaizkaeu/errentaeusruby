@@ -1,4 +1,4 @@
-class Api::V1::Services::UpdateLawyerProfileService < ApplicationService
+class Api::V1::Services::LawProfUpdateService < ApplicationService
   include Authorization
 
   def call(current_account, lawyer_profile, lawyer_profile_params, raise_error: false)

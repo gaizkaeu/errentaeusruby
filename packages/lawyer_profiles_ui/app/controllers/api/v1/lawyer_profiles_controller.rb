@@ -17,7 +17,7 @@ module Api
       end
 
       def create
-        lawyer_profile = Api::V1::Services::CreateLawyerProfileService.new.call(current_user, lawyer_profile_params_create)
+        lawyer_profile = Api::V1::Services::LawProfCreateService.new.call(current_user, lawyer_profile_params_create)
 
         if lawyer_profile.persisted?
           render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile), status: :created, location: lawyer_profile
@@ -27,7 +27,7 @@ module Api
       end
 
       def update
-        lawyer_profile = Api::V1::Services::UpdateLawyerProfileService.new.call(current_user, params[:id], lawyer_profile_params_update, raise_error: false)
+        lawyer_profile = Api::V1::Services::LawProfUpdateService.new.call(current_user, params[:id], lawyer_profile_params_update, raise_error: false)
         if lawyer_profile.errors.empty?
           render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile), status: :ok
         else

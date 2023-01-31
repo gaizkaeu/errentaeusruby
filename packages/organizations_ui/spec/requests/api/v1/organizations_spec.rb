@@ -4,7 +4,7 @@ RSpec.describe 'Organizations' do
   context 'when logged in lawyer' do
     let(:user) { create(:user) }
     let(:lawyer) { create(:lawyer) }
-    let(:organization) { create(:organization, owner_id: lawyer.id) }
+    let(:organization) { create(:organization, owner_id: lawyer.id, status: 'featured_city') }
 
     before do
       sign_in(lawyer)

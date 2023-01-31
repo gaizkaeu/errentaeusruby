@@ -10,7 +10,11 @@ class Api::V1::OrganizationManageController < ApiBaseController
         query.all.limit(25).order(status: :desc, created_at: :desc)
       end
 
-    render json: Api::V1::Serializers::OrganizationSerializer.new(organizations)
+    render json: Api::V1::Serializers::OrganizationSerializer.new(organizations, serializer_config)
+  end
+
+  def show
+    render json: Api::V1::Serializers::OrganizationSerializer.new(@organization, serializer_config)
   end
 
   def create
@@ -33,7 +37,7 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def reviews
-    reviews = Api::V1::Repositories::ReviewRepository.filter(filtering_params.merge!(organization_id: params[:id]))
+    reviews = Api::V1::Repositories::ReviewRepository.filter(review_filter_params.merge!(organization_id: params[:id]))
     render json: Api::V1::Serializers::ReviewSerializer.new(reviews, serializer_config)
   end
 
@@ -53,6 +57,11 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def filtering_params
-    params.slice(*Api::V1::Repositories::OrganizationRepository::FILTER_KEYS)
+    policy = Api::V1::OrganizationPolicy.new(current_user, Api::V1::Organization)
+    params.slice(policy.permitted_filter_params_manage).merge!(policy.filter_forced_params_manage)
+  end
+
+  def review_filter_params
+    params.slice(*Api::V1::Repositories::ReviewRepository::FILTER_KEYS)
   end
 end

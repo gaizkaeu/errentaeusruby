@@ -1,4 +1,4 @@
-class Api::V1::Services::CreateLawyerProfileService < ApplicationService
+class Api::V1::Services::LawProfCreateService < ApplicationService
   include Authorization
 
   def call(current_account, lawyer_profile_params, raise_error: false)

@@ -21,7 +21,7 @@ module Api
       end
 
       def create
-        appointment = Api::V1::Services::CreateAppointmentService.new.call(current_user, appointment_params)
+        appointment = Api::V1::Services::AppoCreateService.new.call(current_user, appointment_params)
 
         if appointment.persisted?
           render json: Api::V1::Serializers::AppointmentSerializer.new(appointment), status: :created, location: appointment
@@ -31,7 +31,7 @@ module Api
       end
 
       def update
-        appointment = Api::V1::Services::UpdateAppointmentService.new.call(current_user, params[:id], appointment_update_params, raise_error: false)
+        appointment = Api::V1::Services::AppoUpdateService.new.call(current_user, params[:id], appointment_update_params, raise_error: false)
         if appointment.errors.empty?
           render json: Api::V1::Serializers::AppointmentSerializer.new(appointment), status: :ok
         else
@@ -48,7 +48,7 @@ module Api
       private
 
       def set_appointment
-        @appointment = Api::V1::Services::FindAppointmentService.new.call(current_user, params[:id])
+        @appointment = Api::V1::Services::AppoFindService.new.call(current_user, params[:id])
       end
 
       # Only allow a list of trusted parameters through.
