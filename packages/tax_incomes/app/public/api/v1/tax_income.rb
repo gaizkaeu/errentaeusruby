@@ -82,7 +82,7 @@ module Api
           return
         end
 
-        lawyer = Api::V1::Repositories::LawyerProfileRepository.first
+        lawyer = Api::V1::Repositories::LawyerProfileRepository.where(organization_id: organization_id, lawyer_status: 'on_duty', org_status: 'accepted').first
         return if lawyer.nil?
         return unless update!(lawyer_id: lawyer.id)
 

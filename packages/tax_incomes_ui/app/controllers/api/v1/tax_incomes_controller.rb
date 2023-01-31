@@ -18,7 +18,7 @@ module Api
       end
 
       def create
-        @tax_income = Api::V1::Services::CreateTaxService.new.call(current_user, parse_params(tax_income_params_create, nested_estimation_params[:token]))
+        @tax_income = Api::V1::Services::TaxCreateService.new.call(current_user, parse_params(tax_income_params_create, nested_estimation_params[:token]))
         if @tax_income.persisted?
           render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
         else
@@ -52,7 +52,7 @@ module Api
       end
 
       def update
-        @tax_income = Api::V1::Services::UpdateTaxService.new.call(current_user, @tax_income, tax_income_params_update)
+        @tax_income = Api::V1::Services::TaxUpdateService.new.call(current_user, @tax_income, tax_income_params_update)
         if @tax_income.errors.empty?
           render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
         else
@@ -70,7 +70,7 @@ module Api
       private
 
       def set_tax_income
-        @tax_income = Api::V1::Services::FindTaxService.new.call(current_user, params[:id])
+        @tax_income = Api::V1::Services::TaxFindService.new.call(current_user, params[:id])
       end
 
       def tax_income_params_create

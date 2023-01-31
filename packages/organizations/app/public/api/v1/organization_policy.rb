@@ -29,7 +29,7 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
 
   def show?
     if record.status == 'not_subscribed'
-      (user.account_type == 'org_manage' && record.owner_id == user.id) || user.admin?
+      (user.org_manage? && record.owner_id == user.id) || user.admin?
     else
       true
     end
@@ -44,7 +44,7 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    record.owner_id == user.id
+    record.owner_id == user.id || user.admin?
   end
 
   def manage_subscription?

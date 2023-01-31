@@ -1,4 +1,4 @@
-class Api::V1::Services::CreateTaxService < ApplicationService
+class Api::V1::Services::TaxCreateService < ApplicationService
   include Authorization
 
   def call(current_account, tax_income_params, raise_error: false)

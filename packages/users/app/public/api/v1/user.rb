@@ -32,6 +32,10 @@ class Api::V1::User
     @account_type == 'client'
   end
 
+  def org_manage?
+    @account_type == 'org_manage'
+  end
+
   def admin?
     @account_type == 'admin'
   end

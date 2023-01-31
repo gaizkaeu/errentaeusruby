@@ -16,4 +16,4 @@ Api::V1::Repositories::UserRepository.add({ first_name: 'Gaizka', last_name: 'Ur
 owner = Api::V1::Repositories::UserRepository.add({ first_name: 'Eliza', last_name: 'Asesores', account_type: :org_manage, account_id: acc_gestion.id }, raise_error: true)
 law = Api::V1::Repositories::UserRepository.add({ first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: acc_lawyer.id }, raise_error: true)
 org = Api::V1::Repositories::OrganizationRepository.add({ name: 'Eliza Asesores', phone: '1234567890', email: 'contacto@elizaasesores.com', website: 'https://www.elizaasesores.com', description: 'Eliza Asesores', latitude: 42.84, longitude: -2.67, owner_id: owner.id }, raise_error: true)
-Api::V1::Repositories::LawyerProfileRepository.add({ user_id: law.id, organization_id: org.id, org_status: :accepted }, raise_error: true)
+Api::V1::Repositories::LawyerProfileRepository.add({ user_id: law.id, organization_id: org.id, org_status: :accepted, lawyer_status: :on_duty }, raise_error: true)

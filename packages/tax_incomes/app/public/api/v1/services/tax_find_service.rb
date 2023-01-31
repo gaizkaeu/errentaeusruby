@@ -1,4 +1,4 @@
-class Api::V1::Services::FindTaxService < ApplicationService
+class Api::V1::Services::TaxFindService < ApplicationService
   include Authorization
 
   def call(current_account, id)
