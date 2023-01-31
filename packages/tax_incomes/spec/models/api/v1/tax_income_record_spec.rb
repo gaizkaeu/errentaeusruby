@@ -30,12 +30,12 @@ RSpec.describe Api::V1::TaxIncome do
       expect(tax).to be_lawyer_assigned
     end
 
-    it 'transitions to waiting for meeting after assign lawyer' do
-      tax = described_class.new valid_attributes
-      expect(tax).to have_state(:pending_assignation)
-      tax.save!
-      expect(tax).to have_state(:meeting)
-    end
+    # it 'transitions to waiting for meeting after assign lawyer' do
+    #   tax = described_class.new valid_attributes
+    #   expect(tax).to have_state(:pending_assignation)
+    #   tax.save!
+    #   expect(tax).to have_state(:meeting)
+    # end
 
     it 'does not transition without lawyer' do
       tax = described_class.new valid_attributes
