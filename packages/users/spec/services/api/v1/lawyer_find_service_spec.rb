@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::FindLawyerService, type: :service do
+describe Api::V1::Services::LawyerFindService, type: :service do
   subject(:service) { described_class.new }
 
   let(:user_record) { create(:lawyer) }

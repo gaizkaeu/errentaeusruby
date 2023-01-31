@@ -6,12 +6,12 @@ module Api
       before_action :authenticate
 
       def index
-        users = Api::V1::Services::FindUserService.new.call(current_user, filtering_params)
+        users = Api::V1::Services::UserFindService.new.call(current_user, filtering_params)
         render json: Api::V1::Serializers::UserSerializer.new(users).serializable_hash
       end
 
       def show
-        user = Api::V1::Services::FindUserService.new.call(current_user, filtering_params, params[:id])
+        user = Api::V1::Services::UserFindService.new.call(current_user, filtering_params, params[:id])
         render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash
       end
 
@@ -33,7 +33,7 @@ module Api
       # rubocop:enable Rails/SaveBang
 
       def update
-        user = Api::V1::Services::UpdateUserService.new.call(current_user, params[:id], user_update_params)
+        user = Api::V1::Services::UserUpdateService.new.call(current_user, params[:id], user_update_params)
         if user.errors.any?
           render json: user.errors, status: :unprocessable_entity
         else

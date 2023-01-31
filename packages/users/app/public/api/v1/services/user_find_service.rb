@@ -1,4 +1,4 @@
-class Api::V1::Services::FindUserService < ApplicationService
+class Api::V1::Services::UserFindService < ApplicationService
   include Authorization
 
   def call(current_account, filters = {}, id = nil)

@@ -27,15 +27,14 @@ module Api
       validates :first_name, length: { maximum: 15, minimum: 2 }
 
       belongs_to :account, class_name: 'Account', inverse_of: :user, optional: true
+      after_create_commit :create_stripe_customer if Rails.env.production? || Rails.env.development?
 
       def create_stripe_customer
-        return unless Rails.env.production?
-
         # rubocop:disable Rails/SaveBang
         customer = Stripe::Customer.create(
           {
             name: (first_name || id) + (last_name || ''),
-            email:,
+            email: account.email,
             metadata: {
               user_id: id
             }

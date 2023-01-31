@@ -1,4 +1,4 @@
-class Api::V1::Services::UpdateUserService
+class Api::V1::Services::UserUpdateService
   include Authorization
 
   def call(current_account, id, params, raise_error: false)

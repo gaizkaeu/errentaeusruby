@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::CreateUserService, type: :service do
+describe Api::V1::Services::UserCreateService, type: :service do
   subject(:service) { described_class.new }
 
   let(:requesting_ip) { '0.0.0.0' }

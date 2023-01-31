@@ -15,20 +15,25 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
 
-      resources :organizations do
-        get :lawyers, on: :member
+      resources :organizations, except: %i[ create delete update ] do
         get :reviews, on: :member
         post :reviews, on: :member, to: 'organizations#create_review'
-        resources :manage, controller: 'organization_manage' do
-          post 'accept/:lawyer_profile_id', to: 'organization_manage#accept', on: :collection, as: :accept
-          post 'remove/:lawyer_profile_id', to: 'organization_manage#remove', on: :collection, as: :reject
-          get 'lawyer/:lawyer_profile_id', to: 'organization_manage#lawyer', on: :collection, as: :lawyer
-          get :lawyers, to: 'organization_manage#lawyers', on: :collection, as: :lawyers
-          get :reviews, to: 'organization_manage#reviews', on: :collection, as: :reviews
-          post 'create-subscription', to: 'organization_manage#create_subscription', on: :collection, as: :create_subscription
-        end
+      end
+
+      resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
+        get :reviews, to: 'organization_manage#reviews', on: :member, as: :reviews
+        post 'create-subscription', to: 'organization_manage#create_subscription', on: :member, as: :create_subscription
 
         resources :stats, only: %i[index], controller: 'organization_stats'
+
+        resources 'lawyer-profiles', only: %i[index show], controller: 'organization_lawyers', as: :lawyer_profiles do
+          post :accept, to: 'organization_lawyers#accept', as: :accept, on: :member
+          post :remove, to: 'organization_lawyers#remove', as: :reject, on: :member
+        end
+
+        resources :subscription, controller: 'organization_subscription', only: %i[create] do
+          get :retrieve, to: 'organization_subscription#retrieve', on: :collection
+        end
       end
 
       resources :appointments

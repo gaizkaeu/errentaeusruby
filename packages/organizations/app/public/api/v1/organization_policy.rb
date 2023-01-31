@@ -29,6 +29,14 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
     record.owner_id == user.id
   end
 
+  def manage_index?
+    user.account_type == 'org_manage' || user.admin?
+  end
+
+  def manage_subscription?
+    update?
+  end
+
   def manage?
     update?
   end

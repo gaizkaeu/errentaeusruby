@@ -4,7 +4,7 @@ class Api::V1::Services::OrgCreateStatsService < ApplicationService
     save_method = raise_error ? :save! : :save
 
     org = Api::V1::OrganizationRecord.find(organization_id)
-    org_stat = Api::V1::OrganizationStatsRecord.find_or_initialize_by(organization_id:)
+    org_stat = Api::V1::OrganizationStatsRecord.find_or_initialize_by(organization_id:, date: Time.zone.today)
     org_stat.lawyers_active_count = org.lawyers_active
     org_stat.lawyers_inactive_count = org.lawyers_inactive
     org_stat.tax_income_count_acc = org.tax_income_count

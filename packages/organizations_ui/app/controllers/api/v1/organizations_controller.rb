@@ -33,31 +33,10 @@ module Api
         render json: Api::V1::Serializers::ReviewSerializer.new(reviews)
       end
 
-      def create
-        organization = Api::V1::Services::OrgCreateService.new.call(current_user, organization_params)
-
-        if organization.persisted?
-          render json: Api::V1::Serializers::OrganizationSerializer.new(organization), status: :created, location: organization
-        else
-          render json: organization.errors, status: :unprocessable_entity
-        end
-      end
-
-      def update
-        organization = Api::V1::Services::OrgUpdateService.new.call(current_user, params[:id], organization_params, raise_error: false)
-        if organization.errors.empty?
-          render json: Api::V1::Serializers::OrganizationSerializer.new(organization), status: :ok
-        else
-          render json: organization.errors, status: :unprocessable_entity
-        end
-      end
-
       def lawyers
         lawyers = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params.merge!(organization_id: params[:id], org_status: 'accepted'))
         render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyers)
       end
-
-      def destroy; end
 
       def handler
         render json: { error: 'not found' }, status: :unprocessable_entity
@@ -71,11 +50,6 @@ module Api
 
       def review_params
         params.require(:review).permit(:rating, :comment).merge!(organization_id: params[:id], user_id: current_user.id)
-      end
-
-      # Only allow a list of trusted parameters through.
-      def organization_params
-        params.require(:organization).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo).merge!(owner_id: current_user.id)
       end
 
       def filtering_params

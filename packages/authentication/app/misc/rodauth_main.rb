@@ -136,7 +136,7 @@ class RodauthMain < Rodauth::Rails::Auth
     end
 
     after_create_account do
-      Api::V1::Services::CreateUserService.call({ account_id:, first_name: param('first_name'), last_name: param('last_name') })
+      Api::V1::Services::UserCreateService.call({ account_id:, first_name: param('first_name'), last_name: param('last_name') })
     end
 
     webauthn_origin Rails.application.config.x.frontend_app
