@@ -34,6 +34,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :reviews, only: %i[create index]
+
       resources :appointments
 
       resources :lawyer_profiles do

@@ -18,6 +18,6 @@ class Api::V1::ReviewRecord < ApplicationRecord
   belongs_to :organization, class_name: 'Api::V1::OrganizationRecord'
   belongs_to :user, class_name: 'Api::V1::UserRecord'
 
-  after_create_commit { OrganizationPubSub.publish('organization.review_created', organization_id:, rating:, date: Time.zone.today) }
-  after_destroy_commit { OrganizationPubSub.publish('organization.review_deleted', organization_id:, rating:, date: Time.zone.today) }
+  after_create_commit { OrganizationPubSub.publish('organization.review_created', organization_id:, rating:, date: Time.zone.today.to_s) }
+  after_destroy_commit { OrganizationPubSub.publish('organization.review_deleted', organization_id:, rating:, date: Time.zone.today.to_s) }
 end

@@ -43,6 +43,7 @@ FactoryBot.define do
 
   factory :tax_income, class: 'Api::V1::TaxIncome' do
     client
+    association :lawyer, factory: :lawyer_profile
     organization
   end
 

@@ -14,6 +14,7 @@ module Api
       end
 
       def show
+        authorize @tax_income, :show?
         render json: Api::V1::Serializers::TaxIncomeSerializer.new(@tax_income).serializable_hash
       end
 
@@ -70,15 +71,15 @@ module Api
       private
 
       def set_tax_income
-        @tax_income = Api::V1::Services::TaxFindService.new.call(current_user, params[:id])
+        @tax_income = Api::V1::Repositories::TaxIncomeRepository.find(params[:id])
       end
 
       def tax_income_params_create
-        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes_create).with_defaults(client_id: current_user.id)
+        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, Api::V1::TaxIncome).permitted_attributes_create).with_defaults(client_id: current_user.id)
       end
 
       def tax_income_params_update
-        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, nil).permitted_attributes_update)
+        params.require(:tax_income).permit(TaxIncomePolicy.new(current_user, Api::V1::TaxIncome).permitted_attributes_update)
       end
 
       def nested_estimation_params
@@ -87,7 +88,7 @@ module Api
 
       def filtering_params
         policy = TaxIncomePolicy.new(current_user, Api::V1::TaxIncome)
-        params.slice(policy.permitted_filter_params).merge!(policy.filter_forced_params)
+        params.slice(*policy.permitted_filter_params).merge!(policy.filter_forced_params)
       end
     end
   end

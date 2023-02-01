@@ -1,4 +1,4 @@
-class Api::V1::Services::IndexUserHistoryService < ApplicationService
+class Api::V1::Services::UserHistoryIndexService < ApplicationService
   include Authorization
 
   def call(current_account, user_id, _filters = {})

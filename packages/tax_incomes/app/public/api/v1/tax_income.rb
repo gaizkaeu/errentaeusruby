@@ -8,8 +8,8 @@ module Api
       self.id_prefix = 'tax'
 
       scope :filter_by_state, ->(state) { where(state:) }
-      scope :filter_by_client_id, ->(client_id) { where(client_id:) }
       scope :filter_by_client_name, ->(client_name) { joins(:client).where("lower(users.first_name || ' ' || users.last_name) like ?", "%#{client_name.downcase}%").limit(10) }
+      scope :filter_by_client_id, ->(client_id) { where(client_id:) }
       scope :filter_by_lawyer_id, ->(lawyer_id) { where(lawyer_id:) }
       scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }
       scope :filter_by_paid, ->(paid) { where(paid:) }
@@ -75,23 +75,16 @@ module Api
 
       private
 
-      # rubocop:disable Metrics/AbcSize
       def assign_lawyer
         unless lawyer_id.nil?
           meeting! if state == 'pending_assignation'
           return
         end
 
-        lawyer = Api::V1::Repositories::LawyerProfileRepository.where(organization_id:, lawyer_status: 'on_duty', org_status: 'accepted').first
-        return if lawyer.nil?
-        return unless update!(lawyer_id: lawyer.id)
+        Api::V1::Services::TaxAssignLawyerService.new.call(id)
 
         meeting!
-        TaxIncomePubSub.publish('tax_income.lawyer_assigned', tax_income_id: id, lawyer_id: lawyer.id)
-        OrganizationPubSub.publish('organization.tax_income_assigned', organization_id: lawyer.organization_id, date: Time.zone.today.to_s)
-        LawyerPubSub.publish('lawyer.tax_income_assigned', lawyer_id: lawyer.id)
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end

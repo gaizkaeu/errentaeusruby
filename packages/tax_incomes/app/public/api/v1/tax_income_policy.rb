@@ -20,10 +20,15 @@ module Api
       end
 
       def permitted_attributes_update
-        if user.lawyer?
-          %i[client_id observations price lawyer_id id state year]
+        case user.account_type
+        when 'client'
+          %i[observations year]
+        when 'lawyer'
+          %i[observations year price state]
+        when 'org_manage'
+          %i[lawyer_id state]
         else
-          %i[observations]
+          []
         end
       end
 
@@ -56,9 +61,10 @@ module Api
       end
 
       def show?
-        if user.client?
+        case user.account_type
+        when 'client'
           record.client_id == user.id
-        elsif user.lawyer?
+        when 'lawyer'
           Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: user.id).id == record.lawyer_id
         else
           false
@@ -66,6 +72,21 @@ module Api
       rescue ActiveRecord::RecordNotFound
         false
       end
+
+      # rubocop:disable Metrics/AbcSize
+      def update?
+        case user.account_type
+        when 'client'
+          record.client_id == user.id
+        when 'lawyer'
+          Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: user.id).id == record.lawyer_id
+        when 'org_manage'
+          Api::V1::Repositories::OrganizationRepository.find_by!(owner_id: user.id).id == record.organization_id
+        else
+          false
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
 
       def create?
         show?
@@ -80,10 +101,6 @@ module Api
       end
 
       def payment_data?
-        create?
-      end
-
-      def update?
         create?
       end
 

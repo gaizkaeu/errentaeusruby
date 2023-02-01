@@ -1,4 +1,4 @@
-class Api::V1::Services::IndexAccountWebauthnKeysService < ApplicationService
+class Api::V1::Services::WebauthnKeysIndex < ApplicationService
   include Authorization
 
   def call(current_account, user_id, _filters = {})
