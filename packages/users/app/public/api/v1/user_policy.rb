@@ -10,19 +10,24 @@ class Api::V1::UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_update
-    %i[first_name last_name]
+    case user.account_type
+    when 'admin'
+      %i[account_type]
+    else
+      %i[first_name last_name]
+    end
   end
 
   def index?
-    user.lawyer?
+    user.admin?
   end
 
   def block?
-    user.lawyer?
+    user.admin?
   end
 
   def show?
-    user.lawyer? || record.id == user.id
+    user.admin? || record.id == user.id
   end
 
   def access_history?

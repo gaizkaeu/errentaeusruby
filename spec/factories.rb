@@ -20,6 +20,14 @@ FactoryBot.define do
     account
   end
 
+  factory :admin, class: 'Api::V1::UserRecord' do
+    first_name { 'My Excellent' }
+    last_name  { 'Lawyer' }
+    phone { '1234567890' }
+    account_type { 'admin' }
+    account
+  end
+
   factory :blocked_user, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }

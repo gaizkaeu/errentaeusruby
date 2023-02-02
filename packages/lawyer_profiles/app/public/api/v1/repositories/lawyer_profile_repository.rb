@@ -1,5 +1,5 @@
 class Api::V1::Repositories::LawyerProfileRepository < Repositories::RepositoryBase
-  FILTER_KEYS = %i[].freeze
+  FILTER_KEYS = %i[organization_id lawyer_status org_status].freeze
   public_constant :FILTER_KEYS
 
   def self.map_record(record)

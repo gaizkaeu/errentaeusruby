@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_143649) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_01_191330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -203,7 +203,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_143649) do
     t.integer "org_status", default: 0, null: false
     t.integer "lawyer_status", default: 0, null: false
     t.integer "tax_income_count", default: 0
-    t.string "organization_id"
+    t.string "organization_id", null: false
+    t.index ["organization_id", "user_id"], name: "index_lawyer_profiles_on_organization_id_and_user_id", unique: true
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
   end
 

@@ -17,8 +17,8 @@ RSpec.describe 'Accounts' do
     end
   end
 
-  context 'when logged in lawyer' do
-    let(:user) { create(:lawyer) }
+  context 'when logged in admin' do
+    let(:user) { create(:admin) }
 
     before do
       sign_in(user)

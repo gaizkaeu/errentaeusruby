@@ -14,8 +14,7 @@ describe Api::V1::Services::LawProfUpdateService, type: :service do
 
       it 'updates a lawyer profile' do
         expect { service.call(lawyer, lawyer_profile.id, params) }
-          .to change { lawyer_profile.reload.organization_id }
-          .from(lawyer_profile.organization_id).to(organization.id)
+          .not_to(change { lawyer_profile.reload.organization_id })
       end
     end
 

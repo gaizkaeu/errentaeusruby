@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::LawProfRejectService, type: :service do
+describe Api::V1::Services::LawProfDeleteService, type: :service do
   subject(:service) { described_class.new }
 
   let(:lawyer) { create(:lawyer) }
@@ -12,17 +12,16 @@ describe Api::V1::Services::LawProfRejectService, type: :service do
       let(:lawyer_profile) { create(:lawyer_profile, user: lawyer, organization:, org_status: :pending) }
 
       it 'does reject lawyer' do
-        expect { service.call(organization.owner, organization.id, lawyer_profile.id) }
-          .to change { lawyer_profile.reload.org_status }
-          .from('pending').to('rejected')
+        expect { service.call(organization.owner, lawyer_profile.id) }
+          .not_to change { lawyer_profile.reload.org_status }
       end
 
       it 'does return lawyer profile' do
-        expect(service.call(organization.owner, organization.id, lawyer_profile.id)).to eq(lawyer_profile)
+        expect(service.call(organization.owner, lawyer_profile.id)).to eq(lawyer_profile)
       end
 
       it 'does not raise error' do
-        expect { service.call(organization.owner, organization.id, lawyer_profile.id) }
+        expect { service.call(organization.owner, lawyer_profile.id) }
           .not_to raise_error
       end
     end
@@ -34,13 +33,13 @@ describe Api::V1::Services::LawProfRejectService, type: :service do
         it 'does not reject lawyer' do
           expect do
             expect do
-              service.call(create(:lawyer), organization.id, lawyer_profile.id)
+              service.call(create(:lawyer), lawyer_profile.id)
             end.to raise_error(Pundit::NotAuthorizedError)
           end.not_to change { lawyer_profile.reload.org_status }
         end
 
         it 'does raise error' do
-          expect { service.call(create(:lawyer), organization.id, lawyer_profile.id) }
+          expect { service.call(create(:lawyer), lawyer_profile.id) }
             .to raise_error(Pundit::NotAuthorizedError)
         end
       end
@@ -49,13 +48,13 @@ describe Api::V1::Services::LawProfRejectService, type: :service do
         it 'does not reject lawyer' do
           expect do
             expect do
-              service.call(create(:user), organization.id, lawyer_profile.id)
+              service.call(create(:user), lawyer_profile.id)
             end.to raise_error(Pundit::NotAuthorizedError)
           end.not_to change { lawyer_profile.reload.org_status }
         end
 
         it 'does raise error' do
-          expect { service.call(create(:user), organization.id, lawyer_profile.id) }
+          expect { service.call(create(:user), lawyer_profile.id) }
             .to raise_error(Pundit::NotAuthorizedError)
         end
       end

@@ -6,6 +6,11 @@ module Api
       before_action :authenticate
       before_action :set_lawyer_profile, only: %i[show update destroy]
 
+      def index
+        lawyer_profiles = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params)
+        render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profiles, serializer_config)
+      end
+
       def show
         render json: Api::V1::Serializers::LawyerProfileSerializer.new(@lawyer_profile)
       end
@@ -35,12 +40,6 @@ module Api
         end
       end
 
-      def destroy; end
-
-      def handler
-        render json: { error: 'not found' }, status: :unprocessable_entity
-      end
-
       private
 
       def set_lawyer_profile
@@ -49,11 +48,20 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def lawyer_profile_params_create
-        params.require(:lawyer_profile).permit(:organization_id, :avatar, :lawyer_status).merge!(user_id: current_user.id)
+        params.require(:lawyer_profile).permit(:organization_id, :avatar).merge!(user_id: current_user.id)
       end
 
       def lawyer_profile_params_update
-        params.require(:lawyer_profile).permit(:avatar, :lawyer_status)
+        params.require(:lawyer_profile).permit(LawyerProfilePolicy.new(current_user, Api::V1::LawyerProfile).permitted_attributes_update)
+      end
+
+      def serializer_config
+        LawyerProfilePolicy.new(current_user, Api::V1::LawyerProfile).serializer_config
+      end
+
+      def filtering_params
+        params.require(:organization_id)
+        params.slice(*Api::V1::Repositories::LawyerProfileRepository::FILTER_KEYS)
       end
     end
   end

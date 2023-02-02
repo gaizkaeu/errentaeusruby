@@ -6,6 +6,7 @@ module Api
       before_action :authenticate
 
       def index
+        authorize Api::V1::User, :index?
         users = Api::V1::Services::UserFindService.new.call(current_user, filtering_params)
         render json: Api::V1::Serializers::UserSerializer.new(users).serializable_hash
       end
@@ -48,9 +49,7 @@ module Api
       end
 
       def filtering_params
-        return unless current_user.lawyer?
-
-        params.slice(Api::V1::Repositories::UserRepository::FILTER_KEYS)
+        params.slice(*Api::V1::Repositories::UserRepository::FILTER_KEYS)
       end
     end
   end

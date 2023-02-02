@@ -25,11 +25,11 @@ RSpec.describe Api::V1::LawyerProfileRecord do
 
     describe 'filter_by_org_status' do
       let(:lawyer_profile) { create(:lawyer_profile, org_status: :accepted) }
-      let(:lawyer_profile_two) { create(:lawyer_profile, org_status: :rejected) }
+      let(:lawyer_profile_two) { create(:lawyer_profile, org_status: :pending) }
 
       it 'returns lawyer profiles by organization status' do
         expect(described_class.filter_by_org_status(:accepted)).to include(lawyer_profile)
-        expect(described_class.filter_by_org_status(:rejected)).to include(lawyer_profile_two)
+        expect(described_class.filter_by_org_status(:pending)).to include(lawyer_profile_two)
       end
     end
 

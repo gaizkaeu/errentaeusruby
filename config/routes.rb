@@ -24,11 +24,6 @@ Rails.application.routes.draw do
         get :reviews, to: 'organization_manage#reviews', on: :member, as: :reviews
         resources :stats, only: %i[index], controller: 'organization_stats'
 
-        resources 'lawyer-profiles', only: %i[index show], controller: 'organization_lawyers', as: :lawyer_profiles do
-          post :accept, to: 'organization_lawyers#accept', as: :accept, on: :member
-          post :remove, to: 'organization_lawyers#remove', as: :reject, on: :member
-        end
-
         resources :subscription, controller: 'organization_subscription', only: %i[create] do
           get :retrieve, to: 'organization_subscription#retrieve', on: :collection
         end

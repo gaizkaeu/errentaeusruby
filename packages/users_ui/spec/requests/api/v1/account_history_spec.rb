@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'AccountHistory' do
   let(:user) { create(:user) }
-  let(:lawyer) { create(:lawyer) }
+  let(:admin) { create(:admin) }
   let(:account_history) { create(:account_history, account_id: user.account_id) }
 
-  context 'when logged in lawyer' do
+  context 'when logged in admin' do
     before do
-      sign_in(lawyer)
+      sign_in(admin)
     end
 
     describe 'index /:id/history' do
@@ -30,7 +30,7 @@ RSpec.describe 'AccountHistory' do
       end
 
       it 'renders error when user is not the same' do
-        authorized_get history_api_v1_account_url(lawyer.id), as: :json
+        authorized_get history_api_v1_account_url(admin.id), as: :json
         expect(response).to be_forbidden
       end
     end

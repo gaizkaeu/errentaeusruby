@@ -6,19 +6,19 @@ describe Api::V1::Services::UserFindService, type: :service do
   let(:requesting_ip) { '0.0.0.0' }
 
   describe '#call' do
-    context 'with lawyer account' do
-      let(:user_record) { create(:lawyer) }
+    context 'with admin account' do
+      let(:user_record) { create(:admin) }
       let(:user) { Api::V1::User.new(user_record.attributes.symbolize_keys!) }
 
       it 'does return with correct filters' do
-        users = service.call(user, { all_first_name: user_record.first_name })
+        users = service.call(user, { name: user_record.first_name })
 
         expect(users).to be_a Array
         expect(users.first.first_name).to eq user_record.first_name
       end
 
       it 'does return with correct filters and id' do
-        users = service.call(user, { all_first_name: user_record.first_name }, user_record.id)
+        users = service.call(user, { name: user_record.first_name }, user_record.id)
 
         expect(users).to be_a Api::V1::User
         expect(users.first_name).to eq user_record.first_name
@@ -32,7 +32,7 @@ describe Api::V1::Services::UserFindService, type: :service do
 
       it 'does return error with correct filters' do
         expect do
-          service.call(user, { all_first_name: user_record.first_name })
+          service.call(user, { name: user_record.first_name })
         end.to raise_error Pundit::NotAuthorizedError
       end
 

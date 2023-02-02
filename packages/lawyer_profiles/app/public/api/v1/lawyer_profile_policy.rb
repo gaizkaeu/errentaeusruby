@@ -9,12 +9,32 @@ class Api::V1::LawyerProfilePolicy < ApplicationPolicy
     super
   end
 
+  def permitted_attributes_update
+    case user.account_type
+    when 'lawyer'
+      %i[avatar]
+    when 'org_manage'
+      %i[lawyer_status org_status]
+    else
+      []
+    end
+  end
+
+  def serializer_config
+    case user.account_type
+    when 'org_manage'
+      { params: { manage: true } }
+    else
+      {}
+    end
+  end
+
   def index?
-    true
+    user.org_manage?
   end
 
   def show?
-    index?
+    true
   end
 
   def create?
@@ -33,11 +53,7 @@ class Api::V1::LawyerProfilePolicy < ApplicationPolicy
     end
   end
 
-  def index_tax_incomes?
-    update?
-  end
-
-  def destroy?
+  def delete?
     update?
   end
 end

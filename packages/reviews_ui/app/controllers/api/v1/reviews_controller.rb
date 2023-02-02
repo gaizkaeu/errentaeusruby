@@ -3,7 +3,7 @@
 module Api
   module V1
     class ReviewsController < ::ApiBaseController
-      before_action :authenticate
+      before_action :authenticate, except: :index
 
       def index
         reviews = Api::V1::Repositories::ReviewRepository.filter(filtering_params)

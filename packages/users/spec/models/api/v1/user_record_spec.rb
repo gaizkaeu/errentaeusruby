@@ -16,7 +16,7 @@ RSpec.describe Api::V1::UserRecord do
       let(:user3) { create(:user, first_name: 'Jane', last_name: 'Doe') }
 
       it 'returns users matching the first name' do
-        expect(described_class.filter_by_all_first_name('John')).to match_array([user1, user2])
+        expect(described_class.filter_by_name('John')).to match_array([user1, user2])
       end
     end
 

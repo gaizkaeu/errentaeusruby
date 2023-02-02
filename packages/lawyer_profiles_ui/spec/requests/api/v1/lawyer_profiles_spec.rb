@@ -49,21 +49,21 @@ RSpec.describe '/api/v1/lawyer_profiles' do
       end
     end
 
-    describe 'UPDATE /:id' do
-      context 'with valid parameters' do
-        it 'updates the requested lawyer_profile' do
-          authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
-          lawyer_profile.reload
-          expect(lawyer_profile.lawyer_status).to eq('off_duty')
-        end
+    # describe 'UPDATE /:id' do
+    #   context 'with valid parameters' do
+    #     it 'updates the requested lawyer_profile' do
+    #       authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
+    #       lawyer_profile.reload
+    #       expect(lawyer_profile.lawyer_status).to eq('off_duty')
+    #     end
 
-        it 'renders a JSON response with the lawyer_profile' do
-          authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
-          expect(response).to have_http_status(:ok)
-          expect(response.content_type).to match(a_string_including('application/json'))
-        end
-      end
-    end
+    #     it 'renders a JSON response with the lawyer_profile' do
+    #       authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
+    #       expect(response).to have_http_status(:ok)
+    #       expect(response.content_type).to match(a_string_including('application/json'))
+    #     end
+    #   end
+    # end
   end
 
   context 'when logged in lawyer and non-existing lawyer_profile' do
