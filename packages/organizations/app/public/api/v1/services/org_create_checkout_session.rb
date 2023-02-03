@@ -5,7 +5,11 @@ class Api::V1::Services::OrgCreateCheckoutSession < ApplicationService
     organization = Api::V1::Repositories::OrganizationRepository.find(params[:id])
     authorize_with current_account, organization, :manage_subscription?
 
-    raise Pundit::NotAuthorizedError if can_create_checkout_session?(organization) && raise_error
+    unless can_create_checkout_session?(organization)
+      raise Pundit::NotAuthorizedError if raise_error
+
+      return
+    end
 
     session(params[:return_url], current_account.stripe_customer_id, params[:price_id], organization.id)
   end
@@ -13,7 +17,7 @@ class Api::V1::Services::OrgCreateCheckoutSession < ApplicationService
   private
 
   def can_create_checkout_session?(organization)
-    organization.subscription_id.nil? && organization.status == :not_subscribed
+    organization.subscription_id.nil? && organization.status == 'not_subscribed'
   end
 
   # rubocop:disable Metrics/MethodLength
