@@ -44,7 +44,8 @@ class Api::V1::OrganizationManageController < ApiBaseController
 
   # Only allow a list of trusted parameters through.
   def organization_params
-    params.require(:organization_manage).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo).merge!(owner_id: current_user.id)
+    policy = Api::V1::OrganizationPolicy.new(current_user, Api::V1::Organization)
+    params.require(:organization_manage).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :owner_id).merge!(policy.forced_create_params)
   end
 
   def serializer_config
@@ -54,9 +55,5 @@ class Api::V1::OrganizationManageController < ApiBaseController
   def filtering_params
     policy = Api::V1::OrganizationPolicy.new(current_user, Api::V1::Organization)
     params.slice(policy.permitted_filter_params_manage).merge!(policy.filter_forced_params_manage)
-  end
-
-  def review_filter_params
-    params.slice(*Api::V1::Repositories::ReviewRepository::FILTER_KEYS)
   end
 end

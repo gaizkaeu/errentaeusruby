@@ -1,4 +1,4 @@
-class Api::V1::OrganizationStats
+class Api::V1::OrganizationStat
   include ActiveModel::Conversion
   extend ActiveModel::Naming
   include ActiveModel::Validations

@@ -9,6 +9,15 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
     super
   end
 
+  def forced_create_params
+    case user.account_type
+    when 'org_manage'
+      { owner_id: user.id }
+    else
+      {}
+    end
+  end
+
   def permitted_filter_params_manage
     case user.account_type
     when 'admin' || 'org_manage'
@@ -36,7 +45,7 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
   end
 
   def create?
-    user.lawyer?
+    user.org_manage? || user.admin?
   end
 
   def review?
@@ -45,10 +54,6 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
 
   def update?
     record.owner_id == user.id || user.admin?
-  end
-
-  def manage_subscription?
-    update?
   end
 
   def manage?
@@ -64,6 +69,10 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
   end
 
   def destroy?
+    update?
+  end
+
+  def manage_subscription?
     update?
   end
 

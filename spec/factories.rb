@@ -82,6 +82,10 @@ FactoryBot.define do
     association :owner, factory: :org_manage
   end
 
+  factory :organization_stat, class: 'Api::V1::OrganizationStatRecord' do
+    organization
+  end
+
   factory :lawyer_profile, class: 'Api::V1::LawyerProfileRecord' do
     association :user, factory: :lawyer
     organization

@@ -1,4 +1,4 @@
-class Api::V1::Serializers::OrganizationStatsSerializer
+class Api::V1::Serializers::OrganizationStatSerializer
   include JSONAPI::Serializer
 
   set_type :organization_stat

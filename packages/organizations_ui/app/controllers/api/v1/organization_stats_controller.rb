@@ -3,8 +3,8 @@ class Api::V1::OrganizationStatsController < ApiBaseController
   before_action :set_organization
 
   def index
-    org_stats = Api::V1::Repositories::OrganizationStatsRepository.filter(filtering_params.merge!(organization_id: params[:organization_manage_id]))
-    render json: Api::V1::Serializers::OrganizationStatsSerializer.new(org_stats)
+    org_stats = Api::V1::Repositories::OrganizationStatRepository.filter(filtering_params.merge!(organization_id: params[:organization_manage_id]))
+    render json: Api::V1::Serializers::OrganizationStatSerializer.new(org_stats)
   end
 
   private
@@ -14,6 +14,6 @@ class Api::V1::OrganizationStatsController < ApiBaseController
   end
 
   def filtering_params
-    params.slice(*Api::V1::Repositories::OrganizationStatsRepository::FILTER_KEYS)
+    params.slice(*Api::V1::Repositories::OrganizationStatRepository::FILTER_KEYS)
   end
 end

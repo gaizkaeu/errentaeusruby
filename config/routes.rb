@@ -15,10 +15,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
 
-      resources :organizations, except: %i[ create delete update ] do
-        get :reviews, on: :member
-        post :reviews, on: :member, to: 'organizations#create_review'
-      end
+      resources :organizations, except: %i[ create delete update ]
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
         resources :stats, only: %i[index], controller: 'organization_stats'

@@ -16,17 +16,7 @@ module Api
       end
 
       def show
-        authorize @organization, :show?
         render json: Api::V1::Serializers::OrganizationSerializer.new(@organization)
-      end
-
-      def lawyers
-        lawyers = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params.merge!(organization_id: params[:id], org_status: 'accepted'))
-        render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyers)
-      end
-
-      def handler
-        render json: { error: 'not found' }, status: :unprocessable_entity
       end
 
       private

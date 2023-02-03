@@ -1,4 +1,4 @@
-class Api::V1::OrganizationStatsRecord < ApplicationRecord
+class Api::V1::OrganizationStatRecord < ApplicationRecord
   include PrettyId
   include Filterable
   extend T::Sig
