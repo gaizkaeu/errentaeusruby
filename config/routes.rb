@@ -21,7 +21,6 @@ Rails.application.routes.draw do
       end
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
-        get :reviews, to: 'organization_manage#reviews', on: :member, as: :reviews
         resources :stats, only: %i[index], controller: 'organization_stats'
 
         resources :subscription, controller: 'organization_subscription', only: %i[create] do

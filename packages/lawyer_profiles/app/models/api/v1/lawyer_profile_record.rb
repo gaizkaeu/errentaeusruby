@@ -16,7 +16,7 @@ class Api::V1::LawyerProfileRecord < ApplicationRecord
   scope :filter_by_lawyer_status, ->(lawyer_status) { where(lawyer_status:) }
 
   enum org_status: { pending: 0, accepted: 1 }
-  enum lawyer_status: { on_duty: 0, off_duty: 1, deleted: 2 }
+  enum lawyer_status: { off_duty: 0, on_duty: 1, deleted: 2 }
 
   belongs_to :organization, class_name: 'Api::V1::OrganizationRecord'
   belongs_to :user, class_name: 'Api::V1::UserRecord'

@@ -20,6 +20,14 @@ FactoryBot.define do
     account
   end
 
+  factory :org_manage, class: 'Api::V1::UserRecord' do
+    first_name { 'My Excellent' }
+    last_name  { 'Lawyer' }
+    phone { '1234567890' }
+    account_type { 'org_manage' }
+    account
+  end
+
   factory :admin, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
@@ -71,7 +79,7 @@ FactoryBot.define do
     prices do
       { prueba: 'asd' }
     end
-    association :owner, factory: :lawyer
+    association :owner, factory: :org_manage
   end
 
   factory :lawyer_profile, class: 'Api::V1::LawyerProfileRecord' do

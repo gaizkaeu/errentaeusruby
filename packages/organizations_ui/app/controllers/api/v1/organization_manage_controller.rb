@@ -36,11 +36,6 @@ class Api::V1::OrganizationManageController < ApiBaseController
     end
   end
 
-  def reviews
-    reviews = Api::V1::Repositories::ReviewRepository.filter(review_filter_params.merge!(organization_id: params[:id]))
-    render json: Api::V1::Serializers::ReviewSerializer.new(reviews, serializer_config)
-  end
-
   private
 
   def set_organization

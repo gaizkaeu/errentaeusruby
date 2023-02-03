@@ -34,7 +34,7 @@ module Api
       def update
         lawyer_profile = Api::V1::Services::LawProfUpdateService.new.call(current_user, params[:id], lawyer_profile_params_update, raise_error: false)
         if lawyer_profile.errors.empty?
-          render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile), status: :ok
+          render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile, serializer_config), status: :ok
         else
           render json: lawyer_profile.errors, status: :unprocessable_entity
         end

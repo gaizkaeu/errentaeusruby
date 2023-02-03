@@ -22,7 +22,59 @@ RSpec.describe '/api/v1/lawyer_profiles' do
   end
 
   let(:invalid_attributes) do
-    { organization_id: organization.id, org_status: 'accepted' }
+    { organization_id: 3, org_status: 'accepted' }
+  end
+
+  context 'when logged in organization owner' do
+    before do
+      sign_in(organization.owner)
+    end
+
+    describe 'GET /index' do
+      it 'renders a successful response' do
+        Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
+        authorized_get api_v1_lawyer_profiles_url(organization_id: organization.id), as: :json
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)['data'].first['relationships']['user']['data']['id']).to eq(lawyer.id)
+      end
+    end
+
+    describe 'GET /show' do
+      it 'renders a successful response' do
+        lawprof = Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
+        authorized_get api_v1_lawyer_profile_url(lawprof.id), as: :json
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
+      end
+    end
+
+    describe 'POST /create' do
+      it 'does not allow to create lawyer_profile' do
+        expect do
+          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
+        end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
+      end
+    end
+
+    describe 'PATCH /update' do
+      it 'can update organization lawyers_profiles' do
+        lawprof = Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
+        expect do
+          authorized_patch api_v1_lawyer_profile_url(lawprof.id), params: { lawyer_profile: { org_status: 'accepted' } }, as: :json
+        end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['data']['attributes']['org_status']).to eq('accepted')
+      end
+
+      it 'cannot update other organization lawyers_profiles' do
+        other_organization = create(:organization)
+        lawprof = Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: other_organization.id })
+        expect do
+          authorized_patch api_v1_lawyer_profile_url(lawprof.id), params: { lawyer_profile: { org_status: 'accepted' } }, as: :json
+        end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   context 'when logged in lawyer and existing lawyer_profile' do
@@ -48,22 +100,6 @@ RSpec.describe '/api/v1/lawyer_profiles' do
         expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
       end
     end
-
-    # describe 'UPDATE /:id' do
-    #   context 'with valid parameters' do
-    #     it 'updates the requested lawyer_profile' do
-    #       authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
-    #       lawyer_profile.reload
-    #       expect(lawyer_profile.lawyer_status).to eq('off_duty')
-    #     end
-
-    #     it 'renders a JSON response with the lawyer_profile' do
-    #       authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
-    #       expect(response).to have_http_status(:ok)
-    #       expect(response.content_type).to match(a_string_including('application/json'))
-    #     end
-    #   end
-    # end
   end
 
   context 'when logged in lawyer and non-existing lawyer_profile' do
@@ -93,20 +129,20 @@ RSpec.describe '/api/v1/lawyer_profiles' do
         end
       end
 
-      # context 'with invalid parameters' do
-      #   it 'does not create a new LawyerProfile' do
-      #     expect do
-      #       authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: invalid_attributes }, as: :json
-      #     end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
-      #   end
+      context 'with invalid parameters' do
+        it 'does not create a new LawyerProfile' do
+          expect do
+            authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: invalid_attributes }, as: :json
+          end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
+        end
 
-      #   it 'renders a JSON response with errors for the new lawyer_profile' do
-      #     authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: invalid_attributes }, as: :json
-      #     expect(response).to have_http_status(:unprocessable_entity)
-      #     expect(JSON.parse(response.body)['organization']).to be_present
-      #     expect(response.content_type).to match(a_string_including('application/json'))
-      #   end
-      # end
+        it 'renders a JSON response with errors for the new lawyer_profile' do
+          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: invalid_attributes }, as: :json
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(JSON.parse(response.body)['organization']).to be_present
+          expect(response.content_type).to match(a_string_including('application/json'))
+        end
+      end
     end
   end
 
@@ -136,9 +172,9 @@ RSpec.describe '/api/v1/lawyer_profiles' do
 
       context 'with valid parameters' do
         it 'does not update the requested lawyer_profile' do
-          authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
+          authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'on_duty' } }, as: :json
           lawyer_profile.reload
-          expect(lawyer_profile.lawyer_status).not_to eq('off_duty')
+          expect(lawyer_profile.lawyer_status).not_to eq('on_duty')
         end
 
         it 'renders a JSON response with errors for the lawyer_profile' do
