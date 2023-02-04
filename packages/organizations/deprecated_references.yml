@@ -1,0 +1,43 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/organizations.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/organizations
+---
+packages/lawyer_profiles:
+  "::Api::V1::LawyerProfileRecord":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/organizations/app/models/api/v1/organization_record.rb
+  "::Api::V1::Serializers::LawyerProfileSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/organizations/app/public/api/v1/serializers/review_serializer.rb
+packages/tax_incomes:
+  "::Api::V1::Serializers::TaxIncomeSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/organizations/app/public/api/v1/serializers/review_serializer.rb
+packages/users:
+  "::Api::V1::Repositories::UserRepository":
+    violations:
+    - dependency
+    files:
+    - packages/organizations/spec/services/api/v1/org_create_service_spec.rb
+  "::Api::V1::Serializers::UserSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/organizations/app/public/api/v1/serializers/organization_serializer.rb
+  "::Api::V1::UserRecord":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/organizations/app/models/api/v1/organization_record.rb
+    - packages/organizations/app/models/api/v1/review_record.rb
