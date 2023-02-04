@@ -41,3 +41,4 @@ packages/users:
     files:
     - packages/organizations/app/models/api/v1/organization_record.rb
     - packages/organizations/app/models/api/v1/review_record.rb
+    - packages/organizations/app/models/api/v1/transaction_record.rb

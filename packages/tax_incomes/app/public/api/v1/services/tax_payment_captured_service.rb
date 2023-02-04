@@ -1,4 +1,4 @@
-class Api::V1::Services::TaxPaymentSucceededService < ApplicationService
+class Api::V1::Services::TaxPaymentCapturedService < ApplicationService
   def call(event)
     payment_intent = event[:data][:object]
 
@@ -7,9 +7,13 @@ class Api::V1::Services::TaxPaymentSucceededService < ApplicationService
     tax_income = Api::V1::TaxIncome.find(payment_intent[:metadata][:tax_income_id])
     raise ActiveRecord::RecordNotFound unless tax_income
 
-    tax_income.update!(paid: true)
+    tax_income.update!(captured: true, amount_captured: payment_intent[:amount_capturable]).tap do
+      tax_income.captured?
 
-    TaxIncomePubSub.publish('tax_income.payment_intent_succeeded', tax_income_id: tax_income.id)
+      tax_income.payment_succeeded!
+
+      TaxIncomePubSub.publish('tax_income.amount_captured', tax_income_id: tax_income.id)
+    end
   end
 
   private

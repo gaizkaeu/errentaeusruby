@@ -38,7 +38,7 @@ class Api::V1::Services::TaxPaymentIntentService < ApplicationService
         amount: tax_income.price,
         currency: 'eur',
         payment_method_types: [:card],
-        metadata: { type: 'tax_payment_intent', id: tax_income.id },
+        metadata: { type: 'tax_payment_intent', tax_income_id: tax_income.id, user_id: current_account.id, organization_id: tax_income.organization_id },
         customer: current_account.stripe_customer_id,
         capture_method: 'manual'
       }

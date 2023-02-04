@@ -20,6 +20,13 @@ FactoryBot.define do
     account
   end
 
+  factory :review, class: 'Api::V1::ReviewRecord' do
+    comment { 'My Excellent Review' }
+    rating { 5 }
+    organization
+    user
+  end
+
   factory :org_manage, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
@@ -55,6 +62,15 @@ FactoryBot.define do
     phone { '1234567890' }
     account_type { 'lawyer' }
     account
+  end
+
+  factory :transaction, class: 'Api::V1::TransactionRecord' do
+    amount { 100 }
+    amount_capturable { 100 }
+    status { 'succeeded' }
+    payment_intent_id { 'pi_1Hq0Zo2eZvKYlo2C8Q2Z0Z2a' }
+    user
+    organization
   end
 
   factory :tax_income, class: 'Api::V1::TaxIncome' do

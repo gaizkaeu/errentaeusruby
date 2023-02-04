@@ -60,7 +60,10 @@ module Api
       end
 
       def filtering_params
-        params.require(:organization_id)
+        org_id = params.require(:organization_id)
+        org = Api::V1::Repositories::OrganizationRepository.find(org_id)
+        authorize org, :manage?
+
         params.slice(*Api::V1::Repositories::LawyerProfileRepository::FILTER_KEYS)
       end
     end

@@ -22,7 +22,11 @@ module Api
       private
 
       def serializer_config
-        Api::V1::ReviewPolicy.new(current_user, nil).serializer_config
+        if current_user
+          Api::V1::ReviewPolicy.new(current_user, nil).serializer_config
+        else
+          {}
+        end
       end
 
       def review_params

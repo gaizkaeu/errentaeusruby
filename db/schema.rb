@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_01_191330) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_084731) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -302,6 +302,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_191330) do
     t.index ["id"], name: "index_tax_incomes_on_id", unique: true
     t.index ["organization_id"], name: "index_tax_incomes_on_organization_id"
     t.index ["payment_intent_id"], name: "index_tax_incomes_on_payment_intent_id", unique: true
+  end
+
+  create_table "transactions", id: :string, force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "organization_id", null: false
+    t.string "payment_intent_id", null: false
+    t.string "status", null: false
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.integer "amount", null: false
+    t.integer "amount_capturable", null: false
+    t.index ["organization_id"], name: "index_transactions_on_organization_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", id: false, force: :cascade do |t|
