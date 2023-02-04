@@ -4,6 +4,11 @@ RSpec.describe Api::V1::TransactionRecord do
   describe 'associations' do
     it { is_expected.to belong_to(:user).class_name('Api::V1::UserRecord') }
     it { is_expected.to belong_to(:organization).class_name('Api::V1::OrganizationRecord') }
+    it { is_expected.to have_readonly_attribute(:user_id) }
+    it { is_expected.to have_readonly_attribute(:organization_id) }
+    it { is_expected.to have_readonly_attribute(:payment_intent_id) }
+    it { is_expected.to have_readonly_attribute(:amount) }
+    it { is_expected.to have_readonly_attribute(:metadata) }
   end
 
   describe 'scopes' do

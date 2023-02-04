@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_04_084731) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_105409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -267,6 +267,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_084731) do
     t.integer "app_fee", default: 10
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
     t.index ["owner_id"], name: "index_organizations_on_owner_id"
+  end
+
+  create_table "payouts", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.integer "amount", null: false
+    t.integer "status", null: false
+    t.date "date", null: false
+    t.datetime "created_at", null: false
+    t.index "organization_id, EXTRACT(month FROM date)", name: "index_organization_id_uniqueness_month", unique: true
+    t.index ["organization_id"], name: "index_payouts_on_organization_id"
   end
 
   create_table "reviews", id: :string, force: :cascade do |t|

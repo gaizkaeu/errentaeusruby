@@ -73,6 +73,13 @@ FactoryBot.define do
     organization
   end
 
+  factory :payout, class: 'Api::V1::PayoutRecord' do
+    amount { 100 }
+    status { 'pending' }
+    organization
+    date { '2025-11-30T11:30:00.000Z' }
+  end
+
   factory :tax_income, class: 'Api::V1::TaxIncome' do
     client
     association :lawyer, factory: :lawyer_profile
