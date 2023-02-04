@@ -6,3 +6,4 @@ dependencies:
   - packages/organizations
   - packages/estimations
   - packages/lawyer_profiles
+  - packages/transactions

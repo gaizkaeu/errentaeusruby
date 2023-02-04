@@ -7,7 +7,6 @@ class Api::V1::Services::PyoCollectMonthService < ApplicationService
 
     transactions = Api::V1::Repositories::TransactionRepository.filter(
       organization_id:,
-      status: :succeeded,
       date_after: date_start,
       date_before: date_end
     )
@@ -16,18 +15,21 @@ class Api::V1::Services::PyoCollectMonthService < ApplicationService
 
     return if amount.nil? || amount.zero?
 
-    create_payout(organization_id, amount, date)
+    create_payout(organization_id, amount, date, transactions.map(&:id))
   end
 
   private
 
-  def create_payout(organization_id, amount, date)
+  def create_payout(organization_id, amount, date, ids)
     Api::V1::Repositories::PayoutRepository.add(
       {
         organization_id:,
         amount:,
         status: :pending,
-        date:
+        date:,
+        metadata: {
+          transaction_ids: ids
+        }
       },
       raise_error: true
     )

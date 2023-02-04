@@ -5,7 +5,7 @@ class Api::V1::Payout
 
   extend T::Sig
 
-  attr_reader :id, :amount, :organization_id, :created_at, :date, :status
+  attr_reader :id, :amount, :organization_id, :created_at, :date, :status, :metadata
 
   def initialize(attributes = {})
     @id = attributes.fetch(:id, nil)
@@ -14,6 +14,7 @@ class Api::V1::Payout
     @created_at = attributes.fetch(:created_at, nil)
     @date = attributes.fetch(:date, nil)
     @status = attributes.fetch(:status, nil)
+    @metadata = attributes.fetch(:metadata, nil)
   end
 
   def persisted?

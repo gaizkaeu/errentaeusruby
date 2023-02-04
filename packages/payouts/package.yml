@@ -1,0 +1,6 @@
+enforce_dependencies: true
+enforce_privacy: true
+dependencies:
+  - packages/organizations
+  - packages/transactions
+  - packages/rails_shimns

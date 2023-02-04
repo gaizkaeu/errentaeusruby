@@ -13,7 +13,7 @@ class Api::V1::TransactionRecord < ApplicationRecord
 
   validates :amount, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
-  validates :status, inclusion: { in: %w[succeeded requires_capture] }
+  validates :status, inclusion: { in: %w[succeeded requires_capture refunded] }
 
   scope :filter_by_amount_greater_than, ->(amount) { where('amount > ?', amount) }
   scope :filter_by_amount_less_than, ->(amount) { where('amount < ?', amount) }

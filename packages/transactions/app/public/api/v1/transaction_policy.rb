@@ -10,7 +10,7 @@ class Api::V1::TransactionPolicy < ApplicationPolicy
   end
 
   def index?
-    user.org_manage? || user.client?
+    user.org_manage? || user.client? || user.admin?
   end
 
   def forced_filter_params
