@@ -21,6 +21,6 @@ class Api::V1::TransactionRecord < ApplicationRecord
   scope :filter_by_user_id, ->(user_id) { where(user_id:) }
   scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }
   scope :filter_by_payment_intent_id, ->(payment_intent_id) { where(payment_intent_id:) }
-  scope :filter_by_date_after, ->(created_at) { where('created_at > ?', created_at) }
-  scope :filter_by_date_before, ->(created_at) { where('created_at < ?', created_at) }
+  scope :filter_by_date_start, ->(created_at) { where('created_at > ?', created_at) }
+  scope :filter_by_date_end, ->(created_at) { where('created_at < ?', created_at) }
 end

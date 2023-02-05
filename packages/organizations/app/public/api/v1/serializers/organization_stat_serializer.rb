@@ -12,7 +12,8 @@ class Api::V1::Serializers::OrganizationStatSerializer
   attributes :three_star_count, :three_star_count_acc
   attributes :four_star_count, :four_star_count_acc
   attributes :five_star_count, :five_star_count_acc
-  attributes :balance
+  attributes :balance_today
+  attributes :balance_capturable_today
   attributes :date
 
   belongs_to :organization, record_type: :organization, serializer: Api::V1::Serializers::OrganizationSerializer

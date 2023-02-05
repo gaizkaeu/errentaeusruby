@@ -5,11 +5,7 @@ class Api::V1::Services::PyoCollectMonthService < ApplicationService
     date_start = date.beginning_of_month
     date_end = date.end_of_month
 
-    transactions = Api::V1::Repositories::TransactionRepository.filter(
-      organization_id:,
-      date_after: date_start,
-      date_before: date_end
-    )
+    transactions = Api::V1::Repositories::TransactionRepository.filter(organization_id:, date_start:, date_end:)
 
     amount = process_data(transactions)
 

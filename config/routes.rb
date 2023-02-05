@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
       resources :transactions, only: %i[index]
 
+      resources :payouts, only: %i[index]
+
       resources :reviews, only: %i[create index]
 
       resources :appointments

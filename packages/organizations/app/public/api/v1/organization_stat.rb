@@ -5,7 +5,7 @@ class Api::V1::OrganizationStat
 
   extend T::Sig
 
-  attr_reader :id, :lawyers_active_count, :lawyers_active_count_acc, :lawyers_inactive_count, :lawyers_inactive_count_acc, :tax_income_count, :tax_income_count_acc, :one_star_count, :one_star_count_acc, :two_star_count, :two_star_count_acc, :three_star_count, :three_star_count_acc, :four_star_count, :four_star_count_acc, :five_star_count, :five_star_count_acc, :date, :organization_id, :balance
+  attr_reader :id, :lawyers_active_count, :lawyers_active_count_acc, :lawyers_inactive_count, :lawyers_inactive_count_acc, :tax_income_count, :tax_income_count_acc, :one_star_count, :one_star_count_acc, :two_star_count, :two_star_count_acc, :three_star_count, :three_star_count_acc, :four_star_count, :four_star_count_acc, :five_star_count, :five_star_count_acc, :date, :organization_id, :balance_today, :balance_capturable_today
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -28,7 +28,8 @@ class Api::V1::OrganizationStat
     @five_star_count = attributes.fetch(:five_star_count, 0)
     @five_star_count_acc = attributes.fetch(:five_star_count_acc, 0)
     @date = attributes.fetch(:date, nil)
-    @balance = attributes.fetch(:balance, 0)
+    @balance_today = attributes.fetch(:balance_today, 0)
+    @balance_capturable_today = attributes.fetch(:balance_capturable_today, 0)
     @organization_id = attributes.fetch(:organization_id, nil)
   end
   # rubocop:enable Metrics/MethodLength

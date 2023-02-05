@@ -23,6 +23,11 @@ describe Api::V1::Services::TrnCreateService, type: :service do
         expect { service.call(valid_attributes) }
           .not_to raise_error
       end
+
+      it 'does enqueue transaction created job' do
+        expect { service.call(valid_attributes) }
+          .to have_enqueued_job(OrgTrackNewTransactionJob)
+      end
     end
 
     context 'with invalid attributes' do
@@ -34,6 +39,11 @@ describe Api::V1::Services::TrnCreateService, type: :service do
       it 'does raise error' do
         expect { service.call(valid_attributes.merge!(amount: nil), raise_error: true) }
           .to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it 'does not enqueue transaction created job' do
+        expect { service.call(valid_attributes.merge!(amount: nil)) }
+          .not_to have_enqueued_job(OrgTrackNewTransactionJob)
       end
     end
   end

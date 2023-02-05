@@ -11,6 +11,11 @@ packages/organizations:
     - privacy
     files:
     - packages/transactions/app/models/api/v1/transaction_record.rb
+  "::Api::V1::OrganizationStatRecord":
+    violations:
+    - privacy
+    files:
+    - packages/transactions/app/jobs/org_track_new_transaction_job.rb
 packages/users:
   "::Api::V1::UserRecord":
     violations:

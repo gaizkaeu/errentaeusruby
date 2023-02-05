@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_04_145406) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_05_104754) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -233,6 +233,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_145406) do
     t.integer "avg_rating_today", default: 0, null: false
     t.integer "balance_today", default: 0
     t.date "date"
+    t.integer "balance_capturable_today", default: 0
     t.index ["organization_id", "date"], name: "index_organization_stats_on_organization_id_and_date", unique: true
     t.index ["organization_id"], name: "index_organization_stats_on_organization_id"
   end
