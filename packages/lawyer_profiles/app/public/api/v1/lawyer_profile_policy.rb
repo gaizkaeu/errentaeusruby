@@ -22,7 +22,7 @@ class Api::V1::LawyerProfilePolicy < ApplicationPolicy
 
   def serializer_config
     case user.account_type
-    when 'org_manage'
+    when 'org_manage' || 'admin'
       { params: { manage: true } }
     else
       {}

@@ -80,6 +80,9 @@ gem 'sorbet-runtime'
 # Id
 gem 'prettyid', require: 'pretty_id'
 
+# Pagy
+gem 'pagy'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

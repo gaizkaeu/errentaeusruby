@@ -7,8 +7,8 @@ module Api
 
       def index
         authorize Api::V1::Transaction, :index?
-        transactions = Api::V1::Repositories::TransactionRepository.filter(filtering_params)
-        render json: Api::V1::Serializers::TransactionSerializer.new(transactions)
+        trns = Api::V1::Repositories::TransactionRepository.filter(filtering_params)
+        render json: Api::V1::Serializers::TransactionSerializer.new(trns)
       end
 
       private

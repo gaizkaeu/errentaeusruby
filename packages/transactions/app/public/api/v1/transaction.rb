@@ -24,6 +24,6 @@ class Api::V1::Transaction
   end
 
   def ==(other)
-    id == other.id && name == other.name
+    id == other.id
   end
 end

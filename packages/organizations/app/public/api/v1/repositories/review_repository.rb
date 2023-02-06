@@ -1,5 +1,5 @@
 class Api::V1::Repositories::ReviewRepository < Repositories::RepositoryBase
-  FILTER_KEYS = %i[rating].freeze
+  FILTER_KEYS = %i[rating organization_id].freeze
   public_constant :FILTER_KEYS
 
   def self.map_record(record)

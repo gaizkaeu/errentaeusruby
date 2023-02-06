@@ -2,7 +2,7 @@ class Api::V1::Serializers::TaxIncomeSerializer
   include JSONAPI::Serializer
 
   set_type :tax_income
-  attributes :year, :observations, :created_at, :updated_at, :state, :price
+  attributes :year, :observations, :created_at, :updated_at, :state, :price, :captured
 
   attribute :client do |object|
     {

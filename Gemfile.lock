@@ -299,6 +299,8 @@ GEM
       parser
       sorbet-runtime (>= 0.5.9914)
       zeitwerk (>= 2.6.1)
+    pagy (5.10.1)
+      activesupport
     parallel (1.22.1)
     parser (3.2.0.0)
       ast (~> 2.4.1)
@@ -527,6 +529,7 @@ DEPENDENCIES
   jsonapi-serializer
   jwt
   packwerk
+  pagy
   pg
   prettyid
   puma (~> 5.0)
