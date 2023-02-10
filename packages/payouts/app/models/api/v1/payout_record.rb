@@ -18,6 +18,6 @@ class Api::V1::PayoutRecord < ApplicationRecord
   scope :filter_by_amount_less_than, ->(amount) { where('amount < ?', amount) }
   scope :filter_by_status, ->(status) { where(status:) }
   scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }
-  scope :filter_by_date_after, ->(created_at) { where('created_at > ?', created_at) }
-  scope :filter_by_date_before, ->(created_at) { where('created_at < ?', created_at) }
+  scope :filter_by_date_start, ->(created_at) { where('created_at > ?', created_at) }
+  scope :filter_by_date_end, ->(created_at) { where('created_at < ?', created_at) }
 end
