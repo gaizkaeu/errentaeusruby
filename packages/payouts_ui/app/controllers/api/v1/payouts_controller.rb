@@ -4,6 +4,7 @@ module Api
   module V1
     class PayoutsController < ::ApiBaseController
       before_action :authenticate
+      before_action -> { authorize Api::V1::Payout, :index? }
 
       def index
         authorize Api::V1::Payout, :index?
@@ -14,8 +15,7 @@ module Api
       private
 
       def filtering_params
-        policy = Api::V1::PayoutPolicy.new(current_user, Api::V1::Payout)
-        params.slice(*Api::V1::Repositories::PayoutRepository::FILTER_KEYS).merge!(policy.forced_filter_params)
+        params.slice(*Api::V1::Repositories::PayoutRepository::FILTER_KEYS)
       end
     end
   end

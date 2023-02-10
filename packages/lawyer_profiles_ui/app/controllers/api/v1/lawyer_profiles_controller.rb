@@ -7,18 +7,13 @@ module Api
       before_action :set_lawyer_profile, only: %i[show update destroy]
 
       def index
+        authorize Api::V1::LawyerProfile, :index?
         lawyer_profiles = Api::V1::Repositories::LawyerProfileRepository.filter(filtering_params)
         render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profiles, serializer_config)
       end
 
       def show
         render json: Api::V1::Serializers::LawyerProfileSerializer.new(@lawyer_profile)
-      end
-
-      def me
-        authorize Api::V1::LawyerProfile, :me?
-        lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
-        render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile, { params: { manage: true } })
       end
 
       def create
@@ -60,11 +55,7 @@ module Api
       end
 
       def filtering_params
-        org_id = params.require(:organization_id)
-        org = Api::V1::Repositories::OrganizationRepository.find(org_id)
-        authorize org, :manage?
-
-        params.slice(*Api::V1::Repositories::LawyerProfileRepository::FILTER_KEYS)
+        params.slice(*Api::V1::Repositories::LawyerProfileRepository::FILTER_KEYS).merge!(user_id: current_user.id)
       end
     end
   end

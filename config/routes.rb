@@ -15,10 +15,20 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
 
-      resources :organizations, except: %i[ create delete update ]
+      resources :organizations, except: %i[ create delete update ] do
+        resources :reviews, only: %i[index], controller: 'organizations/reviews'
+      end
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
-        resources :stats, only: %i[index], controller: 'organization_stats'
+        resources :stats, only: %i[index], controller: 'organization_manage/stats'
+
+        resources :tax_incomes, only: %i[index], controller: 'organization_manage/tax_incomes'
+
+        resources :lawyer_profiles, only: %i[index], controller: 'organization_manage/lawyer_profiles'
+
+        resources :payouts, only: %i[index], controller: 'organization_manage/payouts'
+
+        resources :transactions, only: %i[index], controller: 'organization_manage/transactions'
 
         resources :subscription, controller: 'organization_subscription', only: %i[create] do
           get :retrieve, to: 'organization_subscription#retrieve', on: :collection
@@ -29,13 +39,11 @@ Rails.application.routes.draw do
 
       resources :payouts, only: %i[index]
 
-      resources :reviews, only: %i[create index]
+      resources :reviews, only: %i[create]
 
       resources :appointments
 
-      resources :lawyer_profiles do
-        get :me, on: :collection
-      end
+      resources :lawyer_profiles
 
       resources :estimations do
         post :estimate, on: :collection

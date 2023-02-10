@@ -18,10 +18,6 @@ RSpec.describe Api::V1::LawyerProfilesController do
       expect(patch: '/api/v1/lawyer_profiles/1').to route_to('api/v1/lawyer_profiles#update', id: '1', format: 'json')
     end
 
-    it 'routes to #me' do
-      expect(get: '/api/v1/lawyer_profiles/me').to route_to('api/v1/lawyer_profiles#me', format: 'json')
-    end
-
     it 'routes to #destroy' do
       expect(delete: '/api/v1/lawyer_profiles/1').to route_to('api/v1/lawyer_profiles#destroy', id: '1', format: 'json')
     end

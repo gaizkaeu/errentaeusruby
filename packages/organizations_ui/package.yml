@@ -4,4 +4,6 @@ dependencies:
   - packages/organizations
   - packages/lawyer_profiles
   - packages/tax_incomes
+  - packages/payouts
   - packages/authentication
+  - packages/transactions

@@ -20,7 +20,7 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
 
   def permitted_filter_params_manage
     case user.account_type
-    when 'admin' || 'org_manage'
+    when 'admin', 'org_manage'
       %i[coordinates location_name name price_range featured owner_id]
     else
       %i[]

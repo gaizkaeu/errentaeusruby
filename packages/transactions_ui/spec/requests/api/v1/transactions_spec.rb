@@ -60,7 +60,8 @@ RSpec.describe 'Transactions' do
         Api::V1::Repositories::TransactionRepository.add(attributes_for(:transaction, user_id: user.id, organization_id: organization.id))
 
         authorized_get api_v1_transactions_url, as: :json
-        expect(response).to be_forbidden
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)['data'].size).to eq(0)
       end
     end
   end
@@ -71,26 +72,13 @@ RSpec.describe 'Transactions' do
     end
 
     describe 'index /' do
-      it 'can query own organization transactions' do
-        visible_transactions = create_list(:transaction, 5, organization_id: organization.id)
+      it 'can query only his transactions' do
+        create_list(:transaction, 5, organization_id: organization.id)
         create_list(:transaction, 5)
 
         authorized_get api_v1_transactions_url, as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body)['data'].size).to eq(5)
-        expect(JSON.parse(response.body)['data'].first['attributes']['organization_id']).to eq(organization.id)
-        ids = JSON.parse(response.body)['data'].pluck('id')
-        expect(ids).to match_array(visible_transactions.map(&:id))
-      end
-
-      it 'cannot query other organizations transactions' do
-        create_list(:transaction, 5)
-        Api::V1::Repositories::TransactionRepository.add(attributes_for(:transaction, user_id: user.id, organization_id: organization.id))
-
-        authorized_get api_v1_transactions_url, as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body)['data'].size).to eq(1)
-        expect(JSON.parse(response.body)['data'].first['attributes']['organization_id']).to eq(organization.id)
+        expect(JSON.parse(response.body)['data'].size).to eq(0)
       end
     end
   end

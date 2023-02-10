@@ -15,15 +15,6 @@ RSpec.describe Api::V1::ReviewsController do
     }
   end
 
-  describe 'GET /index' do
-    it 'renders a successful response' do
-      Api::V1::Repositories::ReviewRepository.add(review_attributes, raise_error: true)
-      get api_v1_reviews_url(organization_id: organization.id)
-      expect(response).to be_successful
-      expect(JSON.parse(response.body)['data'].size).to eq(1)
-    end
-  end
-
   context 'with no signed user' do
     describe 'POST /create' do
       it 'does not create a new Review' do

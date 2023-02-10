@@ -33,7 +33,7 @@ RSpec.describe '/api/v1/lawyer_profiles' do
     describe 'GET /index' do
       it 'renders a successful response' do
         Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
-        authorized_get api_v1_lawyer_profiles_url(organization_id: organization.id), as: :json
+        authorized_get api_v1_organization_manage_lawyer_profiles_url(organization_manage_id: organization.id), as: :json
         expect(response).to be_successful
         expect(JSON.parse(response.body)['data'].first['relationships']['user']['data']['id']).to eq(lawyer.id)
       end
@@ -87,15 +87,6 @@ RSpec.describe '/api/v1/lawyer_profiles' do
     describe 'SHOW /:id' do
       it 'renders a successful response' do
         authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
-      end
-    end
-
-    describe 'GET /me' do
-      it 'renders a successful response' do
-        Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
-        authorized_get me_api_v1_lawyer_profiles_url, as: :json
         expect(response).to be_successful
         expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
       end
@@ -191,15 +182,6 @@ RSpec.describe '/api/v1/lawyer_profiles' do
       it 'renders a successful response' do
         authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
         expect(response).to have_http_status(:ok)
-      end
-    end
-
-    describe 'ME /me' do
-      let(:lawyer_profile) { create(:lawyer_profile, user_id: lawyer.id) }
-
-      it 'renders a forbidden response' do
-        authorized_get me_api_v1_lawyer_profiles_url, as: :json
-        expect(response).to have_http_status(:forbidden)
       end
     end
   end

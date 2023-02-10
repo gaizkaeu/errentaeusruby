@@ -26,13 +26,12 @@ RSpec.describe 'Payouts' do
     end
 
     describe 'index /' do
-      it 'user can only query his payouts' do
+      it 'only admin can index payouts' do
         create_list(:payout, 5)
         Api::V1::Repositories::PayoutRepository.add(attributes_for(:payout, organization_id: organization.id))
 
         authorized_get api_v1_payouts_url, as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body)['data'].size).to eq(1)
+        expect(response).to be_forbidden
       end
     end
   end

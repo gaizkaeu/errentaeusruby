@@ -63,6 +63,24 @@ module Api
       def filtering_params
         params.slice(:tax_income_id, :lawyer_id, :client_id, :day, :before_date, :after_date)
       end
+
+      # def set_appointment
+      #   @appointment = Api::V1::Services::AppoFindService.new.call(current_user, params[:id])
+      # end
+
+      # # Only allow a list of trusted parameters through.
+      # def appointment_params
+      #   params.require(:appointment).permit(:lawyer_id, :organization_id, :meeting_method, :phone, :time)
+      # end
+
+      # def appointment_update_params
+      #   params.require(:appointment).permit(AppointmentPolicy.new(current_user, Api::V1::Appointment).permitted_attributes_update)
+      # end
+
+      # def filtering_params
+      #   policy = AppointmentPolicy.new(current_user, Api::V1::Appointment)
+      #   params.slice(*policy.permitted_filter_params).merge!(policy.filter_forced_params)
+      # end
     end
   end
 end
