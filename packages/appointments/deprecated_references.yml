@@ -17,6 +17,12 @@ packages/lawyer_profiles:
     - dependency
     files:
     - packages/appointments/app/public/api/v1/appointment_policy.rb
+packages/organizations:
+  "::Api::V1::Repositories::OrganizationRepository":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/app/public/api/v1/appointment_policy.rb
 packages/users:
   "::Api::V1::UserRecord":
     violations:
