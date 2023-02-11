@@ -24,11 +24,6 @@ packages/tax_incomes:
     files:
     - packages/organizations/app/public/api/v1/serializers/review_serializer.rb
 packages/users:
-  "::Api::V1::Repositories::UserRepository":
-    violations:
-    - dependency
-    files:
-    - packages/organizations/spec/services/api/v1/org_create_service_spec.rb
   "::Api::V1::Serializers::UserSerializer":
     violations:
     - dependency

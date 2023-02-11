@@ -16,6 +16,6 @@ class Api::V1::OrganizationManage::StatsController < ApiBaseController
   end
 
   def filtering_params
-    params.slice(*Api::V1::Repositories::OrganizationStatRepository::FILTER_KEYS).merge!(organization_id: @org_id)
+    params.slice(*Api::V1::Repositories::OrganizationStatRepository::FILTER_KEYS).merge!(organization_id: @org.id)
   end
 end
