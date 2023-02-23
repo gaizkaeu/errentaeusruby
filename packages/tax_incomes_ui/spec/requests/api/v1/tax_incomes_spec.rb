@@ -94,7 +94,6 @@ RSpec.describe '/api/v1/tax_incomes' do
     end
 
     describe 'POST /create authenticated' do
-
       it 'does not create new Api::V1::TaxIncomeRecord to lawyer' do
         expect do
           authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes.merge(client_id: lawyer.id), estimation: { token: nil } }
