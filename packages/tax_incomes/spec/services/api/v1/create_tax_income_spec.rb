@@ -26,13 +26,6 @@ describe Api::V1::Services::TaxCreateService, type: :service do
       end
     end
 
-    context 'with unauthorized action' do
-      it 'raises an error' do
-        expect { service.call(lawyer_profile.user, unauthorized) }
-          .to raise_error(Pundit::NotAuthorizedError)
-      end
-    end
-
     context 'with invalid params' do
       it 'does not create a tax income' do
         expect { service.call(lawyer_profile.user, invalid) }

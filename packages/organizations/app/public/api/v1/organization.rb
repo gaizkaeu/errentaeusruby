@@ -5,7 +5,7 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :status, :latitude, :longitude, :city, :province, :country, :street, :postal_code, :subscription_id, :app_fee
+  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :status, :latitude, :longitude, :city, :province, :country, :street, :postal_code, :subscription_id, :app_fee, :distance
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -38,6 +38,7 @@ class Api::V1::Organization
     @street = attributes.fetch(:street, nil)
     @postal_code = attributes.fetch(:postal_code, nil)
     @subscription_id = attributes.fetch(:subscription_id, nil)
+    @distance = attributes.fetch(:distance, nil)
     @app_fee = attributes.fetch(:app_fee, nil)
   end
   # rubocop:enable Metrics/MethodLength

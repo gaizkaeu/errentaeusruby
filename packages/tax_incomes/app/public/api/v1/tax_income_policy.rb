@@ -12,11 +12,7 @@ module Api
       end
 
       def permitted_attributes_create
-        if user.lawyer?
-          %i[client_id observations price lawyer_id id state year organization_id]
-        else
-          %i[observations year organization_id]
-        end
+        %i[observations year organization_id]
       end
 
       def permitted_attributes_update
@@ -89,7 +85,7 @@ module Api
       # rubocop:enable Metrics/AbcSize
 
       def create?
-        show?
+        true
       end
 
       def create_appointment?
@@ -97,11 +93,11 @@ module Api
       end
 
       def documents?
-        create?
+        show?
       end
 
       def payment_data?
-        create?
+        show?
       end
 
       def destroy?

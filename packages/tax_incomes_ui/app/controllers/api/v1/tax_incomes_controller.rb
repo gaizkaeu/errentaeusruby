@@ -88,7 +88,7 @@ module Api
 
       def filtering_params
         policy = TaxIncomePolicy.new(current_user, Api::V1::TaxIncome)
-        params.slice(*policy.permitted_filter_params).merge!(policy.filter_forced_params)
+        params.slice(*policy.permitted_filter_params).merge!(client_id: current_user.id)
       end
     end
   end

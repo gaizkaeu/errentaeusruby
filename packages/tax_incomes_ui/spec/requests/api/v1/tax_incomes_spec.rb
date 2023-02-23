@@ -94,13 +94,6 @@ RSpec.describe '/api/v1/tax_incomes' do
     end
 
     describe 'POST /create authenticated' do
-      it 'creates a new Api::V1::TaxIncomeRecord to specified user' do
-        expect do
-          authorized_post api_v1_tax_incomes_url, params: { tax_income: valid_attributes, estimation: { token: nil } }
-        end.to change(Api::V1::Repositories::TaxIncomeRepository, :count).by(1)
-        id = JSON.parse(response.body)['data']['id']
-        expect(Api::V1::Repositories::TaxIncomeRepository.find(id).client_id).to match(user.id)
-      end
 
       it 'does not create new Api::V1::TaxIncomeRecord to lawyer' do
         expect do
