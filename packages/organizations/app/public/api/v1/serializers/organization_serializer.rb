@@ -8,9 +8,12 @@ class Api::V1::Serializers::OrganizationSerializer
 
   attributes :app_fee,
              :subscription_id,
+             :settings,
              if: proc { |_record, params|
                    params[:manage].present? && params[:manage] == true
                  }
+
+  attributes :visible
 
   belongs_to :owner, record_type: :user, serializer: Api::V1::Serializers::UserSerializer
 end

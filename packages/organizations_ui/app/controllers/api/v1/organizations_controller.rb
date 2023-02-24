@@ -9,7 +9,7 @@ module Api
       def index
         organizations =
           Api::V1::Repositories::OrganizationRepository.filter(filtering_params) do |query|
-            query.where('status > 0').limit(25).order(status: :desc, created_at: :desc)
+            query.where('status > 0').where(visible: true).limit(25).order(status: :desc, created_at: :desc)
           end
 
         render json: Api::V1::Serializers::OrganizationSerializer.new(organizations)
