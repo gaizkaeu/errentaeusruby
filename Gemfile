@@ -177,3 +177,6 @@ gem 'geocoder', '~> 1.8'
 
 # Storage
 gem 'google-cloud-storage', '~> 1.44'
+
+# Tracking
+gem 'ahoy_matey'

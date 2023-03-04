@@ -1,4 +1,10 @@
 class Repositories::RepositoryBase
+  include Pagy::Backend
+
+  def filter(filter_params)
+    pagy(self.class.model_name.filter(filter_params, self.class.query_base.all), items: 20, page: 1)
+  end
+
   class << self
     def query_base
       model_name

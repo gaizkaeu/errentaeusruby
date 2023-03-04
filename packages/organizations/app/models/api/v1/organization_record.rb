@@ -23,6 +23,7 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   scope :filter_by_owner_id, ->(owner_id) { where(owner_id:) }
   scope :filter_by_prices, ->(prices) { where('prices @> ?', prices.to_json) }
   scope :filter_by_coordinates, ->(coordinates) { near([coordinates[:latitude], coordinates[:longitude]]) }
+  scope :filter_by_bounds, ->(bounds) { within_bounding_box([bounds[:south], bounds[:west]], [bounds[:north], bounds[:east]]) }
   scope :filter_by_price_range, ->(price_range) { where('price_range <= ?', price_range) }
 
   validates :name, presence: true, length: { maximum: 30, minimum: 4 }
