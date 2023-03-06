@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_02_200814) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_06_093404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -248,6 +248,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_200814) do
     t.string "organization_id", null: false
     t.index ["organization_id", "user_id"], name: "index_lawyer_profiles_on_organization_id_and_user_id", unique: true
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
+  end
+
+  create_table "organization_requests", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "website"
+    t.string "city"
+    t.string "province"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "organization_stats", id: :string, force: :cascade do |t|

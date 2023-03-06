@@ -21,6 +21,11 @@ OrganizationPubSub.register_event('organization.review_deleted') do
   rating Integer
 end
 
+OrganizationPubSub.register_event('organization.request_created') do
+  organization_request_id String
+end
+
 OrganizationPubSub.subscribe('organization.tax_income_assigned', OrgTrackNewTaxIncomeAssignationJob)
 OrganizationPubSub.subscribe('organization.review_created', OrgTrackNewReviewJob)
 OrganizationPubSub.subscribe('organization.review_deleted', OrgTrackDeletedReviewJob)
+OrganizationPubSub.subscribe('organization.request_created', OrgRequestNotificationJob)

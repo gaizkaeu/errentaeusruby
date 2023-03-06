@@ -19,6 +19,8 @@ Rails.application.routes.draw do
         resources :reviews, only: %i[index], controller: 'organizations/reviews'
       end
 
+      resources :organization_requests, only: %i[create index show]
+
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
         resources :stats, only: %i[index], controller: 'organization_manage/stats'
 
