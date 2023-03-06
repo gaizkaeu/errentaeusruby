@@ -5,18 +5,8 @@ module Api
     class OrganizationRequestsController < ::ApiBaseController
       before_action :authenticate, except: %i[create]
 
-      def index
-        organizations =
-          Api::V1::Repositories::OrganizationRepository.filter(filtering_params) do |query|
-            query.where('status > 0').where(visible: true).limit(25).order(status: :desc, created_at: :desc)
-          end
-
-        render json: Api::V1::Serializers::OrganizationSerializer.new(organizations)
-      end
-
       def create
         organization = Api::V1::Services::OrgReqCreateService.new.call(organization_params)
-
         if organization.persisted?
           render json: Api::V1::Serializers::OrganizationRequestSerializer.new(organization), status: :created, location: organization
         else
@@ -24,7 +14,14 @@ module Api
         end
       end
 
+      def index
+        authorize Api::V1::OrganizationRequest, :index?
+        pagy, organizations = Api::V1::Services::OrgReqIndexService.new.call(filtering_params)
+        render json: Api::V1::Serializers::OrganizationRequestSerializer.new(organizations, meta: pagy_metadata(pagy))
+      end
+
       def show
+        authorize @organization, :show?
         render json: Api::V1::Serializers::OrganizationRequestSerializer.new(@organization)
       end
 

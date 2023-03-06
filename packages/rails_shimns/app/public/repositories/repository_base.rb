@@ -40,6 +40,12 @@ class Repositories::RepositoryBase
       end
     end
 
+    def map_records(records)
+      records.map do |record|
+        map_record(record)
+      end
+    end
+
     def last
       res = query_base.last
       map_record(res)

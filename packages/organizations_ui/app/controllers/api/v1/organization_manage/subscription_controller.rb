@@ -1,4 +1,4 @@
-class Api::V1::OrganizationSubscriptionController < ApiBaseController
+class Api::V1::OrganizationManage::SubscriptionController < ApiBaseController
   before_action :authenticate
   before_action :set_organization
   before_action -> { authorize @organization, :manage? }

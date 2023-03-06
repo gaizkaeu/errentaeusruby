@@ -7,12 +7,8 @@ module Api
       before_action :set_organization, only: %i[show update destroy]
 
       def index
-        organizations =
-          Api::V1::Repositories::OrganizationRepository.filter(filtering_params) do |query|
-            query.where('status > 0').where(visible: true).limit(25).order(status: :desc, created_at: :desc)
-          end
-
-        render json: Api::V1::Serializers::OrganizationSerializer.new(organizations)
+        pagy, organizations = Api::V1::Services::OrgPublicIndexService.new.call(filtering_params)
+        render json: Api::V1::Serializers::OrganizationSerializer.new(organizations, meta: pagy_metadata(pagy))
       end
 
       def show
@@ -26,7 +22,12 @@ module Api
       end
 
       def filtering_params
-        params.slice(*Api::V1::Repositories::OrganizationRepository::FILTER_KEYS)
+        fparams = params.slice(*Api::V1::Repositories::OrganizationRepository::FILTER_KEYS)
+        # add pagination params if present add default values if not present
+        fparams[:page] = params[:page] || 1
+        fparams[:items] = params[:items] || 20
+
+        fparams
       end
     end
   end

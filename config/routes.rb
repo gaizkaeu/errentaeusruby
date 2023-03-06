@@ -32,8 +32,8 @@ Rails.application.routes.draw do
 
         resources :transactions, only: %i[index], controller: 'organization_manage/transactions'
 
-        resources :subscription, controller: 'organization_subscription', only: %i[create] do
-          get :retrieve, to: 'organization_subscription#retrieve', on: :collection
+        resources :subscription, controller: 'organization_manage/subscription', only: %i[create] do
+          get :retrieve, to: 'organization_manage#retrieve', on: :collection
         end
       end
 

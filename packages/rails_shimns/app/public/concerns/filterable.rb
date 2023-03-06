@@ -11,7 +11,9 @@ module Filterable
       return results if filtering_params.nil?
 
       filtering_params.each do |key, value|
-        results = results.public_send("filter_by_#{key}", value) if value.present?
+        if results.respond_to?("filter_by_#{key}") && value.present?
+          results = results.public_send("filter_by_#{key}", value)
+        end
       end
       results
     end
