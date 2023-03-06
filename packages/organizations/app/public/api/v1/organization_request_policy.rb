@@ -16,5 +16,4 @@ class Api::V1::OrganizationRequestPolicy < ApplicationPolicy
   def index?
     show?
   end
-
 end
