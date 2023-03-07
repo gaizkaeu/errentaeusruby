@@ -7,12 +7,7 @@ module Api
       before_action :set_appointment, only: %i[show update destroy]
 
       def index
-        if current_user.lawyer?
-          lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
-          appointments = Api::V1::Repositories::AppointmentRepository.filter(filtering_params.merge!(lawyer_id: lawyer_profile.id))
-        else
-          appointments = Api::V1::Repositories::AppointmentRepository.filter(filtering_params.merge!(client_id: current_user.id))
-        end
+        appointments = Api::V1::Repositories::AppointmentRepository.filter(filtering_params.merge!(client_id: current_user.id))
         render json: Api::V1::Serializers::AppointmentSerializer.new(appointments)
       end
 
@@ -63,24 +58,6 @@ module Api
       def filtering_params
         params.slice(:tax_income_id, :lawyer_id, :client_id, :day, :before_date, :after_date)
       end
-
-      # def set_appointment
-      #   @appointment = Api::V1::Services::AppoFindService.new.call(current_user, params[:id])
-      # end
-
-      # # Only allow a list of trusted parameters through.
-      # def appointment_params
-      #   params.require(:appointment).permit(:lawyer_id, :organization_id, :meeting_method, :phone, :time)
-      # end
-
-      # def appointment_update_params
-      #   params.require(:appointment).permit(AppointmentPolicy.new(current_user, Api::V1::Appointment).permitted_attributes_update)
-      # end
-
-      # def filtering_params
-      #   policy = AppointmentPolicy.new(current_user, Api::V1::Appointment)
-      #   params.slice(*policy.permitted_filter_params).merge!(policy.filter_forced_params)
-      # end
     end
   end
 end

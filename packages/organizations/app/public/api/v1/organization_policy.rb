@@ -37,7 +37,7 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
   end
 
   def show?
-    if record.status == 'not_subscribed'
+    if record.visible == false
       (user.org_manage? && record.owner_id == user.id) || user.admin?
     else
       true
@@ -52,19 +52,19 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
     true
   end
 
-  def update?
-    record.owner_id == user.id || user.admin?
-  end
-
-  def manage?
-    update?
-  end
-
   def accept?
     update?
   end
 
   def reject?
+    update?
+  end
+
+  def update?
+    record.owner_id == user.id || user.admin?
+  end
+
+  def manage?
     update?
   end
 

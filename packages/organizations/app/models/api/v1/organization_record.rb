@@ -6,6 +6,9 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   PRICES_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_prices.json')
   private_constant :PRICES_JSON_SCHEMA
 
+  SETTINGS_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_settings.json')
+  private_constant :SETTINGS_JSON_SCHEMA
+
   self.table_name = 'organizations'
   self.id_prefix = 'org'
 
@@ -31,7 +34,9 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   validates :website, presence: true, length: { maximum: 50, minimum: 4 }
   validates :description, presence: true, length: { maximum: 1000, minimum: 4 }
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
+
   validates :prices, json: { schema: PRICES_JSON_SCHEMA }
+  validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
 
   belongs_to :owner, class_name: 'Api::V1::UserRecord'
 

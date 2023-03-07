@@ -43,9 +43,10 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   # Only allow a list of trusted parameters through.
+  # TODO: CHECK SETTINGS PARAMS HERE
   def organization_params
     policy = Api::V1::OrganizationPolicy.new(current_user, Api::V1::Organization)
-    params.require(:organization_manage).permit(:name, :description, :owner_id, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :visible).merge!(policy.forced_create_params)
+    params.require(:organization_manage).permit(:name, :description, :owner_id, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :visible, settings: {}).merge!(policy.forced_create_params)
   end
 
   def serializer_config

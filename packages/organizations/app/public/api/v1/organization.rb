@@ -23,6 +23,7 @@ class Api::V1::Organization
     @tax_income_count = attributes.fetch(:tax_income_count, 0)
     @status = attributes.fetch(:status, nil)
     @ratings = {
+      avg_rating: attributes.fetch(:avg_rating, 0),
       one_star_count: attributes.fetch(:one_star_count, 0),
       two_star_count: attributes.fetch(:two_star_count, 0),
       three_star_count: attributes.fetch(:three_star_count, 0),
@@ -45,6 +46,11 @@ class Api::V1::Organization
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+
+  def public_settings
+    public_s = %w[hireable appointment_open calculable]
+    settings.select { |k, _v| public_s.include?(k) }
+  end
 
   def persisted?
     !!id

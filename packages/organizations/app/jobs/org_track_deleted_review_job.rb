@@ -1,12 +1,16 @@
-# rubocop:disable Rails/SkipsModelValidations
 class OrgTrackDeletedReviewJob < ApplicationJob
+  COUNT_HASH = { 1 => :one_star_count, 2 => :two_star_count, 3 => :three_star_count, 4 => :four_star_count, 5 => :five_star_count }.freeze
+  private_constant :COUNT_HASH
+
   def perform(params)
-    count_hash = { 1 => :one_star_count, 2 => :two_star_count, 3 => :three_star_count, 4 => :four_star_count, 5 => :five_star_count }
-    count_column = count_hash[params['rating']]
+    count_column = COUNT_HASH[params['rating']]
     ActiveRecord::Base.transaction do
-      Api::V1::OrganizationRecord.find(params['organization_id']).decrement!(count_column)
-      Api::V1::OrganizationStatsRecord.first_or_create!(organization_id: params['organization_id'], date: params['date']).decrement!(:count_column)
+      org = Api::V1::OrganizationRecord.find(params['organization_id'])
+      org.decrement(count_column)
+      org.update!(avg_rating: Api::V1::Services::RevCalculateRatingService.call(org_stat))
+      org_stat = Api::V1::OrganizationStatRecord.where(organization_id: params['organization_id'], date: params['date']).first_or_create!
+      org_stat.decrement(count_column)
+      org_stat.update!(avg_rating_today: Api::V1::Services::RevCalculateRatingService.call(org_stat))
     end
   end
 end
-# rubocop:enable Rails/SkipsModelValidations
