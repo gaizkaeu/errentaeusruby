@@ -1,0 +1,20 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+  description: This is the first version of my API
+paths:
+  "/api/v1/accounts/me":
+    post:
+      summary: Shows authenticated user
+      tags:
+      - Users
+      responses:
+        '401':
+          description: unauthorized
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.errenta.eus

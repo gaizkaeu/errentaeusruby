@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_18_100614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -242,12 +242,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
     t.string "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "org_status", default: 0, null: false
-    t.integer "lawyer_status", default: 0, null: false
-    t.integer "tax_income_count", default: 0
-    t.string "organization_id", null: false
-    t.index ["organization_id", "user_id"], name: "index_lawyer_profiles_on_organization_id_and_user_id", unique: true
+    t.string "lawyer_status", default: "off_duty"
+    t.string "email"
+    t.string "phone"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
+  end
+
+  create_table "organization_invitations", id: :string, force: :cascade do |t|
+    t.string "email", null: false
+    t.string "token", null: false
+    t.string "status", default: "pending", null: false
+    t.string "role", default: "lawyer", null: false
+    t.string "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email", "organization_id"], name: "index_organization_invitations_on_email_and_organization_id", unique: true
+    t.index ["organization_id"], name: "index_organization_invitations_on_organization_id"
+    t.index ["token"], name: "index_organization_invitations_on_token", unique: true
+  end
+
+  create_table "organization_memberships", id: :string, force: :cascade do |t|
+    t.string "user_id"
+    t.string "organization_id"
+    t.string "role", default: "member", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_memberships_on_organization_id"
+    t.index ["user_id", "organization_id"], name: "index_organization_memberships_on_user_id_and_organization_id", unique: true
+    t.index ["user_id"], name: "index_organization_memberships_on_user_id"
   end
 
   create_table "organization_requests", id: :string, force: :cascade do |t|
@@ -299,7 +321,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
     t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "owner_id", null: false
     t.jsonb "prices", default: {}
     t.float "latitude", default: 0.0, null: false
     t.float "longitude", default: 0.0, null: false
@@ -323,7 +344,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
     t.boolean "visible", default: true
     t.float "avg_rating", default: 0.0
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
-    t.index ["owner_id"], name: "index_organizations_on_owner_id"
   end
 
   create_table "payouts", id: :string, force: :cascade do |t|
@@ -347,6 +367,47 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
     t.index ["organization_id", "user_id"], name: "index_reviews_on_organization_id_and_user_id", unique: true
     t.index ["organization_id"], name: "index_reviews_on_organization_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "roles", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.string "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.string "taggable_type"
+    t.string "taggable_id"
+    t.string "tagger_type"
+    t.string "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.string "tenant", limit: 128
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+    t.index ["tagger_type", "tagger_id"], name: "index_taggings_on_tagger"
+    t.index ["tenant"], name: "index_taggings_on_tenant"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "tax_incomes", id: false, force: :cascade do |t|
@@ -399,6 +460,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
     t.index ["id"], name: "index_users_on_id", unique: true
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.string "user_record_id", null: false
+    t.string "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_record_id", "role_id"], name: "index_users_roles_on_user_record_id_and_role_id"
+  end
+
   add_foreign_key "account_authentication_audit_logs", "accounts"
   add_foreign_key "account_histories", "users"
   add_foreign_key "account_lockouts", "accounts", column: "id"
@@ -419,8 +487,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_090926) do
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"
   add_foreign_key "documents", "users", column: "exported_by_id"
-  add_foreign_key "lawyer_profiles", "organizations"
-  add_foreign_key "organizations", "users", column: "owner_id"
+  add_foreign_key "organization_invitations", "organizations"
+  add_foreign_key "organization_memberships", "organizations"
+  add_foreign_key "organization_memberships", "users"
+  add_foreign_key "taggings", "tags"
   add_foreign_key "tax_incomes", "estimations"
   add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "users", "accounts"

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
 
   mount StripeEvent::Engine, at: '/api/v1/payments/webhook' 
 
@@ -23,18 +25,25 @@ Rails.application.routes.draw do
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
         resources :stats, only: %i[index], controller: 'organization_manage/stats'
-
         resources :tax_incomes, only: %i[index], controller: 'organization_manage/tax_incomes'
-
         resources :lawyer_profiles, only: %i[index], controller: 'organization_manage/lawyer_profiles'
-
         resources :payouts, only: %i[index], controller: 'organization_manage/payouts'
-
         resources :transactions, only: %i[index], controller: 'organization_manage/transactions'
-
         resources :subscription, controller: 'organization_manage/subscription', only: %i[create] do
           get :retrieve, to: 'organization_manage#retrieve', on: :collection
         end
+
+        get :memberships, to: 'organization_manage/memberships#index', as: :memberships, on: :member
+
+        resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy]
+
+        collection do
+          resources :memberships, controller: 'organization_memberships', only: %i[create update destroy]
+          resources :invitations, controller: 'organization_invitations', only: %i[show] do
+            post :accept, on: :member
+          end
+        end
+
       end
 
       resources :transactions, only: %i[index]
@@ -45,7 +54,11 @@ Rails.application.routes.draw do
 
       resources :appointments
 
-      resources :lawyer_profiles
+      get '/my-lawyer-profile/', to: 'my_lawyer_profile#show'
+      post '/my-lawyer-profile/', to: 'my_lawyer_profile#create'
+      put '/my-lawyer-profile/', to: 'my_lawyer_profile#update'
+      delete '/my-lawyer-profile/', to: 'my_lawyer_profile#destroy'
+
 
       resources :estimations do
         post :estimate, on: :collection

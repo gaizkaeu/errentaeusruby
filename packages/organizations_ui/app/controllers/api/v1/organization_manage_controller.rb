@@ -4,13 +4,9 @@ class Api::V1::OrganizationManageController < ApiBaseController
   before_action -> { authorize @organization, :manage? }, except: %i[create index]
 
   def index
-    authorize Api::V1::Organization, :manage_index?
-    organizations =
-      Api::V1::Repositories::OrganizationRepository.filter(filtering_params) do |query|
-        query.all.limit(25).order(status: :desc, created_at: :desc)
-      end
+    orgs = Api::V1::Services::OrgMangIndexService.new.call(current_user)
 
-    render json: Api::V1::Serializers::OrganizationSerializer.new(organizations, serializer_config)
+    render json: Api::V1::Serializers::OrganizationSerializer.new(orgs, serializer_config)
   end
 
   def show

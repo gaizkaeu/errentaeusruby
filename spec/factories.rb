@@ -102,7 +102,6 @@ FactoryBot.define do
     prices do
       { prueba: 'asd' }
     end
-    association :owner, factory: :org_manage
   end
 
   factory :organization_stat, class: 'Api::V1::OrganizationStatRecord' do
@@ -111,8 +110,6 @@ FactoryBot.define do
 
   factory :lawyer_profile, class: 'Api::V1::LawyerProfileRecord' do
     association :user, factory: :lawyer
-    organization
-    org_status { 'pending' }
   end
 
   factory :appointment, class: 'Api::V1::AppointmentRecord' do

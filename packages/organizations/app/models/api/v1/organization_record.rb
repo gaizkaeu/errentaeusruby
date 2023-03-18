@@ -3,6 +3,12 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   include Filterable
   extend T::Sig
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[name phone website description email]
+  end
+
+  acts_as_taggable_on :services
+
   PRICES_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_prices.json')
   private_constant :PRICES_JSON_SCHEMA
 
@@ -38,7 +44,10 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   validates :prices, json: { schema: PRICES_JSON_SCHEMA }
   validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
 
-  belongs_to :owner, class_name: 'Api::V1::UserRecord'
+  has_many :memberships, class_name: 'Api::V1::OrganizationMembershipRecord', dependent: :destroy, foreign_key: :organization_id
+  has_many :users, through: :memberships, class_name: 'Api::V1::UserRecord'
+  has_many :invitations, class_name: 'Api::V1::OrganizationInvitationRecord', dependent: :destroy, foreign_key: :organization_id
+  has_many :lawyer_profiles, class_name: 'Api::V1::LawyerProfileRecord', through: :memberships
 
   has_one_attached :logo
 

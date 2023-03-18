@@ -52,6 +52,20 @@ class Api::V1::Organization
     settings.select { |k, _v| public_s.include?(k) }
   end
 
+  def user_part_of_organization?(user_id)
+    return false if user_id.nil?
+
+    organization_membership = Api::V1::Repositories::OrganizationMembershipRepository.find_by!(organization_id: id, user_id:)
+    organization_membership.present? && organization_membership.role != 'deleted'
+  end
+
+  def user_is_admin?(user_id)
+    return false if user_id.nil?
+
+    organization_membership = Api::V1::Repositories::OrganizationMembershipRepository.find_by!(organization_id: id, user_id:)
+    organization_membership.present? && organization_membership.role == 'admin'
+  end
+
   def persisted?
     !!id
   end

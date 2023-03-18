@@ -180,3 +180,14 @@ gem 'google-cloud-storage', '~> 1.44'
 
 # Tracking
 gem 'ahoy_matey'
+
+# API DOC
+gem 'rswag'
+
+# Roles
+gem 'rolify'
+
+# Search
+gem 'ransack'
+
+gem 'acts-as-taggable-on', '~> 9.0'
