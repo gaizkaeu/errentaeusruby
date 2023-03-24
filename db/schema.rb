@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_173152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -338,11 +338,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
     t.string "postal_code", default: ""
     t.string "country", default: ""
     t.string "subscription_id"
-    t.integer "status", default: 0
     t.integer "app_fee", default: 10
     t.jsonb "settings", default: {"hireable"=>true}
     t.boolean "visible", default: true
     t.float "avg_rating", default: 0.0
+    t.string "status", default: "not_subscribed", null: false
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
   end
 
@@ -462,10 +462,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
-    t.string "user_record_id", null: false
+    t.string "user_id", null: false
     t.string "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
-    t.index ["user_record_id", "role_id"], name: "index_users_roles_on_user_record_id_and_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
   end
 
   add_foreign_key "account_authentication_audit_logs", "accounts"
