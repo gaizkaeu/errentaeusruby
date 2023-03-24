@@ -9,7 +9,7 @@ class Api::V1::MyLawyerProfileController < ApiBaseController
   end
 
   def create
-    lawyer_profile = Api::V1::Services::LawProfCreateService.new.call(current_user, lawyer_profile_params_create)
+    lawyer_profile = Api::V1::Services::LawProfCreateService.new.call(current_user, law_prof_params)
 
     if lawyer_profile.persisted?
       render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile), status: :created, location: lawyer_profile
@@ -19,7 +19,7 @@ class Api::V1::MyLawyerProfileController < ApiBaseController
   end
 
   def update
-    lawyer_profile = Api::V1::Services::LawProfUpdateService.new.call(current_user, params[:id], lawyer_profile_params_update, raise_error: false)
+    lawyer_profile = Api::V1::Services::LawProfUpdateService.new.call(current_user, @lawyer_profile.id, law_prof_params, raise_error: false)
     if lawyer_profile.errors.empty?
       render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile, serializer_config), status: :ok
     else
@@ -33,8 +33,8 @@ class Api::V1::MyLawyerProfileController < ApiBaseController
     @lawyer_profile = Api::V1::Repositories::LawyerProfileRepository.find_by!(user_id: current_user.id)
   end
 
-  def lawyer_profile_params_create
-    params.require(:my_lawyer_profile).permit(:phone, :email).merge(user_id: current_user.id)
+  def law_prof_params
+    params.require(:my_lawyer_profile).permit(:phone, :email, :on_duty, skill_list: []).merge(user_id: current_user.id)
   end
 
   def serializer_config

@@ -3,7 +3,7 @@ class Api::V1::Services::OrgPublicIndexService < ApplicationService
 
   def call(filter_params)
     pagy, res = pagy(
-      Api::V1::OrganizationRecord.filter(filter_params, Api::V1::OrganizationRecord.all)
+      Api::V1::OrganizationRecord.filter(filter_params, Api::V1::OrganizationRecord.includes(:skills).all)
                               .order(status: :desc)
                               .order(avg_rating: :desc)
                               .order(created_at: :asc),

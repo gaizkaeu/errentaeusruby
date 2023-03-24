@@ -1,4 +1,4 @@
-class Api::V1::OrganizationRecord < ApplicationRecord
+class Api::V1::Organization < ApplicationRecord
   include PrettyId
   include Filterable
   extend T::Sig
@@ -15,7 +15,6 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   SETTINGS_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_settings.json')
   private_constant :SETTINGS_JSON_SCHEMA
 
-  self.table_name = 'organizations'
   self.id_prefix = 'org'
 
   geocoded_by :address
@@ -48,29 +47,18 @@ class Api::V1::OrganizationRecord < ApplicationRecord
   has_many :users, through: :memberships, class_name: 'Api::V1::UserRecord'
   has_many :invitations, class_name: 'Api::V1::OrganizationInvitationRecord', dependent: :destroy, foreign_key: :organization_id
   has_many :lawyer_profiles, class_name: 'Api::V1::LawyerProfileRecord', through: :memberships
-
+  has_many :skills, -> {distinct} , through: :lawyer_profiles
+  
   has_one_attached :logo
 
   after_validation :calculate_price_range
   after_validation :geocode unless Rails.env.test?
 
-  def calculate_price_range
-    price_r = 0
-    prices.values.map(&:to_i).each do |price|
-      price_r += price
-    end
-    self.price_range = price_r
-  end
-
   def address
     [street, postal_code, city, province, country].compact.join(', ')
   end
 
-  def lawyers_active
-    Api::V1::LawyerProfileRecord.where(organization_id: id, lawyer_status: 'on_duty').count
-  end
-
-  def lawyers_inactive
-    Api::V1::LawyerProfileRecord.where(organization_id: id, lawyer_status: 'off_duty').count
+  def skill_list
+    skills.pluck(:name)
   end
 end

@@ -13,7 +13,7 @@ FactoryBot.define do
     status { 'verified' }
   end
 
-  factory :user, class: 'Api::V1::UserRecord', aliases: [:client] do
+  factory :user, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
     phone { '1234567890' }
@@ -27,40 +27,11 @@ FactoryBot.define do
     user
   end
 
-  factory :org_manage, class: 'Api::V1::UserRecord' do
-    first_name { 'My Excellent' }
-    last_name  { 'Lawyer' }
-    phone { '1234567890' }
-    account_type { 'org_manage' }
-    account
-  end
-
   factory :admin, class: 'Api::V1::UserRecord' do
     first_name { 'My Excellent' }
     last_name  { 'Lawyer' }
     phone { '1234567890' }
     account_type { 'admin' }
-    account
-  end
-
-  factory :blocked_user, class: 'Api::V1::UserRecord' do
-    first_name { 'My Excellent' }
-    last_name  { 'Lawyer' }
-    account
-  end
-
-  factory :unconfirmed_user, class: 'Api::V1::UserRecord' do
-    first_name { 'My Excellent' }
-    last_name  { 'Lawyer' }
-    phone { '1234567890' }
-    account
-  end
-
-  factory :lawyer, class: 'Api::V1::UserRecord' do
-    first_name { 'Carolina' }
-    last_name  { 'Doe' }
-    phone { '1234567890' }
-    account_type { 'lawyer' }
     account
   end
 
@@ -86,6 +57,18 @@ FactoryBot.define do
     organization
   end
 
+  factory :org_admin_membership, class: 'Api::V1::OrgMembershipRecord' do
+    user
+    organization
+    role { 'admin' }
+  end
+
+  factory :org_lawyer_membership, class: 'Api::V1::OrgMembershipRecord' do
+    user
+    organization
+    role { 'lawyer' }
+  end
+
   factory :tax_income_with_lawyer, class: 'Api::V1::TaxIncome' do
     client
     association :lawyer, factory: :lawyer_profile
@@ -99,9 +82,6 @@ FactoryBot.define do
     email { 'gasdasd@gmail.com' }
     website { 'https://www.google.com' }
     description { 'My Excellent Organization' }
-    prices do
-      { prueba: 'asd' }
-    end
   end
 
   factory :organization_stat, class: 'Api::V1::OrganizationStatRecord' do
@@ -109,7 +89,7 @@ FactoryBot.define do
   end
 
   factory :lawyer_profile, class: 'Api::V1::LawyerProfileRecord' do
-    association :user, factory: :lawyer
+    user
   end
 
   factory :appointment, class: 'Api::V1::AppointmentRecord' do

@@ -15,7 +15,7 @@ class Api::V1::Serializers::OrganizationSerializer
 
   attributes :visible
 
-  attributes :public_settings
+  attributes :public_settings, :skills
 
   belongs_to :owner, record_type: :user, serializer: Api::V1::Serializers::UserSerializer
 end

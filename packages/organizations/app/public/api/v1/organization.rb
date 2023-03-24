@@ -5,7 +5,7 @@ class Api::V1::Organization
 
   extend T::Sig
 
-  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :status, :latitude, :longitude, :city, :province, :country, :street, :postal_code, :subscription_id, :app_fee, :distance, :settings, :visible
+  attr_reader :id, :name, :phone, :email, :website, :description, :owner_id, :prices, :logo, :created_at, :location, :price_range, :tax_income_count, :ratings, :status, :latitude, :longitude, :city, :province, :country, :street, :postal_code, :subscription_id, :app_fee, :distance, :settings, :visible, :skills
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -43,9 +43,11 @@ class Api::V1::Organization
     @app_fee = attributes.fetch(:app_fee, nil)
     @settings = attributes.fetch(:settings, {})
     @visible = attributes.fetch(:visible, nil)
+    @skills = attributes.fetch(:skill_list, [])
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+
 
   def public_settings
     public_s = %w[hireable appointment_open calculable]
@@ -73,4 +75,5 @@ class Api::V1::Organization
   def ==(other)
     id == other.id && name == other.name
   end
+
 end

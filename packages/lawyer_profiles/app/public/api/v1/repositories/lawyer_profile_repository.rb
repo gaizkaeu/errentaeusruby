@@ -4,11 +4,11 @@ class Api::V1::Repositories::LawyerProfileRepository < Repositories::RepositoryB
 
   def self.map_record(record)
     super(record) do
-      Api::V1::LawyerProfile.new(record.attributes.symbolize_keys!.merge({ first_name: record.user&.first_name, last_name: record.user&.last_name, avatar_url: record.avatar&.url }))
+      Api::V1::LawyerProfile.new(record.attributes.symbolize_keys!.merge({ first_name: record.user&.first_name, last_name: record.user&.last_name, avatar_url: record.avatar&.url, skills: record.skills&.pluck(:name) }))
     end
   end
 
   def self.query_base
-    Api::V1::LawyerProfileRecord.includes(:user, :avatar_attachment)
+    Api::V1::LawyerProfileRecord.includes(:user, :avatar_attachment, :skills)
   end
 end

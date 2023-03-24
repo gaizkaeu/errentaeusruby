@@ -14,6 +14,8 @@ class Api::V1::OrganizationMembershipRecord < ApplicationRecord
 
   has_one :lawyer_profile, through: :user
 
+  has_many :skills, through: :lawyer_profile
+
   validates :role, inclusion: { in: USER_TYPES }
   validates :user, uniqueness: { scope: :organization }
 end

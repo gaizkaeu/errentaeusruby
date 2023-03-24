@@ -5,10 +5,8 @@ class Api::V1::LawyerProfileRecord < ApplicationRecord
   self.table_name = 'lawyer_profiles'
   self.id_prefix = 'lawprof'
 
-  LAWYER_STATUSES = %w[on_duty off_duty].freeze
-  private_constant :LAWYER_STATUSES
+  acts_as_taggable_on :skills
 
-  validates :lawyer_status, inclusion: { in: LAWYER_STATUSES }
   validates :user, uniqueness: true
 
   scope :filter_by_organization_id, ->(organization_id) { where(organization_id:) }

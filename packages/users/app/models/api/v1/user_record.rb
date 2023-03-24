@@ -5,6 +5,9 @@ class Api::V1::UserRecord < ApplicationRecord
   include PrettyId
   include Filterable
 
+  SETTINGS_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'user_settings.json')
+  private_constant :SETTINGS_JSON_SCHEMA
+
   self.id_prefix = 'usr'
 
   enum account_type: { client: 0, lawyer: 1, org_manage: 2, admin: 3 }
@@ -20,4 +23,5 @@ class Api::V1::UserRecord < ApplicationRecord
 
   validates_presence_of :first_name, :last_name, :account_type
   validates :first_name, length: { maximum: 15, minimum: 2 }
+  validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
 end
