@@ -2,8 +2,9 @@ class Api::V1::Services::OrgCreateCheckoutSession < ApplicationService
   include Authorization
 
   def call(current_account, params, raise_error: false)
-    organization = Api::V1::Repositories::OrganizationRepository.find(params[:id])
-    authorize_with current_account, organization, :manage_subscription?
+    organization = Api::V1::Organization.find(params[:id])
+
+    authorize_with current_account, organization, :create_checkout_session?
 
     unless can_create_checkout_session?(organization)
       raise Pundit::NotAuthorizedError if raise_error

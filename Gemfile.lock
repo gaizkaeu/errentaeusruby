@@ -150,6 +150,8 @@ GEM
       tzinfo
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
+    faker (3.1.1)
+      i18n (>= 1.8.11, < 2)
     faraday (2.7.2)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -554,6 +556,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   factory_bot
+  faker (~> 3.1)
   geocoder (~> 1.8)
   google-cloud-storage (~> 1.44)
   graphwerk

@@ -1,5 +1,6 @@
 class Api::V1::Organization < ApplicationRecord
   include PrettyId
+  ORGANIZATION_SUBSCRIPTION_STATUS = %w[not_subscribed featured_city featured_state featured_country].freeze
 
   self.id_prefix = 'org'
 
@@ -16,7 +17,6 @@ class Api::V1::Organization < ApplicationRecord
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude
 
-  ORGANIZATION_SUBSCRIPTION_STATUS = %w[not_subscribed featured_city featured_state featured_country].freeze
   public_constant :ORGANIZATION_SUBSCRIPTION_STATUS
 
   scope :filter_by_coordinates, ->(coordinates) { near([coordinates[:latitude], coordinates[:longitude]]) }
@@ -30,17 +30,16 @@ class Api::V1::Organization < ApplicationRecord
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
   validates :prices, json: { schema: PRICES_JSON_SCHEMA }
   validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
-  validates :subscription_status, inclusion: { in: ORGANIZATION_SUBSCRIPTION_STATUS }
+  validates :status, inclusion: { in: ORGANIZATION_SUBSCRIPTION_STATUS }
 
   # RELATIONS
-  has_many :memberships, class_name: 'Api::V1::OrganizationMembership', dependent: :destroy, foreign_key: :organization_id
-  has_many :users, through: :memberships, class_name: 'Api::V1::UserRecord'
-  has_many :invitations, class_name: 'Api::V1::OrganizationInvitation', dependent: :destroy, foreign_key: :organization_id
-  has_many :lawyer_profiles, class_name: 'Api::V1::LawyerProfileRecord', through: :memberships
+  has_many :memberships, class_name: 'Api::V1::OrganizationMembership', dependent: :destroy
+  has_many :users, through: :memberships, class_name: 'Api::V1::User'
+  has_many :invitations, class_name: 'Api::V1::OrganizationInvitation', dependent: :destroy
+  has_many :lawyer_profiles, class_name: 'Api::V1::LawyerProfile', through: :memberships
   has_one_attached :logo
   acts_as_taggable_on :services
 
-  after_validation :calculate_price_range
   after_validation :geocode unless Rails.env.test?
 
   def address
@@ -52,6 +51,6 @@ class Api::V1::Organization < ApplicationRecord
   end
 
   def user_is_admin?(user_id)
-    memberships.where(user_id: user_id, role: 'admin').any?
+    memberships.where(user_id:, role: 'admin').any?
   end
 end

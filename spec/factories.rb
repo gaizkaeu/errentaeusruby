@@ -57,31 +57,11 @@ FactoryBot.define do
     organization
   end
 
-  factory :org_admin_membership, class: 'Api::V1::OrgMembershipRecord' do
-    user
-    organization
-    role { 'admin' }
-  end
-
-  factory :org_lawyer_membership, class: 'Api::V1::OrgMembershipRecord' do
-    user
-    organization
-    role { 'lawyer' }
-  end
-
   factory :tax_income_with_lawyer, class: 'Api::V1::TaxIncome' do
     client
     association :lawyer, factory: :lawyer_profile
     organization
     state { 'meeting' }
-  end
-
-  factory :organization, class: 'Api::V1::OrganizationRecord' do
-    name { 'My Excellent Organization' }
-    phone { '1234567890' }
-    email { 'gasdasd@gmail.com' }
-    website { 'https://www.google.com' }
-    description { 'My Excellent Organization' }
   end
 
   factory :organization_stat, class: 'Api::V1::OrganizationStatRecord' do

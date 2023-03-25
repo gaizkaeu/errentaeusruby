@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::LawyerProfileRecord do
+RSpec.describe Api::V1::LawyerProfile do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
   end

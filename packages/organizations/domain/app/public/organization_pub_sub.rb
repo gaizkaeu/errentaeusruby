@@ -33,3 +33,16 @@ OrganizationPubSub.subscribe('organization.tax_income_assigned', OrgTrackNewTaxI
 OrganizationPubSub.subscribe('organization.review_created', OrgTrackNewReviewJob)
 OrganizationPubSub.subscribe('organization.review_deleted', OrgTrackDeletedReviewJob)
 OrganizationPubSub.subscribe('organization.request_created', OrgRequestNotificationJob)
+
+# Register external package events
+
+CustomerSubscriptionDeletedPubSub.subscribe(
+  Api::V1::Services::OrgSubscriptionDeletedService,
+  /org_*/,
+  synchronous: true
+)
+CustomerSubscriptionUpdatedPubSub.subscribe(
+  Api::V1::Services::OrgSubscriptionUpdatedService,
+  /org_*/,
+  synchronous: true
+)

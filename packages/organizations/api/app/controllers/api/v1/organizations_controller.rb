@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::OrganizationsController < ::ApiBaseController
+class Api::V1::OrganizationsController < ApiBaseController
   before_action :authenticate, except: %i[index show reviews]
   before_action :set_organization, only: %i[show update destroy]
 

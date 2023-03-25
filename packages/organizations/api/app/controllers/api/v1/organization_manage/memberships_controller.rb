@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::OrganizationManage::MembershipsController < Api::V1::OrganizationManage::BaseController
-
   def index
     memberships = Api::V1::OrganizationMembership.where(organization: @organization).includes(:user)
 

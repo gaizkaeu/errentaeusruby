@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::AccountHistoryController < ::ApiBaseController
+class Api::V1::AccountHistoryController < ApiBaseController
   before_action :authenticate
 
   def index

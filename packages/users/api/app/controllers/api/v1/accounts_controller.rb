@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::AccountsController < ::ApiBaseController
+class Api::V1::AccountsController < ApiBaseController
   before_action :authenticate
 
   def me
@@ -21,11 +21,10 @@ class Api::V1::AccountsController < ::ApiBaseController
   # rubocop:enable Rails/SaveBang
 
   def update
-
-    if !current_user.update(user_update_params)
-      render json: current_user.errors, status: :unprocessable_entity
-    else
+    if current_user.update(user_update_params)
       render json: Api::V1::Serializers::UserSerializer.new(current_user).serializable_hash
+    else
+      render json: current_user.errors, status: :unprocessable_entity
     end
   end
 

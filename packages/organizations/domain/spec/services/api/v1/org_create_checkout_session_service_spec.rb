@@ -3,8 +3,7 @@ require 'rails_helper'
 describe Api::V1::Services::OrgCreateCheckoutSession, type: :service do
   subject(:service) { described_class.new }
 
-  let(:user) { create(:user, account_type: 'org_manage') }
-  let(:organization) { create(:organization, owner_id: user.id, status: 'not_subscribed', subscription_id: nil) }
+  let(:organization) { create(:organization, :with_memberships) }
 
   describe '#call' do
     let(:params) do
@@ -18,13 +17,13 @@ describe Api::V1::Services::OrgCreateCheckoutSession, type: :service do
     it 'calls stripe api' do
       allow(Stripe::Checkout::Session).to receive(:create).and_return(true)
 
-      service.call(user, params)
+      service.call(organization.memberships.first.user, params)
 
       expect(Stripe::Checkout::Session).to have_received(:create)
     end
 
     it 'returns a checkout session' do
-      expect(service.call(user, params).url).to be_a(String)
+      expect(service.call(organization.memberships.first.user, params).url).to be_a(String)
     end
 
     context 'with raise_error' do
@@ -33,7 +32,7 @@ describe Api::V1::Services::OrgCreateCheckoutSession, type: :service do
       it 'raises an error if the organization is not found' do
         params[:id] = 'not_found'
 
-        expect { service.call(user, params, raise_error: true) }
+        expect { service.call(organization.memberships.first.user, params, raise_error: true) }
           .to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -45,7 +44,7 @@ describe Api::V1::Services::OrgCreateCheckoutSession, type: :service do
       it 'raises an error if already subscribed' do
         organization.update!(subscription_id: 'sub_123')
 
-        expect { service.call(user, params, raise_error: true) }
+        expect { service.call(organization.memberships.first.user, params, raise_error: true) }
           .to raise_error(Pundit::NotAuthorizedError)
       end
     end
@@ -61,9 +60,9 @@ describe Api::V1::Services::OrgCreateCheckoutSession, type: :service do
       it 'does not raise an error if already subscribed' do
         organization.update!(subscription_id: 'sub_123')
 
-        expect { service.call(user, params) }
+        expect { service.call(organization.memberships.first.user, params) }
           .not_to raise_error
-        expect(service.call(user, params)).to be_nil
+        expect(service.call(organization.memberships.first.user, params)).to be_nil
       end
     end
   end

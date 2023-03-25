@@ -13,7 +13,6 @@ class Api::V1::Serializers::OrganizationSerializer
                    params[:manage].present? && params[:manage] == true
                  }
 
-
   attributes :ratings do |object|
     {
       average: object.avg_rating,

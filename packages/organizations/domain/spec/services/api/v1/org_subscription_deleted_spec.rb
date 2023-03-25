@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::OrgSubscriptionDeleted, type: :service do
+describe Api::V1::Services::OrgSubscriptionDeletedService, type: :service do
   subject(:service) { described_class.new }
 
   let(:organization) { create(:organization, subscription_id: 'asd', status: 'featured_city') }

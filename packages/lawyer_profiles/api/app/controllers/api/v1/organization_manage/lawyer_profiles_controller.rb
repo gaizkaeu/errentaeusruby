@@ -3,8 +3,8 @@ class Api::V1::OrganizationManage::LawyerProfilesController < Api::V1::Organizat
 
   def index
     profiles = Api::V1::LawyerProfileRecord.joins(:organization_memberships)
-                .where(organization_memberships: { organization: @organization})
-                .includes(:user, :taggings)
+                                           .where(organization_memberships: { organization: @organization })
+                                           .includes(:user, :taggings)
 
     render json: Api::V1::Serializers::LawyerProfileSerializer.new(profiles, serializer_config)
   end

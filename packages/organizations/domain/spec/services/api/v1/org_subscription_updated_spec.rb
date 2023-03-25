@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::Services::OrgSubscriptionUpdated, type: :service do
+describe Api::V1::Services::OrgSubscriptionUpdatedService, type: :service do
   subject(:service) { described_class.new }
 
   let(:organization) { create(:organization) }
@@ -65,7 +65,7 @@ describe Api::V1::Services::OrgSubscriptionUpdated, type: :service do
       subscription_object[:items][:data].first[:plan][:metadata][:subscription_type] = 'not_found'
 
       expect { service.call(event) }
-        .to raise_error(ArgumentError)
+        .to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 end

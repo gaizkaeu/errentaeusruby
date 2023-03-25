@@ -54,4 +54,8 @@ class Api::V1::OrganizationPolicy < ApplicationPolicy
   def manage_subscription?
     update?
   end
+
+  def create_checkout_session?
+    update?
+  end
 end

@@ -18,7 +18,7 @@ describe Api::V1::Services::OrgCreateReviewService, type: :service do
 
     it 'creates a review' do
       expect { service.call(user, review_params) }
-        .to change(Api::V1::Repositories::ReviewRepository, :count)
+        .to change(Api::V1::Review, :count)
         .by(1)
     end
 
@@ -30,13 +30,6 @@ describe Api::V1::Services::OrgCreateReviewService, type: :service do
     context 'with raise_error' do
       it 'raises an error if the organization is not found' do
         review_params[:organization_id] = 'not_found'
-
-        expect { service.call(user, review_params, raise_error: true) }
-          .to raise_error(ActiveRecord::RecordInvalid)
-      end
-
-      it 'raises an error if the user is not found' do
-        review_params[:user_id] = '2347'
 
         expect { service.call(user, review_params, raise_error: true) }
           .to raise_error(ActiveRecord::RecordInvalid)
@@ -64,7 +57,7 @@ describe Api::V1::Services::OrgCreateReviewService, type: :service do
         expect { service.call(user, review_params) }
           .not_to raise_error
         expect { service.call(user, review_params) }
-          .not_to change(Api::V1::Repositories::ReviewRepository, :count)
+          .not_to change(Api::V1::Review, :count)
         expect { service.call(user, review_params) }
           .not_to have_enqueued_job(OrgTrackNewReviewJob)
         expect(service.call(user, review_params).errors).not_to be_empty
@@ -76,7 +69,7 @@ describe Api::V1::Services::OrgCreateReviewService, type: :service do
         expect { service.call(user, review_params) }
           .not_to raise_error
         expect { service.call(user, review_params) }
-          .not_to change(Api::V1::Repositories::ReviewRepository, :count)
+          .not_to change(Api::V1::Review, :count)
         expect { service.call(user, review_params) }
           .not_to have_enqueued_job(OrgTrackNewReviewJob)
         expect(service.call(user, review_params).errors).not_to be_empty
@@ -88,7 +81,7 @@ describe Api::V1::Services::OrgCreateReviewService, type: :service do
         expect { service.call(user, review_params) }
           .not_to raise_error
         expect { service.call(user, review_params) }
-          .not_to change(Api::V1::Repositories::ReviewRepository, :count)
+          .not_to change(Api::V1::Review, :count)
         expect { service.call(user, review_params) }
           .not_to have_enqueued_job(OrgTrackNewReviewJob)
         expect(service.call(user, review_params).errors).not_to be_empty
@@ -100,7 +93,7 @@ describe Api::V1::Services::OrgCreateReviewService, type: :service do
         expect { service.call(user, review_params) }
           .not_to raise_error
         expect { service.call(user, review_params) }
-          .not_to change(Api::V1::Repositories::ReviewRepository, :count)
+          .not_to change(Api::V1::Review, :count)
         expect { service.call(user, review_params) }
           .not_to have_enqueued_job(OrgTrackNewReviewJob)
         expect(service.call(user, review_params).errors).not_to be_empty

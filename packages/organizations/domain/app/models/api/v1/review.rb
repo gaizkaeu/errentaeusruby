@@ -1,4 +1,4 @@
-class Api::V1::ReviewRecord < ApplicationRecord
+class Api::V1::Review < ApplicationRecord
   include PrettyId
   include Filterable
   extend T::Sig
@@ -15,6 +15,6 @@ class Api::V1::ReviewRecord < ApplicationRecord
   validates :comment, presence: true, length: { maximum: 1000, minimum: 4 }
   validates :organization_id, uniqueness: { scope: :user_id }
 
-  belongs_to :organization, class_name: 'Api::V1::OrganizationRecord'
+  belongs_to :organization, class_name: 'Api::V1::Organization'
   belongs_to :user, class_name: 'Api::V1::User'
 end

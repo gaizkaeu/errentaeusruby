@@ -4,7 +4,6 @@ RSpec.describe 'AccountHistory' do
   let(:user) { create(:user) }
   let(:account_history) { create(:account_history, account_id: user.account_id) }
 
-
   context 'when logged in user' do
     before do
       sign_in(user)

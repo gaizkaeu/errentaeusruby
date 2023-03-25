@@ -37,7 +37,7 @@ class Api::V1::OrganizationManageController < ApiBaseController
   private
 
   def set_organization
-    @organization = Api::V1::Organization.find_by!(id: params[:id])
+    @organization = Api::V1::Organization.find(params[:id])
 
     raise Pundit::NotAuthorizedError unless @organization.user_is_admin?(current_user.id)
   end

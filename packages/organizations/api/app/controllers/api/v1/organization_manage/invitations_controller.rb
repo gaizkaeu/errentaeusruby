@@ -5,8 +5,8 @@ class Api::V1::OrganizationManage::InvitationsController < Api::V1::Organization
 
   def index
     invs = Api::V1::OrganizationInvitation.where(organization: @organization)
-                                                .where('created_at > ?', 1.week.ago)
-                                                .where(status: 'pending')
+                                          .where('created_at > ?', 1.week.ago)
+                                          .where(status: 'pending')
 
     render json: Api::V1::Serializers::OrganizationInvitationSerializer.new(invs)
   end

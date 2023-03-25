@@ -9,6 +9,10 @@ class Api::V1::ReviewPolicy < ApplicationPolicy
     super
   end
 
+  def create?
+    true
+  end
+
   def serializer_config
     case user.account_type
     when 'org_manage'

@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-
-class Api::V1::OrganizationRequestsController < ::ApiBaseController
+class Api::V1::OrganizationRequestsController < ApiBaseController
   before_action :authenticate, except: %i[create]
 
   def create
-    organization = Api::V1::OrganizationRequest.create(organization_params)
+    organization = Api::V1::OrganizationRequest.create!(organization_params)
     if organization.errors.empty?
       render json: Api::V1::Serializers::OrganizationRequestSerializer.new(organization), status: :created, location: organization
     else
