@@ -2,5 +2,5 @@ enforce_dependencies: true
 enforce_privacy: true
 dependencies:
   - packages/organizations
-  - packages/users
+  - packages/authentication
   - packages/rails_shimns

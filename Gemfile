@@ -152,6 +152,9 @@ group :test do
 
   # Factorybot
   gem 'factory_bot'
+
+  # Faker
+  gem 'faker', '~> 3.1'
 end
 
 # Authentification
@@ -190,4 +193,5 @@ gem 'rolify'
 # Search
 gem 'ransack'
 
+# Tags
 gem 'acts-as-taggable-on', '~> 9.0'

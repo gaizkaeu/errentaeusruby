@@ -20,7 +20,7 @@ module Errentaeusreact
     config.middleware.use config.session_store, config.session_options
 
     config.autoload_paths << Rails.root.join('app', 'services')
-    config.paths.add 'packages', glob: '*/app/{*,*/concerns}', eager_load: true
+    config.paths.add 'packages', glob: '{*,**}/app/{*,*/concerns, */serializers}', eager_load: true
 
     # Configuration for the application, engines, and railties goes here.
     #

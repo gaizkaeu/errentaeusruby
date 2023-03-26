@@ -1,0 +1,40 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/organizations/api.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/organizations/api
+---
+packages/organizations/domain:
+  "::Api::V1::Organization":
+    violations:
+    - privacy
+    files:
+    - packages/organizations/api/app/controllers/api/v1/organization_manage/base_controller.rb
+    - packages/organizations/api/app/controllers/api/v1/organization_manage_controller.rb
+    - packages/organizations/api/app/controllers/api/v1/organizations_controller.rb
+    - packages/organizations/api/spec/requests/api/v1/organization_manage_spec.rb
+    - packages/organizations/api/spec/requests/api/v1/organizations_spec.rb
+  "::Api::V1::OrganizationInvitation":
+    violations:
+    - privacy
+    files:
+    - packages/organizations/api/app/controllers/api/v1/organization_invitations_controller.rb
+    - packages/organizations/api/app/controllers/api/v1/organization_manage/invitations_controller.rb
+  "::Api::V1::OrganizationMembership":
+    violations:
+    - privacy
+    files:
+    - packages/organizations/api/app/controllers/api/v1/organization_manage/memberships_controller.rb
+    - packages/organizations/api/app/controllers/api/v1/organization_memberships_controller.rb
+  "::Api::V1::OrganizationRequest":
+    violations:
+    - privacy
+    files:
+    - packages/organizations/api/app/controllers/api/v1/organization_requests_controller.rb
+  "::Api::V1::Review":
+    violations:
+    - privacy
+    files:
+    - packages/organizations/api/app/controllers/api/v1/organizations/reviews_controller.rb
+    - packages/organizations/api/spec/requests/api/v1/reviews_spec.rb

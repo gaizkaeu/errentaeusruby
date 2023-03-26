@@ -1,40 +1,4 @@
 FactoryBot.define do
-  sequence :email do |n|
-    "person#{n}@example.com"
-  end
-
-  sequence :password do |n|
-    "password#{n}"
-  end
-
-  factory :account do
-    email { generate(:email) }
-    password { generate(:password) }
-    status { 'verified' }
-  end
-
-  factory :user, class: 'Api::V1::UserRecord' do
-    first_name { 'My Excellent' }
-    last_name  { 'Lawyer' }
-    phone { '1234567890' }
-    account
-  end
-
-  factory :review, class: 'Api::V1::ReviewRecord' do
-    comment { 'My Excellent Review' }
-    rating { 5 }
-    organization
-    user
-  end
-
-  factory :admin, class: 'Api::V1::UserRecord' do
-    first_name { 'My Excellent' }
-    last_name  { 'Lawyer' }
-    phone { '1234567890' }
-    account_type { 'admin' }
-    account
-  end
-
   factory :transaction, class: 'Api::V1::TransactionRecord' do
     amount { 100 }
     amount_capturable { 100 }
@@ -57,18 +21,6 @@ FactoryBot.define do
     organization
   end
 
-  factory :org_admin_membership, class: 'Api::V1::OrgMembershipRecord' do
-    user
-    organization
-    role { 'admin' }
-  end
-
-  factory :org_lawyer_membership, class: 'Api::V1::OrgMembershipRecord' do
-    user
-    organization
-    role { 'lawyer' }
-  end
-
   factory :tax_income_with_lawyer, class: 'Api::V1::TaxIncome' do
     client
     association :lawyer, factory: :lawyer_profile
@@ -76,20 +28,8 @@ FactoryBot.define do
     state { 'meeting' }
   end
 
-  factory :organization, class: 'Api::V1::OrganizationRecord' do
-    name { 'My Excellent Organization' }
-    phone { '1234567890' }
-    email { 'gasdasd@gmail.com' }
-    website { 'https://www.google.com' }
-    description { 'My Excellent Organization' }
-  end
-
   factory :organization_stat, class: 'Api::V1::OrganizationStatRecord' do
     organization
-  end
-
-  factory :lawyer_profile, class: 'Api::V1::LawyerProfileRecord' do
-    user
   end
 
   factory :appointment, class: 'Api::V1::AppointmentRecord' do

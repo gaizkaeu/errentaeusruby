@@ -1,0 +1,54 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/lawyer_profiles/domain.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/lawyer_profiles/domain
+---
+packages/organizations/domain:
+  "::Api::V1::OrganizationMembership":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/lawyer_profiles/domain/app/models/api/v1/lawyer_profile.rb
+packages/rails_shimns:
+  "::ApplicationJob":
+    violations:
+    - dependency
+    files:
+    - packages/lawyer_profiles/domain/app/jobs/law_track_deleted_review_job.rb
+    - packages/lawyer_profiles/domain/app/jobs/law_track_new_review_job.rb
+    - packages/lawyer_profiles/domain/app/jobs/law_track_new_tax_income_assignation_job.rb
+  "::ApplicationPolicy":
+    violations:
+    - dependency
+    files:
+    - packages/lawyer_profiles/domain/app/public/api/v1/lawyer_profile_policy.rb
+  "::ApplicationRecord":
+    violations:
+    - dependency
+    files:
+    - packages/lawyer_profiles/domain/app/models/api/v1/lawyer_profile.rb
+  "::Filterable":
+    violations:
+    - dependency
+    files:
+    - packages/lawyer_profiles/domain/app/models/api/v1/lawyer_profile.rb
+  "::PubSubManager":
+    violations:
+    - dependency
+    files:
+    - packages/lawyer_profiles/domain/app/public/lawyer_pub_sub.rb
+  "::Repositories::RepositoryBase":
+    violations:
+    - dependency
+    files:
+    - packages/lawyer_profiles/domain/app/public/api/v1/repositories/lawyer_profile_repository.rb
+packages/users/domain:
+  "::Api::V1::User":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/lawyer_profiles/domain/app/models/api/v1/lawyer_profile.rb

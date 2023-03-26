@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_26_092317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -182,12 +182,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
     t.datetime "updated_at", null: false
     t.string "meeting_method", null: false
     t.string "phone"
-    t.string "client_id"
-    t.string "tax_income_id"
-    t.string "lawyer_id"
-    t.index ["client_id"], name: "index_appointments_on_client_id"
+    t.string "user_id"
+    t.string "organization_membership_id"
+    t.string "organization_id"
     t.index ["id"], name: "index_appointments_on_id", unique: true
-    t.index ["tax_income_id"], name: "index_appointments_on_tax_income_id", unique: true
+    t.index ["organization_id"], name: "index_appointments_on_organization_id"
+    t.index ["organization_membership_id"], name: "index_appointments_on_organization_membership_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
   create_table "document_histories", id: false, force: :cascade do |t|
@@ -338,11 +339,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
     t.string "postal_code", default: ""
     t.string "country", default: ""
     t.string "subscription_id"
-    t.integer "status", default: 0
     t.integer "app_fee", default: 10
     t.jsonb "settings", default: {"hireable"=>true}
     t.boolean "visible", default: true
     t.float "avg_rating", default: 0.0
+    t.string "status", default: "not_subscribed", null: false
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
   end
 
@@ -462,10 +463,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
-    t.string "user_record_id", null: false
+    t.string "user_id", null: false
     t.string "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
-    t.index ["user_record_id", "role_id"], name: "index_users_roles_on_user_record_id_and_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
   end
 
   add_foreign_key "account_authentication_audit_logs", "accounts"
@@ -482,8 +483,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_103616) do
   add_foreign_key "account_webauthn_user_ids", "accounts", column: "id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "appointments", "tax_incomes"
-  add_foreign_key "appointments", "users", column: "client_id"
+  add_foreign_key "appointments", "users"
   add_foreign_key "document_histories", "documents"
   add_foreign_key "document_histories", "users"
   add_foreign_key "documents", "tax_incomes"

@@ -1,9 +1,0 @@
-Se ha autorizado un pago para la declaración nº<%= @tax_income.id %>
-
-<br/>
-Cliente: <%= @user.first_name %> <%= @user.last_name %>
-         - <%= @user.email %>
-
-<br/>
-
-<a href="https://<%= Rails.application.config.x.frontend_app %>/mytaxincome/<%=@tax_income.id%>">Ver declaración</a>

@@ -24,27 +24,20 @@ Rails.application.routes.draw do
       resources :organization_requests, only: %i[create index show]
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
-        resources :stats, only: %i[index], controller: 'organization_manage/stats'
-        resources :tax_incomes, only: %i[index], controller: 'organization_manage/tax_incomes'
-        resources :lawyer_profiles, only: %i[index], controller: 'organization_manage/lawyer_profiles'
-        resources :payouts, only: %i[index], controller: 'organization_manage/payouts'
-        resources :transactions, only: %i[index], controller: 'organization_manage/transactions'
-        resources :subscription, controller: 'organization_manage/subscription', only: %i[create] do
-          get :retrieve, to: 'organization_manage#retrieve', on: :collection
-        end
 
-        get :memberships, to: 'organization_manage/memberships#index', as: :memberships, on: :member
+        resources :memberships, controller: 'organization_manage/memberships', only: %i[index create update destroy]
+        resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
 
-        resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy]
+        get :lawyer_profiles, to: 'organization_manage/lawyer_profiles#index', as: :lawyer_profiles, on: :member
 
         collection do
-          resources :memberships, controller: 'organization_memberships', only: %i[create update destroy]
           resources :invitations, controller: 'organization_invitations', only: %i[show] do
             post :accept, on: :member
           end
         end
-
       end
+
+      resources 'organization-memberships', controller: 'organization_memberships', as: :organization_memberships, only: %i[index]
 
       resources :transactions, only: %i[index]
 
