@@ -9,9 +9,9 @@ class Api::V1::MyLawyerProfileController < ApiBaseController
   end
 
   def create
-    lawyer_profile = Api::V1::LawyerProfile.create!(law_prof_params)
+    lawyer_profile = Api::V1::LawyerProfile.create(law_prof_params)
 
-    if lawyer_profile.errors.empty?
+    if lawyer_profile.errors.empty? && lawyer_profile.persisted?
       render json: Api::V1::Serializers::LawyerProfileSerializer.new(lawyer_profile), status: :created, location: api_v1_my_lawyer_profile_url
     else
       render json: lawyer_profile.errors, status: :unprocessable_entity

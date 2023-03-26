@@ -5,8 +5,8 @@ class Api::V1::OrganizationMembershipsController < ApiBaseController
 
   def index
     orgs = Api::V1::OrganizationMembership.where(user_id: current_user.id)
-          .where.not(role: 'deleted')
-          .joins(:organization)
+                                          .where.not(role: 'deleted')
+                                          .joins(:organization)
 
     render json: Api::V1::Serializers::OrganizationMembershipSerializer.new(orgs, serializer_config)
   end

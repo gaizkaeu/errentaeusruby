@@ -5,7 +5,7 @@ class Api::V1::Serializers::OrganizationMembershipSerializer
   set_id :id
   attributes :organization_id, :user_id, :role
 
-  attributes :organization, if: Proc.new { |record, params| params[:include_organization] } do |object|
+  attributes :organization, if: proc { |_record, params| params[:include_organization] } do |object|
     Api::V1::Serializers::OrganizationSerializer.new(object.organization)
   end
 

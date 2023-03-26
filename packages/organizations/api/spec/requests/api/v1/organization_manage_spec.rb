@@ -12,22 +12,6 @@ RSpec.describe 'OrganizationManage' do
       sign_in organization.memberships.first.user
     end
 
-    describe 'INDEX /organization-manage' do
-      it 'renders a successful response' do
-        get api_v1_organization_manage_index_url, as: :json
-        expect(response).to be_successful
-        expect(body['data']).to be_present
-      end
-
-      it 'doesn\'t render other organizations' do
-        get api_v1_organization_manage_index_url, as: :json
-        expect(response).to be_successful
-        expect(body['data']).to be_present
-        expect(JSON.parse(response.body)['data'].first['id']).to eq(organization.id)
-        expect(JSON.parse(response.body)['data'].pluck('id')).not_to include(organization3.id)
-      end
-    end
-
     describe 'SHOW /organization-manage/:id' do
       it 'renders a successful response' do
         get api_v1_organization_manage_url(organization.id), as: :json

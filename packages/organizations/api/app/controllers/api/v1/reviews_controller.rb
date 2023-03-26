@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::ReviewsController < ::ApiBaseController
+class Api::V1::ReviewsController < ApiBaseController
   before_action :authenticate
 
   def create
@@ -26,4 +26,3 @@ class Api::V1::ReviewsController < ::ApiBaseController
     params.require(:review).permit(:rating, :comment, :organization_id).merge!(user_id: current_user.id)
   end
 end
-

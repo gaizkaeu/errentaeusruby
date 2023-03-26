@@ -14,7 +14,7 @@ class Api::V1::User < ApplicationRecord
 
   delegate :email, to: :account
 
-  validates_presence_of :first_name, :last_name, :account_type
+  validates_presence_of :first_name, :last_name
   validates :first_name, length: { maximum: 15, minimum: 2 }
   validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
 
