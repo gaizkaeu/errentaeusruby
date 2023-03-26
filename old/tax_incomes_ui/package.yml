@@ -1,6 +1,0 @@
-enforce_dependencies: true
-enforce_privacy: true
-dependencies:
-  - packages/tax_incomes
-  - packages/authentication
-  - packages/estimations
