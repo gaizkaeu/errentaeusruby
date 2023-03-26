@@ -4,7 +4,7 @@ class Api::V1::Serializers::LawyerProfileSerializer
   set_type :lawyer_profile
   set_id :id
 
-  attributes :first_name, :last_name, :skill_list
+  attributes :first_name, :last_name, :skill_list, :email, :phone
 
   attributes :on_duty,
              if: proc { |_record, params|

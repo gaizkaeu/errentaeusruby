@@ -8,17 +8,13 @@ class Api::V1::AccountsController < ApiBaseController
     render json: Api::V1::Serializers::UserSerializer.new(user).serializable_hash
   end
 
-  # rubocop:disable Rails/SaveBang
   def stripe_customer_portal
-    portal = Stripe::BillingPortal::Session.create(
-      {
-        customer: current_user.stripe_customer_id,
-        return_url: params[:return_url]
-      }
-    )
-    render json: { url: portal.url }
+    if Api::V1::Services::UserStripeCusPortalService.call(current_user).nil?
+      render json: { error: 'No stripe customer id' }, status: :unprocessable_entity
+    else
+      render json: { url: portal.url }
+    end
   end
-  # rubocop:enable Rails/SaveBang
 
   def update
     if current_user.update(user_update_params)

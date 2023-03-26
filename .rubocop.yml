@@ -138,7 +138,7 @@ RSpec/AlignRightLetBrace:
   Enabled: false
 
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
 
 RSpec/MultipleMemoizedHelpers:
   Max: 7

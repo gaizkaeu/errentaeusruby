@@ -10,6 +10,7 @@ class Api::V1::User < ApplicationRecord
   self.id_prefix = 'usr'
 
   belongs_to :account, class_name: 'Account', inverse_of: :user, optional: true
+  has_many :organization_memberships, class_name: 'Api::V1::OrganizationMembership', inverse_of: :user, dependent: :destroy
 
   delegate :email, to: :account
 

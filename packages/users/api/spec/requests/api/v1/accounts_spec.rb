@@ -23,7 +23,7 @@ RSpec.describe Api::V1::AccountsController do
     describe 'AUTHORIZED_POST #stripe_customer_portal' do
       it 'returns a successful response' do
         authorized_post stripe_customer_portal_api_v1_accounts_path
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 

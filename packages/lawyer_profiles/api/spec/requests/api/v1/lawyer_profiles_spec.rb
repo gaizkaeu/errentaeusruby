@@ -13,175 +13,100 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/api/v1/lawyer_profiles' do
-  let(:lawyer) { create(:lawyer) }
-  let(:user) { create(:user) }
-  let(:organization) { create(:organization) }
-
-  let(:valid_attributes) do
-    { organization_id: organization.id }
-  end
+  let(:lawyer_attributes) { attributes_for(:lawyer_profile) }
 
   let(:invalid_attributes) do
-    { organization_id: 3, org_status: 'accepted' }
+    attributes_for(:lawyer_profile, email: nil)
   end
 
-  context 'when logged in organization owner' do
-    before do
-      sign_in(organization.owner)
-    end
+  context 'with created lawyer profile' do
+    let(:lawyer) { create(:lawyer_profile) }
 
-    describe 'GET /index' do
-      it 'renders a successful response' do
-        Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
-        authorized_get api_v1_organization_manage_lawyer_profiles_url(organization_manage_id: organization.id), as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body)['data'].first['relationships']['user']['data']['id']).to eq(lawyer.id)
-      end
+    before do
+      sign_in lawyer.user
     end
 
     describe 'GET /show' do
       it 'renders a successful response' do
-        lawprof = Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
-        authorized_get api_v1_lawyer_profile_url(lawprof.id), as: :json
+        get api_v1_my_lawyer_profile_path, as: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
-      end
-    end
-
-    describe 'POST /create' do
-      it 'does not allow to create lawyer_profile' do
-        expect do
-          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-        end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
       end
     end
 
     describe 'PATCH /update' do
-      it 'can update organization lawyers_profiles' do
-        lawprof = Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: organization.id })
+      context 'with valid parameters' do
+        let(:new_attributes) do
+          { email: 'newemail@gmail.com' }
+        end
+
+        it 'updates the requested lawyer_profile' do
+          authorized_put api_v1_my_lawyer_profile_path, params: { lawyer_profile: new_attributes }, as: :json
+          expect(response).to have_http_status(:ok)
+          expect(lawyer.reload.email).to eq(new_attributes[:email])
+        end
+
+        it 'renders a JSON response with the lawyer_profile' do
+          authorized_put api_v1_my_lawyer_profile_path, params: { lawyer_profile: new_attributes }, as: :json
+          expect(response).to have_http_status(:ok)
+          expect(response.content_type).to match(a_string_including('application/json'))
+        end
+      end
+    end
+
+    describe 'CREATE /create' do
+      it 'cannot create a new Lawyer Profile' do
         expect do
-          authorized_patch api_v1_lawyer_profile_url(lawprof.id), params: { lawyer_profile: { org_status: 'accepted' } }, as: :json
-        end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
-        expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)['data']['attributes']['org_status']).to eq('accepted')
+          authorized_post api_v1_my_lawyer_profile_path, params: { lawyer_profile: lawyer_attributes }, as: :json
+        end.not_to change(Api::V1::LawyerProfile, :count)
       end
 
-      it 'cannot update other organization lawyers_profiles' do
-        other_organization = create(:organization)
-        lawprof = Api::V1::Repositories::LawyerProfileRepository.add({ user_id: lawyer.id, organization_id: other_organization.id })
+      it 'renders a JSON response with errors for the new lawyer_profile' do
+        authorized_post api_v1_my_lawyer_profile_path, params: { lawyer_profile: invalid_attributes }, as: :json
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.content_type).to match(a_string_including('application/json'))
+        expect(response.body).to include('"user":["has already been taken"')
+      end
+    end
+  end
+
+  context 'with no lawyer profile' do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in user
+    end
+
+    describe 'GET /show' do
+      it 'renders a successful response' do
+        get api_v1_my_lawyer_profile_path, as: :json
+        expect(response).not_to be_successful
+      end
+    end
+
+    describe 'CREATE /create' do
+      it 'creates a new Lawyer Profile' do
         expect do
-          authorized_patch api_v1_lawyer_profile_url(lawprof.id), params: { lawyer_profile: { org_status: 'accepted' } }, as: :json
-        end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
-        expect(response).to have_http_status(:forbidden)
+          authorized_post api_v1_my_lawyer_profile_path, params: { lawyer_profile: lawyer_attributes }, as: :json
+        end.to change(Api::V1::LawyerProfile, :count).by(1)
+      end
+
+      it 'renders a JSON response with the new lawyer_profile' do
+        authorized_post api_v1_my_lawyer_profile_path, params: { lawyer_profile: lawyer_attributes }, as: :json
+        expect(response).to have_http_status(:created)
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
-  end
 
-  context 'when logged in lawyer and existing lawyer_profile' do
-    let(:lawyer_profile) { create(:lawyer_profile, user_id: lawyer.id) }
-
-    before do
-      sign_in(lawyer)
-    end
-
-    describe 'SHOW /:id' do
-      it 'renders a successful response' do
-        authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
-        expect(response).to be_successful
-        expect(JSON.parse(response.body)['data']['relationships']['user']['data']['id']).to eq(lawyer.id)
-      end
-    end
-  end
-
-  context 'when logged in lawyer and non-existing lawyer_profile' do
-    before do
-      sign_in(lawyer)
-    end
-
-    describe 'CREATE' do
+    describe 'PATCH /update' do
       context 'with valid parameters' do
-        it 'creates a new LawyerProfile' do
-          expect do
-            authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-          end.to change(Api::V1::Repositories::LawyerProfileRepository, :count).by(1)
+        let(:new_attributes) do
+          { email: 'asd@gmail.com' }
         end
 
-        it 'renders a JSON response with the new lawyer_profile' do
-          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-          expect(response).to have_http_status(:created)
-          expect(response.content_type).to match(a_string_including('application/json'))
+        it 'returns error' do
+          authorized_put api_v1_my_lawyer_profile_path, params: { lawyer_profile: new_attributes }, as: :json
+          expect(response).to have_http_status(:not_found)
         end
-
-        it 'creates a new LawyerProfile with the correct attributes' do
-          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-          expect(response).to have_http_status(:created)
-          expect { Api::V1::Repositories::LawyerProfileRepository.find_by!(organization_id: organization.id) }
-            .not_to raise_error
-        end
-      end
-
-      context 'with invalid parameters' do
-        it 'does not create a new LawyerProfile' do
-          expect do
-            authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: invalid_attributes }, as: :json
-          end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
-        end
-
-        it 'renders a JSON response with errors for the new lawyer_profile' do
-          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: invalid_attributes }, as: :json
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(JSON.parse(response.body)['organization']).to be_present
-          expect(response.content_type).to match(a_string_including('application/json'))
-        end
-      end
-    end
-  end
-
-  context 'when logged in user' do
-    before do
-      sign_in(user)
-    end
-
-    describe 'CREATE' do
-      context 'with valid parameters' do
-        it 'does not create a new LawyerProfile' do
-          expect do
-            authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-          end.not_to change(Api::V1::Repositories::LawyerProfileRepository, :count)
-        end
-
-        it 'renders a JSON response with errors for the new lawyer_profile' do
-          authorized_post api_v1_lawyer_profiles_url, params: { lawyer_profile: valid_attributes }, as: :json
-          expect(response).to have_http_status(:forbidden)
-          expect(response.content_type).to match(a_string_including('application/json'))
-        end
-      end
-    end
-
-    describe 'UPDATE /:id' do
-      let(:lawyer_profile) { create(:lawyer_profile, user_id: lawyer.id) }
-
-      context 'with valid parameters' do
-        it 'does not update the requested lawyer_profile' do
-          authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'on_duty' } }, as: :json
-          lawyer_profile.reload
-          expect(lawyer_profile.lawyer_status).not_to eq('on_duty')
-        end
-
-        it 'renders a JSON response with errors for the lawyer_profile' do
-          authorized_patch api_v1_lawyer_profile_url(lawyer_profile.id), params: { lawyer_profile: { lawyer_status: 'off_duty' } }, as: :json
-          expect(response).to have_http_status(:forbidden)
-          expect(response.content_type).to match(a_string_including('application/json'))
-        end
-      end
-    end
-
-    describe 'SHOW /:id' do
-      let(:lawyer_profile) { create(:lawyer_profile, user_id: lawyer.id) }
-
-      it 'renders a successful response' do
-        authorized_get api_v1_lawyer_profile_url(lawyer_profile.id), as: :json
-        expect(response).to have_http_status(:ok)
       end
     end
   end

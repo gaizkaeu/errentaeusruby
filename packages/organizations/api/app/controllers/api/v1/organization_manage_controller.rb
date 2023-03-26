@@ -2,15 +2,6 @@ class Api::V1::OrganizationManageController < ApiBaseController
   before_action :authenticate
   before_action :set_organization, except: %i[create index]
 
-  def index
-    orgs = Api::V1::Organization
-           .joins(:memberships)
-           .where(organization_memberships: { user_id: current_user.id })
-           .where.not(organization_memberships: { role: 'deleted' })
-
-    render json: Api::V1::Serializers::OrganizationSerializer.new(orgs, serializer_config)
-  end
-
   def show
     render json: Api::V1::Serializers::OrganizationSerializer.new(@organization, serializer_config)
   end

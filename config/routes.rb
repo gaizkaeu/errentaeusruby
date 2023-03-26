@@ -35,8 +35,9 @@ Rails.application.routes.draw do
             post :accept, on: :member
           end
         end
-
       end
+
+      resources 'organization-memberships', controller: 'organization_memberships', as: :organization_memberships, only: %i[index]
 
       resources :transactions, only: %i[index]
 

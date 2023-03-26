@@ -20,7 +20,7 @@ RSpec.describe Api::V1::ReviewsController do
       it 'does not create a new Review' do
         expect do
           post api_v1_reviews_url, params: { review: review_attributes }
-        end.not_to change(Api::V1::Repositories::ReviewRepository, :count)
+        end.not_to change(Api::V1::Review, :count)
       end
 
       it 'renders a JSON response with errors for the new review' do
@@ -41,7 +41,7 @@ RSpec.describe Api::V1::ReviewsController do
         it 'creates a new Review' do
           expect do
             post api_v1_reviews_url, params: { review: review_attributes }
-          end.to change(Api::V1::Repositories::ReviewRepository, :count).by(1)
+          end.to change(Api::V1::Review, :count).by(1)
         end
 
         it 'renders a JSON response with the new review' do
@@ -55,7 +55,7 @@ RSpec.describe Api::V1::ReviewsController do
         it 'does not create a new Review' do
           expect do
             post api_v1_reviews_url, params: invalid_attributes
-          end.not_to change(Api::V1::Repositories::ReviewRepository, :count)
+          end.not_to change(Api::V1::Review, :count)
         end
 
         it 'renders a JSON response with errors for the new review' do
