@@ -19,4 +19,3 @@ enforce_privacy: false
 # Note that packages in this list require their own `package.yml` file
 dependencies:
  - packages/application_services
- - packages/users

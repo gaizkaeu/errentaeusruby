@@ -37,7 +37,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources 'organization-memberships', controller: 'organization_memberships', as: :organization_memberships, only: %i[index]
+      resources 'organization-memberships', controller: 'organization_memberships', as: :organization_memberships, only: %i[index] do
+        resources :appointments, controller: 'organization_memberships/appointments', only: %i[index]
+      end
 
       resources :transactions, only: %i[index]
 
