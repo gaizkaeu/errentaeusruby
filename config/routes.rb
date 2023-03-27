@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
         resources :memberships, controller: 'organization_manage/memberships', only: %i[index create update destroy]
         resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
+        resources :subscriptions, controller: 'organization_manage/subscriptions', only: %i[create retrieve]
 
         get :lawyer_profiles, to: 'organization_manage/lawyer_profiles#index', as: :lawyer_profiles, on: :member
 
