@@ -5,7 +5,7 @@ class Api::V1::OrganizationMemberships::AppointmentsController < ApiBaseControll
   def index
     appos = Api::V1::Appointment.where(organization_membership: @membership)
 
-    render json: Api::V1::Serializers::AppointmentSerializer.new(appos)
+    render json: Api::V1::Serializers::AppointmentSerializer.new(appos, { params: { include_user: true } })
   end
 
   private

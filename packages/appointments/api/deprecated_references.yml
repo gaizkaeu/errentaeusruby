@@ -11,7 +11,21 @@ packages/appointments/domain:
     - privacy
     files:
     - packages/appointments/api/app/controllers/api/v1/appointments_controller.rb
+    - packages/appointments/api/app/controllers/api/v1/organization_manage/appointments_controller.rb
     - packages/appointments/api/app/controllers/api/v1/organization_memberships/appointments_controller.rb
+packages/lawyer_profiles/api:
+  "::Api::V1::Serializers::LawyerProfileSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/api/app/public/api/v1/serializers/appointment_serializer.rb
+packages/organizations/api:
+  "::Api::V1::OrganizationManage::BaseController":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/appointments/api/app/controllers/api/v1/organization_manage/appointments_controller.rb
 packages/organizations/domain:
   "::Api::V1::OrganizationMembership":
     violations:
@@ -19,3 +33,9 @@ packages/organizations/domain:
     - privacy
     files:
     - packages/appointments/api/app/controllers/api/v1/organization_memberships/appointments_controller.rb
+packages/users/api:
+  "::Api::V1::Serializers::UserSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/api/app/public/api/v1/serializers/appointment_serializer.rb

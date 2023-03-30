@@ -11,6 +11,7 @@ class Api::V1::User < ApplicationRecord
 
   belongs_to :account, class_name: 'Account', inverse_of: :user, optional: true
   has_many :organization_memberships, class_name: 'Api::V1::OrganizationMembership', inverse_of: :user, dependent: :destroy
+  has_one :lawyer_profile, class_name: 'Api::V1::LawyerProfile', inverse_of: :user, dependent: :destroy
 
   delegate :email, to: :account
 

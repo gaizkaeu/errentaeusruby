@@ -5,12 +5,12 @@ class Api::V1::AppointmentsController < ApiBaseController
   before_action :set_appointment, only: %i[show update destroy]
 
   def index
-    appointments = Api::V1::Appointment.where(user_id: current_user.id)
-    render json: Api::V1::Serializers::AppointmentSerializer.new(appointments)
+    appointments = Api::V1::Appointment.includes(:lawyer_profile).where(user_id: current_user.id)
+    render json: Api::V1::Serializers::AppointmentSerializer.new(appointments, { params: { include_lawyer_profile: true } })
   end
 
   def show
-    render json: Api::V1::Serializers::AppointmentSerializer.new(@appointment)
+    render json: Api::V1::Serializers::AppointmentSerializer.new(@appointment, { params: { include_lawyer_profile: true } })
   end
 
   def create
@@ -24,7 +24,7 @@ class Api::V1::AppointmentsController < ApiBaseController
   end
 
   def update
-    appointment = Api::V1::Services::AppoUpdateService.new.call(current_user, params[:id], appointment_update_params, raise_error: false)
+    appointment = Api::V1::Services::AppoUpdateService.new.call(current_user, params[:id], appointment_params, raise_error: false)
     if appointment.errors.empty?
       render json: Api::V1::Serializers::AppointmentSerializer.new(appointment), status: :ok
     else
@@ -47,10 +47,6 @@ class Api::V1::AppointmentsController < ApiBaseController
 
   # Only allow a list of trusted parameters through.
   def appointment_params
-    params.require(:appointment).permit(:time, :meeting_method, :phone)
-  end
-
-  def appointment_update_params
-    params.require(:appointment).permit(:time, :meeting_method, :phone)
+    params.require(:appointment).permit(:time, :meeting_method, :phone, :organization_id)
   end
 end

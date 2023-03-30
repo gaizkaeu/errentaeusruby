@@ -5,9 +5,15 @@ class Api::V1::OrganizationsController < ApiBaseController
   before_action :set_organization, only: %i[show update destroy]
 
   def index
-    pagy, orgs = pagy(Api::V1::Organization.ransack(params[:q]).result.where(visible: true))
+    pagy, orgs = pagy(Api::V1::Organization.includes([:skills]).ransack(params[:q]).result.where(visible: true))
 
-    render json: Api::V1::Serializers::OrganizationSerializer.new(orgs, meta: pagy_metadata(pagy))
+    render json: Api::V1::Serializers::OrganizationSerializer.new(
+      orgs,
+      meta: pagy_metadata(pagy),
+      params: {
+        include_verified_skills: true
+      }
+    )
   end
 
   def show
