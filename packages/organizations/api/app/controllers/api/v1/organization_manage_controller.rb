@@ -34,7 +34,7 @@ class Api::V1::OrganizationManageController < ApiBaseController
   end
 
   def organization_params
-    params.require(:organization_manage).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :visible, :skill_list, settings: {})
+    params.require(:organization_manage).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :visible, skill_list: [], settings: {})
   end
 
   def serializer_config

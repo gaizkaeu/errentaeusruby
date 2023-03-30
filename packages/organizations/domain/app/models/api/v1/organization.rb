@@ -68,13 +68,13 @@ class Api::V1::Organization < ApplicationRecord
     memberships.joins(:skills).where(tags: { name: skills.pluck(:name) }).pluck('tags.name').uniq
   end
 
-  def skill_list
+  def skill_list_name
     skills.pluck(:name)
   end
 
   def skills_verified
     Rails.cache.fetch("org_skills_verified_#{id}", expires_in: 1.hour) do
-      all_skills = skill_list
+      all_skills = skill_list_name
       verified = verified_tags
 
       all_skills.map do |skill|
