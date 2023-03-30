@@ -1,0 +1,71 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/appointments/domain.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/appointments/domain
+---
+packages/lawyer_profiles/domain:
+  "::Api::V1::LawyerProfile":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/appointments/domain/app/models/api/v1/appointment.rb
+packages/organizations/domain:
+  "::Api::V1::Organization":
+    violations:
+    - privacy
+    files:
+    - packages/appointments/domain/app/models/api/v1/appointment.rb
+  "::Api::V1::OrganizationMembership":
+    violations:
+    - privacy
+    files:
+    - packages/appointments/domain/app/models/api/v1/appointment.rb
+packages/rails_shimns:
+  "::ApplicationJob":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/jobs/appointment_creation_job.rb
+    - packages/appointments/domain/app/jobs/appointment_update_job.rb
+  "::ApplicationMailer":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/mailer/appointment_mailer.rb
+  "::ApplicationPolicy":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/public/api/v1/appointment_policy.rb
+  "::ApplicationRecord":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/models/api/v1/appointment.rb
+  "::ApplicationService":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/public/api/v1/services/appo_create_service.rb
+    - packages/appointments/domain/app/public/api/v1/services/appo_update_service.rb
+  "::Authorization":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/public/api/v1/services/appo_create_service.rb
+    - packages/appointments/domain/app/public/api/v1/services/appo_update_service.rb
+  "::PubSubManager":
+    violations:
+    - dependency
+    files:
+    - packages/appointments/domain/app/public/appointment_pub_sub.rb
+packages/users/domain:
+  "::Api::V1::User":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/appointments/domain/app/models/api/v1/appointment.rb

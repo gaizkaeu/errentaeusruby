@@ -6,14 +6,8 @@
 # bin/packwerk update-deprecations packages/authentication
 ---
 packages/users/domain:
-  "::Api::V1::Services::WebauthnKeysIndex":
-    violations:
-    - dependency
-    files:
-    - packages/authentication/app/controllers/api/v1/webauthn_controller.rb
   "::Api::V1::User":
     violations:
-    - dependency
     - privacy
     files:
     - packages/authentication/app/public/api_base_controller.rb

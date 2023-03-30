@@ -1,0 +1,16 @@
+Hola, <%= @notify_to.first_name %>.
+
+<br/>
+Le informamos que se ha modificado su cita.
+
+<br/>
+La nueva cita será el día:
+<%= @appointment.time.strftime("%d/%m/%Y %I:%M %p") %>.
+<br/>
+Su cita será con <%= @appointment_with.first_name %> <%= @appointment_with.last_name %>.
+
+Para más información, por favor ingrese con su cuenta en el siguiente enlace:
+<a href="https://<%= Rails.application.config.x.frontend_app %>/appointments/<%=@appointment.id%>">Ver cita</a>
+
+<br/>
+Muchas gracias por su atención.

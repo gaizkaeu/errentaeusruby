@@ -8,7 +8,6 @@
 packages/organizations/domain:
   "::Api::V1::OrganizationMembership":
     violations:
-    - dependency
     - privacy
     files:
     - packages/lawyer_profiles/domain/app/models/api/v1/lawyer_profile.rb

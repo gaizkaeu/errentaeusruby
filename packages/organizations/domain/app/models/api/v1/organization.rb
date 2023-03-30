@@ -8,6 +8,14 @@ class Api::V1::Organization < ApplicationRecord
     %w[name phone website description email]
   end
 
+  def self.ransackable_associations(_auth_object = nil)
+    ['skills']
+  end
+
+  def self.ransackable_scopes(_auth_object = nil)
+    %w[coordinates bounds near_by]
+  end
+
   PRICES_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_prices.json')
   private_constant :PRICES_JSON_SCHEMA
 
@@ -19,8 +27,9 @@ class Api::V1::Organization < ApplicationRecord
 
   public_constant :ORGANIZATION_SUBSCRIPTION_STATUS
 
-  scope :filter_by_coordinates, ->(coordinates) { near([coordinates[:latitude], coordinates[:longitude]]) }
-  scope :filter_by_bounds, ->(bounds) { within_bounding_box([bounds[:south], bounds[:west]], [bounds[:north], bounds[:east]]) }
+  scope :coordinates, ->(coords) { near(coords.split(',')) }
+  scope :bounds, ->(bounds) { within_bounding_box(bounds.split(',')) }
+  scope :near_by, ->(loc) { near(loc) }
 
   # VALIDATIONS
   validates :name, presence: true, length: { maximum: 30, minimum: 4 }
@@ -38,7 +47,8 @@ class Api::V1::Organization < ApplicationRecord
   has_many :invitations, class_name: 'Api::V1::OrganizationInvitation', dependent: :destroy
   has_many :lawyer_profiles, class_name: 'Api::V1::LawyerProfile', through: :memberships
   has_one_attached :logo
-  acts_as_taggable_on :services
+
+  acts_as_taggable_on :skills
 
   after_validation :geocode unless Rails.env.test?
 
@@ -46,11 +56,33 @@ class Api::V1::Organization < ApplicationRecord
     [street, postal_code, city, province, country].compact.join(', ')
   end
 
+  def user_is_admin?(user_id)
+    memberships.where(user_id:, role: 'admin').any?
+  end
+
+  def user_is_member?(user_id)
+    memberships.where(user_id:).any?
+  end
+
+  def verified_tags
+    memberships.joins(:skills).where(tags: { name: skills.pluck(:name) }).pluck('tags.name').uniq
+  end
+
   def skill_list
     skills.pluck(:name)
   end
 
-  def user_is_admin?(user_id)
-    memberships.where(user_id:, role: 'admin').any?
+  def skills_verified
+    Rails.cache.fetch("org_skills_verified_#{id}", expires_in: 1.hour) do
+      all_skills = skill_list
+      verified = verified_tags
+
+      all_skills.map do |skill|
+        {
+          name: skill,
+          verified: verified.include?(skill)
+        }
+      end
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_26_092317) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -408,6 +408,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_092317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "taggings_count", default: 0
+    t.string "hex_color"
+    t.string "emoji"
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 

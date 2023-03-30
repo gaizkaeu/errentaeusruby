@@ -23,10 +23,14 @@ Rails.application.routes.draw do
 
       resources :organization_requests, only: %i[create index show]
 
+      resources :tags, only: %i[index]
+
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
 
         resources :memberships, controller: 'organization_manage/memberships', only: %i[index create update destroy]
         resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
+        resources :subscriptions, controller: 'organization_manage/subscriptions', only: %i[create retrieve]
+        resources :appointments, controller: 'organization_manage/appointments', only: %i[index]
 
         get :lawyer_profiles, to: 'organization_manage/lawyer_profiles#index', as: :lawyer_profiles, on: :member
 
@@ -37,7 +41,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources 'organization-memberships', controller: 'organization_memberships', as: :organization_memberships, only: %i[index]
+      resources 'organization-memberships', controller: 'organization_memberships', as: :organization_memberships, only: %i[index] do
+        resources :appointments, controller: 'organization_memberships/appointments', only: %i[index]
+      end
 
       resources :transactions, only: %i[index]
 

@@ -1,5 +1,5 @@
 enforce_dependencies: true
 enforce_privacy: true
 dependencies:
-  - packages/organizations
+  - packages/organizations/domain
   - packages/authentication
