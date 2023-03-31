@@ -4,7 +4,7 @@ class Api::V1::OrganizationManage::MembershipsController < Api::V1::Organization
   def index
     memberships = Api::V1::OrganizationMembership.where(organization: @organization).includes(:user)
 
-    render json: Api::V1::Serializers::OrganizationMembershipSerializer.new(memberships)
+    render json: Api::V1::Serializers::OrganizationMembershipSerializer.new(memberships, { meta: metadata })
   end
 
   def update
@@ -26,6 +26,13 @@ class Api::V1::OrganizationManage::MembershipsController < Api::V1::Organization
   end
 
   private
+
+  def metadata
+    {
+      total_members: @organization.memberships.count,
+      max_members: @organization.max_members
+    }
+  end
 
   def membership_params
     params.require(:membership).permit(:role)

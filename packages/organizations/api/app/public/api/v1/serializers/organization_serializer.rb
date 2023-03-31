@@ -13,11 +13,6 @@ class Api::V1::Serializers::OrganizationSerializer
                    params[:manage].present? && params[:manage] == true
                  }
 
-  attribute :skills_verified,
-            if: proc { |_record, params|
-                  params[:include_verified_skills].present? && params[:include_verified_skills] == true
-                }
-
   attribute :skill_list, &:skill_list_name
 
   attributes :ratings do |object|

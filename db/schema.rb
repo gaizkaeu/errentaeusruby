@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_31_091802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -29,16 +29,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
     t.string "key", null: false
     t.datetime "deadline", null: false
     t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
-  end
-
-  create_table "account_histories", id: false, force: :cascade do |t|
-    t.string "id", null: false
-    t.string "ip"
-    t.datetime "time", null: false
-    t.integer "action", null: false
-    t.string "user_id", null: false
-    t.index ["id"], name: "index_account_histories_on_id", unique: true
-    t.index ["user_id"], name: "index_account_histories_on_user_id"
   end
 
   create_table "account_lockouts", force: :cascade do |t|
@@ -175,80 +165,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
-  create_table "appointments", id: false, force: :cascade do |t|
-    t.string "id", null: false
-    t.datetime "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "meeting_method", null: false
-    t.string "phone"
-    t.string "user_id"
-    t.string "organization_membership_id"
-    t.string "organization_id"
-    t.index ["id"], name: "index_appointments_on_id", unique: true
-    t.index ["organization_id"], name: "index_appointments_on_organization_id"
-    t.index ["organization_membership_id"], name: "index_appointments_on_organization_membership_id"
-    t.index ["user_id"], name: "index_appointments_on_user_id"
-  end
-
-  create_table "document_histories", id: false, force: :cascade do |t|
-    t.string "id", null: false
-    t.string "description"
-    t.integer "action", null: false
-    t.string "document_id", null: false
-    t.string "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["document_id"], name: "index_document_histories_on_document_id"
-    t.index ["id"], name: "index_document_histories_on_id", unique: true
-    t.index ["user_id"], name: "index_document_histories_on_user_id"
-  end
-
-  create_table "documents", id: false, force: :cascade do |t|
-    t.string "id", null: false
-    t.string "name"
-    t.string "exported_by_id"
-    t.integer "state", default: 0, null: false
-    t.integer "export_status", default: 0, null: false
-    t.integer "document_number", default: 1, null: false
-    t.string "tax_income_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["exported_by_id"], name: "index_documents_on_exported_by_id"
-    t.index ["id"], name: "index_documents_on_id", unique: true
-    t.index ["tax_income_id"], name: "index_documents_on_tax_income_id"
-  end
-
-  create_table "estimations", id: false, force: :cascade do |t|
-    t.string "id", null: false
-    t.string "first_name"
-    t.boolean "first_time", default: false, null: false
-    t.integer "home_changes", default: 0, null: false
-    t.integer "rentals_mortgages", default: 0, null: false
-    t.boolean "professional_company_activity", default: false, null: false
-    t.integer "real_state_trade", default: 0, null: false
-    t.boolean "with_couple", default: false, null: false
-    t.integer "income_rent", default: 0, null: false
-    t.integer "shares_trade", default: 0, null: false
-    t.boolean "outside_alava", default: false, null: false
-    t.integer "price", default: -1, null: false
-    t.string "token", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["id"], name: "index_estimations_on_id", unique: true
-    t.index ["token"], name: "index_estimations_on_token", unique: true
-  end
-
-  create_table "lawyer_profiles", id: :string, force: :cascade do |t|
-    t.string "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "email"
-    t.string "phone"
-    t.boolean "on_duty", default: false
-    t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
-  end
-
   create_table "organization_invitations", id: :string, force: :cascade do |t|
     t.string "email", null: false
     t.string "token", null: false
@@ -284,36 +200,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "organization_stats", id: :string, force: :cascade do |t|
-    t.string "organization_id", null: false
-    t.integer "lawyers_active_count", default: 0, null: false
-    t.integer "lawyers_active_count_acc", default: 0, null: false
-    t.integer "lawyers_inactive_count", default: 0, null: false
-    t.integer "lawyers_inactive_count_acc", default: 0, null: false
-    t.integer "tax_income_count", default: 0, null: false
-    t.integer "tax_income_count_acc", default: 0, null: false
-    t.integer "tax_income_finished_count", default: 0, null: false
-    t.integer "tax_income_finished_count_acc", default: 0, null: false
-    t.integer "tax_income_pending_count", default: 0, null: false
-    t.integer "tax_income_pending_count_acc", default: 0, null: false
-    t.integer "one_star_count", default: 0, null: false
-    t.integer "one_star_count_acc", default: 0, null: false
-    t.integer "two_star_count", default: 0, null: false
-    t.integer "two_star_count_acc", default: 0, null: false
-    t.integer "three_star_count", default: 0, null: false
-    t.integer "three_star_count_acc", default: 0, null: false
-    t.integer "four_star_count", default: 0, null: false
-    t.integer "four_star_count_acc", default: 0, null: false
-    t.integer "five_star_count", default: 0, null: false
-    t.integer "five_star_count_acc", default: 0, null: false
-    t.integer "avg_rating_today", default: 0, null: false
-    t.integer "balance_today", default: 0
-    t.date "date"
-    t.integer "balance_capturable_today", default: 0
-    t.index ["organization_id", "date"], name: "index_organization_stats_on_organization_id_and_date", unique: true
-    t.index ["organization_id"], name: "index_organization_stats_on_organization_id"
-  end
-
   create_table "organizations", id: :string, force: :cascade do |t|
     t.string "name", null: false
     t.string "phone", null: false
@@ -345,17 +231,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
     t.float "avg_rating", default: 0.0
     t.string "status", default: "not_subscribed", null: false
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
-  end
-
-  create_table "payouts", id: :string, force: :cascade do |t|
-    t.string "organization_id", null: false
-    t.integer "amount", null: false
-    t.integer "status", null: false
-    t.date "date", null: false
-    t.datetime "created_at", null: false
-    t.jsonb "metadata", default: {}, null: false
-    t.index "organization_id, EXTRACT(month FROM date)", name: "index_organization_id_uniqueness_month", unique: true
-    t.index ["organization_id"], name: "index_payouts_on_organization_id"
   end
 
   create_table "reviews", id: :string, force: :cascade do |t|
@@ -413,42 +288,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "tax_incomes", id: false, force: :cascade do |t|
-    t.string "id", null: false
-    t.string "observations"
-    t.integer "year"
-    t.integer "price", default: -1, null: false
-    t.integer "amount_captured", default: -1, null: false
-    t.boolean "captured", default: false, null: false
-    t.boolean "paid", default: false, null: false
-    t.integer "state", default: 0
-    t.string "client_id", null: false
-    t.string "estimation_id"
-    t.string "payment_intent_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "lawyer_id"
-    t.string "organization_id", null: false
-    t.index ["client_id"], name: "index_tax_incomes_on_client_id"
-    t.index ["estimation_id"], name: "index_tax_incomes_on_estimation_id"
-    t.index ["id"], name: "index_tax_incomes_on_id", unique: true
-    t.index ["organization_id"], name: "index_tax_incomes_on_organization_id"
-    t.index ["payment_intent_id"], name: "index_tax_incomes_on_payment_intent_id", unique: true
-  end
-
-  create_table "transactions", id: :string, force: :cascade do |t|
-    t.string "user_id", null: false
-    t.string "organization_id", null: false
-    t.string "payment_intent_id", null: false
-    t.string "status", null: false
-    t.jsonb "metadata", default: {}, null: false
-    t.datetime "created_at", null: false
-    t.integer "amount", null: false
-    t.integer "amount_capturable", null: false
-    t.index ["organization_id"], name: "index_transactions_on_organization_id"
-    t.index ["user_id"], name: "index_transactions_on_user_id"
-  end
-
   create_table "users", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.string "first_name"
@@ -472,7 +311,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
   end
 
   add_foreign_key "account_authentication_audit_logs", "accounts"
-  add_foreign_key "account_histories", "users"
   add_foreign_key "account_lockouts", "accounts", column: "id"
   add_foreign_key "account_login_change_keys", "accounts", column: "id"
   add_foreign_key "account_login_failures", "accounts", column: "id"
@@ -485,16 +323,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_131020) do
   add_foreign_key "account_webauthn_user_ids", "accounts", column: "id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "appointments", "users"
-  add_foreign_key "document_histories", "documents"
-  add_foreign_key "document_histories", "users"
-  add_foreign_key "documents", "tax_incomes"
-  add_foreign_key "documents", "users", column: "exported_by_id"
   add_foreign_key "organization_invitations", "organizations"
   add_foreign_key "organization_memberships", "organizations"
   add_foreign_key "organization_memberships", "users"
   add_foreign_key "taggings", "tags"
-  add_foreign_key "tax_incomes", "estimations"
-  add_foreign_key "tax_incomes", "users", column: "client_id"
   add_foreign_key "users", "accounts"
 end

@@ -45,16 +45,19 @@ class Api::V1::Organization < ApplicationRecord
   has_many :memberships, class_name: 'Api::V1::OrganizationMembership', dependent: :destroy
   has_many :users, through: :memberships, class_name: 'Api::V1::User'
   has_many :invitations, class_name: 'Api::V1::OrganizationInvitation', dependent: :destroy
-  has_many :lawyer_profiles, class_name: 'Api::V1::LawyerProfile', through: :memberships
   has_one_attached :logo
 
   acts_as_taggable_on :skills
 
   after_validation :geocode unless Rails.env.test?
 
+  # GEOCODING
+
   def address
     [street, postal_code, city, province, country].compact.join(', ')
   end
+
+  # MEMBERSHIPS
 
   def user_is_admin?(user_id)
     memberships.where(user_id:, role: 'admin').any?
@@ -64,25 +67,13 @@ class Api::V1::Organization < ApplicationRecord
     memberships.where(user_id:).any?
   end
 
-  def verified_tags
-    memberships.joins(:skills).where(tags: { name: skills.pluck(:name) }).pluck('tags.name').uniq
+  def max_members
+    5
   end
+
+  # SKILLS
 
   def skill_list_name
     skills.pluck(:name)
-  end
-
-  def skills_verified
-    Rails.cache.fetch("org_skills_verified_#{id}", expires_in: 1.hour) do
-      all_skills = skill_list_name
-      verified = verified_tags
-
-      all_skills.map do |skill|
-        {
-          name: skill,
-          verified: verified.include?(skill)
-        }
-      end
-    end
   end
 end
