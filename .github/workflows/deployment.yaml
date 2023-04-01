@@ -159,6 +159,8 @@ jobs:
             VAPID_PUBLIC=ERRENTA-VAPID-PUBLIC:1
             VAPID_PRIVATE=ERRENTA-VAPID-PRIVATE:1
             SMTP_PASSWORD=ERRENTA-SMTP_PASSWORD:latest
+            GOOGLE_OAUTH_SECRET=ERRENTA_GOOGLE_OAUTH_SECRET:latest
+            GOOGLE_OAUTH_CLIENT=ERRENTA_GOOGLE_OAUTH_CLIENT:latest
           flags: |
             --set-cloudsql-instances=eliza-asesores:europe-west1:errenta-db
 

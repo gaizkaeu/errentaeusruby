@@ -1,7 +1,6 @@
 class Api::V1::Review < ApplicationRecord
   include PrettyId
   include Filterable
-  extend T::Sig
 
   self.table_name = 'reviews'
   self.id_prefix = 'rev'
