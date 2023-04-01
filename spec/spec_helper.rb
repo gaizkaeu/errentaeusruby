@@ -14,7 +14,6 @@ require './spec/support/auth_helpers'
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'aasm/rspec'
 
 RSpec.configure do |config|
   config.include AuthHelpers

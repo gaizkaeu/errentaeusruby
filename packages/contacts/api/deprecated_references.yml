@@ -1,0 +1,20 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/contacts/api.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/contacts/api
+---
+packages/contacts/domain:
+  "::Api::V1::CallContact":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/contacts/api/app/controllers/api/v1/calls_controller.rb
+  "::Api::V1::EmailContact":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/contacts/api/app/controllers/api/v1/emails_controller.rb

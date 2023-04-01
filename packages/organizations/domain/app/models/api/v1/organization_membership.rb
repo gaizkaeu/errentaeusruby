@@ -12,10 +12,6 @@ class Api::V1::OrganizationMembership < ApplicationRecord
   delegate :first_name, to: :user
   delegate :last_name, to: :user
 
-  has_one :lawyer_profile, through: :user
-
-  has_many :skills, through: :lawyer_profile
-
   validates :role, inclusion: { in: USER_TYPES }
   validates :user, uniqueness: { scope: :organization }
 

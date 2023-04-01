@@ -14,7 +14,6 @@ acc_lawyer = Account.create!(email: 'carolina@elizaasesores.com', status: 2)
 
 Api::V1::User.create!({ first_name: 'Gaizka', last_name: 'Urdangarin', account_id: admin.id })
 owner = Api::V1::User.create!({ first_name: 'Eliza', last_name: 'Asesores', account_type: :org_manage, account_id: acc_gestion.id })
-law = Api::V1::User.create!({ first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: acc_lawyer.id })
+Api::V1::User.create!({ first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: acc_lawyer.id })
 org = Api::V1::Organization.create!({ name: 'Eliza Asesores', phone: '1234567890', email: 'contacto@elizaasesores.com', website: 'https://www.elizaasesores.com', description: 'Eliza Asesores', latitude: 42.84, longitude: -2.67 })
 Api::V1::OrganizationMembership.create!({ user_id: owner.id, organization_id: org.id, role: :admin })
-Api::V1::LawyerProfile.create!({ user_id: law.id })
