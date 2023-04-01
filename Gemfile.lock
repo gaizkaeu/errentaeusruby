@@ -1,8 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.4.0)
-      concurrent-ruby (~> 1.0)
     actioncable (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -255,9 +253,6 @@ GEM
     io-console (0.6.0)
     irb (1.6.2)
       reline (>= 0.3.0)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     json (2.6.3)
     json-schema (3.0.0)
       addressable (>= 2.8)
@@ -511,11 +506,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sorbet (0.5.10626)
-      sorbet-static (= 0.5.10626)
     sorbet-runtime (0.5.10626)
-    sorbet-static (0.5.10626-universal-darwin-21)
-    sorbet-static (0.5.10626-x86_64-linux)
     stripe (8.1.0)
     stripe_event (2.7.0)
       activesupport (>= 3.1)
@@ -563,9 +554,6 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wicked_pdf (2.6.3)
-      activesupport
-    wkhtmltopdf-binary (0.12.6.6)
     zeitwerk (2.6.6)
 
 PLATFORMS
@@ -573,7 +561,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  aasm
   active_storage_validations
   activerecord_json_validator (~> 2.1)
   acts-as-taggable-on (~> 9.0)
@@ -591,7 +578,6 @@ DEPENDENCIES
   google-cloud-storage (~> 1.44)
   graphwerk
   honeybadger (~> 5.0)
-  jbuilder
   jsonapi-serializer
   jwt
   omniauth (~> 2.1)
@@ -621,8 +607,6 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers (~> 5.0)
   simplecov
-  sorbet
-  sorbet-runtime
   stripe
   stripe_event
   tzinfo-data
@@ -631,8 +615,6 @@ DEPENDENCIES
   web-console
   webauthn (~> 2.5)
   webdrivers
-  wicked_pdf
-  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 3.1.2p20
