@@ -5,13 +5,6 @@
 #
 # bin/packwerk update-deprecations packages/users/domain
 ---
-packages/lawyer_profiles/domain:
-  "::Api::V1::LawyerProfile":
-    violations:
-    - dependency
-    - privacy
-    files:
-    - packages/users/domain/app/models/api/v1/user.rb
 packages/organizations/domain:
   "::Api::V1::OrganizationMembership":
     violations:

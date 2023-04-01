@@ -12,7 +12,6 @@ class Api::V1::OrganizationMembership < ApplicationRecord
   delegate :first_name, to: :user
   delegate :last_name, to: :user
 
-
   validates :role, inclusion: { in: USER_TYPES }
   validates :user, uniqueness: { scope: :organization }
 

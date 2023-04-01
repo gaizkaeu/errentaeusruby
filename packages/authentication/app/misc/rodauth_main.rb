@@ -20,7 +20,8 @@ class RodauthMain < Rodauth::Rails::Auth
            :change_password_notify,
            :verify_login_change,
            :close_account,
-           :internal_request
+           :internal_request,
+           :omniauth
 
     prefix '/api/v1/auth'
 
@@ -161,5 +162,15 @@ class RodauthMain < Rodauth::Rails::Auth
     email_auth_email_link do
       "#{Rails.application.config.x.frontend_app}/account/email-auth/#{token_param_value(email_auth_key_value)}"
     end
+
+    omniauth_provider :google_oauth2,
+                      ENV.fetch('GOOGLE_OAUTH_CLIENT', nil),
+                      ENV.fetch('GOOGLE_OAUTH_SECRET', nil),
+                      {
+                        provider_ignores_state: true,
+                        name: 'google',
+                        authorize_params: { redirect_uri: "#{ENV.fetch('FRONTEND_APP_HOST', nil)}/account/google/callback" },
+                        token_params: { redirect_uri: "#{ENV.fetch('FRONTEND_APP_HOST', nil)}/account/google/callback" }
+                      }
   end
 end

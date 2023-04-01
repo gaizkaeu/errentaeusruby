@@ -1,6 +1,7 @@
 class ApiBaseController < ApplicationController
   include Authorization
   include ActionController::Cookies
+  include ActionController::Helpers
 
   rescue_from Pundit::NotAuthorizedError, with: :permission_denied
 

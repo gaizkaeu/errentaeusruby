@@ -21,6 +21,9 @@ Rails.application.routes.draw do
         resources :reviews, only: %i[index], controller: 'organizations/reviews'
       end
 
+      resources :emails, as: :email_contacts, only: %i[create]
+      resources :calls, as: :call_contacts, only: %i[create]
+
       resources :organization_requests, only: %i[create index show]
 
       resources :tags, only: %i[index]

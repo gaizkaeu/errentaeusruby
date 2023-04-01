@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_091802) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_31_150718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -29,6 +29,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_091802) do
     t.string "key", null: false
     t.datetime "deadline", null: false
     t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "account_identities", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.index ["account_id"], name: "index_account_identities_on_account_id"
+    t.index ["provider", "uid"], name: "index_account_identities_on_provider_and_uid", unique: true
   end
 
   create_table "account_lockouts", force: :cascade do |t|
@@ -163,6 +171,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_091802) do
     t.datetime "started_at"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
+  end
+
+  create_table "call_contacts", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number", null: false
+    t.string "state", default: "pending", null: false
+    t.boolean "successful", default: false, null: false
+    t.string "notes"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_call_contacts_on_organization_id"
+    t.index ["user_id"], name: "index_call_contacts_on_user_id"
+  end
+
+  create_table "email_contacts", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.string "state", default: "pending", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email", null: false
+    t.boolean "successful", default: false, null: false
+    t.string "notes"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_email_contacts_on_organization_id"
+    t.index ["user_id"], name: "index_email_contacts_on_user_id"
   end
 
   create_table "organization_invitations", id: :string, force: :cascade do |t|
@@ -311,6 +349,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_091802) do
   end
 
   add_foreign_key "account_authentication_audit_logs", "accounts"
+  add_foreign_key "account_identities", "accounts", on_delete: :cascade
   add_foreign_key "account_lockouts", "accounts", column: "id"
   add_foreign_key "account_login_change_keys", "accounts", column: "id"
   add_foreign_key "account_login_failures", "accounts", column: "id"
@@ -323,6 +362,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_091802) do
   add_foreign_key "account_webauthn_user_ids", "accounts", column: "id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "call_contacts", "organizations", on_delete: :cascade
+  add_foreign_key "call_contacts", "users", on_delete: :cascade
+  add_foreign_key "email_contacts", "organizations", on_delete: :cascade
+  add_foreign_key "email_contacts", "users", on_delete: :cascade
   add_foreign_key "organization_invitations", "organizations"
   add_foreign_key "organization_memberships", "organizations"
   add_foreign_key "organization_memberships", "users"
