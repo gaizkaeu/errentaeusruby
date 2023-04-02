@@ -161,6 +161,7 @@ jobs:
             SMTP_PASSWORD=ERRENTA-SMTP_PASSWORD:latest
             GOOGLE_OAUTH_SECRET=ERRENTA_GOOGLE_OAUTH_SECRET:latest
             GOOGLE_OAUTH_CLIENT=ERRENTA_GOOGLE_OAUTH_CLIENT:latest
+            GOOGLE_API_KEY=ERRENTA_GOOGLE_API_KEY:latest
           flags: |
             --set-cloudsql-instances=eliza-asesores:europe-west1:errenta-db
 

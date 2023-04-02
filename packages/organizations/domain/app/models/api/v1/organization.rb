@@ -1,4 +1,7 @@
 class Api::V1::Organization < ApplicationRecord
+  # WARNING
+  # OPEN CLOSE HOURS ARE STORED IN UTC
+
   include PrettyId
   ORGANIZATION_SUBSCRIPTION_STATUS = %w[not_subscribed featured_city featured_state featured_country].freeze
 
@@ -100,4 +103,44 @@ class Api::V1::Organization < ApplicationRecord
       GooglePlaces::Client.new(ENV.fetch('GOOGLE_API_KEY', nil)).spot(google_place_id, fields: 'reviews,rating', language: 'es').json_result_object
     end
   end
+
+  # Times
+  # rubocop:disable Metrics/AbcSize
+  def open?
+    return false if open_close_hours.blank?
+
+    day = Time.zone.now.strftime('%A').downcase
+    time = Time.zone.now.strftime('%H:%M')
+
+    return false if open_close_hours[day]['open'] == 'closed' || open_close_hours[day]['close'] == 'closed'
+
+    time >= open_close_hours[day]['open'] && time <= open_close_hours[day]['close']
+  end
+
+  def near_close?
+    return false if open_close_hours.blank?
+
+    day = Time.zone.now.strftime('%A').downcase
+    time = 30.minutes.from_now
+
+    return false if open_close_hours[day]['open'] == 'closed' || open_close_hours[day]['close'] == 'closed'
+
+    time >= open_close_hours[day]['close']
+  end
+
+  def nearest_open_time
+    today = Time.zone.now
+
+    # get the next day that is open
+    open_days = open_close_hours.select { |_day, v| v['open'] != 'closed' && v['close'] != 'closed' }
+
+    7.times do |i|
+      day = today + i.days
+      wday = day.strftime('%A').downcase
+      if open_days.fetch(wday, nil).present?
+        return day.change(hour: open_days[wday]['open'].split(':').first.to_i, min: open_days[wday]['open'].split(':').last.to_i, offset: '+0000')
+      end
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 end

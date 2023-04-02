@@ -137,7 +137,7 @@ class RodauthMain < Rodauth::Rails::Auth
     end
 
     after_create_account do
-      Api::V1::Services::UserCreateService.call({ account_id:, first_name: param('first_name'), last_name: param('last_name') })
+      Api::V1::User.create!(account_id:, first_name: param('first_name'), last_name: param('last_name'))
     end
 
     webauthn_origin Rails.application.config.x.frontend_app
@@ -172,5 +172,9 @@ class RodauthMain < Rodauth::Rails::Auth
                         authorize_params: { redirect_uri: "#{ENV.fetch('FRONTEND_APP_HOST', nil)}/account/google/callback" },
                         token_params: { redirect_uri: "#{ENV.fetch('FRONTEND_APP_HOST', nil)}/account/google/callback" }
                       }
+
+    after_omniauth_create_account do
+      Api::V1::User.create!(account_id:, first_name: omniauth_info['first_name'], last_name: omniauth_info['last_name'])
+    end
   end
 end
