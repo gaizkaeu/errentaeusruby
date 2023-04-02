@@ -36,6 +36,11 @@ Rails.application.routes.draw do
           get :retrieve, on: :collection
         end
 
+        resources :calls, controller: 'organization_manage/calls', only: %i[index update] do
+          post :start, on: :member
+          post :end, on: :member
+        end
+
         collection do
           resources :invitations, controller: 'organization_invitations', only: %i[show] do
             post :accept, on: :member

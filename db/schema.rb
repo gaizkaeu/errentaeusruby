@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_01_132058) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_093931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -184,6 +184,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_01_132058) do
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.integer "duration", default: -1, null: false
     t.index ["organization_id"], name: "index_call_contacts_on_organization_id"
     t.index ["user_id"], name: "index_call_contacts_on_user_id"
   end
