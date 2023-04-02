@@ -8,4 +8,22 @@ class Api::V1::CallContact < ApplicationRecord
   private_constant :STATUSES
 
   validates :state, inclusion: { in: STATUSES }
+
+  def start
+    if state == 'pending'
+      update!(state: 'live', start_at: Time.current)
+    else
+      errors.add(:state, 'is not pending')
+      false
+    end
+  end
+
+  def end
+    if state == 'live'
+      update!(state: 'finished', end_at: Time.current, duration: Time.current - start_at)
+    else
+      errors.add(:state, 'is not live')
+      false
+    end
+  end
 end

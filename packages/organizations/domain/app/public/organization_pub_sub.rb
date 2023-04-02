@@ -1,12 +1,11 @@
 OrganizationPubSub = PubSubManager.new
-OrganizationPubSub.register_event('organization.tax_income_assigned') do
-  organization_id String
-  date String
+
+OrganizationPubSub.register_event('organization.created') do
+  id String
 end
 
-OrganizationPubSub.register_event('organization.lawyer_change') do
-  organization_id String
-  lawyer_id String
+OrganizationPubSub.register_event('organization.updated') do
+  id String
 end
 
 OrganizationPubSub.register_event('organization.review_created') do
@@ -29,7 +28,6 @@ OrganizationPubSub.register_event('organization.invitation_created') do
   organization_inv_id String
 end
 
-OrganizationPubSub.subscribe('organization.tax_income_assigned', OrgTrackNewTaxIncomeAssignationJob)
 OrganizationPubSub.subscribe('organization.review_created', OrgTrackNewReviewJob)
 OrganizationPubSub.subscribe('organization.review_deleted', OrgTrackDeletedReviewJob)
 OrganizationPubSub.subscribe('organization.request_created', OrgRequestNotificationJob)

@@ -9,11 +9,15 @@ class Api::V1::Serializers::OrganizationSerializer
   attributes :app_fee,
              :subscription_id,
              :settings,
+             :google_place_id,
+             :google_place_verified,
+             :google_place_details,
              if: proc { |_record, params|
                    params[:manage].present? && params[:manage] == true
                  }
 
   attribute :skill_list, &:skill_list_name
+  attribute :google_place_details, if: proc { |rec| rec.google_place_id.present? && rec.google_place_verified }
 
   attributes :ratings do |object|
     {

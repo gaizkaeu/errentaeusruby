@@ -8,13 +8,19 @@
 packages/contacts/domain:
   "::Api::V1::CallContact":
     violations:
-    - dependency
     - privacy
     files:
     - packages/contacts/api/app/controllers/api/v1/calls_controller.rb
+    - packages/contacts/api/app/controllers/api/v1/organization_manage/calls_controller.rb
   "::Api::V1::EmailContact":
+    violations:
+    - privacy
+    files:
+    - packages/contacts/api/app/controllers/api/v1/emails_controller.rb
+packages/organizations/api:
+  "::Api::V1::OrganizationManage::BaseController":
     violations:
     - dependency
     - privacy
     files:
-    - packages/contacts/api/app/controllers/api/v1/emails_controller.rb
+    - packages/contacts/api/app/controllers/api/v1/organization_manage/calls_controller.rb
