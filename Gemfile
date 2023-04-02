@@ -187,3 +187,6 @@ gem 'omniauth-google-oauth2', '~> 1.1'
 
 # Authentication
 gem 'omniauth', '~> 2.1'
+
+# Google places
+gem 'google_places'

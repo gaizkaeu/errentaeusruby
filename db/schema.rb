@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_150718) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_01_132058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -268,6 +268,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_150718) do
     t.boolean "visible", default: true
     t.float "avg_rating", default: 0.0
     t.string "status", default: "not_subscribed", null: false
+    t.string "google_place_id"
+    t.boolean "google_place_verified", default: false
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
   end
 

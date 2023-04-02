@@ -51,10 +51,24 @@ class Api::V1::Organization < ApplicationRecord
 
   after_validation :geocode unless Rails.env.test?
 
+  after_update_commit do
+    OrganizationPubSub.publish('organization.updated', id:)
+    Api::V1::Services::OrgPlaceIdService.call(id)
+  end
+
+  after_create_commit do
+    OrganizationPubSub.publish('organization.created', id:)
+    Api::V1::Services::OrgPlaceIdService.call(id)
+  end
+
   # GEOCODING
 
   def address
     [street, postal_code, city, province, country].compact.join(', ')
+  end
+
+  def address_with_name
+    [name, address].compact.join(', ')
   end
 
   # MEMBERSHIPS
@@ -75,5 +89,15 @@ class Api::V1::Organization < ApplicationRecord
 
   def skill_list_name
     skills.pluck(:name)
+  end
+
+  # Google Places details
+
+  def google_place_details
+    return {} if google_place_id.blank? || !google_place_verified
+
+    Rails.cache.fetch("google_place_details_#{google_place_id}", expires_in: 1.day) do
+      GooglePlaces::Client.new(ENV.fetch('GOOGLE_API_KEY', nil)).spot(google_place_id, fields: 'reviews,rating', language: 'es').json_result_object
+    end
   end
 end
