@@ -7,13 +7,13 @@ class Api::V1::Services::OrgPlaceIdService < ApplicationService
     end
 
     if organization.address.present? && !Rails.env.test?
-      place = GooglePlaces::Client.new(ENV.fetch('GOOGLE_API_KEY', nil)).spots_by_query(organization.address_with_name)
-      if place.present?
-        organization.google_place_id = place[0].place_id
-        organization.save!
-      end
+      organization.update!(google_place_id: place_id)
     end
 
     organization
+  end
+
+  def place_id
+    GooglePlaces::Client.new(ENV.fetch('GOOGLE_API_KEY', nil)).spots_by_query(organization.address_with_name).first.place_id
   end
 end
