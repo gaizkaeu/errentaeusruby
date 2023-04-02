@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_02_093931) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_140405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -273,6 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_093931) do
     t.string "status", default: "not_subscribed", null: false
     t.string "google_place_id"
     t.boolean "google_place_verified", default: false
+    t.jsonb "open_close_hours", default: {"friday"=>{"open"=>"9:00", "close"=>"17:00"}, "monday"=>{"open"=>"9:00", "close"=>"17:00"}, "sunday"=>{"open"=>"closed", "close"=>"closed"}, "tuesday"=>{"open"=>"9:00", "close"=>"17:00"}, "saturday"=>{"open"=>"closed", "close"=>"closed"}, "thursday"=>{"open"=>"9:00", "close"=>"17:00"}, "wednesday"=>{"open"=>"9:00", "close"=>"17:00"}}
     t.index ["latitude", "longitude"], name: "index_organizations_on_latitude_and_longitude"
   end
 

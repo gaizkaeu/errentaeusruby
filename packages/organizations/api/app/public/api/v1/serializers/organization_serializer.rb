@@ -3,15 +3,22 @@ class Api::V1::Serializers::OrganizationSerializer
 
   set_type :organization
   set_id :id
-  attributes :name, :description, :website, :email, :phone, :prices, :created_at, :price_range, :tax_income_count, :status
-  attributes :latitude, :longitude, :city, :province, :country, :street, :postal_code
+  attributes :name, :description, :website, :email, :phone, :prices, :created_at, :price_range
+  attributes :latitude, :longitude, :city, :province, :country, :street, :postal_code, :open_close_hours
 
-  attributes :app_fee,
-             :subscription_id,
+  attribute :open, &:open?
+  attribute :near_close, &:near_close?
+
+  attribute :nearest_open_time, if: proc { |rec| !rec.open? }
+
+  attribute :visible
+
+  attributes :subscription_id,
              :settings,
              :google_place_id,
              :google_place_verified,
              :google_place_details,
+             :status,
              if: proc { |_record, params|
                    params[:manage].present? && params[:manage] == true
                  }
@@ -29,6 +36,4 @@ class Api::V1::Serializers::OrganizationSerializer
       five_star_count: object.five_star_count
     }
   end
-
-  attributes :visible
 end

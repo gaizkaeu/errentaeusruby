@@ -10,4 +10,5 @@ packages/users/domain:
     violations:
     - privacy
     files:
+    - packages/authentication/app/misc/rodauth_main.rb
     - packages/authentication/app/public/api_base_controller.rb
