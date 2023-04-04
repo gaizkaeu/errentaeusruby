@@ -3,5 +3,5 @@ class Api::V1::Serializers::TagSerializer
 
   set_type :tag
   set_id :id
-  attributes :name, :hex_color, :taggings_count, :emoji
+  attributes :name, :hex_color, :taggings_count, :emoji, :dark_hex_color
 end

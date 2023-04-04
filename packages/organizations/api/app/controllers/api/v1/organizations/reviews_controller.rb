@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::Organizations::ReviewsController < ApiBaseController
+class Api::V1::Organizations::ReviewsController < ApplicationController
   before_action :authenticate, except: :index
 
   def index

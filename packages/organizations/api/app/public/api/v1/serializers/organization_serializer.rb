@@ -6,6 +6,7 @@ class Api::V1::Serializers::OrganizationSerializer
   attributes :name, :description, :website, :email, :phone, :prices, :created_at, :price_range
   attributes :latitude, :longitude, :city, :province, :country, :street, :postal_code, :open_close_hours
 
+  attribute :status
   attribute :open, &:open?
   attribute :near_close, &:near_close?
 
@@ -18,7 +19,6 @@ class Api::V1::Serializers::OrganizationSerializer
              :google_place_id,
              :google_place_verified,
              :google_place_details,
-             :status,
              if: proc { |_record, params|
                    params[:manage].present? && params[:manage] == true
                  }

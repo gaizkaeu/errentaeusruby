@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::AccountsController < ApiBaseController
+class Api::V1::AccountsController < ApplicationController
   before_action :authenticate
 
   def me

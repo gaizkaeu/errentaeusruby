@@ -1,4 +1,4 @@
-class Api::V1::EmailsController < ApiBaseController
+class Api::V1::EmailsController < ApplicationController
   def create
     call = Api::V1::EmailContact.new(email_params)
     call.user = current_user if current_account.present?

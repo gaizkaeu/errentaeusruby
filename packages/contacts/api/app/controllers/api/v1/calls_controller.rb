@@ -1,4 +1,4 @@
-class Api::V1::CallsController < ApiBaseController
+class Api::V1::CallsController < ApplicationController
   def create
     call = Api::V1::CallContact.new(call_params)
     call.user = current_user if current_account.present?
@@ -13,6 +13,6 @@ class Api::V1::CallsController < ApiBaseController
   private
 
   def call_params
-    params.require(:call).permit(:organization_id, :first_name, :last_name, :phone_number)
+    params.require(:call).permit(:organization_id, :phone_number)
   end
 end

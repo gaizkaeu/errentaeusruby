@@ -1,4 +1,4 @@
-class Api::V1::OrganizationManageController < ApiBaseController
+class Api::V1::OrganizationManageController < ApplicationController
   before_action :authenticate
   before_action :set_organization, except: %i[create index]
 
