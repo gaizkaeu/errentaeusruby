@@ -1,6 +1,6 @@
 class OrgRequestNotificationJob < ApplicationJob
   def perform(params)
-    request = Api::V1::Repositories::OrganizationRequestRepository.find(params['organization_request_id'])
+    request = Api::V1::OrganizationRequest.find(params['organization_request_id'])
 
     return unless request.persisted?
 

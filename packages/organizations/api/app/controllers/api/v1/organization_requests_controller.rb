@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::OrganizationRequestsController < ApiBaseController
+class Api::V1::OrganizationRequestsController < ApplicationController
   before_action :authenticate, except: %i[create]
 
   def create

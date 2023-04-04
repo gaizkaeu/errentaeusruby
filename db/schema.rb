@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_02_140405) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_03_202053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_140405) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.bigint "visit_id"
-    t.bigint "user_id"
+    t.string "user_id"
     t.string "name"
     t.jsonb "properties"
     t.datetime "time"
@@ -146,7 +146,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_140405) do
   create_table "ahoy_visits", force: :cascade do |t|
     t.string "visit_token"
     t.string "visitor_token"
-    t.bigint "user_id"
+    t.string "user_id"
     t.string "ip"
     t.text "user_agent"
     t.text "referrer"
@@ -329,6 +329,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_140405) do
     t.integer "taggings_count", default: 0
     t.string "hex_color"
     t.string "emoji"
+    t.string "dark_hex_color"
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 

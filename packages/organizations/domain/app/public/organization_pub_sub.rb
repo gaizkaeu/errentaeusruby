@@ -28,9 +28,17 @@ OrganizationPubSub.register_event('organization.invitation_created') do
   organization_inv_id String
 end
 
+OrganizationPubSub.register_event('organization.notification') do
+  organization_id String
+  message do
+    subject String content String
+  end
+end
+
 OrganizationPubSub.subscribe('organization.review_created', OrgTrackNewReviewJob)
 OrganizationPubSub.subscribe('organization.review_deleted', OrgTrackDeletedReviewJob)
 OrganizationPubSub.subscribe('organization.request_created', OrgRequestNotificationJob)
+OrganizationPubSub.subscribe('organization.notification', OrgNotifyToAllMembersJob)
 
 # Register external package events
 

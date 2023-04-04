@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::OrganizationMembershipsController < ApiBaseController
+class Api::V1::OrganizationMembershipsController < ApplicationController
   before_action :authenticate
 
   def index

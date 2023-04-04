@@ -1,4 +1,4 @@
-class Api::V1::OrganizationInvitationsController < ApiBaseController
+class Api::V1::OrganizationInvitationsController < ApplicationController
   before_action :authenticate
 
   def accept

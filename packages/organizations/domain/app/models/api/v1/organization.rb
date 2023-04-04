@@ -12,7 +12,7 @@ class Api::V1::Organization < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    ['skills']
+    ['skills, company_targets, services']
   end
 
   def self.ransackable_scopes(_auth_object = nil)
@@ -51,6 +51,8 @@ class Api::V1::Organization < ApplicationRecord
   has_one_attached :logo
 
   acts_as_taggable_on :skills
+  acts_as_taggable_on :company_targets
+  acts_as_taggable_on :services
 
   after_validation :geocode unless Rails.env.test?
 
@@ -110,15 +112,17 @@ class Api::V1::Organization < ApplicationRecord
     return false if open_close_hours.blank?
 
     day = Time.zone.now.strftime('%A').downcase
-    time = Time.zone.now.strftime('%H:%M')
+    time = Time.zone.now
 
-    return false if open_close_hours[day]['open'] == 'closed' || open_close_hours[day]['close'] == 'closed'
+    today_schedule = open_close_hours[day]
+
+    return false if today_schedule.nil? || today_schedule['open'] == 'closed' || today_schedule['close'] == 'closed'
 
     time >= open_close_hours[day]['open'] && time <= open_close_hours[day]['close']
   end
 
   def near_close?
-    return false if open_close_hours.blank?
+    return false if open_close_hours.blank? || !open?
 
     day = Time.zone.now.strftime('%A').downcase
     time = 30.minutes.from_now

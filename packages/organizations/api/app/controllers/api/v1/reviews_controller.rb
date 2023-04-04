@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::ReviewsController < ApiBaseController
+class Api::V1::ReviewsController < ApplicationController
   before_action :authenticate
 
   def create

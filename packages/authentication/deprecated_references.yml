@@ -11,4 +11,4 @@ packages/users/domain:
     - privacy
     files:
     - packages/authentication/app/misc/rodauth_main.rb
-    - packages/authentication/app/public/api_base_controller.rb
+    - packages/authentication/app/public/application_controller.rb

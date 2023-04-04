@@ -1,0 +1,14 @@
+# This file contains a list of dependencies that are not part of the long term plan for packages/rails_shimns.
+# We should generally work to reduce this list, but not at the expense of actually getting work done.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-deprecations packages/rails_shimns
+---
+packages/authentication:
+  "::ApplicationController":
+    violations:
+    - dependency
+    files:
+    - packages/rails_shimns/app/public/test/sessions_controller.rb
+    - packages/rails_shimns/spec/model/pub_sub_manager_spec.rb

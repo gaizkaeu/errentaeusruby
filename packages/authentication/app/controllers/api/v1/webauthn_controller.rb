@@ -1,4 +1,4 @@
-class Api::V1::WebauthnController < ApiBaseController
+class Api::V1::WebauthnController < ApplicationController
   before_action :authenticate
 
   def index
