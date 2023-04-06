@@ -24,6 +24,9 @@ class Api::V1::Serializers::OrganizationSerializer
                  }
 
   attribute :skill_list, &:skill_list_name
+  attribute :company_target_list
+  attribute :service_list
+
   attribute :google_place_details, if: proc { |rec| rec.google_place_id.present? && rec.google_place_verified }
 
   attributes :ratings do |object|
