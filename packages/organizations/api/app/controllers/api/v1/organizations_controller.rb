@@ -7,10 +7,7 @@ class Api::V1::OrganizationsController < ApplicationController
   def index
     pagy, orgs = pagy(Api::V1::Organization.includes([:taggings]).ransack(params[:q]).result.where(visible: true))
 
-    render json: Api::V1::Serializers::OrganizationSerializer.new(
-      orgs,
-      meta: pagy_metadata(pagy)
-    )
+    render json: Api::V1::Serializers::OrganizationSerializer.new(orgs, meta: pagy_metadata(pagy))
   end
 
   def show
