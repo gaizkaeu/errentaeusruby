@@ -138,7 +138,7 @@ class Api::V1::Organization < ApplicationRecord
     # get the next day that is open
     open_days = open_close_hours.select { |_day, v| v['open'] != 'closed' && v['close'] != 'closed' }
 
-    7.times do |i|
+    (1..7).each do |i|
       day = today + i.days
       wday = day.strftime('%A').downcase
       if open_days.fetch(wday, nil).present?

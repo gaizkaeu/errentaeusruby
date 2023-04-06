@@ -5,14 +5,11 @@ class Api::V1::OrganizationsController < ApplicationController
   before_action :set_organization, only: %i[show update destroy]
 
   def index
-    pagy, orgs = pagy(Api::V1::Organization.includes([:skills]).ransack(params[:q]).result.where(visible: true))
+    pagy, orgs = pagy(Api::V1::Organization.includes([:taggings]).ransack(params[:q]).result.where(visible: true))
 
     render json: Api::V1::Serializers::OrganizationSerializer.new(
       orgs,
-      meta: pagy_metadata(pagy),
-      params: {
-        include_verified_skills: true
-      }
+      meta: pagy_metadata(pagy)
     )
   end
 
@@ -24,5 +21,7 @@ class Api::V1::OrganizationsController < ApplicationController
 
   def set_organization
     @organization = Api::V1::Organization.find(params[:id])
+
+    render json: { error: 'Organization not found' }, status: :not_found unless @organization.visible
   end
 end
