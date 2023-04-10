@@ -12,7 +12,7 @@ class Api::V1::Organization < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    ['skills, company_targets, services']
+    %w[skills company_targets services]
   end
 
   def self.ransackable_scopes(_auth_object = nil)
@@ -24,9 +24,6 @@ class Api::V1::Organization < ApplicationRecord
 
   SETTINGS_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_settings.json')
   private_constant :SETTINGS_JSON_SCHEMA
-
-  geocoded_by :address
-  reverse_geocoded_by :latitude, :longitude
 
   public_constant :ORGANIZATION_SUBSCRIPTION_STATUS
 
@@ -54,6 +51,8 @@ class Api::V1::Organization < ApplicationRecord
   acts_as_taggable_on :company_targets
   acts_as_taggable_on :services
 
+  geocoded_by :address
+  reverse_geocoded_by :latitude, :longitude
   after_validation :geocode unless Rails.env.test?
 
   after_update_commit do
@@ -88,12 +87,6 @@ class Api::V1::Organization < ApplicationRecord
 
   def max_members
     5
-  end
-
-  # SKILLS
-
-  def skill_list_name
-    skills.pluck(:name)
   end
 
   # Google Places details
