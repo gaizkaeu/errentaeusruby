@@ -23,7 +23,7 @@ class Api::V1::Serializers::OrganizationSerializer
                    params[:manage].present? && params[:manage] == true
                  }
 
-  attribute :skill_list, &:skill_list_name
+  attribute :skill_list
   attribute :company_target_list
   attribute :service_list
 

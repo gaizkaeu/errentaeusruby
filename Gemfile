@@ -190,3 +190,6 @@ gem 'omniauth', '~> 2.1'
 
 # Google places
 gem 'google_places'
+
+# ID3
+gem 'decisiontree'

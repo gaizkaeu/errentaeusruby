@@ -130,6 +130,7 @@ GEM
     debug (1.7.1)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    decisiontree (0.5.0)
     declarative (0.0.20)
     device_detector (1.1.0)
     diff-lcs (1.5.0)
@@ -576,6 +577,7 @@ DEPENDENCIES
   cloudflare-rails
   cloudtasker
   debug
+  decisiontree
   dotenv-rails
   factory_bot
   faker (~> 3.1)

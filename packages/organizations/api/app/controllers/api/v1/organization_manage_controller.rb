@@ -34,10 +34,10 @@ class Api::V1::OrganizationManageController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization_manage).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :visible, skill_list: [], settings: {})
+    params.require(:organization_manage).permit(:name, :description, :website, :email, :phone, :city, :postal_code, :street, :province, :street, :prices, :logo, :visible, skill_list: [], company_target_list: [], service_list: [], settings: {})
   end
 
   def serializer_config
-    { params: { manage: true, include_verified_skills: true } }
+    { params: { manage: true } }
   end
 end

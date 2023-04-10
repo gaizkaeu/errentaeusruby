@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_202053) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -206,6 +206,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_202053) do
     t.index ["user_id"], name: "index_email_contacts_on_user_id"
   end
 
+  create_table "organization_calculators", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.string "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_calculators_on_organization_id"
+  end
+
   create_table "organization_invitations", id: :string, force: :cascade do |t|
     t.string "email", null: false
     t.string "token", null: false
@@ -330,7 +338,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_202053) do
     t.string "hex_color"
     t.string "emoji"
     t.string "dark_hex_color"
+    t.bigint "parent_tag_id"
     t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["parent_tag_id"], name: "index_tags_on_parent_tag_id"
   end
 
   create_table "users", id: false, force: :cascade do |t|
@@ -373,9 +383,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_202053) do
   add_foreign_key "call_contacts", "users", on_delete: :cascade
   add_foreign_key "email_contacts", "organizations", on_delete: :cascade
   add_foreign_key "email_contacts", "users", on_delete: :cascade
+  add_foreign_key "organization_calculators", "organizations"
   add_foreign_key "organization_invitations", "organizations"
   add_foreign_key "organization_memberships", "organizations"
   add_foreign_key "organization_memberships", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "tags", "tags", column: "parent_tag_id"
   add_foreign_key "users", "accounts"
 end

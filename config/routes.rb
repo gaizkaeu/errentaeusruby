@@ -26,7 +26,9 @@ Rails.application.routes.draw do
 
       resources :organization_requests, only: %i[create index show]
 
-      resources :tags, only: %i[index]
+      resources :skills_tags, only: %i[index]
+      resources :services_tags, only: %i[index]
+      resources :company_targets, only: %i[index]
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
 
