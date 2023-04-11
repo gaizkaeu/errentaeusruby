@@ -9,6 +9,7 @@ class Api::V1::Serializers::OrganizationSerializer
   attribute :status
   attribute :open, &:open?
   attribute :near_close, &:near_close?
+  attribute :logo_url, proc { |rec| rec.logo.url }
 
   attribute :nearest_open_time, if: proc { |rec| !rec.open? }
 
