@@ -5,7 +5,7 @@ class Api::V1::OrganizationsController < ApplicationController
   before_action :set_organization, only: %i[show update destroy]
 
   def index
-    pagy, orgs = pagy(Api::V1::Organization.includes([:taggings]).ransack(params[:q]).result.where(visible: true))
+    pagy, orgs = pagy(Api::V1::Organization.includes(%i[taggings logo_attachment]).ransack(params[:q]).result.where(visible: true))
 
     render json: Api::V1::Serializers::OrganizationSerializer.new(orgs, meta: pagy_metadata(pagy))
   end
