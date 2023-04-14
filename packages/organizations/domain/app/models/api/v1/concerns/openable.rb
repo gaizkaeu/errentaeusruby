@@ -33,12 +33,13 @@ module Api::V1::Concerns::Openable
     # get the next day that is open
     open_days = open_close_hours.select { |_day, v| v['open'] != 'closed' && v['close'] != 'closed' }
 
-    7.times do |i|
+    8.times do |i|
       day = today + i.days
       wday = day.strftime('%A').downcase
-      if open_days.fetch(wday, nil).present?
-        return day.change(hour: open_days[wday]['open'].split(':').first.to_i, min: open_days[wday]['open'].split(':').last.to_i, offset: '+0000')
-      end
+      next if open_days.fetch(wday, nil).blank?
+      next if today == day && today > open_close_hours[wday]['open']
+
+      return day.change(hour: open_days[wday]['open'].split(':').first.to_i, min: open_days[wday]['open'].split(':').last.to_i, offset: '+0000')
     end
   end
 

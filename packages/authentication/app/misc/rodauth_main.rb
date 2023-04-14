@@ -163,6 +163,14 @@ class RodauthMain < Rodauth::Rails::Auth
       "#{Rails.application.config.x.frontend_app}/account/email-auth/#{token_param_value(email_auth_key_value)}"
     end
 
+    omniauth_identity_update_hash do
+      {
+        info: omniauth_info.to_json,
+        credentials: omniauth_credentials.to_json,
+        extra: omniauth_extra.to_json
+      }
+    end
+
     omniauth_provider :google_oauth2,
                       ENV.fetch('GOOGLE_OAUTH_CLIENT', nil),
                       ENV.fetch('GOOGLE_OAUTH_SECRET', nil),
