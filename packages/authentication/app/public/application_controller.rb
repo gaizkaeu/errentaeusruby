@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action do
-    ActiveStorage::Current.host = Rails.application.config.x.app_host
+    ActiveStorage::Current.url_options = Rails.application.config.x.app_host
   end
 
   def current_user

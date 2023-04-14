@@ -1,7 +1,9 @@
 class Api::V1::CallsController < ApplicationController
+  before_action :authenticate
+
   def create
     call = Api::V1::CallContact.new(call_params)
-    call.user = current_user if current_account.present?
+    call.user = current_user
 
     if call.save
       render json: Api::V1::Serializers::CallSerializer.new(call), status: :created
@@ -13,6 +15,6 @@ class Api::V1::CallsController < ApplicationController
   private
 
   def call_params
-    params.require(:call).permit(:organization_id, :phone_number)
+    params.require(:call).permit(:organization_id, :phone_number, :call_time)
   end
 end

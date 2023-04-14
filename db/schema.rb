@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_094237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -35,6 +35,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
     t.bigint "account_id", null: false
     t.string "provider", null: false
     t.string "uid", null: false
+    t.json "info", default: "{}"
+    t.json "credentials", default: "{}"
+    t.json "extra", default: "{}"
     t.index ["account_id"], name: "index_account_identities_on_account_id"
     t.index ["provider", "uid"], name: "index_account_identities_on_provider_and_uid", unique: true
   end
@@ -173,6 +176,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
+  create_table "calculations", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.string "calculator_id", null: false
+    t.string "user_id", null: false
+    t.jsonb "input", null: false
+    t.jsonb "output", null: false
+    t.boolean "verified", default: false, null: false
+    t.boolean "train_with", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calculator_id"], name: "index_calculations_on_calculator_id"
+    t.index ["organization_id"], name: "index_calculations_on_organization_id"
+    t.index ["user_id"], name: "index_calculations_on_user_id"
+  end
+
+  create_table "calculators", id: :string, force: :cascade do |t|
+    t.string "organization_id", null: false
+    t.string "calculator_type", null: false
+    t.binary "marshalled_predictor", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_calculators_on_organization_id"
+  end
+
   create_table "call_contacts", id: :string, force: :cascade do |t|
     t.string "organization_id", null: false
     t.string "first_name"
@@ -187,6 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
     t.datetime "start_at"
     t.datetime "end_at"
     t.integer "duration", default: -1, null: false
+    t.datetime "call_time"
     t.index ["organization_id"], name: "index_call_contacts_on_organization_id"
     t.index ["user_id"], name: "index_call_contacts_on_user_id"
   end
@@ -204,14 +232,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_email_contacts_on_organization_id"
     t.index ["user_id"], name: "index_email_contacts_on_user_id"
-  end
-
-  create_table "organization_calculators", id: :string, force: :cascade do |t|
-    t.string "organization_id", null: false
-    t.string "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_organization_calculators_on_organization_id"
   end
 
   create_table "organization_invitations", id: :string, force: :cascade do |t|
@@ -379,11 +399,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_100427) do
   add_foreign_key "account_webauthn_user_ids", "accounts", column: "id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "calculations", "calculators"
+  add_foreign_key "calculations", "organizations"
+  add_foreign_key "calculations", "users"
+  add_foreign_key "calculators", "organizations"
   add_foreign_key "call_contacts", "organizations", on_delete: :cascade
   add_foreign_key "call_contacts", "users", on_delete: :cascade
   add_foreign_key "email_contacts", "organizations", on_delete: :cascade
   add_foreign_key "email_contacts", "users", on_delete: :cascade
-  add_foreign_key "organization_calculators", "organizations"
   add_foreign_key "organization_invitations", "organizations"
   add_foreign_key "organization_memberships", "organizations"
   add_foreign_key "organization_memberships", "users"
