@@ -119,6 +119,7 @@ GEM
       jwt
       redis
       retriable
+    cmath (1.0.0)
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
     constant_resolver (0.2.0)
@@ -270,6 +271,8 @@ GEM
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     jwt (2.6.0)
+    keisan (0.9.1)
+      cmath (~> 1.0)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -588,6 +591,7 @@ DEPENDENCIES
   honeybadger (~> 5.0)
   jsonapi-serializer
   jwt
+  keisan
   omniauth (~> 2.1)
   omniauth-google-oauth2 (~> 1.1)
   packwerk
