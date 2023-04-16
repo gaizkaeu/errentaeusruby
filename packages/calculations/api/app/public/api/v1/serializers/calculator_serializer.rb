@@ -3,7 +3,7 @@ class Api::V1::Serializers::CalculatorSerializer
 
   set_type :calculator
   set_id :id
-  attributes :calculation_topic_id, :classifications, :organization_id, :last_trained_at, :created_at, :updated_at
+  attributes :calculation_topic_id, :classifications, :organization_id, :last_trained_at, :created_at, :updated_at, :correct_rate, :sample_count
 
   attribute :topic_name do |object|
     object.calculation_topic.name
