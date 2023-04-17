@@ -17,6 +17,7 @@ packages/calculations/domain:
     - privacy
     files:
     - packages/calculations/api/app/contollers/api/v1/organization_manage/calculations_controller.rb
+    - packages/calculations/api/app/contollers/api/v1/organization_manage/calculators_controller.rb
 packages/organizations/api:
   "::Api::V1::OrganizationManage::BaseController":
     violations:
