@@ -3,7 +3,16 @@ class Api::V1::Serializers::CalculatorSerializer
 
   set_type :calculator
   set_id :id
-  attributes :calculation_topic_id, :classifications, :organization_id, :last_trained_at, :created_at, :updated_at, :correct_rate, :sample_count
+  attributes :calculation_topic_id, :organization_id, :created_at, :updated_at, :questions
+
+  attributes :last_trained_at,
+             :classifications,
+             :correct_rate,
+             :sample_count,
+             :exposed_variables_formatted,
+             if: proc { |_record, params|
+                   params[:manage].present? && params[:manage] == true
+                 }
 
   attribute :topic_name do |object|
     object.calculation_topic.name

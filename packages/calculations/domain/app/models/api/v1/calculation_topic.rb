@@ -6,10 +6,6 @@ class Api::V1::CalculationTopic < ApplicationRecord
   has_many :calculators, class_name: 'Api::V1::Calculator'
   has_many :calculations, through: :calculators
 
-  def calculate(_classification)
-    10
-  end
-
   def variable_types
     prediction_attributes.each_value.to_h do |attribute|
       [attribute['name'].to_sym, attribute['var_type'].to_sym]
@@ -35,5 +31,21 @@ class Api::V1::CalculationTopic < ApplicationRecord
     when 'string'
       value.to_s
     end
+  end
+
+  def validation_schema
+    Rails.root.join('config', 'schemas', validation_file)
+  end
+
+  def questions
+    prediction_attributes.each_value.pluck('question')
+  end
+
+  def exposed_variables
+    variable_data_types.select { |_, type| type == :integer }
+  end
+
+  def exposed_variables_formatted
+    exposed_variables.transform_keys { |k| k.upcase.to_s }
   end
 end

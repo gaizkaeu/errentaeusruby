@@ -10,28 +10,30 @@ class Api::V1::Services::CalcnPredictService < ApplicationService
     @calculation.save!
   end
 
+  private
+
   def classify
     @classification = calculator.predict(@calculation.predict_variables)
     @calculation.output = { classification: @classification }
   end
 
-  # rubocop:disable Metrics/AbcSize
   def calculate_price
     ec = classifications.fetch(@classification, nil)
 
     return 0 if ec.nil?
 
-    int_vars = variable_data_types.select { |_, type| type == :integer }
-
     variables =
-      @calculation.input.select { |k, _| int_vars.key?(k.to_sym) }
+      @calculation.input.select { |k, _| exposed_variables.key?(k.to_sym) }
                   .to_h do |key, value|
         [key.upcase, value.to_i]
       end
 
     @calculation.price_result = Keisan::Calculator.new.evaluate(ec, variables)
   end
-  # rubocop:enable Metrics/AbcSize
+
+  def exposed_variables
+    @exposed_variables ||= @calculation.calculation_topic.exposed_variables
+  end
 
   def classifications
     @classifications ||= @calculation.calculator.classifications

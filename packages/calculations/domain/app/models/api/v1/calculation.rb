@@ -3,21 +3,20 @@ class Api::V1::Calculation < ApplicationRecord
 
   self.id_prefix = 'calcn'
 
+  has_one :calculation_topic, through: :calculator
   belongs_to :calculator, class_name: 'Api::V1::Calculator'
   belongs_to :user, class_name: 'Api::V1::User', optional: true
 
+  delegate :calculation_topic, to: :calculator
+
+  validates :input, json: { schema: -> { calculation_topic.validation_schema } }
+  validates_with Api::V1::Validators::CalculationOutputValidator
+
   before_validation :sanitize_input
-
-  TEST = Rails.root.join('config', 'schemas', 'test.json')
-  private_constant :TEST
-
-  validates :input, json: { schema: TEST }
 
   after_create_commit do
     CalculatorPubSub.publish('calculator.perform_calculation', calculation_id: id)
   end
-
-  has_one :calculation_topic, through: :calculator
 
   def predict_variables
     input.values_at(*calculation_topic.attributes_training)
