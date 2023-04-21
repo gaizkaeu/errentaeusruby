@@ -11,30 +11,6 @@ packages/organizations/domain:
     - privacy
     files:
     - packages/calculations/domain/app/models/api/v1/calculator.rb
-packages/rails_shimns:
-  "::ApplicationJob":
-    violations:
-    - dependency
-    files:
-    - packages/calculations/domain/app/jobs/calculation_job.rb
-  "::ApplicationRecord":
-    violations:
-    - dependency
-    files:
-    - packages/calculations/domain/app/models/api/v1/calculation.rb
-    - packages/calculations/domain/app/models/api/v1/calculation_topic.rb
-    - packages/calculations/domain/app/models/api/v1/calculator.rb
-  "::ApplicationService":
-    violations:
-    - dependency
-    files:
-    - packages/calculations/domain/app/public/api/v1/services/calcn_predict_service.rb
-    - packages/calculations/domain/app/public/api/v1/services/calcr_train_service.rb
-  "::PubSubManager":
-    violations:
-    - dependency
-    files:
-    - packages/calculations/domain/app/public/calculator_pub_sub.rb
 packages/users/domain:
   "::Api::V1::User":
     violations:

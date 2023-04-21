@@ -5,7 +5,7 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
   before_action :set_calculator
 
   def index
-    pagy, calc = pagy(Api::V1::Calculation.where(calculator: @calculator).ransack(params[:q]).result.order(created_at: :desc))
+    pagy, calc = pagy(Api::V1::Calculation.where(calculator: @calculator).includes([:calculator]).ransack(params[:q]).result.order(created_at: :desc))
 
     render json: Api::V1::Serializers::CalculationSerializer.new(calc, meta: pagy_metadata(pagy), params: { manage: true })
   end

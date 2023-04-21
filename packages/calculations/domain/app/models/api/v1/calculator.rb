@@ -13,6 +13,9 @@ class Api::V1::Calculator < ApplicationRecord
   delegate :sanitize_variable, to: :calculation_topic
   delegate :exposed_variables_formatted, to: :calculation_topic
   delegate :questions, to: :calculation_topic
+  delegate :description, to: :calculation_topic
+  delegate :estimated_time, to: :calculation_topic
+  delegate :colors, to: :calculation_topic
   delegate :predict, to: :predictor
 
   after_create_commit do

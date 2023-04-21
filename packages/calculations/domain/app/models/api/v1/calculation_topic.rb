@@ -37,6 +37,10 @@ class Api::V1::CalculationTopic < ApplicationRecord
     Rails.root.join('config', 'schemas', validation_file)
   end
 
+  def estimated_time
+    prediction_attributes.keys.count * 0.5
+  end
+
   def questions
     prediction_attributes.each_value.map do |v|
       v['question'].merge!('name' => v['name'])

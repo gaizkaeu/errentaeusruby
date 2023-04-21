@@ -12,18 +12,17 @@ class Api::V1::Calculation < ApplicationRecord
   validates :input, json: { schema: -> { calculation_topic.validation_schema } }
   validates_with Api::V1::Validators::CalculationOutputValidator
 
-  before_validation :sanitize_input
-
   def self.ransackable_attributes(_auth_object = nil)
     %w[train_with]
   end
 
-  after_create_commit do
-    CalculatorPubSub.publish('calculator.perform_calculation', calculation_id: id)
+  before_validation do
+    sanitize_input
+    calculate_price
   end
 
-  def predict_variables
-    input.values_at(*calculation_topic.attributes_training)
+  after_create_commit do
+    CalculatorPubSub.publish('calculator.perform_calculation', calculation_id: id)
   end
 
   def sanitize_input
@@ -40,18 +39,42 @@ class Api::V1::Calculation < ApplicationRecord
     calculator_version != calculator.version
   end
 
-  # rubocop:disable Metrics/AbcSize
   def eligible_for_training?
-    return false if output.nil? || output['classification'].nil? || input.nil?
+    return false if output.nil? || classification.nil? || input.nil?
 
-    calculator.classifications.key?(output['classification']) &&
+    calculator.classifications.key?(classification) &&
       calculation_topic.attributes_training.all? { |k| input[k].present? }
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def calculate_price
+    ec = calculator.classifications.fetch(classification, nil)
+
+    return if ec.nil?
+
+    variables =
+      input.select { |k, _| calculation_topic.exposed_variables.key?(k.to_sym) }
+           .to_h do |key, value|
+        [key.upcase, value.to_i]
+      end
+
+    self.price_result = Keisan::Calculator.new.evaluate(ec, variables)
+  end
   # rubocop:enable Metrics/AbcSize
+
+  # HELPERS
 
   def questions
     calculation_topic.questions.map do |question|
       question.merge('value' => input[question['name']])
     end
+  end
+
+  def classification
+    output['classification']
+  end
+
+  def predict_variables
+    input.values_at(*calculation_topic.attributes_training)
   end
 end

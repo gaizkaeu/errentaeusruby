@@ -3,7 +3,6 @@ class Api::V1::Services::CalcrPredictService < ApplicationService
     @calculation = Api::V1::Calculation.find(calculation_id)
 
     classify
-    calculate_price
 
     @calculation.predicted_at = Time.zone.now
     @calculation.calculator_version = @calculation.calculator.version
@@ -16,20 +15,6 @@ class Api::V1::Services::CalcrPredictService < ApplicationService
   def classify
     @classification = calculator.predict(@calculation.predict_variables)
     @calculation.output = { classification: @classification }
-  end
-
-  def calculate_price
-    ec = classifications.fetch(@classification, nil)
-
-    return 0 if ec.nil?
-
-    variables =
-      @calculation.input.select { |k, _| exposed_variables.key?(k.to_sym) }
-                  .to_h do |key, value|
-        [key.upcase, value.to_i]
-      end
-
-    @calculation.price_result = Keisan::Calculator.new.evaluate(ec, variables)
   end
 
   def exposed_variables
