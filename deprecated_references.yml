@@ -5,12 +5,26 @@
 #
 # bin/packwerk update-deprecations .
 ---
+packages/calculations/domain:
+  "::Api::V1::CalculationTopic":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - db/migrate/20230421170019_add_some_test_data.rb
+  "::Api::V1::Calculator":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - db/migrate/20230421170019_add_some_test_data.rb
 packages/organizations/domain:
   "::Api::V1::Organization":
     violations:
     - dependency
     - privacy
     files:
+    - db/migrate/20230421170019_add_some_test_data.rb
     - db/seeds.rb
   "::Api::V1::OrganizationMembership":
     violations:
