@@ -1,0 +1,12 @@
+digraph G {
+graph [
+  size = "9,11",
+  orientation = portrait,
+  color = black
+]
+n2059730163499865778 [label="trabajadores\n(687980)", shape="box"];
+n1324909870046214057 [label="dificil\n(688000)", shape="box"];
+n317145373066767310 [label="facil\n(688020)", shape="box"];
+n2059730163499865778 -> n1324909870046214057 [label=">= 1.5"];
+n2059730163499865778 -> n317145373066767310 [label="< 1.5"];
+}

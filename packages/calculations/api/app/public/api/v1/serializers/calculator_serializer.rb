@@ -9,6 +9,8 @@ class Api::V1::Serializers::CalculatorSerializer
              :classifications,
              :correct_rate,
              :sample_count,
+             :version,
+             :dot_visualization,
              :exposed_variables_formatted,
              if: proc { |_record, params|
                    params[:manage].present? && params[:manage] == true

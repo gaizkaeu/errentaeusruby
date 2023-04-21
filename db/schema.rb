@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_17_081632) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_172241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -195,6 +195,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_081632) do
     t.datetime "updated_at", null: false
     t.integer "price_result"
     t.datetime "predicted_at"
+    t.integer "calculator_version", default: 0
     t.index ["calculator_id"], name: "index_calculations_on_calculator_id"
     t.index ["user_id"], name: "index_calculations_on_user_id"
   end
@@ -209,6 +210,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_081632) do
     t.datetime "last_trained_at"
     t.integer "correct_rate", default: -1
     t.integer "sample_count", default: -1
+    t.integer "version", default: 0
+    t.text "dot_visualization"
     t.index ["calculation_topic_id"], name: "index_calculators_on_calculation_topic_id"
     t.index ["organization_id"], name: "index_calculators_on_organization_id"
   end

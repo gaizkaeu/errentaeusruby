@@ -5,7 +5,7 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
   before_action :set_calculator
 
   def index
-    pagy, calc = pagy(Api::V1::Calculation.where(calculator: @calculator))
+    pagy, calc = pagy(Api::V1::Calculation.where(calculator: @calculator).ransack(params[:q]).result.order(created_at: :desc))
 
     render json: Api::V1::Serializers::CalculationSerializer.new(calc, meta: pagy_metadata(pagy), params: { manage: true })
   end
@@ -28,7 +28,7 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
   end
 
   def update
-    calc = Api::V1::Calculation.find(params[:id], calculator: @calculator)
+    calc = Api::V1::Calculation.find_by(id: params[:id], calculator: @calculator)
 
     if calc.update(calculation_params)
       render json: Api::V1::Serializers::CalculationSerializer.new(calc, serializer_params)

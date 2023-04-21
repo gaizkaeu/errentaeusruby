@@ -1,4 +1,4 @@
-class Api::V1::Services::CalcnPredictService < ApplicationService
+class Api::V1::Services::CalcrPredictService < ApplicationService
   def call(calculation_id)
     @calculation = Api::V1::Calculation.find(calculation_id)
 
@@ -6,6 +6,7 @@ class Api::V1::Services::CalcnPredictService < ApplicationService
     calculate_price
 
     @calculation.predicted_at = Time.zone.now
+    @calculation.calculator_version = @calculation.calculator.version
 
     @calculation.save!
   end

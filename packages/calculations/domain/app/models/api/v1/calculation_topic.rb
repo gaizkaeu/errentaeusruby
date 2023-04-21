@@ -38,7 +38,9 @@ class Api::V1::CalculationTopic < ApplicationRecord
   end
 
   def questions
-    prediction_attributes.each_value.pluck('question')
+    prediction_attributes.each_value.map do |v|
+      v['question'].merge!('name' => v['name'])
+    end
   end
 
   def exposed_variables

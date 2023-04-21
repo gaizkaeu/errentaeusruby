@@ -4,11 +4,16 @@
     "properties": {
         "constitucion": {
             "type": "string",
-            "const": "sociedad"
+            "enum": ["sociedad", "autonomo"]
         },
         "trabajadores": {
             "type": "integer",
             "minimum": 1
+        },
+        "impuestos_especiales": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
         }
     },
     "required": ["constitucion", "trabajadores"],

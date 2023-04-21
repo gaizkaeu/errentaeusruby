@@ -14,6 +14,10 @@ class Api::V1::Calculation < ApplicationRecord
 
   before_validation :sanitize_input
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[train_with]
+  end
+
   after_create_commit do
     CalculatorPubSub.publish('calculator.perform_calculation', calculation_id: id)
   end
@@ -27,6 +31,27 @@ class Api::V1::Calculation < ApplicationRecord
 
     input.each do |key, value|
       input[key] = calculation_topic.sanitize_variable(key, value)
+    end
+  end
+
+  def stale_calculation?
+    return false if output.nil?
+
+    calculator_version != calculator.version
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def eligible_for_training?
+    return false if output.nil? || output['classification'].nil? || input.nil?
+
+    calculator.classifications.key?(output['classification']) &&
+      calculation_topic.attributes_training.all? { |k| input[k].present? }
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def questions
+    calculation_topic.questions.map do |question|
+      question.merge('value' => input[question['name']])
     end
   end
 end

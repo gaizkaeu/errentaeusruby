@@ -15,6 +15,18 @@ class Api::V1::Calculator < ApplicationRecord
   delegate :questions, to: :calculation_topic
   delegate :predict, to: :predictor
 
+  after_create_commit do
+    train
+  end
+
+  after_update_commit do
+    train
+  end
+
+  def train
+    CalculatorPubSub.publish('calculator.train', { calculator_id: id }) if eligible_to_train?
+  end
+
   def predictor
     # rubocop:disable Security/MarshalLoad
     @predictor ||= Marshal.load(marshalled_predictor)
@@ -23,5 +35,11 @@ class Api::V1::Calculator < ApplicationRecord
 
   def predictor=(predictor)
     self.marshalled_predictor = Marshal.dump(predictor)
+  end
+
+  def eligible_to_train?
+    return false if predictor.nil?
+
+    last_trained_at.nil? || last_trained_at < 1.day.ago
   end
 end
