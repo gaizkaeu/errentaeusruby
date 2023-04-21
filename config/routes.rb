@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
       resources :organizations, except: %i[ create delete update ] do
         resources :reviews, only: %i[index], controller: 'organizations/reviews'
+        resources :calculators, only: %i[index show], controller: 'organizations/calculators'
       end
 
       resources :emails, as: :email_contacts, only: %i[create]
@@ -30,10 +31,19 @@ Rails.application.routes.draw do
       resources :services_tags, only: %i[index]
       resources :company_targets, only: %i[index]
 
+      resources :calculations, only: %i[create show]
+
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
 
         resources :memberships, controller: 'organization_manage/memberships', only: %i[index create update destroy]
         resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
+
+        resources :calculators, controller: 'organization_manage/calculators', only: %i[index show] do
+          resources :calculations, controller: 'organization_manage/calculations', only: %i[index create update destroy]
+
+          post :train, on: :member
+        end
+
         resources :subscription, controller: 'organization_manage/subscriptions', only: %i[create] do
           get :retrieve, on: :collection
         end

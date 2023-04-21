@@ -1,20 +1,20 @@
-# This file contains a list of dependencies that are not part of the long term plan for packages/calculations.
+# This file contains a list of dependencies that are not part of the long term plan for packages/calculations/domain.
 # We should generally work to reduce this list, but not at the expense of actually getting work done.
 #
 # You can regenerate this file using the following command:
 #
-# bin/packwerk update-deprecations packages/calculations
+# bin/packwerk update-deprecations packages/calculations/domain
 ---
 packages/organizations/domain:
   "::Api::V1::Organization":
     violations:
     - privacy
     files:
-    - packages/calculations/domain/app/models/api/v1/calculation.rb
     - packages/calculations/domain/app/models/api/v1/calculator.rb
 packages/users/domain:
   "::Api::V1::User":
     violations:
+    - dependency
     - privacy
     files:
     - packages/calculations/domain/app/models/api/v1/calculation.rb

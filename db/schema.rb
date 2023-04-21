@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_14_094237) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_103736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -176,27 +176,45 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_094237) do
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
+  create_table "calculation_topics", id: :string, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "prediction_attributes", default: {}
+    t.string "validation_file"
+    t.string "colors", default: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"
+    t.string "description"
+  end
+
   create_table "calculations", id: :string, force: :cascade do |t|
-    t.string "organization_id", null: false
     t.string "calculator_id", null: false
-    t.string "user_id", null: false
+    t.string "user_id"
     t.jsonb "input", null: false
-    t.jsonb "output", null: false
+    t.jsonb "output", default: {}, null: false
     t.boolean "verified", default: false, null: false
     t.boolean "train_with", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "price_result"
+    t.datetime "predicted_at"
+    t.integer "calculator_version", default: 0
     t.index ["calculator_id"], name: "index_calculations_on_calculator_id"
-    t.index ["organization_id"], name: "index_calculations_on_organization_id"
     t.index ["user_id"], name: "index_calculations_on_user_id"
   end
 
   create_table "calculators", id: :string, force: :cascade do |t|
     t.string "organization_id", null: false
-    t.string "calculator_type", null: false
     t.binary "marshalled_predictor", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "calculation_topic_id", null: false
+    t.jsonb "classifications", default: {}
+    t.datetime "last_trained_at"
+    t.integer "correct_rate", default: -1
+    t.integer "sample_count", default: -1
+    t.integer "version", default: 0
+    t.text "dot_visualization"
+    t.index ["calculation_topic_id"], name: "index_calculators_on_calculation_topic_id"
     t.index ["organization_id"], name: "index_calculators_on_organization_id"
   end
 
@@ -400,8 +418,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_094237) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "calculations", "calculators"
-  add_foreign_key "calculations", "organizations"
   add_foreign_key "calculations", "users"
+  add_foreign_key "calculators", "calculation_topics"
   add_foreign_key "calculators", "organizations"
   add_foreign_key "call_contacts", "organizations", on_delete: :cascade
   add_foreign_key "call_contacts", "users", on_delete: :cascade

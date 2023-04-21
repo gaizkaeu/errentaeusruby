@@ -193,3 +193,9 @@ gem 'google_places'
 
 # ID3
 gem 'decisiontree'
+
+# Math parser
+gem 'keisan'
+
+# Dot visualization for decisiontree
+gem 'graphr', '~> 0.2.1'
