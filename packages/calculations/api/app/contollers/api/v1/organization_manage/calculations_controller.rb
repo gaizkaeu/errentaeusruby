@@ -37,6 +37,11 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
     end
   end
 
+  def preview
+    out = Api::V1::Services::CalcnPreviewService.call(calculation_params)
+    render json: out
+  end
+
   private
 
   def serializer_params

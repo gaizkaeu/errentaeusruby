@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "alquileres": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "duenio_inmueble_arrendado":
+        {
+            "type": "integer",
+            "minimum": 0
+        },
+        "actividad_economica":
+        {
+            "type": "boolean"
+        },
+        "pareja_matrimonio": {
+            "type": "boolean"
+        },
+        "cambio_vivienda_habitual": {
+            "type": "boolean"
+        },
+        "operacion_acciones": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "compra_venta_vivienda": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "pensiones_epsv": {
+            "type": "boolean"
+        },
+        "minusvalia": {
+            "type": "boolean"
+        },
+        "despido": {
+            "type": "boolean"
+        },
+        "familia_numerosa": {
+            "type": "boolean"
+        }
+    },
+    "required": ["alquileres", "duenio_inmueble_arrendado", "actividad_economica", "pareja_matrimonio", "cambio_vivienda_habitual", "operacion_acciones", "compra_venta_vivienda", "pensiones_epsv", "minusvalia", "despido", "familia_numerosa"],
+    "additionalProperties": false
+  }
+  

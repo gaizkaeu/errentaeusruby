@@ -6,6 +6,9 @@ class Api::V1::CalculationTopic < ApplicationRecord
   has_many :calculators, class_name: 'Api::V1::Calculator'
   has_many :calculations, through: :calculators
 
+  VAR_TYPES_EXPOSED = %w[integer boolean].freeze
+  public_constant :VAR_TYPES_EXPOSED
+
   def variable_types
     prediction_attributes.each_value.to_h do |attribute|
       [attribute['name'].to_sym, attribute['var_type'].to_sym]
@@ -30,6 +33,8 @@ class Api::V1::CalculationTopic < ApplicationRecord
       value.to_i
     when 'string'
       value.to_s
+    when 'boolean'
+      value == 'true'
     end
   end
 
@@ -48,7 +53,7 @@ class Api::V1::CalculationTopic < ApplicationRecord
   end
 
   def exposed_variables
-    variable_data_types.select { |_, type| type == :integer }
+    variable_data_types.select { |_, type| VAR_TYPES_EXPOSED.include?(type.to_s) }
   end
 
   def exposed_variables_formatted

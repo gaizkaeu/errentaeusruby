@@ -17,6 +17,7 @@ packages/contacts/domain:
     - privacy
     files:
     - packages/contacts/api/app/controllers/api/v1/emails_controller.rb
+    - packages/contacts/api/app/controllers/api/v1/organization_manage/emails_controller.rb
 packages/organizations/api:
   "::Api::V1::OrganizationManage::BaseController":
     violations:
@@ -24,3 +25,4 @@ packages/organizations/api:
     - privacy
     files:
     - packages/contacts/api/app/controllers/api/v1/organization_manage/calls_controller.rb
+    - packages/contacts/api/app/controllers/api/v1/organization_manage/emails_controller.rb

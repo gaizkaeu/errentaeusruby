@@ -39,7 +39,7 @@ module Api::V1::Concerns::Openable
       next if open_days.fetch(wday, nil).blank?
       next if today == day && today > open_close_hours[wday]['open']
 
-      return day.change(hour: open_days[wday]['open'].split(':').first.to_i, min: open_days[wday]['open'].split(':').last.to_i, offset: '+0000')
+      return day.change(hour: open_days[wday]['open'].split(':').first.to_i, min: open_days[wday]['open'].split(':').last.to_i)
     end
   end
 
