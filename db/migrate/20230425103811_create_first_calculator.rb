@@ -121,7 +121,8 @@ class CreateFirstCalculator < ActiveRecord::Migration[7.0]
         },
         version: 0,
         marshalled_predictor: 'a',
-        organization: org
+        organization: org,
+        calculator_status: :disabled
       )
     end
   end
