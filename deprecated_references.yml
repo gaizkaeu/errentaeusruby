@@ -12,12 +12,14 @@ packages/calculations/domain:
     - privacy
     files:
     - db/migrate/20230421170019_add_some_test_data.rb
+    - db/migrate/20230425103811_create_first_calculator.rb
   "::Api::V1::Calculator":
     violations:
     - dependency
     - privacy
     files:
     - db/migrate/20230421170019_add_some_test_data.rb
+    - db/migrate/20230425103811_create_first_calculator.rb
 packages/organizations/domain:
   "::Api::V1::Organization":
     violations:
@@ -25,6 +27,7 @@ packages/organizations/domain:
     - privacy
     files:
     - db/migrate/20230421170019_add_some_test_data.rb
+    - db/migrate/20230425103811_create_first_calculator.rb
     - db/seeds.rb
   "::Api::V1::OrganizationMembership":
     violations:

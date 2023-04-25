@@ -5,6 +5,8 @@ class Api::V1::Calculator < ApplicationRecord
   belongs_to :calculation_topic, class_name: 'Api::V1::CalculationTopic'
   belongs_to :organization, class_name: 'Api::V1::Organization'
 
+  validates :calculator_status, inclusion: { in: %w[live training error disabled waiting_for_training] }
+
   delegate :name, to: :calculation_topic
   delegate :variable_data_types, to: :calculation_topic
   delegate :prediction_attributes, to: :calculation_topic
@@ -18,15 +20,9 @@ class Api::V1::Calculator < ApplicationRecord
   delegate :colors, to: :calculation_topic
   delegate :predict, to: :predictor
 
-  after_create_commit do
-    train
-  end
-
-  after_update_commit do
-    train
-  end
-
   def train
+    self.calculator_status = 'waiting_for_training'
+    save!
     CalculatorPubSub.publish('calculator.train', { calculator_id: id }) if eligible_to_train?
   end
 

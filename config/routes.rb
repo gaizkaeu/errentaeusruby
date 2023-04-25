@@ -38,8 +38,10 @@ Rails.application.routes.draw do
         resources :memberships, controller: 'organization_manage/memberships', only: %i[index create update destroy]
         resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
 
-        resources :calculators, controller: 'organization_manage/calculators', only: %i[index show] do
-          resources :calculations, controller: 'organization_manage/calculations', only: %i[index create update destroy]
+        resources :calculators, controller: 'organization_manage/calculators', only: %i[index show update] do
+          resources :calculations, controller: 'organization_manage/calculations', only: %i[index create update destroy] do
+            post :preview, on: :collection
+          end
 
           post :train, on: :member
         end
@@ -52,6 +54,8 @@ Rails.application.routes.draw do
           post :start, on: :member
           post :end, on: :member
         end
+
+        resources :emails, controller: 'organization_manage/emails', only: %i[index update]
 
         collection do
           resources :invitations, controller: 'organization_invitations', only: %i[show] do

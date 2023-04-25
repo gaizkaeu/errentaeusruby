@@ -9,7 +9,7 @@ class Api::V1::Calculation < ApplicationRecord
 
   delegate :calculation_topic, to: :calculator
 
-  validates :input, json: { schema: -> { calculation_topic.validation_schema } }
+  validates :input, json: { message: ->(errors) { errors }, schema: -> { calculation_topic.validation_schema } }
   validates_with Api::V1::Validators::CalculationOutputValidator
 
   def self.ransackable_attributes(_auth_object = nil)
@@ -22,7 +22,7 @@ class Api::V1::Calculation < ApplicationRecord
   end
 
   after_create_commit do
-    CalculatorPubSub.publish('calculator.perform_calculation', calculation_id: id)
+    CalculatorPubSub.publish('calculator.perform_calculation', calculation_id: id) unless train_with
   end
 
   def sanitize_input
@@ -39,18 +39,21 @@ class Api::V1::Calculation < ApplicationRecord
     calculator_version != calculator.version
   end
 
+  # rubocop:disable Metrics/AbcSize
   def eligible_for_training?
     return false if output.nil? || classification.nil? || input.nil?
 
     calculator.classifications.key?(classification) &&
-      calculation_topic.attributes_training.all? { |k| input[k].present? }
+      calculation_topic.attributes_training.all? { |k| !input.fetch(k, nil).nil? }
   end
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/AbcSize
-  def calculate_price
+  def calculate_price(classification = nil)
+    classification ||= self.classification
     ec = calculator.classifications.fetch(classification, nil)
 
-    return if ec.nil?
+    return if ec.nil? || input.nil?
 
     variables =
       input.select { |k, _| calculation_topic.exposed_variables.key?(k.to_sym) }

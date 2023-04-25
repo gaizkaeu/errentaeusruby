@@ -4,6 +4,8 @@ class Api::V1::Services::CalcrTrainService < ApplicationService
 
     gather_data
 
+    set_training_status_to_training
+
     predictor = DecisionTree::ID3Tree.new(@calculation_topic.attributes_training, @data, 'error', @calculation_topic.variable_types)
     predictor.train
 
@@ -12,12 +14,21 @@ class Api::V1::Services::CalcrTrainService < ApplicationService
     @calculator.version += 1
 
     save_dot_visualization
-    run_test_data
 
     @calculator.save!
+
+    set_training_status_to_live
   end
 
   private
+
+  def set_training_status_to_training
+    @calculator.update!(calculator_status: 'training')
+  end
+
+  def set_training_status_to_live
+    @calculator.update!(calculator_status: 'live')
+  end
 
   def save_dot_visualization
     dgp = DotGraphPrinter.new(@calculator.predictor.send(:build_tree))
@@ -26,19 +37,6 @@ class Api::V1::Services::CalcrTrainService < ApplicationService
     dgp.node_labeler = proc { |n| n.split("\n").first }
 
     @calculator.dot_visualization = dgp.to_dot_specification
-  end
-
-  def run_test_data
-    correct = 0
-
-    @test_data.each do |input, output|
-      classification = @calculator.predictor.predict(input.values_at(*@calculation_topic.attributes_training))
-      if classification == output['classification']
-        correct += 1
-      end
-    end
-
-    @calculator.correct_rate = (correct / @test_data.count.to_f) * 100
   end
 
   def initialize_instance_variables(calculator_id)
@@ -66,16 +64,10 @@ class Api::V1::Services::CalcrTrainService < ApplicationService
     # rubocop:enable Rails/WhereNotWithMultipleConditions
 
     raw_data_count = raw_data.count
-
-    train_data_count = (raw_data_count * 0.8).to_i
-
     @calculator.sample_count = raw_data_count
 
-    train_data = raw_data.sample(train_data_count)
-    @test_data = raw_data.reject { |data| train_data.include?(data) }
-
     @data =
-      train_data.map do |input, output|
+      raw_data.map do |input, output|
         input.values_at(*attributes) << output['classification']
       end
   end

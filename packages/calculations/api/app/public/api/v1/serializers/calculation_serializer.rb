@@ -3,7 +3,11 @@ class Api::V1::Serializers::CalculationSerializer
 
   set_type :calculation
   set_id :id
-  attributes :input, :output, :calculator_id, :predicted_at, :price_result, :questions
+  attributes :output, :calculator_id, :predicted_at, :price_result, :questions
+
+  attribute :input do |object|
+    object.input.transform_values(&:to_s)
+  end
 
   attributes :calculator_id,
              :verified,

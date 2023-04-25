@@ -7,7 +7,7 @@ class Api::V1::Serializers::CalculatorSerializer
 
   attributes :last_trained_at,
              :classifications,
-             :correct_rate,
+             :calculator_status,
              :sample_count,
              :version,
              :dot_visualization,

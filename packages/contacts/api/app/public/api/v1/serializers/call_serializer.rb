@@ -8,6 +8,7 @@ class Api::V1::Serializers::CallSerializer
   attributes :successful,
              :notes,
              :start_at,
+             :call_time,
              :end_at,
              :duration,
              if: proc { |_record, params|
