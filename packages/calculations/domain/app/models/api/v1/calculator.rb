@@ -21,9 +21,11 @@ class Api::V1::Calculator < ApplicationRecord
   delegate :predict, to: :predictor
 
   def train
+    return unless eligible_to_train?
+
     self.calculator_status = 'waiting_for_training'
     save!
-    CalculatorPubSub.publish('calculator.train', { calculator_id: id }) if eligible_to_train?
+    CalculatorPubSub.publish('calculator.train', { calculator_id: id })
   end
 
   def predictor
@@ -37,8 +39,6 @@ class Api::V1::Calculator < ApplicationRecord
   end
 
   def eligible_to_train?
-    return false if predictor.nil?
-
-    last_trained_at.nil? || last_trained_at < 1.day.ago
+    last_trained_at.nil? || last_trained_at < 5.minutes.ago
   end
 end

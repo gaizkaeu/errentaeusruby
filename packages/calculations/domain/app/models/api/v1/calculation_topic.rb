@@ -38,6 +38,19 @@ class Api::V1::CalculationTopic < ApplicationRecord
     end
   end
 
+  def sanitize_training(name, value)
+    type = prediction_attributes.select { |_key, v| v['name'] == name }
+                                .values.first['type']
+    case type
+    when 'boolean'
+      if value
+        1
+      else
+        0
+      end
+    end
+  end
+
   def validation_schema
     Rails.root.join('config', 'schemas', validation_file)
   end
