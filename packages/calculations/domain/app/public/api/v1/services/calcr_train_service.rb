@@ -6,7 +6,7 @@ class Api::V1::Services::CalcrTrainService < ApplicationService
 
     set_training_status_to_training
 
-    predictor = DecisionTree::ID3Tree.new(@calculation_topic.attributes_training, @data, 'error', @calculation_topic.variable_types)
+    predictor = DecisionTree::ID3Tree.new(@calculation_topic.attributes_training, @clean_data, 'error', @calculation_topic.variable_types)
     predictor.train
 
     @calculator.last_trained_at = Time.zone.now
@@ -45,32 +45,29 @@ class Api::V1::Services::CalcrTrainService < ApplicationService
     @calculation_topic = @calculator.calculation_topic
   end
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def gather_data
     attributes = @calculation_topic.attributes_training
+    @calculator.sample_count = data.count
 
-    # rubocop:disable Rails/WhereNotWithMultipleConditions
-    raw_data = Api::V1::Calculation
-               .where(calculator_id: @calculator_id, train_with: true)
-               .where.not(input: nil, output: nil)
-               .where.not(input: {}, output: {})
-               .where('output ->> \'classification\' IS NOT NULL')
-               .where('output ->> \'classification\' IN (?)', @calculator.classifications.keys)
-               .where('input ?& array[:attributes]', attributes:)
-               .distinct(:input)
-               .pluck(:input, :output)
-
-    # rubocop:enable Rails/WhereNotWithMultipleConditions
-
-    raw_data_count = raw_data.count
-    @calculator.sample_count = raw_data_count
-
-    @data =
-      raw_data.map do |input, output|
-        input.values_at(*attributes) << output['classification']
+    @clean_data =
+      data.map do |input, output|
+        attributes.map do |attribute|
+          @calculation_topic.sanitize_training(attribute, input[attribute])
+        end << output['classification']
       end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
+
+  # rubocop:disable Rails/WhereNotWithMultipleConditions
+  def data
+    @data ||= Api::V1::Calculation
+              .where(calculator_id: @calculator_id, train_with: true)
+              .where.not(input: nil, output: nil)
+              .where.not(input: {}, output: {})
+              .where('output ->> \'classification\' IS NOT NULL')
+              .where('output ->> \'classification\' IN (?)', @calculator.classifications.keys)
+              .where('input ?& array[:attributes]', attributes: @calculation_topic.attributes_training)
+              .distinct(:input)
+              .pluck(:input, :output)
+  end
+  # rubocop:enable Rails/WhereNotWithMultipleConditions
 end
