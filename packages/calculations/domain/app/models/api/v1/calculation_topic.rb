@@ -43,11 +43,9 @@ class Api::V1::CalculationTopic < ApplicationRecord
                                 .values.first['type']
     case type
     when 'boolean'
-      if value
-        1
-      else
-        0
-      end
+      value.to_i
+    else
+      value
     end
   end
 
