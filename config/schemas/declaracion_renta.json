@@ -40,9 +40,15 @@
         },
         "familia_numerosa": {
             "type": "boolean"
+        },
+        "primera_vez": {
+            "type": "boolean"
+        },
+        "estado_civil": {
+            "type": "boolean"
         }
     },
-    "required": ["alquileres", "duenio_inmueble_arrendado", "actividad_economica", "pareja_matrimonio", "cambio_vivienda_habitual", "operacion_acciones", "compra_venta_vivienda", "pensiones_epsv", "minusvalia", "despido", "familia_numerosa"],
+    "required": ["primera_vez", "estado_civil", "alquileres", "duenio_inmueble_arrendado", "actividad_economica", "pareja_matrimonio", "cambio_vivienda_habitual", "operacion_acciones", "compra_venta_vivienda", "pensiones_epsv", "minusvalia", "despido", "familia_numerosa"],
     "additionalProperties": false
   }
   
