@@ -25,18 +25,28 @@ class Api::V1::CalculationTopic < ApplicationRecord
     prediction_attributes.each_value.pluck('name')
   end
 
-  def sanitize_variable(name, value)
+  # rubocop:disable Metrics/MethodLength
+  def sanitize_variable_store(name, value)
     type = prediction_attributes.select { |_key, v| v['name'] == name }
                                 .values.first['type']
+
     case type
     when 'integer'
       value.to_i
     when 'string'
       value.to_s
     when 'boolean'
-      value == 'true'
+      case value
+      when String
+        value == 'true'
+      when Integer
+        value == 1
+      else
+        value
+      end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def sanitize_training(name, value)
     type = prediction_attributes.select { |_key, v| v['name'] == name }
