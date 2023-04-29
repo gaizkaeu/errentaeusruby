@@ -13,7 +13,11 @@ class Api::V1::Services::CalcrPredictService < ApplicationService
   private
 
   def classify
-    @classification = calculator.predict(@calculation.predict_variables)
+    sanitized_variables =
+      @calculation.calculation_topic.attributes_training.map do |attribute|
+        @calculation.calculation_topic.sanitize_training(attribute, @calculation.input[attribute])
+      end
+    @classification = calculator.predict(sanitized_variables)
     @calculation.output = { classification: @classification }
   end
 

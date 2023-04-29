@@ -76,8 +76,4 @@ class Api::V1::Calculation < ApplicationRecord
   def classification
     output['classification']
   end
-
-  def predict_variables
-    input.values_at(*calculation_topic.attributes_training)
-  end
 end
