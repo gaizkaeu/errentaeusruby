@@ -7,6 +7,8 @@ class Api::V1::Services::CalcrPredictService < ApplicationService
     @calculation.predicted_at = Time.zone.now
     @calculation.calculator_version = @calculation.calculator.version
 
+    @calculation.attributes
+
     @calculation.save!
   end
 

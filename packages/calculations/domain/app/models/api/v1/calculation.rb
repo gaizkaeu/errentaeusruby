@@ -29,7 +29,7 @@ class Api::V1::Calculation < ApplicationRecord
     input.slice(*calculation_topic.attributes_training)
 
     input.each do |key, value|
-      input[key] = calculation_topic.sanitize_variable(key, value)
+      input[key] = calculation_topic.sanitize_variable_store(key, value)
     end
   end
 

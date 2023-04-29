@@ -25,16 +25,23 @@ class Api::V1::CalculationTopic < ApplicationRecord
     prediction_attributes.each_value.pluck('name')
   end
 
-  def sanitize_variable(name, value)
+  def sanitize_variable_store(name, value)
     type = prediction_attributes.select { |_key, v| v['name'] == name }
                                 .values.first['type']
+
     case type
     when 'integer'
       value.to_i
     when 'string'
       value.to_s
     when 'boolean'
-      value == 'true'
+      if value.is_a?(String)
+        value == 'true'
+      elsif value.is_a?(Integer)
+        value == 1
+      else
+        value
+      end
     end
   end
 
