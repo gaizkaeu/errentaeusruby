@@ -13,6 +13,7 @@ packages/calculations/domain:
     files:
     - db/migrate/20230421170019_add_some_test_data.rb
     - db/migrate/20230425103811_create_first_calculator.rb
+    - db/migrate/20230429105109_change_prediction_attributes.rb
   "::Api::V1::Calculator":
     violations:
     - dependency
