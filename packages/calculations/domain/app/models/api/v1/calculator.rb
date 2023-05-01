@@ -5,6 +5,8 @@ class Api::V1::Calculator < ApplicationRecord
   belongs_to :calculation_topic, class_name: 'Api::V1::CalculationTopic'
   belongs_to :organization, class_name: 'Api::V1::Organization'
 
+  has_many :calculations, class_name: 'Api::V1::Calculation', dependent: :destroy
+
   validates :calculator_status, inclusion: { in: %w[live training error disabled waiting_for_training] }
 
   delegate :name, to: :calculation_topic

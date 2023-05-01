@@ -15,6 +15,6 @@ class Api::V1::CallsController < ApplicationController
   private
 
   def call_params
-    params.require(:call).permit(:organization_id, :phone_number, :call_time)
+    params.require(:call).permit(:organization_id, :phone_number, :call_time, :calculation_id)
   end
 end

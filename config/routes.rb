@@ -31,7 +31,11 @@ Rails.application.routes.draw do
       resources :services_tags, only: %i[index]
       resources :company_targets, only: %i[index]
 
-      resources :calculations, only: %i[create show]
+      resources :calculations, only: %i[create show] do
+        post :bulk, on: :member
+      end
+
+      resources 'bulk-calculations', controller: 'bulk_calculations', as: :bulk_calculations, only: %i[show]
 
       resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
 

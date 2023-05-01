@@ -17,4 +17,5 @@ packages/users/domain:
     - dependency
     - privacy
     files:
+    - packages/calculations/domain/app/models/api/v1/bulk_calculation.rb
     - packages/calculations/domain/app/models/api/v1/calculation.rb
