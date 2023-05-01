@@ -5,6 +5,12 @@
 #
 # bin/packwerk update-deprecations packages/contacts/api
 ---
+packages/calculations/api:
+  "::Api::V1::Serializers::CalculationSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/contacts/api/app/public/api/v1/serializers/call_serializer.rb
 packages/contacts/domain:
   "::Api::V1::CallContact":
     violations:

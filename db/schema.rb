@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_29_105109) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_085834) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -176,6 +176,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_105109) do
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
+  create_table "bulk_calculations", id: :string, force: :cascade do |t|
+    t.jsonb "input", default: {}, null: false
+    t.string "user_id", null: false
+    t.string "calculation_topic_id", null: false
+    t.index ["calculation_topic_id"], name: "index_bulk_calculations_on_calculation_topic_id"
+    t.index ["user_id"], name: "index_bulk_calculations_on_user_id"
+  end
+
   create_table "calculation_topics", id: :string, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -198,6 +206,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_105109) do
     t.integer "price_result"
     t.datetime "predicted_at"
     t.integer "calculator_version", default: 0
+    t.string "bulk_calculation_id"
+    t.index ["bulk_calculation_id"], name: "index_calculations_on_bulk_calculation_id"
     t.index ["calculator_id"], name: "index_calculations_on_calculator_id"
     t.index ["user_id"], name: "index_calculations_on_user_id"
   end
@@ -233,6 +243,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_105109) do
     t.datetime "end_at"
     t.integer "duration", default: -1, null: false
     t.datetime "call_time"
+    t.string "calculation_id"
+    t.index ["calculation_id"], name: "index_call_contacts_on_calculation_id"
     t.index ["organization_id"], name: "index_call_contacts_on_organization_id"
     t.index ["user_id"], name: "index_call_contacts_on_user_id"
   end
@@ -248,6 +260,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_105109) do
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "calculation_id"
+    t.index ["calculation_id"], name: "index_email_contacts_on_calculation_id"
     t.index ["organization_id"], name: "index_email_contacts_on_organization_id"
     t.index ["user_id"], name: "index_email_contacts_on_user_id"
   end
@@ -417,12 +431,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_105109) do
   add_foreign_key "account_webauthn_user_ids", "accounts", column: "id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bulk_calculations", "calculation_topics"
+  add_foreign_key "bulk_calculations", "users"
+  add_foreign_key "calculations", "bulk_calculations"
   add_foreign_key "calculations", "calculators"
   add_foreign_key "calculations", "users"
   add_foreign_key "calculators", "calculation_topics"
   add_foreign_key "calculators", "organizations"
+  add_foreign_key "call_contacts", "calculations"
   add_foreign_key "call_contacts", "organizations", on_delete: :cascade
   add_foreign_key "call_contacts", "users", on_delete: :cascade
+  add_foreign_key "email_contacts", "calculations"
   add_foreign_key "email_contacts", "organizations", on_delete: :cascade
   add_foreign_key "email_contacts", "users", on_delete: :cascade
   add_foreign_key "organization_invitations", "organizations"

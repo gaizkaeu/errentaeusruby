@@ -14,14 +14,18 @@ module Api
                                       .where(visible: true)
         )
 
-        render json: Serializers::OrganizationSerializer.new(orgs, meta: pagy_metadata(pagy))
+        render json: Serializers::OrganizationSerializer.new(orgs, meta: pagy_metadata(pagy), **serializer_params)
       end
 
       def show
-        render json: Serializers::OrganizationSerializer.new(@organization)
+        render json: Serializers::OrganizationSerializer.new(@organization, serializer_params)
       end
 
       private
+
+      def serializer_params
+        { params: { skills: true, services: true, tags: true, targets: true, logo: true } }
+      end
 
       def set_organization
         @organization = Organization.find(params[:id])

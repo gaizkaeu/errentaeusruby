@@ -13,6 +13,6 @@ class Api::V1::EmailsController < ApplicationController
   private
 
   def email_params
-    params.require(:email).permit(:organization_id, :first_name, :last_name, :email)
+    params.require(:email).permit(:organization_id, :first_name, :last_name, :email, :calculation_id)
   end
 end

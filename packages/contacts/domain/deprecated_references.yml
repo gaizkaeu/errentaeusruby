@@ -5,6 +5,13 @@
 #
 # bin/packwerk update-deprecations packages/contacts/domain
 ---
+packages/calculations/domain:
+  "::Api::V1::Calculation":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/contacts/domain/app/models/api/v1/concerns/contactable.rb
 packages/organizations/domain:
   "::Api::V1::Organization":
     violations:

@@ -9,7 +9,7 @@ class Api::V1::Serializers::OrganizationSerializer
   attribute :status
   attribute :open, &:open?
   attribute :near_close, &:near_close?
-  attribute :logo_url, proc { |rec| rec.logo.url }
+  attribute :logo_url, proc { |rec| rec.logo.url }, if: proc { |_, params| !params.fetch(:logo, nil).nil? }
 
   attribute :nearest_open_time, if: proc { |rec| !rec.open? }
 
@@ -24,9 +24,9 @@ class Api::V1::Serializers::OrganizationSerializer
                    params[:manage].present? && params[:manage] == true
                  }
 
-  attribute :skill_list
-  attribute :company_target_list
-  attribute :service_list
+  attribute :skill_list, if: proc { |_, params| !params.fetch(:skills, nil).nil? }
+  attribute :company_target_list, if: proc { |_, params| !params.fetch(:targets, nil).nil? }
+  attribute :service_list, if: proc { |_, params| !params.fetch(:services, nil).nil? }
 
   attribute :google_place_details, if: proc { |rec| rec.google_place_id.present? && rec.google_place_verified }
 

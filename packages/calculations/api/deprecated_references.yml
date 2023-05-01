@@ -6,6 +6,11 @@
 # bin/packwerk update-deprecations packages/calculations/api
 ---
 packages/calculations/domain:
+  "::Api::V1::BulkCalculation":
+    violations:
+    - privacy
+    files:
+    - packages/calculations/api/app/contollers/api/v1/bulk_calculations_controller.rb
   "::Api::V1::Calculation":
     violations:
     - privacy
@@ -22,13 +27,7 @@ packages/calculations/domain:
 packages/organizations/api:
   "::Api::V1::OrganizationManage::BaseController":
     violations:
-    - dependency
     - privacy
     files:
     - packages/calculations/api/app/contollers/api/v1/organization_manage/calculations_controller.rb
     - packages/calculations/api/app/contollers/api/v1/organization_manage/calculators_controller.rb
-  "::Api::V1::Serializers::OrganizationSerializer":
-    violations:
-    - dependency
-    files:
-    - packages/calculations/api/app/public/api/v1/serializers/calculator_serializer.rb

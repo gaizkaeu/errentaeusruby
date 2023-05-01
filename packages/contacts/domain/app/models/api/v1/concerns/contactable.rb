@@ -2,6 +2,7 @@ module Api::V1::Concerns::Contactable
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :calculation, class_name: 'Api::V1::Calculation', optional: true
     belongs_to :organization, class_name: 'Api::V1::Organization'
     belongs_to :user, class_name: 'Api::V1::User', optional: true
 

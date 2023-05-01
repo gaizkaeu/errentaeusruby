@@ -3,11 +3,16 @@ class Api::V1::Calculation < ApplicationRecord
 
   self.id_prefix = 'calcn'
 
-  has_one :calculation_topic, through: :calculator
   belongs_to :calculator, class_name: 'Api::V1::Calculator'
+
+  has_one :calculation_topic, through: :calculator
+  has_one :organization, through: :calculator
+
   belongs_to :user, class_name: 'Api::V1::User', optional: true
+  belongs_to :bulk_calculation, class_name: 'Api::V1::BulkCalculation', optional: true
 
   delegate :calculation_topic, to: :calculator
+  delegate :name, to: :calculation_topic
 
   validates :input, json: { message: ->(errors) { errors }, schema: -> { calculation_topic.validation_schema } }
   validates_with Api::V1::Validators::CalculationOutputValidator
