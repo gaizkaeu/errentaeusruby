@@ -3,6 +3,7 @@ module Api::V1::Concerns::Contactable
 
   included do
     belongs_to :calculation, class_name: 'Api::V1::Calculation', optional: true
+    has_one :calculator, through: :calculation, class_name: 'Api::V1::Calculator'
     belongs_to :organization, class_name: 'Api::V1::Organization'
     belongs_to :user, class_name: 'Api::V1::User', optional: true
 

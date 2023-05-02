@@ -12,6 +12,12 @@ packages/calculations/domain:
     - privacy
     files:
     - packages/contacts/domain/app/models/api/v1/concerns/contactable.rb
+  "::Api::V1::Calculator":
+    violations:
+    - dependency
+    - privacy
+    files:
+    - packages/contacts/domain/app/models/api/v1/concerns/contactable.rb
 packages/organizations/domain:
   "::Api::V1::Organization":
     violations:

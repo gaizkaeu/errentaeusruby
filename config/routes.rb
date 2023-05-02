@@ -54,7 +54,7 @@ Rails.application.routes.draw do
           get :retrieve, on: :collection
         end
 
-        resources :calls, controller: 'organization_manage/calls', only: %i[index update] do
+        resources :calls, controller: 'organization_manage/calls', only: %i[index update show] do
           post :start, on: :member
           post :end, on: :member
         end

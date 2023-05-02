@@ -9,7 +9,10 @@ class Api::V1::Serializers::CalculationSerializer
     object.input.transform_values(&:to_s)
   end
 
-  attribute :organization do |object|
+  attribute :organization,
+            if: proc { |_record, params|
+                  !params.fetch(:organization, nil).nil?
+                } do |object|
     Api::V1::Serializers::OrganizationSerializer.new(object.organization).serializable_hash[:data]
   end
 

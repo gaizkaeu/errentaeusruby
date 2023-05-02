@@ -15,7 +15,7 @@ module Api
       end
 
       def show
-        render json: Serializers::CalculationSerializer.new(@calculation)
+        render json: Serializers::CalculationSerializer.new(@calculation, params: { organization: true })
       end
 
       def bulk

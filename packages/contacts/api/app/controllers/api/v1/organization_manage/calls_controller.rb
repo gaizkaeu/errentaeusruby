@@ -8,19 +8,26 @@ module Api
 
         def index
           pagy, calls = pagy(
-            CallContact.where(organization: @organization).includes(:calculation)
+            CallContact.includes(:user)
+            .where(organization: @organization)
                                       .ransack(params[:q])
                                       .result
           )
 
-          render json: Serializers::CallSerializer.new(calls, meta: pagination_meta(pagy), **serializer_config), status: :ok
+          render json: Serializers::CallSerializer.new(calls, meta: pagy_metadata(pagy), **serializer_config), status: :ok
+        end
+
+        def show
+          call = CallContact.find_by(organization: @organization, id: params[:id])
+
+          render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
         end
 
         def update
           call = CallContact.find_by(organization: @organization, id: params[:id])
 
           if call.update(call_update_params)
-            render json: Serializers::CallSerializer.new(call, serializer_config), status: :ok
+            render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
           else
             render json: call.errors, status: :unprocessable_entity
           end
@@ -30,7 +37,7 @@ module Api
           call = CallContact.find_by(organization: @organization, id: params[:id])
 
           if call.start
-            render json: Serializers::CallSerializer.new(call, serializer_config), status: :ok
+            render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
           else
             render json: call.errors, status: :unprocessable_entity
           end
@@ -40,7 +47,7 @@ module Api
           call = CallContact.find_by(organization: @organization, id: params[:id])
 
           if call.end
-            render json: Serializers::CallSerializer.new(call, serializer_config), status: :ok
+            render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
           else
             render json: call.errors, status: :unprocessable_entity
           end
@@ -50,6 +57,10 @@ module Api
 
         def serializer_config
           { params: { manage: true } }
+        end
+
+        def ind_serializer
+          serializer_config.merge(params: { calculation: true })
         end
 
         def call_update_params
