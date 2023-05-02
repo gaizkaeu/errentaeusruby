@@ -7,7 +7,7 @@ class Api::V1::Serializers::CallSerializer
 
   attribute :calculation,
             if: proc { |_record, params|
-                  params[:manage].present? && params[:manage] == true
+                  params[:calculation].present? && params[:calculation] == true
                 } do |object|
     Api::V1::Serializers::CalculationSerializer.new(object.calculation).serializable_hash[:data]
   end

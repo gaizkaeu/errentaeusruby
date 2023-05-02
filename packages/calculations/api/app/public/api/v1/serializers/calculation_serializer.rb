@@ -3,13 +3,16 @@ class Api::V1::Serializers::CalculationSerializer
 
   set_type :calculation
   set_id :id
-  attributes :output, :calculator_id, :predicted_at, :price_result, :questions, :organization_id, :name, :bulk_calculation_id
+  attributes :output, :calculator_id, :predicted_at, :price_result, :questions, :organization_id, :name, :bulk_calculation_id, :created_at
 
   attribute :input do |object|
     object.input.transform_values(&:to_s)
   end
 
-  attribute :organization do |object|
+  attribute :organization,
+            if: proc { |_record, params|
+                  !params.fetch(:organization, nil).nil?
+                } do |object|
     Api::V1::Serializers::OrganizationSerializer.new(object.organization).serializable_hash[:data]
   end
 

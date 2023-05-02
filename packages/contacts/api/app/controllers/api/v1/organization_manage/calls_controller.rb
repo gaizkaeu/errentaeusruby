@@ -1,55 +1,76 @@
 # frozen_string_literal: true
 
-class Api::V1::OrganizationManage::CallsController < Api::V1::OrganizationManage::BaseController
-  before_action :authenticate
+module Api
+  module V1
+    module OrganizationManage
+      class CallsController < BaseController
+        before_action :authenticate
 
-  def index
-    calls = Api::V1::CallContact.where(organization: @organization)
+        def index
+          pagy, calls = pagy(
+            CallContact.includes(:user)
+            .where(organization: @organization)
+                                      .ransack(params[:q])
+                                      .result
+          )
 
-    render json: Api::V1::Serializers::CallSerializer.new(calls, serializer_config)
-  end
+          render json: Serializers::CallSerializer.new(calls, meta: pagy_metadata(pagy), **serializer_config), status: :ok
+        end
 
-  def update
-    call = Api::V1::CallContact.find_by(organization: @organization, id: params[:id])
+        def show
+          call = CallContact.find_by(organization: @organization, id: params[:id])
 
-    if call.update(call_update_params)
-      render json: Api::V1::Serializers::CallSerializer.new(call, serializer_config), status: :ok
-    else
-      render json: call.errors, status: :unprocessable_entity
+          render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
+        end
+
+        def update
+          call = CallContact.find_by(organization: @organization, id: params[:id])
+
+          if call.update(call_update_params)
+            render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
+          else
+            render json: call.errors, status: :unprocessable_entity
+          end
+        end
+
+        def start
+          call = CallContact.find_by(organization: @organization, id: params[:id])
+
+          if call.start
+            render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
+          else
+            render json: call.errors, status: :unprocessable_entity
+          end
+        end
+
+        def end
+          call = CallContact.find_by(organization: @organization, id: params[:id])
+
+          if call.end
+            render json: Serializers::CallSerializer.new(call, ind_serializer), status: :ok
+          else
+            render json: call.errors, status: :unprocessable_entity
+          end
+        end
+
+        private
+
+        def serializer_config
+          { params: { manage: true } }
+        end
+
+        def ind_serializer
+          serializer_config.merge(params: { calculation: true })
+        end
+
+        def call_update_params
+          params.require(:call).permit(:successful, :notes)
+        end
+
+        def invitation_update_params
+          params.require(:invitation).permit(:role)
+        end
+      end
     end
-  end
-
-  def start
-    call = Api::V1::CallContact.find_by(organization: @organization, id: params[:id])
-
-    if call.start
-      render json: Api::V1::Serializers::CallSerializer.new(call, serializer_config), status: :ok
-    else
-      render json: call.errors, status: :unprocessable_entity
-    end
-  end
-
-  def end
-    call = Api::V1::CallContact.find_by(organization: @organization, id: params[:id])
-
-    if call.end
-      render json: Api::V1::Serializers::CallSerializer.new(call, serializer_config), status: :ok
-    else
-      render json: call.errors, status: :unprocessable_entity
-    end
-  end
-
-  private
-
-  def serializer_config
-    { params: { manage: true } }
-  end
-
-  def call_update_params
-    params.require(:call).permit(:successful, :notes)
-  end
-
-  def invitation_update_params
-    params.require(:invitation).permit(:role)
   end
 end

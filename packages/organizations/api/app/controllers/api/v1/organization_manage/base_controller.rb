@@ -1,6 +1,6 @@
 class Api::V1::OrganizationManage::BaseController < ApplicationController
-  before_action :set_organization
   before_action :authenticate
+  before_action :set_organization
 
   private
 
