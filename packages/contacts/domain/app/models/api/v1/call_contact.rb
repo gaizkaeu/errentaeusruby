@@ -9,6 +9,10 @@ class Api::V1::CallContact < ApplicationRecord
 
   validates :state, inclusion: { in: STATUSES }
 
+  def self.ransackable_attributes(_auth_object = nil)
+    ['successful']
+  end
+
   def start
     if state == 'pending'
       update!(state: 'live', start_at: Time.current)
