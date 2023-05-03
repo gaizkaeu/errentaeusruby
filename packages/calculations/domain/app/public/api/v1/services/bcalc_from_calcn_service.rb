@@ -16,7 +16,7 @@ module Api
 
           calculators = Calculator.where(calculation_topic_id: ctopic_id)
                                   .where.not(id: calcn.calculator_id)
-                                  .where(status: :live)
+                                  .where(calculator_status: :live)
 
           calculators.map do |calculator|
             run_calculation(calculator)
