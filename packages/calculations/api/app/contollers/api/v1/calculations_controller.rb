@@ -11,19 +11,23 @@ module Api
         calculation.user = current_user
         calculation.save!
 
-        render json: Serializers::CalculationSerializer.new(calculation)
+        render json: Serializers::CalculationSerializer.new(calculation, serializer_params)
       end
 
       def show
-        render json: Serializers::CalculationSerializer.new(@calculation, params: { organization: true })
+        render json: Serializers::CalculationSerializer.new(@calculation, serializer_params)
       end
 
       def bulk
         bulk_c = Services::BcalcFromCalcnService.call(@calculation)
-        render json: Serializers::CalculationSerializer.new(bulk_c)
+        render json: Serializers::CalculationSerializer.new(bulk_c, serializer_params)
       end
 
       private
+
+      def serializer_params
+        { params: { organization: true } }
+      end
 
       def create_params
         params.require(:calculation).permit(:calculator_id, input: {})
