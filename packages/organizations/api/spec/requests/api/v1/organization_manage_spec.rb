@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'OrganizationManage' do
   let(:user) { create(:user) }
+  # rubocop:disable RSpec/IndexedLet
   let(:organization) { create(:organization, :with_memberships) }
   let(:organization2) { create(:organization, status: 'featured_city', name: 'noesesta') }
   let(:organization3) { create(:organization, status: 'featured_city') }
+  # rubocop:enable RSpec/IndexedLet
   let(:organization_attributes) { attributes_for(:organization) }
 
   context 'with owning organization' do

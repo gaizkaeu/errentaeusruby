@@ -7,13 +7,9 @@
             "enum": ["sociedad", "autonomo"]
         },
         "trabajadores": {
-            "type": "integer",
-            "minimum": 1
         },
         "impuestos_especiales": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 1
+            "type": "boolean"
         }
     },
     "required": ["constitucion", "trabajadores"],

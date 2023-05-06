@@ -12,6 +12,7 @@ module Api
             .where(organization: @organization)
                                       .ransack(params[:q])
                                       .result
+                                      .order(call_time: :asc)
           )
 
           render json: Serializers::CallSerializer.new(calls, meta: pagy_metadata(pagy), **serializer_config), status: :ok
