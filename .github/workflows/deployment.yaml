@@ -44,14 +44,14 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Setup PostgreSQL
+        run: bin/rails db:setup
+
       - name: Lint with RuboCop
         run: bin/rubocop --parallel
 
       - name: Packwerk check
         run: bin/packwerk check
-
-      - name: Setup PostgreSQL
-        run: bin/rails db:setup
   
       - uses: rwx-research/setup-captain@v1
       - name: Run RSpec \w Captain
