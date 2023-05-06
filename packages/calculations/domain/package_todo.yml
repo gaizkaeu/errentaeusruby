@@ -1,0 +1,15 @@
+# This file contains a list of dependencies that are not part of the long term plan for the
+# 'packages/calculations/domain' package.
+# We should generally work to reduce this list over time.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-todo
+---
+packages/users/domain:
+  "::Api::V1::User":
+    violations:
+    - dependency
+    files:
+    - packages/calculations/domain/app/models/api/v1/bulk_calculation.rb
+    - packages/calculations/domain/app/models/api/v1/calculation.rb

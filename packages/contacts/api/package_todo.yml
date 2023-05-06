@@ -1,0 +1,21 @@
+# This file contains a list of dependencies that are not part of the long term plan for the
+# 'packages/contacts/api' package.
+# We should generally work to reduce this list over time.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-todo
+---
+packages/calculations/api:
+  "::Api::V1::Serializers::CalculationSerializer":
+    violations:
+    - dependency
+    files:
+    - packages/contacts/api/app/public/api/v1/serializers/call_serializer.rb
+packages/organizations/api:
+  "::Api::V1::OrganizationManage::BaseController":
+    violations:
+    - dependency
+    files:
+    - packages/contacts/api/app/controllers/api/v1/organization_manage/calls_controller.rb
+    - packages/contacts/api/app/controllers/api/v1/organization_manage/emails_controller.rb

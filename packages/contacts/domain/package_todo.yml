@@ -1,0 +1,25 @@
+# This file contains a list of dependencies that are not part of the long term plan for the
+# 'packages/contacts/domain' package.
+# We should generally work to reduce this list over time.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-todo
+---
+packages/calculations/domain:
+  "::Api::V1::Calculation":
+    violations:
+    - dependency
+    files:
+    - packages/contacts/domain/app/models/api/v1/concerns/contactable.rb
+  "::Api::V1::Calculator":
+    violations:
+    - dependency
+    files:
+    - packages/contacts/domain/app/models/api/v1/concerns/contactable.rb
+packages/users/domain:
+  "::Api::V1::User":
+    violations:
+    - dependency
+    files:
+    - packages/contacts/domain/app/models/api/v1/concerns/contactable.rb

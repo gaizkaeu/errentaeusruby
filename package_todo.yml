@@ -1,0 +1,47 @@
+# This file contains a list of dependencies that are not part of the long term plan for the
+# '.' package.
+# We should generally work to reduce this list over time.
+#
+# You can regenerate this file using the following command:
+#
+# bin/packwerk update-todo
+---
+packages/calculations/domain:
+  "::Api::V1::CalculationTopic":
+    violations:
+    - dependency
+    files:
+    - db/migrate/20230421170019_add_some_test_data.rb
+    - db/migrate/20230425103811_create_first_calculator.rb
+    - db/migrate/20230429105109_change_prediction_attributes.rb
+    - db/migrate/20230504200405_change_input.rb
+  "::Api::V1::Calculator":
+    violations:
+    - dependency
+    files:
+    - db/migrate/20230421170019_add_some_test_data.rb
+    - db/migrate/20230425103811_create_first_calculator.rb
+packages/organizations/domain:
+  "::Api::V1::Organization":
+    violations:
+    - dependency
+    files:
+    - db/migrate/20230421170019_add_some_test_data.rb
+    - db/migrate/20230425103811_create_first_calculator.rb
+    - db/seeds.rb
+  "::Api::V1::OrganizationMembership":
+    violations:
+    - dependency
+    files:
+    - db/seeds.rb
+packages/users/domain:
+  "::Account":
+    violations:
+    - dependency
+    files:
+    - db/seeds.rb
+  "::Api::V1::User":
+    violations:
+    - dependency
+    files:
+    - db/seeds.rb
