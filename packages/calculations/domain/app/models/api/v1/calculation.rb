@@ -4,16 +4,16 @@ class Api::V1::Calculation < ApplicationRecord
   self.id_prefix = 'calcn'
 
   belongs_to :calculator, class_name: 'Api::V1::Calculator'
+  belongs_to :user, class_name: 'Api::V1::User'
+  belongs_to :bulk_calculation, class_name: 'Api::V1::BulkCalculation', optional: true
 
   has_one :calculation_topic, through: :calculator
   has_one :organization, through: :calculator
 
-  belongs_to :user, class_name: 'Api::V1::User', optional: true
-  belongs_to :bulk_calculation, class_name: 'Api::V1::BulkCalculation', optional: true
-
   delegate :calculation_topic, to: :calculator
   delegate :name, to: :calculation_topic
 
+  validates :input, presence: true
   validates :input, json: { message: ->(errors) { errors }, schema: -> { calculation_topic.validation_schema } }
   validates_with Api::V1::Validators::CalculationOutputValidator
 
@@ -22,7 +22,7 @@ class Api::V1::Calculation < ApplicationRecord
   end
 
   before_validation do
-    sanitize_input
+    sanitize_input if input.present?
     calculate_price
   end
 
@@ -33,8 +33,12 @@ class Api::V1::Calculation < ApplicationRecord
   def sanitize_input
     input.slice(*calculation_topic.attributes_training)
 
-    input.each do |key, value|
-      input[key] = calculation_topic.sanitize_variable_store(key, value)
+    begin
+      input.each do |key, value|
+        input[key] = calculation_topic.sanitize_variable_store(key, value)
+      end
+    rescue StandardError
+      errors.add(:input, 'Invalid input')
     end
   end
 
@@ -69,8 +73,6 @@ class Api::V1::Calculation < ApplicationRecord
     self.price_result = Keisan::Calculator.new.evaluate(ec, variables)
   end
   # rubocop:enable Metrics/AbcSize
-
-  # HELPERS
 
   def questions
     calculation_topic.questions.map do |question|
