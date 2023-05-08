@@ -15,5 +15,38 @@ acc_lawyer = Account.create!(email: 'carolina@elizaasesores.com', status: 2)
 Api::V1::User.create!({ first_name: 'Gaizka', last_name: 'Urdangarin', account_id: admin.id })
 owner = Api::V1::User.create!({ first_name: 'Eliza', last_name: 'Asesores', account_type: :org_manage, account_id: acc_gestion.id })
 Api::V1::User.create!({ first_name: 'Carolina', last_name: 'Elizagarate', account_type: :lawyer, account_id: acc_lawyer.id })
-org = Api::V1::Organization.create!({ name: 'Eliza Asesores', phone: '1234567890', email: 'contacto@elizaasesores.com', website: 'https://www.elizaasesores.com', description: 'Eliza Asesores', latitude: 42.84, longitude: -2.67 })
+org = Api::V1::Organization.create!({ name: 'Eliza Asesores', phone: '1234567890', email: 'contacto@elizaasesores.com', website: 'https://www.elizaasesores.com', description: 'Eliza Asesores', latitude: 42.84, longitude: -2.67,
+  open_close_hours: {
+    monday: {
+      open: '09:00',
+      close: '17:00'
+    },
+    tuesday: {
+      open: '09:00',
+      close: '17:00'
+    },
+    wednesday: {
+      open: '09:00',
+      close: '17:00'
+    },
+    thursday: {
+      open: '09:00',
+      close: '17:00'
+    },
+    friday: {
+      open: '09:00',
+      close: '17:00'
+    },
+    saturday: {
+      open: '09:00',
+      close: '17:00'
+    },
+    sunday: {
+      open: '09:00',
+      close: '17:00'
+    }
+  }
+  }
+
+})
 Api::V1::OrganizationMembership.create!({ user_id: owner.id, organization_id: org.id, role: :admin })

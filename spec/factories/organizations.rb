@@ -6,7 +6,7 @@ FactoryBot.define do
     website { Faker::Internet.url }
     description { Faker::Lorem.paragraph }
 
-    open_close_hours {
+    open_close_hours do
       {
         monday: {
           open: '09:00',
@@ -37,7 +37,7 @@ FactoryBot.define do
           close: '17:00'
         }
       }
-    }
+    end
 
     # Define a trait to create memberships for the organization
     trait :with_memberships do
