@@ -22,8 +22,8 @@ class Api::V1::Organization < ApplicationRecord
     %w[coordinates bounds near_by]
   end
 
-  PRICES_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_prices.json')
-  private_constant :PRICES_JSON_SCHEMA
+  OPEN_CLOSE_SCHEMA = Rails.root.join('config', 'schemas', 'open_close_hours.json')
+  private_constant :OPEN_CLOSE_SCHEMA
 
   SETTINGS_JSON_SCHEMA = Rails.root.join('config', 'schemas', 'org_settings.json')
   private_constant :SETTINGS_JSON_SCHEMA
@@ -34,11 +34,10 @@ class Api::V1::Organization < ApplicationRecord
   validates :name, presence: true, length: { maximum: 30, minimum: 4 }
   validates :phone, presence: true, length: { maximum: 10, minimum: 9 }
   validates :website, presence: true, length: { maximum: 50, minimum: 4 }
-  validates :description, presence: true, length: { maximum: 1000, minimum: 4 }
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
-  validates :prices, json: { schema: PRICES_JSON_SCHEMA }
   validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
   validates :status, inclusion: { in: ORGANIZATION_SUBSCRIPTION_STATUS }
+  validates :open_close_hours, json: { schema: OPEN_CLOSE_SCHEMA }
 
   # RELATIONS
   has_many :memberships, class_name: 'Api::V1::OrganizationMembership', dependent: :destroy

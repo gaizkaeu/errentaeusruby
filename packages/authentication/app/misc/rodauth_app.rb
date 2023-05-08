@@ -4,6 +4,9 @@ class RodauthApp < Rodauth::Rails::App
 
   # secondary configuration
   # configure RodauthAdmin, :admin
+  route do |r|
+    rodauth.load_memory # autologin remembered users
 
-  route(&:rodauth)
+    r.rodauth # route rodauth requests
+  end
 end
