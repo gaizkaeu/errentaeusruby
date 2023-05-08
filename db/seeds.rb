@@ -46,7 +46,5 @@ org = Api::V1::Organization.create!({ name: 'Eliza Asesores', phone: '1234567890
       close: '17:00'
     }
   }
-  }
-
 })
 Api::V1::OrganizationMembership.create!({ user_id: owner.id, organization_id: org.id, role: :admin })
