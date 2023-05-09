@@ -4,7 +4,7 @@ class Api::V1::Calculation < ApplicationRecord
   self.id_prefix = 'calcn'
 
   belongs_to :calculator, class_name: 'Api::V1::Calculator'
-  belongs_to :user, class_name: 'Api::V1::User'
+  belongs_to :user, class_name: 'Api::V1::User', optional: true
   belongs_to :bulk_calculation, class_name: 'Api::V1::BulkCalculation', optional: true
 
   has_one :calculation_topic, through: :calculator
