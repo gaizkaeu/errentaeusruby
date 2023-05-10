@@ -26,6 +26,7 @@ class Api::V1::CalculationTopic < ApplicationRecord
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   def sanitize_variable_store(name, value)
     type = prediction_attributes.select { |_key, v| v['name'] == name }
                                 .values.first['type']
@@ -41,11 +42,14 @@ class Api::V1::CalculationTopic < ApplicationRecord
         value == 'true'
       when Integer
         value == 1
-      else
+      when TrueClass, FalseClass
         value
+      else
+        false
       end
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
 
   def sanitize_training(name, value)

@@ -10,6 +10,7 @@ FactoryBot.define do
           constitucion: {
             name: 'constitucion',
             type: 'string',
+            var_type: 'discrete',
             question: {
               title: 'Escoge el tipo de constitucion',
               field_type: 'select_unique',
@@ -19,6 +20,7 @@ FactoryBot.define do
           trabajadores: {
             name: 'trabajadores',
             type: 'integer',
+            var_type: 'continuous',
             question: {
               title: 'Trabajadores',
               field_type: 'input'
@@ -27,6 +29,7 @@ FactoryBot.define do
           impuestos_especiales: {
             name: 'impuestos_especiales',
             type: 'boolean',
+            var_type: 'discrete',
             question: {
               title: 'Impuestos especiales',
               field_type: 'boolean'
