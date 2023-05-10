@@ -11,11 +11,11 @@ class Api::V1::Organization < ApplicationRecord
   self.id_prefix = 'org'
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[name phone website description email]
+    %w[name phone website description email price_range]
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[skills company_targets services]
+    %w[skills company_targets services taggings]
   end
 
   def self.ransackable_scopes(_auth_object = nil)

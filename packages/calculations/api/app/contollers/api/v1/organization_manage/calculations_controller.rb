@@ -37,6 +37,16 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
     end
   end
 
+  def destroy
+    calc = Api::V1::Calculation.find_by(id: params[:id], calculator: @calculator)
+
+    if calc.destroy
+      render json: {}, status: :no_content
+    else
+      render json: calc.errors, status: :unprocessable_entity
+    end
+  end
+
   def preview
     out = Api::V1::Services::CalcnPreviewService.call(calculation_params)
     render json: out
