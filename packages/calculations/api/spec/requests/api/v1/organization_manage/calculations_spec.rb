@@ -12,7 +12,7 @@ RSpec.describe 'OrganizationManage/Calculations' do
 
     describe 'INDEX /organization-manage/:id/calculators' do
       it 'renders a successful response' do
-        c = build(:calculation, :calct_test_schema, calculator: calculator)
+        c = build(:calculation, :calct_test_schema, calculator:)
         c.save!
         authorized_get api_v1_org_man_clcr_clcn_index_url(organization.id, calculator.id), as: :json
         expect(response).to be_successful
