@@ -62,6 +62,6 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
   end
 
   def set_calculator
-    @calculator = Api::V1::Calculator.find(params[:calculator_id])
+    @calculator = Api::V1::Calculator.find(params[:clcr_id])
   end
 end
