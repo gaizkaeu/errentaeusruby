@@ -49,6 +49,27 @@ RSpec.describe 'OrganizationManage/Calculators' do
         expect(JSON.parse(body)['data']['attributes']['calculator_status']).not_to eq('test')
       end
     end
+
+    describe 'TRAIN /organization-manage/:id/calculators/:id/train' do
+      it 'trains the calculator' do
+        expect do
+          authorized_post train_api_v1_org_man_clcr_url(organization.id, calculator.id), as: :json
+        end.to enqueue_job(CalcrTrainJob)
+        expect(response).to be_successful
+        expect(body).to be_present
+      end
+
+      it 'renders a JSON response with errors' do
+        calculator.update!(last_trained_at: Time.zone.now)
+
+        expect do
+          authorized_post train_api_v1_org_man_clcr_url(organization.id, calculator.id), as: :json
+        end.not_to enqueue_job(CalcrTrainJob)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(body).to be_present
+      end
+    end
   end
 
   context 'with no signed_in account' do

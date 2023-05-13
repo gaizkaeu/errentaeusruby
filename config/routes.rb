@@ -43,7 +43,7 @@ Rails.application.routes.draw do
         resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
 
         resources :calculators, controller: 'organization_manage/calculators', only: %i[index show update], as: :clcr do
-          resources :calculations, controller: 'organization_manage/calculations', only: %i[index create update destroy], as: :clcn do
+          resources :calculations, controller: 'organization_manage/calculations', as: :clcn do
             post :preview, on: :collection
           end
 

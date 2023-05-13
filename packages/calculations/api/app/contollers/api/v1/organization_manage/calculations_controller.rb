@@ -10,7 +10,7 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
   end
 
   def show
-    calc = Api::V1::Calculation.find(params[:id], calculator: @calculator)
+    calc = Api::V1::Calculation.find_by(id: params[:id], calculator: @calculator)
 
     render json: Api::V1::Serializers::CalculationSerializer.new(calc, serializer_params)
   end

@@ -10,7 +10,7 @@ FactoryBot.define do
         {
           constitucion: %w[sociedad autonomo].sample(1).first,
           trabajadores: Faker::Number.between(from: 1, to: 10),
-          impuestos_especiales: Faker::Number.between(from: 0, to: 1)
+          impuestos_especiales: [true, false].sample(1).first
         }
       end
     end
