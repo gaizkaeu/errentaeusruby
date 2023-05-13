@@ -37,13 +37,13 @@ Rails.application.routes.draw do
 
       resources 'bulk-calculations', controller: 'bulk_calculations', as: :bulk_calculations, only: %i[show]
 
-      resources 'organization-manage', controller: 'organization_manage', as: :organization_manage do
+      resources 'organization-manage', controller: 'organization_manage', as: :org_man do
 
         resources :memberships, controller: 'organization_manage/memberships', only: %i[index create update destroy]
         resources :invitations, controller: 'organization_manage/invitations', only: %i[index create destroy update]
 
-        resources :calculators, controller: 'organization_manage/calculators', only: %i[index show update] do
-          resources :calculations, controller: 'organization_manage/calculations', only: %i[index create update destroy] do
+        resources :calculators, controller: 'organization_manage/calculators', only: %i[index show update], as: :clcr do
+          resources :calculations, controller: 'organization_manage/calculations', only: %i[index create update destroy], as: :clcn do
             post :preview, on: :collection
           end
 
