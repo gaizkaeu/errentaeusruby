@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::OrganizationManage::CalculationsController < Api::V1::OrganizationManage::BaseController
-  before_action :authenticate
   before_action :set_calculator
 
   def index
@@ -40,7 +39,7 @@ class Api::V1::OrganizationManage::CalculationsController < Api::V1::Organizatio
   def destroy
     calc = Api::V1::Calculation.find_by(id: params[:id], calculator: @calculator)
 
-    if calc.destroy
+    if calc.delete
       render json: {}, status: :no_content
     else
       render json: calc.errors, status: :unprocessable_entity
