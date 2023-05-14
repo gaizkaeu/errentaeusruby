@@ -37,7 +37,7 @@ class Api::V1::Organization < ApplicationRecord
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
   validates :settings, json: { schema: SETTINGS_JSON_SCHEMA }
   validates :status, inclusion: { in: ORGANIZATION_SUBSCRIPTION_STATUS }
-  validates :open_close_hours, json: { schema: OPEN_CLOSE_SCHEMA }
+  validates :open_close_hours, json: {message: ->(errors) { errors }, schema: OPEN_CLOSE_SCHEMA }
 
   # RELATIONS
   has_many :memberships, class_name: 'Api::V1::OrganizationMembership', dependent: :destroy

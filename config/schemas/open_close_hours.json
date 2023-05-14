@@ -30,12 +30,28 @@
             "type": "object",
             "properties": {
                 "open": {
-                    "type": "string",
-                    "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                    "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": ["closed"]
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                        }
+                      ]
                 },
                 "close": {
-                    "type": "string",
-                    "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                    "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": ["closed"]
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+                        }
+                      ]
                 }
             },
             "required": ["open", "close"],
