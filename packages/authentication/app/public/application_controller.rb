@@ -3,7 +3,6 @@ class ApplicationController < ActionController::API
 
   include Pagy::Backend
   include Authorization
-  include ActionController::Cookies
   include ActionController::Helpers
 
   rescue_from Pundit::NotAuthorizedError, with: :permission_denied
@@ -13,6 +12,7 @@ class ApplicationController < ActionController::API
   before_action do
     ActiveStorage::Current.url_options = Rails.application.config.x.app_host
   end
+  after_action :set_jwt_token
 
   def alive
     render json: { success: 'i am alive!' }
@@ -47,5 +47,11 @@ class ApplicationController < ActionController::API
 
   def not_found
     render json: { error: 'not found' }, status: :not_found
+  end
+
+  def set_jwt_token
+    return unless rodauth.use_jwt? && rodauth.valid_jwt?
+
+    response.headers['Authorization'] = rodauth.session_jwt
   end
 end

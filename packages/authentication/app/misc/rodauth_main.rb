@@ -7,7 +7,7 @@ class RodauthMain < Rodauth::Rails::Auth
            :login,
            :logout,
            :remember,
-           :json,
+           :jwt,
            :otp,
            :webauthn,
            :webauthn_login,
@@ -39,6 +39,8 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # Accept only JSON requests.
     only_json? true
+
+    jwt_secret ENV.fetch('JWT_SECRET', 'insecure')
 
     # Handle login and password confirmation fields on the client side.
     # require_password_confirmation? false

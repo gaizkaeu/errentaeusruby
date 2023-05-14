@@ -21,6 +21,8 @@ module Api
           calculators.map do |calculator|
             run_calculation(calculator)
           end
+          @bcalc.save!
+          @bcalc
         end
 
         def run_calculation(calculator)

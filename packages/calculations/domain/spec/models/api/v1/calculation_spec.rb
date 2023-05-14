@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Calculation do
-  describe 'predicts if it is not for training' do
+  describe 'running prediction' do
     let(:calculation) { build(:calculation, :calct_test_schema) }
 
     it 'predicts if it is not for training' do

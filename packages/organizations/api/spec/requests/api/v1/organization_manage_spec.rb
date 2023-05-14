@@ -16,14 +16,14 @@ RSpec.describe 'OrganizationManage' do
 
     describe 'SHOW /organization-manage/:id' do
       it 'renders a successful response' do
-        get api_v1_org_man_url(organization.id), as: :json
+        authorized_get api_v1_org_man_url(organization.id), as: :json
         expect(response).to be_successful
         expect(body['data']).to be_present
         expect(JSON.parse(body)['data']['id']).to eq(organization.id)
       end
 
       it 'renders a not found response' do
-        get api_v1_org_man_url(organization3.id), as: :json
+        authorized_get api_v1_org_man_url(organization3.id), as: :json
         expect(response).not_to be_successful
         expect(response).to have_http_status(:forbidden)
       end
@@ -31,7 +31,7 @@ RSpec.describe 'OrganizationManage' do
 
     describe 'POST /organization-manage' do
       it 'renders a successful response' do
-        post api_v1_org_man_index_url, params: { organization_manage: organization_attributes }, as: :json
+        authorized_post api_v1_org_man_index_url, params: { organization_manage: organization_attributes }, as: :json
         expect(response).to be_successful
         expect(body['data']).to be_present
         expect(JSON.parse(body)['data']['id']).not_to be_nil
@@ -39,12 +39,12 @@ RSpec.describe 'OrganizationManage' do
 
       it 'persists the organization' do
         expect do
-          post api_v1_org_man_index_url, params: { organization_manage: organization_attributes }, as: :json
+          authorized_post api_v1_org_man_index_url, params: { organization_manage: organization_attributes }, as: :json
         end.to change(Api::V1::Organization, :count).by(1)
       end
 
       it 'renders errors when invalid' do
-        post api_v1_org_man_index_url, params: { organization_manage: { name: '' } }, as: :json
+        authorized_post api_v1_org_man_index_url, params: { organization_manage: { name: '' } }, as: :json
         expect(response).not_to be_successful
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(body)['name']).to be_present
@@ -53,20 +53,20 @@ RSpec.describe 'OrganizationManage' do
 
     describe 'PATCH /organization-manage/:id' do
       it 'renders a successful response' do
-        patch api_v1_org_man_url(organization.id), params: { organization_manage: { name: 'new name' } }, as: :json
+        authorized_patch api_v1_org_man_url(organization.id), params: { organization_manage: { name: 'new name' } }, as: :json
         expect(response).to be_successful
         expect(body['data']).to be_present
         expect(JSON.parse(body)['data']['attributes']['name']).to eq('new name')
       end
 
       it 'cant update other organizations' do
-        patch api_v1_org_man_url(organization3.id), params: { organization_manage: { name: 'new name' } }, as: :json
+        authorized_patch api_v1_org_man_url(organization3.id), params: { organization_manage: { name: 'new name' } }, as: :json
         expect(response).not_to be_successful
         expect(response).to have_http_status(:forbidden)
       end
 
       it 'renders errors when invalid' do
-        patch api_v1_org_man_url(organization.id), params: { organization_manage: { name: '' } }, as: :json
+        authorized_patch api_v1_org_man_url(organization.id), params: { organization_manage: { name: '' } }, as: :json
         expect(response).not_to be_successful
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(body)['name']).to be_present

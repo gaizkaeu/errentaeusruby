@@ -9,9 +9,11 @@ module Api
       def create
         calculation = Calculation.new(create_params)
         calculation.user = current_user
-        calculation.save!
-
-        render json: Serializers::CalculationSerializer.new(calculation, serializer_params)
+        if calculation.save
+          render json: Serializers::CalculationSerializer.new(calculation, serializer_params), status: :created
+        else
+          render json: { errors: calculation.errors }, status: :unprocessable_entity
+        end
       end
 
       def show
@@ -20,7 +22,7 @@ module Api
 
       def bulk
         bulk_c = Services::BcalcFromCalcnService.call(@calculation)
-        render json: Serializers::CalculationSerializer.new(bulk_c, serializer_params)
+        render json: Serializers::BulkCalculationSerializer.new(bulk_c), status: :created
       end
 
       private
@@ -34,7 +36,7 @@ module Api
       end
 
       def set_calculation
-        @calculation = Calculation.find_by(id: params[:id], user: current_user)
+        @calculation = Calculation.find_by!(id: params[:id], user_id: current_user.id)
       end
     end
   end
