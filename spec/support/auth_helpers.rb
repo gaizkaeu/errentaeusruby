@@ -9,7 +9,18 @@ module AuthHelpers
   end
 
   def sign_in(user)
-    set_session(account_id: user.account.id)
+    jwt = JWT.encode(
+      {
+        account_id: user.account.id,
+        authenticated_by: [
+          'password'
+        ]
+      },
+      ENV.fetch('JWT_SECRET', 'insecure'),
+      'HS256'
+    )
+
+    @authorized_headers = { Authorization: jwt }
   end
 
   def authorized_get(*args, **kwargs)

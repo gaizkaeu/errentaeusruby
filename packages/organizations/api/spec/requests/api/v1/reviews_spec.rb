@@ -40,12 +40,12 @@ RSpec.describe Api::V1::ReviewsController do
       context 'with valid parameters' do
         it 'creates a new Review' do
           expect do
-            post api_v1_reviews_url, params: { review: review_attributes }
+            authorized_post api_v1_reviews_url, params: { review: review_attributes }
           end.to change(Api::V1::Review, :count).by(1)
         end
 
         it 'renders a JSON response with the new review' do
-          post api_v1_reviews_url, params: { review: review_attributes }
+          authorized_post api_v1_reviews_url, params: { review: review_attributes }
           expect(response).to have_http_status(:created)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
@@ -54,12 +54,12 @@ RSpec.describe Api::V1::ReviewsController do
       context 'with invalid parameters' do
         it 'does not create a new Review' do
           expect do
-            post api_v1_reviews_url, params: invalid_attributes
+            authorized_post api_v1_reviews_url, params: invalid_attributes
           end.not_to change(Api::V1::Review, :count)
         end
 
         it 'renders a JSON response with errors for the new review' do
-          post api_v1_reviews_url, params: invalid_attributes
+          authorized_post api_v1_reviews_url, params: invalid_attributes
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.content_type).to match(a_string_including('application/json'))
         end
